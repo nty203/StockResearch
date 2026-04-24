@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "pnpm --filter @stock/web dev",
     "build": "pnpm --filter @stock/web build",
+    "pages:build": "pnpm --filter @stock/web run pages:build",
     "lint": "pnpm --filter @stock/web lint",
     "typecheck": "pnpm --filter @stock/web typecheck"
   },

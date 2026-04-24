@@ -2,7 +2,3 @@ name = "stock-research"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
-
-[vars]
-# 로컬 개발용 기본값 (실제 값은 Cloudflare Dashboard에서 설정)
-NODE_ENV = "development"
