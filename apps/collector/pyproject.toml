@@ -1,10 +1,10 @@
 [project]
 name = "stock-collector"
 version = "0.1.0"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
     "OpenDartReader>=0.2",
-    "FinanceDataReader>=0.9",
+    "finance-datareader>=0.9",
     "yfinance>=0.2",
     "pandas-ta>=0.3",
     "edgartools>=2.0",

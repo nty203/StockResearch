@@ -9,6 +9,9 @@ jobs:
   collect:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: apps/collector
 
     steps:
       - uses: actions/checkout@v4
@@ -25,16 +28,16 @@ jobs:
           SUPABASE_URL:        ${{ secrets.SUPABASE_URL }}
           SUPABASE_DB_URL:     ${{ secrets.SUPABASE_DB_URL }}   # pooler URL
           DART_API_KEY:        ${{ secrets.DART_API_KEY }}
-        run: uv run python -m apps.collector.src.financials_dart
+        run: uv run python -m src.financials_dart
 
       - name: Run screening scores
         env:
           SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
-        run: uv run python -m apps.collector.src.screening.score
+        run: uv run python -m src.screening.score
 
       - name: Run enqueue
         env:
           SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
-        run: uv run python -m apps.collector.src.queue.enqueue
+        run: uv run python -m src.queue.enqueue
