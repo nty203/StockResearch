@@ -1,4 +1,5 @@
 'use client'
+export const runtime = 'edge'
 
 import { useQuery } from '@tanstack/react-query'
 import type { TriggerEvent } from '@stock/shared'

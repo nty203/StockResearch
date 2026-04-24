@@ -1,3 +1,5 @@
+export const runtime = 'edge'
+
 import { GoldenSignalFeed } from './components/golden-signal-feed'
 import { WatchlistSummary } from './components/watchlist-summary'
 import { ScoreTable } from './components/score-table'
