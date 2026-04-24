@@ -17,6 +17,9 @@ dependencies = [
     "python-dotenv>=1.0",
 ]
 
+[tool.setuptools]
+packages = []
+
 [tool.uv.workspace]
 members = ["apps/collector"]
 
