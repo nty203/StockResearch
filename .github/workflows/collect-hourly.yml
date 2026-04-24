@@ -1,0 +1,40 @@
+name: Hourly Collector
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # 매시간
+  workflow_dispatch:        # /settings 페이지 수동 재실행 버튼용 — 반드시 유지
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Run prices
+        env:
+          SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: uv run python -m apps.collector.src.prices
+
+      - name: Run filings watcher
+        env:
+          SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          DART_API_KEY:    ${{ secrets.DART_API_KEY }}
+        run: uv run python -m apps.collector.src.filings_watch
+
+      - name: Run news RSS
+        env:
+          SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: uv run python -m apps.collector.src.news_rss

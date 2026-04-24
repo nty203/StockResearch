@@ -1,0 +1,33 @@
+name: Weekly Backtest & Prune
+
+on:
+  schedule:
+    - cron: '0 13 * * 0'   # 일요일 22:00 KST (UTC 13:00)
+  workflow_dispatch:         # /settings 페이지 수동 재실행 버튼용 — 반드시 유지
+
+jobs:
+  backtest-then-prune:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      # 백테스트 먼저, 완료 후 prune 실행 — 병렬 실행 금지 (데이터 경합 방지)
+      - name: Run backtest
+        env:
+          SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: uv run python -m apps.collector.src.screening.backtest
+
+      - name: Prune old prices (> 2 years)
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: uv run python -m apps.collector.src.screening.prune_prices
