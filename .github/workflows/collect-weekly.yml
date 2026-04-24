@@ -12,6 +12,10 @@ jobs:
     defaults:
       run:
         working-directory: apps/collector
+    env:
+      SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+      SUPABASE_DB_URL:      ${{ secrets.SUPABASE_DB_URL }}
 
     steps:
       - uses: actions/checkout@v4
@@ -25,12 +29,7 @@ jobs:
 
       # 백테스트 먼저, 완료 후 prune 실행 — 병렬 실행 금지 (데이터 경합 방지)
       - name: Run backtest
-        env:
-          SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
-          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: uv run python -m src.screening.backtest
 
       - name: Prune old prices (> 2 years)
-        env:
-          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: uv run python -m src.screening.prune_prices

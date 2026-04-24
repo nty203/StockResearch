@@ -12,6 +12,10 @@ jobs:
     defaults:
       run:
         working-directory: apps/collector
+    env:
+      SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+      SUPABASE_DB_URL:      ${{ secrets.SUPABASE_DB_URL }}
 
     steps:
       - uses: actions/checkout@v4
@@ -24,20 +28,12 @@ jobs:
         run: uv sync --frozen
 
       - name: Run prices
-        env:
-          SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
-          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: uv run python -m src.prices
 
       - name: Run filings watcher
         env:
-          SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
-          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
-          DART_API_KEY:    ${{ secrets.DART_API_KEY }}
+          DART_API_KEY: ${{ secrets.DART_API_KEY }}
         run: uv run python -m src.filings_watch
 
       - name: Run news RSS
-        env:
-          SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
-          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: uv run python -m src.news_rss

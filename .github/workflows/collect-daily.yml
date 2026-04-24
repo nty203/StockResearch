@@ -12,6 +12,10 @@ jobs:
     defaults:
       run:
         working-directory: apps/collector
+    env:
+      SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+      SUPABASE_DB_URL:      ${{ secrets.SUPABASE_DB_URL }}
 
     steps:
       - uses: actions/checkout@v4
@@ -25,19 +29,11 @@ jobs:
 
       - name: Run financials (DART + SEC)
         env:
-          SUPABASE_URL:        ${{ secrets.SUPABASE_URL }}
-          SUPABASE_DB_URL:     ${{ secrets.SUPABASE_DB_URL }}   # pooler URL
-          DART_API_KEY:        ${{ secrets.DART_API_KEY }}
+          DART_API_KEY: ${{ secrets.DART_API_KEY }}
         run: uv run python -m src.financials_dart
 
       - name: Run screening scores
-        env:
-          SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
-          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: uv run python -m src.screening.score
 
       - name: Run enqueue
-        env:
-          SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
-          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: uv run python -m src.queue.enqueue
