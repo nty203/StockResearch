@@ -3,7 +3,7 @@ import logging
 import os
 import time
 
-import OpenDartReader
+from OpenDartReader import OpenDartReader as DartReader
 
 from .upsert import get_client, upsert_batch
 
@@ -34,7 +34,7 @@ def collect_dart_financials(tickers: list[str], years: list[int]) -> list[dict]:
         logger.error("DART_API_KEY not set")
         return []
 
-    dart = OpenDartReader.OpenDartReader(DART_API_KEY)
+    dart = DartReader(DART_API_KEY)
     rows = []
 
     for ticker in tickers:

@@ -5,7 +5,7 @@ import time
 from datetime import date, timedelta
 
 import feedparser
-import OpenDartReader
+from OpenDartReader import OpenDartReader as DartReader
 import edgar
 
 from .upsert import get_client, upsert_batch
@@ -55,7 +55,7 @@ def collect_dart_filings(tickers: list[str], lookback_days: int = 1) -> list[dic
         logger.error("DART_API_KEY not set")
         return []
 
-    dart = OpenDartReader.OpenDartReader(api_key)
+    dart = DartReader(api_key)
     start = (date.today() - timedelta(days=lookback_days)).isoformat()
     rows = []
 
