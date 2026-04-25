@@ -27,6 +27,12 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen
 
+      # 재무 데이터 — DART API 일 20,000건 제한으로 주 1회 실행
+      - name: Run financials (DART)
+        env:
+          DART_API_KEY: ${{ secrets.DART_API_KEY }}
+        run: uv run python -m src.financials_dart
+
       # 백테스트 먼저, 완료 후 prune 실행 — 병렬 실행 금지 (데이터 경합 방지)
       - name: Run backtest
         run: uv run python -m src.screening.backtest
