@@ -70,7 +70,7 @@ def run() -> int:
     for r in rows:
         seen[r["ticker"]] = r
     unique = list(seen.values())
-    count = upsert_batch(client, "stocks", unique, on_conflict="ticker")
+    count = upsert_batch(client, "stocks", unique, on_conflict="ticker,market")
     logger.info("Universe upserted %d rows", count)
     return count
 
