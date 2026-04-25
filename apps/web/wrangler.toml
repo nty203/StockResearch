@@ -6,4 +6,5 @@ pages_build_output_dir = ".vercel/output/static"
 [vars]
 CF_ACCOUNT_ID = "244c48047ff6f631154391563e48daac"
 CF_PROJECT_NAME = "stockresearch"
-# CF_API_TOKEN is stored as a Secret in the CF Pages dashboard (encrypted)
+GITHUB_REPO = "nty203/StockResearch"
+# CF_API_TOKEN and GITHUB_PAT are stored as Secrets in the CF Pages dashboard (encrypted)

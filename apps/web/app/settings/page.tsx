@@ -41,6 +41,7 @@ export default function SettingsPage() {
   const [section, setSection] = useState<'checklist' | 'schedule' | 'filters' | 'weights' | 'notify' | 'universe' | 'failures'>('checklist')
   const queryClient = useQueryClient()
   const [triggering, setTriggering] = useState<string | null>(null)
+  const [triggerResult, setTriggerResult] = useState<{ workflow: string; ok: boolean; msg: string } | null>(null)
 
   const { data: runs } = useQuery<PipelineRun[]>({
     queryKey: ['pipeline-runs-latest'],
@@ -67,12 +68,21 @@ export default function SettingsPage() {
 
   async function triggerWorkflow(workflow: string) {
     setTriggering(workflow)
+    setTriggerResult(null)
     try {
-      await fetch('/api/pipeline/trigger', {
+      const res = await fetch('/api/pipeline/trigger', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ workflow }),
       })
+      if (res.ok) {
+        setTriggerResult({ workflow, ok: true, msg: '워크플로우 실행 요청 완료 ✓' })
+      } else {
+        const body = await res.json().catch(() => ({ error: res.statusText }))
+        setTriggerResult({ workflow, ok: false, msg: `오류: ${body.error ?? res.statusText}` })
+      }
+    } catch (e) {
+      setTriggerResult({ workflow, ok: false, msg: `네트워크 오류: ${String(e)}` })
     } finally {
       setTriggering(null)
       queryClient.invalidateQueries({ queryKey: ['pipeline-runs-latest'] })
@@ -120,6 +130,11 @@ export default function SettingsPage() {
         {section === 'checklist' && (
           <div className="space-y-4">
             <h2 className="text-base font-semibold text-[var(--color-text-1)]">업데이트 체크리스트</h2>
+            {triggerResult && (
+              <div className={`text-xs px-3 py-2 rounded border ${triggerResult.ok ? 'border-[var(--color-success)] text-[var(--color-success)]' : 'border-[var(--color-error)] text-[var(--color-error)]'}`}>
+                {triggerResult.msg}
+              </div>
+            )}
             <div className="rounded-lg border border-[var(--color-border)] divide-y divide-[var(--color-border)]">
               {STAGES.map(stage => {
                 const run = latestByStage[stage]
