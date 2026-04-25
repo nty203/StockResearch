@@ -142,8 +142,8 @@ CF 대시보드에 이미 `GitHub Actions` 토큰 (Account.Cloudflare Pages 권�
 | DART API Key | 미설정 | GitHub Secret `DART_API_KEY` |
 | Telegram Bot Token | 미설정 | Cloudflare env var `TELEGRAM_BOT_TOKEN` |
 | Telegram Chat ID | 미설정 | Cloudflare env var `TELEGRAM_CHAT_ID` |
-| GitHub PAT | 미설정 | Cloudflare env var `GITHUB_PAT` + GitHub Secret `GITHUB_PAT` |
-| GitHub Repo | 미설정 | Cloudflare env var `GITHUB_REPO` (예: `nty203/StockResearch`) |
+| GitHub PAT | ✅ **적용 완료** | CF Pages Secret `GITHUB_PAT` 저장됨 (OAuth token, workflow scope), GitHub Secret은 별도 |
+| GitHub Repo | ✅ **적용 완료** | `apps/web/wrangler.toml` `[vars]` `GITHUB_REPO = "nty203/StockResearch"` |
 | Supabase Storage bucket | 미생성 | `analysis-prompts` 버킷 생성 필요 |
 | Supabase DB 마이그레이션 | 완료 여부 확인 필요 | `supabase/migrations/001_init.sql` |
 
@@ -249,7 +249,7 @@ StockResearch/
 ## 다음 작업 순서
 
 1. ✅ **CF API 토큰 생성 완료** — `StockResearch Full Access` (Cloudflare Pages:Edit, Account Settings:Read), CF Pages Secret `CF_API_TOKEN` 저장, wrangler.toml에 `CF_ACCOUNT_ID`/`CF_PROJECT_NAME` 추가
-2. **[수동]** GitHub PAT 생성 → Cloudflare Pages 환경변수에 `GITHUB_PAT`, `GITHUB_REPO` 추가 (설정 페이지 수동 재실행 버튼 동작에 필요)
+2. ✅ **GitHub PAT 설정 완료** — GitHub OAuth token (workflow scope), CF Pages Secret `GITHUB_PAT` 저장 (wrangler pages secret put), wrangler.toml에 `GITHUB_REPO = "nty203/StockResearch"` 추가. 트리거 버튼 피드백 UI도 추가 (commit `934cb42`)
 3. **[수동]** `.github/workflows/cf-build-test.yml` 삭제 (빌드 성공 후 필요 없음)
 4. **[수동]** Supabase Storage `analysis-prompts` 버킷 생성
 5. **[수동]** DART API Key 실제 값 설정, Telegram 설정 완료
