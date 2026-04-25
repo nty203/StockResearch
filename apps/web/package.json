@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npx @cloudflare/next-on-pages --skip-build",
+    "build": "node -e \"const{execSync:e}=require('child_process');e(process.env.VERCEL?'next build':'npx @cloudflare/next-on-pages',{stdio:'inherit'})\"",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
