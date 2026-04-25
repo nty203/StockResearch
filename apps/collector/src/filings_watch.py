@@ -5,7 +5,7 @@ import time
 from datetime import date, timedelta
 
 import feedparser
-from OpenDartReader import OpenDartReader as DartReader
+import OpenDartReader as DartReader
 import edgar
 
 from .upsert import get_client, upsert_batch

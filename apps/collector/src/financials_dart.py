@@ -3,7 +3,7 @@ import logging
 import os
 import time
 
-from OpenDartReader import OpenDartReader as DartReader
+import OpenDartReader as DartReader
 
 from .upsert import get_client, upsert_batch
 
