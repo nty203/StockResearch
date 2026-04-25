@@ -48,7 +48,12 @@ def _match_keywords(text: str, keywords: list[str]) -> list[str]:
     return [kw for kw in keywords if kw.lower() in text.lower()]
 
 
-def collect_dart_filings(tickers: list[str], lookback_days: int = 1) -> list[dict]:
+def collect_dart_filings(kr_ticker_set: set[str], lookback_days: int = 1) -> list[dict]:
+    """DART 공시를 전체 목록 1회 조회로 수집 (ticker별 루프 금지 — 20,000회/일 한도 보호).
+
+    dart.list() 를 corp_code 없이 호출하면 기간 내 전체 공시 목록을 반환.
+    API 호출 1회로 모든 종목 커버 → 하루 24회 실행해도 24회 소모.
+    """
     import os
     api_key = os.environ.get("DART_API_KEY", "")
     if not api_key:
@@ -59,31 +64,35 @@ def collect_dart_filings(tickers: list[str], lookback_days: int = 1) -> list[dic
     start = (date.today() - timedelta(days=lookback_days)).isoformat()
     rows = []
 
-    for ticker in tickers:
-        try:
-            df = dart.list(ticker, start=start, end=date.today().isoformat(), kind="B")
-            if df is None or df.empty:
+    try:
+        # corp_code 파라미터 없이 호출 → 전체 공시 목록 (API 1회 소모)
+        df = dart.list(start=start, end=date.today().isoformat(), kind="B")
+        if df is None or df.empty:
+            return []
+
+        for _, r in df.iterrows():
+            # stock_code가 6자리 숫자인 공시만 처리 (ETF·펀드 제외)
+            stock_code = str(r.get("stock_code", "")).strip()
+            if not stock_code or stock_code not in kr_ticker_set:
                 continue
-            for _, r in df.iterrows():
-                headline = str(r.get("report_nm", ""))
-                matched = _match_keywords(headline, KEYWORDS_KR)
-                if not matched:
-                    continue
-                rows.append({
-                    "ticker": ticker,
-                    "source": "DART",
-                    "filing_type": str(r.get("report_nm", ""))[:50],
-                    "filed_at": str(r.get("rcept_dt", ""))[:10] + "T00:00:00+09:00",
-                    "url": f"https://dart.fss.or.kr/dsaf001/main.do?rcpNo={r.get('rcept_no', '')}",
-                    "headline": headline,
-                    "raw_text": None,
-                    "keywords": matched,
-                    "parsed_amount": _extract_amount(headline),
-                    "parsed_customer": None,
-                })
-            time.sleep(0.05)
-        except Exception as e:
-            logger.warning("DART filing error %s: %s", ticker, e)
+            headline = str(r.get("report_nm", ""))
+            matched = _match_keywords(headline, KEYWORDS_KR)
+            if not matched:
+                continue
+            rows.append({
+                "ticker": stock_code,
+                "source": "DART",
+                "filing_type": headline[:50],
+                "filed_at": str(r.get("rcept_dt", ""))[:10] + "T00:00:00+09:00",
+                "url": f"https://dart.fss.or.kr/dsaf001/main.do?rcpNo={r.get('rcept_no', '')}",
+                "headline": headline,
+                "raw_text": None,
+                "keywords": matched,
+                "parsed_amount": _extract_amount(headline),
+                "parsed_customer": None,
+            })
+    except Exception as e:
+        logger.warning("DART filing error: %s", e)
     return rows
 
 
@@ -127,10 +136,10 @@ def run() -> int:
 
     res = client.table("stocks").select("ticker, market").eq("is_active", True).execute()
     stocks = res.data or []
-    kr_tickers = [s["ticker"] for s in stocks if s["market"] in ("KOSPI", "KOSDAQ")]
+    kr_ticker_set = {s["ticker"] for s in stocks if s["market"] in ("KOSPI", "KOSDAQ")}
     us_tickers = {s["ticker"] for s in stocks if s["market"] in ("NYSE", "NASDAQ")}
 
-    rows = collect_dart_filings(kr_tickers, lookback_days) + collect_sec_filings(us_tickers)
+    rows = collect_dart_filings(kr_ticker_set, lookback_days) + collect_sec_filings(us_tickers)
     count = upsert_batch(client, "filings", rows, on_conflict="ticker,filed_at,filing_type")
     logger.info("Filings upserted %d rows", count)
     return count

@@ -27,9 +27,7 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen
 
-      - name: Run prices
-        run: uv run python -m src.prices
-
+      # prices는 하루 1회로 충분 (주가는 일봉 데이터) — daily 워크플로우에서 실행
       - name: Run filings watcher
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
