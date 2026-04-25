@@ -44,10 +44,12 @@ export default function StockDetailPage() {
     )
   }
 
-  if (error || !data) {
+  if (error || !data || !data.stock) {
     return (
       <div className="rounded-lg bg-[var(--color-surface)] border border-[var(--color-error)] p-6">
-        <p className="text-sm text-[var(--color-error)]">종목 데이터를 불러오지 못했습니다.</p>
+        <p className="text-sm text-[var(--color-error)]">
+          {error ? '종목 데이터를 불러오지 못했습니다.' : `종목 ${ticker}을(를) 찾을 수 없습니다.`}
+        </p>
       </div>
     )
   }
