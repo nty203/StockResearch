@@ -2,3 +2,8 @@ name = "stock-research"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
+
+[vars]
+CF_ACCOUNT_ID = "244c48047ff6f631154391563e48daac"
+CF_PROJECT_NAME = "stockresearch"
+# CF_API_TOKEN is stored as a Secret in the CF Pages dashboard (encrypted)

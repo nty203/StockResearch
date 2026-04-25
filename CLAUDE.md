@@ -20,9 +20,11 @@
 - **Phase 3** — 트리거 이벤트 탐지 완료 (classifier, golden_signal)
 - **Phase 4** — 에이전트 큐 완료 (enqueue, 토큰 예산)
 - **Python 테스트** — 110/110 통과
+- **Cloudflare Pages 빌드** — ✅ 성공 (deployment `ace2579a`, commit `6a0c33c`)
+- **GitHub Actions** — ✅ Hourly/Daily 워크플로우 정상 동작 확인
 
-### 진행 중 (최우선)
-- **Cloudflare Pages 빌드 성공시키기**
+### 미완료 설정 (수동 진행 필요)
+- CF API 토큰 생성 및 적용 (아래 상세 가이드 참고)
 
 ---
 
@@ -51,11 +53,16 @@
 - `FinanceDataReader`는 Python 3.13에서 설치 불가
 - 해결: root `pyproject.toml`의 `dependencies = []` (빈 배열), 모든 Python 의존성을 `apps/collector/pyproject.toml`로 이동
 
-**문제 5: build 스크립트가 next build 실행 (현재 최신 커밋 1cf3b7d에서 수정 중)**
+**문제 5: build 스크립트 무한 루프 (✅ 해결 — commit `6a0c33c`)**
 - CF Pages 빌드 커맨드: `cd apps/web && pnpm install && pnpm build`
-- `pnpm build` = `next build` → 출력이 `.next/`이고 `.vercel/output/static/`가 생성 안 됨
-- 해결: `apps/web/package.json`의 `build` 스크립트를 `npx @cloudflare/next-on-pages`로 변경
-- `@cloudflare/next-on-pages`는 내부적으로 `next build`를 실행하고 결과를 `.vercel/output/static/`으로 변환
+- `pnpm build` = `npx @cloudflare/next-on-pages` → 내부에서 `vercel build` 호출 → `pnpm run build` 재호출 → 무한 루프
+- 해결: `VERCEL=1` 환경변수 체크로 분기
+  ```json
+  "build": "node -e \"const{execSync:e}=require('child_process');e(process.env.VERCEL?'next build':'npx @cloudflare/next-on-pages',{stdio:'inherit'})\""
+  ```
+- `VERCEL=1`인 경우 (vercel build 내부): `next build`만 실행
+- `VERCEL` 없는 경우 (CF Pages 진입점): `@cloudflare/next-on-pages` 전체 실행
+- **배포 결과**: `https://ace2579a.stockresearch-7kh.pages.dev` ✅
 
 ### 현재 파일 상태
 
@@ -68,7 +75,7 @@ apps/web/wrangler.toml
   pages_build_output_dir = ".vercel/output/static"
 
 apps/web/package.json
-  "build": "npx @cloudflare/next-on-pages"   ← 최신 수정
+  "build": "node -e \"...VERCEL ? 'next build' : 'npx @cloudflare/next-on-pages'...\""  ← 무한루프 방지
   "pages:build": "npx @cloudflare/next-on-pages"
 
 pyproject.toml (repo root)
@@ -86,9 +93,44 @@ apps/collector/pyproject.toml
 
 ---
 
-## GitHub Actions Diagnostic Workflow
+## Cloudflare API 토큰 설정 가이드
 
-`.github/workflows/cf-build-test.yml` — 빌드 디버깅용으로 생성됨. 빌드 성공 후 삭제 예정.
+### 왜 필요한가?
+`/api/deployments` 라우트가 CF Pages 최신 배포 상태를 조회한다. 설정 페이지에서 "마지막 CF Pages 배포: N분 전" 같은 정보를 보여줄 수 있다.
+
+### 1. 토큰 생성 (dash.cloudflare.com)
+
+1. `https://dash.cloudflare.com/profile/api-tokens` 접속
+2. **Create Token** 클릭
+3. **"Cloudflare Pages" 템플릿** 선택 (또는 Custom Token으로 아래 권한만 설정)
+   - 최소 권한: `Account → Cloudflare Pages → Read`
+4. Account Resources: `Include → All accounts` (또는 특정 계정)
+5. **Continue to Summary** → **Create Token**
+6. 토큰 값 복사 (한 번만 표시됨)
+
+### 2. 토큰 저장 — Cloudflare Pages 환경변수 (웹 앱용)
+
+1. `https://dash.cloudflare.com/244c48047ff6f631154391563e48daac/pages/view/stockresearch/settings/environment-variables` 접속
+2. **Production** 환경에 아래 변수 추가:
+
+| 변수명 | 값 | 설명 |
+|---|---|---|
+| `CF_API_TOKEN` | `<토큰 값>` | 위에서 생성한 토큰 |
+| `CF_ACCOUNT_ID` | `244c48047ff6f631154391563e48daac` | URL에서 확인한 계정 ID |
+| `CF_PROJECT_NAME` | `stockresearch` | CF Pages 프로젝트명 |
+
+3. **Save** 후 새 배포 트리거 (main 푸시 또는 CF 대시보드에서 Retry deployment)
+
+### 3. Account ID 확인
+- CF 대시보드 URL: `https://dash.cloudflare.com/244c48047ff6f631154391563e48daac/...`
+- 위 URL에서 `244c48047ff6f631154391563e48daac`가 Account ID
+
+### 4. 기존 "GitHub Actions" 토큰
+CF 대시보드에 이미 `GitHub Actions` 토큰 (Account.Cloudflare Pages 권한)이 존재한다. 이 토큰 값을 알고 있다면 새로 생성 없이 재사용 가능. 토큰 값을 모른다면 위 절차대로 신규 생성.
+
+### 5. 사용처
+- `apps/web/app/api/deployments/route.ts` — CF Pages 최신 5개 배포 목록 반환
+- 응답 형식: `{ deployments: [{ id, url, created_on, status, stage, environment, commit_message, commit_hash }] }`
 
 ---
 
@@ -96,11 +138,32 @@ apps/collector/pyproject.toml
 
 | 항목 | 상태 | 위치 |
 |---|---|---|
-| DART API Key | 미설정 | `apps/collector/.env` (placeholder) |
-| Telegram Bot Token | 미설정 | Cloudflare env var `TELEGRAM_BOT_TOKEN` 필요 |
-| Telegram Chat ID | 미설정 | Cloudflare env var `TELEGRAM_CHAT_ID` 필요 |
+| CF API 토큰 | ✅ **적용 완료** | CF Pages Secret `CF_API_TOKEN` 저장됨, wrangler.toml에 `CF_ACCOUNT_ID` / `CF_PROJECT_NAME` 추가 |
+| DART API Key | 미설정 | GitHub Secret `DART_API_KEY` |
+| Telegram Bot Token | 미설정 | Cloudflare env var `TELEGRAM_BOT_TOKEN` |
+| Telegram Chat ID | 미설정 | Cloudflare env var `TELEGRAM_CHAT_ID` |
+| GitHub PAT | 미설정 | Cloudflare env var `GITHUB_PAT` + GitHub Secret `GITHUB_PAT` |
+| GitHub Repo | 미설정 | Cloudflare env var `GITHUB_REPO` (예: `nty203/StockResearch`) |
 | Supabase Storage bucket | 미생성 | `analysis-prompts` 버킷 생성 필요 |
 | Supabase DB 마이그레이션 | 완료 여부 확인 필요 | `supabase/migrations/001_init.sql` |
+
+### GitHub Actions Secrets (현재 설정됨)
+- `SUPABASE_URL` ✅
+- `SUPABASE_SERVICE_KEY` ✅
+- `SUPABASE_DB_URL` ✅
+- `DART_API_KEY` — 실제 값 확인 필요
+
+### Cloudflare Pages 환경변수 (현재 설정됨)
+- `SUPABASE_URL` ✅
+- `SUPABASE_SERVICE_KEY` ✅
+- `NEXT_PUBLIC_SUPABASE_URL` ✅
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` ✅
+
+---
+
+## GitHub Actions Diagnostic Workflow
+
+`.github/workflows/cf-build-test.yml` — 빌드 디버깅용으로 생성됨. 더 이상 필요 없으므로 삭제 가능.
 
 ---
 
@@ -146,6 +209,10 @@ StockResearch/
 │   │       ├── signals/page.tsx       ← edge 있음
 │   │       ├── watchlist/page.tsx     ← edge 있음
 │   │       └── stocks/[ticker]/page.tsx ← edge 있음
+│   │   └── api/
+│   │       ├── deployments/route.ts   ← CF Pages 배포 상태 (CF_API_TOKEN 필요)
+│   │       ├── pipeline/trigger/route.ts ← GitHub workflow_dispatch (GITHUB_PAT 필요)
+│   │       └── ...
 │   └── collector/                     ← Python 데이터 수집
 │       ├── pyproject.toml             ← 모든 Python 의존성
 │       └── src/
@@ -181,9 +248,10 @@ StockResearch/
 
 ## 다음 작업 순서
 
-1. **[진행 중]** Cloudflare Pages 빌드 성공 확인 (커밋 `1cf3b7d` 빌드 결과 확인)
-2. 빌드 성공 후 `.github/workflows/cf-build-test.yml` 삭제
-3. Supabase Storage `analysis-prompts` 버킷 생성
-4. DART API Key, Telegram 설정 완료
-5. Phase 5 Next.js 대시보드 UI 폴리싱
-6. Phase 6-8 (알림, 백테스트, 문서)
+1. ✅ **CF API 토큰 생성 완료** — `StockResearch Full Access` (Cloudflare Pages:Edit, Account Settings:Read), CF Pages Secret `CF_API_TOKEN` 저장, wrangler.toml에 `CF_ACCOUNT_ID`/`CF_PROJECT_NAME` 추가
+2. **[수동]** GitHub PAT 생성 → Cloudflare Pages 환경변수에 `GITHUB_PAT`, `GITHUB_REPO` 추가 (설정 페이지 수동 재실행 버튼 동작에 필요)
+3. **[수동]** `.github/workflows/cf-build-test.yml` 삭제 (빌드 성공 후 필요 없음)
+4. **[수동]** Supabase Storage `analysis-prompts` 버킷 생성
+5. **[수동]** DART API Key 실제 값 설정, Telegram 설정 완료
+6. Phase 5 Next.js 대시보드 UI 폴리싱 (계속)
+7. Phase 6-8 (알림, 백테스트, 문서)
