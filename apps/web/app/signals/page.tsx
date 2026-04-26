@@ -56,8 +56,8 @@ export default function SignalsPage() {
                     <span className="text-base font-semibold text-[var(--color-text-1)]">
                       {signal.ticker}
                     </span>
-                    {signal.stocks?.name_kr && (
-                      <span className="text-sm text-[var(--color-text-2)]">{signal.stocks.name_kr}</span>
+                    {(signal.stocks?.name_kr || signal.stocks?.name_en) && (
+                      <span className="text-sm text-[var(--color-text-2)]">{signal.stocks.name_kr || signal.stocks.name_en}</span>
                     )}
                     <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--color-card)] text-[var(--color-accent)]">
                       {signal.event_type}

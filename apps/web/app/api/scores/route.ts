@@ -27,13 +27,17 @@ export async function GET(req: Request) {
       .limit(limit),
     supabase
       .from('stocks')
-      .select('ticker, name_kr'),
+      .select('ticker, name_kr, name_en'),
   ])
 
   if (scoresRes.error) return Response.json({ error: scoresRes.error.message }, { status: 500 })
 
-  const nameMap = Object.fromEntries((namesRes.data ?? []).map(s => [s.ticker, s.name_kr]))
-  const data = (scoresRes.data ?? []).map(row => ({ ...row, name_kr: nameMap[row.ticker] ?? null }))
+  const nameMap = Object.fromEntries((namesRes.data ?? []).map(s => [s.ticker, { name_kr: s.name_kr, name_en: s.name_en }]))
+  const data = (scoresRes.data ?? []).map(row => ({
+    ...row,
+    name_kr: nameMap[row.ticker]?.name_kr ?? null,
+    name_en: nameMap[row.ticker]?.name_en ?? null,
+  }))
 
   return Response.json(data)
 }

@@ -64,8 +64,8 @@ export default function StockDetailPage() {
           <div>
             <div className="flex items-center gap-3">
               <span className="text-2xl font-bold text-[var(--color-text-1)]">{ticker}</span>
-              {stock.name_kr && (
-                <span className="text-lg text-[var(--color-text-2)]">{stock.name_kr}</span>
+              {(stock.name_kr || stock.name_en) && (
+                <span className="text-lg text-[var(--color-text-2)]">{stock.name_kr || stock.name_en}</span>
               )}
               <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--color-card)] text-[var(--color-text-2)]">
                 {stock.market}
