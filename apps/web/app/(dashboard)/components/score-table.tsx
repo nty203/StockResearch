@@ -47,9 +47,9 @@ export function ScoreTable() {
                 <th className="px-4 py-2 text-left w-4">#</th>
                 <th className="px-4 py-2 text-left">티커</th>
                 <th className="px-4 py-2 text-right">10X점수</th>
-                <th className="px-4 py-2 text-right">Growth</th>
-                <th className="px-4 py-2 text-right">Momentum</th>
-                <th className="px-4 py-2 text-right">Quality</th>
+                <th className="px-4 py-2 text-right">성장성</th>
+                <th className="px-4 py-2 text-right">모멘텀</th>
+                <th className="px-4 py-2 text-right">품질</th>
                 <th className="px-4 py-2 text-right">통과</th>
               </tr>
             </thead>

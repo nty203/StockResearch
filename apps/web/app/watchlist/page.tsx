@@ -3,7 +3,10 @@ export const runtime = 'edge'
 
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import Link from 'next/link'
 import type { Watchlist } from '@stock/shared'
+
+type WatchlistRow = Watchlist & { name_kr?: string | null; name_en?: string | null; score_10x?: number | null; percentile?: number | null }
 
 const STATUS_TABS = ['green', 'yellow', 'candidate'] as const
 type Tab = typeof STATUS_TABS[number]
@@ -18,7 +21,7 @@ export default function WatchlistPage() {
   const [tab, setTab] = useState<Tab>('green')
   const queryClient = useQueryClient()
 
-  const { data, isLoading } = useQuery<Watchlist[]>({
+  const { data, isLoading } = useQuery<WatchlistRow[]>({
     queryKey: ['watchlist', tab],
     queryFn: () => fetch(`/api/watchlist?status=${tab}`).then(r => r.json()),
     staleTime: 5 * 60_000,
@@ -78,14 +81,25 @@ export default function WatchlistPage() {
               key={item.id}
               className="rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] p-4 space-y-3"
             >
-              <div className="flex items-start justify-between">
-                <div>
-                  <span className="text-base font-semibold text-[var(--color-text-1)]">{item.ticker}</span>
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <Link href={`/stocks/${item.ticker}`} className="hover:text-[var(--color-accent)]">
+                    <span className="text-base font-semibold text-[var(--color-text-1)]">{item.ticker}</span>
+                    {(item.name_kr || item.name_en) && (
+                      <span className="text-sm text-[var(--color-text-2)] ml-2">{item.name_kr || item.name_en}</span>
+                    )}
+                  </Link>
                   <span className="text-xs text-[var(--color-text-2)] ml-2">
                     추가일 {new Date(item.added_at).toLocaleDateString('ko-KR')}
                   </span>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex items-center gap-3 shrink-0">
+                  {item.score_10x != null && (
+                    <div className="text-right">
+                      <div className="text-lg font-bold text-[var(--color-text-1)]">{Math.round(item.score_10x)}</div>
+                      <div className="text-xs text-[var(--color-text-2)]">10X Score</div>
+                    </div>
+                  )}
                   {tab === 'candidate' && (
                     <button
                       onClick={() => promote.mutate({ id: item.id, status: 'yellow' })}

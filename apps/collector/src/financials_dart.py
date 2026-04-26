@@ -5,7 +5,7 @@ import time
 
 import OpenDartReader as DartReader
 
-from .upsert import get_client, upsert_batch
+from .upsert import get_client, upsert_batch, pipeline_run
 
 logger = logging.getLogger(__name__)
 
@@ -98,8 +98,10 @@ def run(years: list[int] | None = None) -> int:
     res = client.table("stocks").select("ticker").in_("market", ["KOSPI", "KOSDAQ"]).eq("is_active", True).execute()
     tickers = [r["ticker"] for r in (res.data or [])]
 
-    rows = collect_dart_financials(tickers, years)
-    count = upsert_batch(client, "financials_q", rows, on_conflict="ticker,fq")
+    with pipeline_run(client, "financials") as (rows_out, _):
+        rows = collect_dart_financials(tickers, years)
+        count = upsert_batch(client, "financials_q", rows, on_conflict="ticker,fq")
+        rows_out[0] = count
     logger.info("DART financials upserted %d rows", count)
     return count
 

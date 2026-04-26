@@ -5,7 +5,7 @@ import os
 import FinanceDataReader as fdr
 import pandas as pd
 
-from .upsert import get_client, upsert_batch
+from .upsert import get_client, upsert_batch, pipeline_run
 
 logger = logging.getLogger(__name__)
 
@@ -76,12 +76,13 @@ def run() -> int:
     if not rows:
         logger.warning("No universe rows collected")
         return 0
-    # Deduplicate by ticker (keep last)
     seen: dict[str, dict] = {}
     for r in rows:
         seen[r["ticker"]] = r
     unique = list(seen.values())
-    count = upsert_batch(client, "stocks", unique, on_conflict="ticker,market")
+    with pipeline_run(client, "universe") as (rows_out, _):
+        count = upsert_batch(client, "stocks", unique, on_conflict="ticker,market")
+        rows_out[0] = count
     logger.info("Universe upserted %d rows", count)
     return count
 

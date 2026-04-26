@@ -35,3 +35,6 @@ jobs:
 
       - name: Run news RSS
         run: uv run python -m src.news_rss
+
+      - name: Run trigger classifier
+        run: uv run python -m src.triggers.golden_signal

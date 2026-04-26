@@ -22,5 +22,16 @@ export async function GET(req: Request) {
 
   const { data, error } = await query
   if (error) return Response.json({ error: error.message }, { status: 500 })
-  return Response.json(data)
+
+  const tickers = [...new Set((data ?? []).map(r => r.ticker))]
+  const { data: stocksData } = tickers.length > 0
+    ? await supabase.from('stocks').select('ticker, name_kr, name_en, market').in('ticker', tickers)
+    : { data: [] }
+  const stockMap = Object.fromEntries((stocksData ?? []).map(s => [s.ticker, s]))
+
+  const merged = (data ?? []).map(r => ({
+    ...r,
+    stocks: stockMap[r.ticker] ?? null,
+  }))
+  return Response.json(merged)
 }

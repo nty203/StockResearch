@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 
 import feedparser
 
-from .upsert import get_client, upsert_batch
+from .upsert import get_client, upsert_batch, pipeline_run
 
 logger = logging.getLogger(__name__)
 
@@ -73,7 +73,9 @@ def run() -> int:
     ticker_set = {r["ticker"] for r in (res.data or [])}
 
     rows = collect_rss_news(ticker_set)
-    count = upsert_batch(client, "news", rows, on_conflict="ticker,url")
+    with pipeline_run(client, "news") as (rows_out, _):
+        count = upsert_batch(client, "news", rows, on_conflict="ticker,url")
+        rows_out[0] = count
     logger.info("News upserted %d rows", count)
     return count
 

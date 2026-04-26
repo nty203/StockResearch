@@ -12,7 +12,7 @@ from io import BytesIO
 
 import tiktoken
 
-from ..upsert import get_client
+from ..upsert import get_client, pipeline_run
 from ..screening.settings_loader import load_settings
 
 logger = logging.getLogger(__name__)
@@ -262,11 +262,13 @@ def run(run_date: str | None = None) -> int:
     )
 
     count = 0
-    for ticker in all_tickers:
-        for prompt_type in PROMPT_TYPES:
-            item = enqueue_ticker(client, ticker, prompt_type, run_date, max_tokens)
-            if item:
-                count += 1
+    with pipeline_run(client, "queue") as (rows_out, _):
+        for ticker in all_tickers:
+            for prompt_type in PROMPT_TYPES:
+                item = enqueue_ticker(client, ticker, prompt_type, run_date, max_tokens)
+                if item:
+                    count += 1
+        rows_out[0] = count
 
     logger.info("Enqueued %d queue items for %s", count, run_date)
     return count

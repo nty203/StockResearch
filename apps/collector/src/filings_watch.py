@@ -8,7 +8,7 @@ import feedparser
 import OpenDartReader as DartReader
 import edgar
 
-from .upsert import get_client, upsert_batch
+from .upsert import get_client, upsert_batch, pipeline_run
 from .screening.settings_loader import load_settings
 
 logger = logging.getLogger(__name__)
@@ -140,7 +140,9 @@ def run() -> int:
     us_tickers = {s["ticker"] for s in stocks if s["market"] in ("NYSE", "NASDAQ")}
 
     rows = collect_dart_filings(kr_ticker_set, lookback_days) + collect_sec_filings(us_tickers)
-    count = upsert_batch(client, "filings", rows, on_conflict="ticker,filed_at,filing_type")
+    with pipeline_run(client, "filings") as (rows_out, _):
+        count = upsert_batch(client, "filings", rows, on_conflict="ticker,filed_at,filing_type")
+        rows_out[0] = count
     logger.info("Filings upserted %d rows", count)
     return count
 

@@ -14,7 +14,7 @@ from .filters_kr import apply_kr_filters, FilterResult
 from .filters_us import apply_us_filters
 from .peak_risk import apply_peak_risk_penalty
 from .settings_loader import load_settings
-from ..upsert import get_client, upsert_batch
+from ..upsert import get_client, upsert_batch, pipeline_run
 
 logger = logging.getLogger(__name__)
 
@@ -236,7 +236,9 @@ def run(run_date: str | None = None) -> int:
     if not rows:
         return 0
     client = get_client()
-    count = upsert_batch(client, "screen_scores", rows, on_conflict="ticker,run_date")
+    with pipeline_run(client, "scores") as (rows_out, _):
+        count = upsert_batch(client, "screen_scores", rows, on_conflict="ticker,run_date")
+        rows_out[0] = count
     logger.info("Scores upserted %d rows for %s", count, run_date or "today")
     return count
 

@@ -229,6 +229,10 @@ function WeightSettings({
 }) {
   const defaultWeights = { growth: 28, momentum: 22, quality: 18, sponsorship: 12, value: 8, safety: 7, size: 5 }
   const weights = (settingsMap['score_weights'] as typeof defaultWeights) ?? defaultWeights
+  const weightLabels: Record<keyof typeof defaultWeights, string> = {
+    growth: '성장성', momentum: '모멘텀', quality: '품질',
+    sponsorship: '수급', value: '밸류', safety: '안전성', size: '규모',
+  }
 
   return (
     <div className="space-y-4">
@@ -236,7 +240,7 @@ function WeightSettings({
       <div className="rounded-lg border border-[var(--color-border)] p-4 space-y-3">
         {(Object.keys(weights) as (keyof typeof defaultWeights)[]).map(k => (
           <div key={k} className="flex items-center gap-4">
-            <label className="text-sm text-[var(--color-text-2)] w-28 capitalize">{k}</label>
+            <label className="text-sm text-[var(--color-text-2)] w-28">{weightLabels[k]}</label>
             <input
               type="range"
               min={0}

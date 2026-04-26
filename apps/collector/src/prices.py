@@ -6,7 +6,7 @@ from datetime import date, timedelta
 import FinanceDataReader as fdr
 import yfinance as yf
 
-from .upsert import get_client, upsert_batch
+from .upsert import get_client, upsert_batch, pipeline_run
 
 logger = logging.getLogger(__name__)
 
@@ -86,7 +86,9 @@ def run(market_filter: str | None = None) -> int:
     else:
         rows = collect_kr_prices(kr_tickers) + collect_us_prices(us_tickers)
 
-    count = upsert_batch(client, "prices_daily", rows, on_conflict="ticker,date")
+    with pipeline_run(client, "prices") as (rows_out, _):
+        count = upsert_batch(client, "prices_daily", rows, on_conflict="ticker,date")
+        rows_out[0] = count
     logger.info("Prices upserted %d rows", count)
     return count
 

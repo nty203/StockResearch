@@ -3,11 +3,51 @@ from __future__ import annotations
 
 import logging
 import os
+from contextlib import contextmanager
+from datetime import datetime, timezone
 from typing import Any
 
 from supabase import create_client, Client
 
 logger = logging.getLogger(__name__)
+
+
+@contextmanager
+def pipeline_run(client: Client, stage: str, github_run_id: str | None = None):
+    """Context manager that writes a pipeline_runs row on entry and exit."""
+    started_at = datetime.now(timezone.utc).isoformat()
+    row_id: str | None = None
+    try:
+        res = client.table("pipeline_runs").insert({
+            "stage": stage,
+            "started_at": started_at,
+            "status": "running",
+            "github_run_id": github_run_id or os.environ.get("GITHUB_RUN_ID"),
+        }).execute()
+        row_id = (res.data or [{}])[0].get("id")
+    except Exception as e:
+        logger.warning("pipeline_run insert failed: %s", e)
+
+    rows_processed: list[int] = [0]
+    error_msg: list[str | None] = [None]
+    try:
+        yield rows_processed, error_msg
+        status = "success"
+    except Exception as exc:
+        status = "error"
+        error_msg[0] = str(exc)
+        raise
+    finally:
+        if row_id:
+            try:
+                client.table("pipeline_runs").update({
+                    "ended_at": datetime.now(timezone.utc).isoformat(),
+                    "status": status,
+                    "rows_processed": rows_processed[0] or None,
+                    "error_msg": error_msg[0],
+                }).eq("id", row_id).execute()
+            except Exception as e:
+                logger.warning("pipeline_run update failed: %s", e)
 
 
 def get_client() -> Client:
