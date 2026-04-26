@@ -89,6 +89,7 @@ export type ScreenScore = {
   percentile: number
   passed: boolean
   failed_filters: string[]
+  scores_by_filter: Record<string, number> | null
   created_at: string
 }
 

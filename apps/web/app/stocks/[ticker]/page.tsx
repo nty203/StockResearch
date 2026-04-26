@@ -73,62 +73,51 @@ function fmtBillion(n: number | null) {
   return n.toFixed(0)
 }
 
+// 필터코드 → 한국어 라벨 (Python 스코어링 엔진의 scores_by_filter 키와 1:1 대응)
+const FILTER_LABEL: Record<string, string> = {
+  f03:               '매출 YoY 성장',
+  f04:               '성장 가속',
+  f13_bcr:           '수주잔고 확보',
+  f14_backlog_growth:'수주 증가',
+  us03:              '매출 YoY 성장',
+  us04_accel:        '성장 가속',
+  f11_rs:            '상대강도 우수',
+  f12_momentum:      '고점 근접',
+  us11_rs:           '상대강도 우수',
+  us12_momentum:     '고점 근접',
+  f05_op_margin:     '영업이익률 우수',
+  f05_margin_trend:  '이익률 개선',
+  f15_opm_inflection:'이익률 전환',
+  f06_roic:          'ROIC 우수',
+  f07_fcf:           'FCF 양호',
+  us05_op_margin:    '영업이익률 우수',
+  us06_roic:         'ROIC 우수',
+  f10_foreign:       '외국인 지분 확대',
+  us10_institutional:'기관 지분 확대',
+  us15_ps:           'P/S 밸류 양호',
+  safety_score:      '부채비율 건전',
+  size_score:        '거래대금 양호',
+}
+
+const CATEGORY_FILTERS: Record<string, string[]> = {
+  growth:      ['f03', 'f04', 'f13_bcr', 'f14_backlog_growth', 'us03', 'us04_accel'],
+  momentum:    ['f11_rs', 'f12_momentum', 'us11_rs', 'us12_momentum'],
+  quality:     ['f05_op_margin', 'f05_margin_trend', 'f15_opm_inflection', 'f06_roic', 'f07_fcf', 'us05_op_margin', 'us06_roic'],
+  sponsorship: ['f10_foreign', 'us10_institutional'],
+  value:       ['us15_ps'],
+  safety:      ['safety_score'],
+  size:        ['size_score'],
+}
+
 function buildCategorySummary(
   cat: string,
-  val: number | null,
-  financials: Financials,
-  priceContext: PriceContext
+  scoresMap: Record<string, number> | null | undefined
 ): string | null {
-  if (val == null || val <= 0) return null
-
-  switch (cat) {
-    case 'growth': {
-      const parts: string[] = []
-      if (financials.rev_growth_pct != null && financials.rev_growth_pct >= 20)
-        parts.push(`매출 YoY +${financials.rev_growth_pct.toFixed(0)}%`)
-      return parts.length > 0 ? parts.join(' · ') : '매출 성장 확인'
-    }
-    case 'momentum': {
-      if (priceContext.pct_from_high != null && priceContext.pct_from_high <= 20)
-        return `고점 대비 -${priceContext.pct_from_high.toFixed(1)}%`
-      return '상승 모멘텀'
-    }
-    case 'quality': {
-      const parts: string[] = []
-      if (financials.op_margin != null && financials.op_margin > 10)
-        parts.push(`OPM ${financials.op_margin.toFixed(0)}%`)
-      if (financials.roic != null && financials.roic > 15)
-        parts.push(`ROIC ${financials.roic.toFixed(0)}%`)
-      if (financials.fcf != null && financials.fcf > 0)
-        parts.push('FCF+')
-      if (
-        financials.op_margin != null &&
-        financials.op_margin_prev != null &&
-        financials.op_margin > financials.op_margin_prev
-      )
-        parts.push('이익률 개선')
-      return parts.length > 0 ? parts.slice(0, 2).join(' · ') : null
-    }
-    case 'sponsorship':
-      return '외국인 지분 10%+'
-    case 'value':
-      return 'P/S 밸류 양호'
-    case 'safety': {
-      if (financials.debt_ratio != null) {
-        const label =
-          financials.debt_ratio <= 50 ? '매우 건전' : financials.debt_ratio <= 100 ? '건전' : '양호'
-        return `부채비율 ${financials.debt_ratio.toFixed(0)}% ${label}`
-      }
-      return '재무 안전성 확인'
-    }
-    case 'size': {
-      if (priceContext.avg_daily_value != null)
-        return `거래대금 ${fmtBillion(priceContext.avg_daily_value)}/일`
-      return '유동성 양호'
-    }
-    default:
-      return null
-  }
+  if (!scoresMap) return null
+  const filters = CATEGORY_FILTERS[cat] ?? []
+  const fired = filters.filter(f => (scoresMap[f] ?? 0) > 0)
+  if (fired.length === 0) return null
+  return fired.map(f => FILTER_LABEL[f] ?? f).join(' · ')
 }
 
 function StatusDot({ ok }: { ok: boolean | null }) {
@@ -441,7 +430,7 @@ export default function StockDetailPage() {
               {SCORE_CATEGORIES.map(cat => {
                 const val = (score as unknown as Record<string, unknown>)[cat.key] as number | null
                 const pct = val != null ? Math.min(100, Math.round((val / cat.max) * 100)) : 0
-                const summary = buildCategorySummary(cat.key, val, financials, priceContext)
+                const summary = buildCategorySummary(cat.key, score.scores_by_filter)
                 return (
                   <div key={cat.key}>
                     <div className="flex justify-between text-xs text-[var(--color-text-2)] mb-0.5">

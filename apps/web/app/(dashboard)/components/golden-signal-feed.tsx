@@ -2,7 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
-import type { TriggerEvent } from '@stock/shared'
+import type { TriggerEvent, RiseCategory } from '@stock/shared'
+import { RiseCategoryBadge } from '@/components/ui/rise-category-badge'
 
 type TriggerEventWithStock = TriggerEvent & {
   stocks?: { name_kr?: string | null; name_en?: string | null; market?: string | null } | null
@@ -48,10 +49,11 @@ export function GoldenSignalFeed() {
 
 function SignalCard({ signal }: { signal: TriggerEventWithStock }) {
   const name = signal.stocks?.name_kr || signal.stocks?.name_en
+  const riseCategory = (signal as TriggerEventWithStock & { rise_category?: RiseCategory | null }).rise_category
   return (
     <div className="bg-card border border-gold/20 rounded p-3 flex items-center justify-between">
-      <div>
-        <div className="flex items-center gap-2">
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-center gap-2">
           <Link
             href={`/stocks/${signal.ticker}`}
             className="text-sm font-semibold text-text1 hover:text-accent"
@@ -64,10 +66,11 @@ function SignalCard({ signal }: { signal: TriggerEventWithStock }) {
             ) : signal.ticker}
           </Link>
           <span className="text-xs text-text2">{signal.event_type}</span>
+          {riseCategory && <RiseCategoryBadge category={riseCategory} />}
         </div>
         <p className="text-xs text-text2 mt-0.5 line-clamp-1">{signal.summary}</p>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 shrink-0 ml-3">
         <ConfidenceBar value={signal.confidence} />
         <AddToWatchlistButton ticker={signal.ticker} />
       </div>

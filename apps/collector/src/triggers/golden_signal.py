@@ -59,6 +59,7 @@ def process_filing(filing: dict) -> list[dict]:
             "matched_keywords": r.matched_keywords,
             "summary": r.summary,
             "golden": golden,
+            "rise_category": r.rise_category,
         })
 
     try:

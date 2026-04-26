@@ -215,6 +215,7 @@ def compute_scores(run_date: str | None = None) -> list[dict]:
             raw_scores.append({
                 "ticker": ticker,
                 **cats,
+                "scores_by_filter": filter_result.scores_by_filter,
                 "market_gate": market_gate,
                 "score_10x": raw_score,
                 "percentile": 0.0,  # filled in pass 2
