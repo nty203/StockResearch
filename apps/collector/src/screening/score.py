@@ -189,8 +189,8 @@ def compute_scores(run_date: str | None = None) -> list[dict]:
                     "growth": 0, "momentum": 0, "quality": 0, "sponsorship": 0,
                     "value": 0, "safety": 0, "size": 0,
                     "market_gate": market_gate,
-                    "score_10x": 0,
-                    "percentile": 0,
+                    "score_10x": 0.0,
+                    "percentile": 0.0,
                     "passed": False,
                     "failed_filters": filter_result.failed_filters,
                     "run_date": run_date,
@@ -209,7 +209,7 @@ def compute_scores(run_date: str | None = None) -> list[dict]:
                 **cats,
                 "market_gate": market_gate,
                 "score_10x": raw_score,
-                "percentile": 0,  # filled in pass 2
+                "percentile": 0.0,  # filled in pass 2
                 "passed": True,
                 "failed_filters": [],
                 "run_date": run_date,
