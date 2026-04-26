@@ -89,6 +89,12 @@ def apply_kr_filters(stock_data: dict, settings: dict | None = None) -> FilterRe
     result.passed = True
 
     # ── Scoring filters ────────────────────────────────────────────────────
+    # f03: Revenue growth contribution (when growth data available)
+    if rev_growth is not None and rev_growth >= cfg["kr_min_revenue_growth"]:
+        s = min(10, (rev_growth - cfg["kr_min_revenue_growth"]) / 5)
+        score += s
+        result.scores_by_filter["f03"] = s
+
     # f04: Revenue growth acceleration
     rev_2y = stock_data.get("revenue_2y_ago")
     growth_2y = _pct_change(rev_prev, rev_2y)
