@@ -5,11 +5,10 @@ import { createServerClient } from '@/lib/supabase'
 export async function GET(_req: Request, { params }: { params: Promise<{ ticker: string }> }) {
   const { ticker } = await params
   const supabase = createServerClient()
-  const today = new Date().toISOString().slice(0, 10)
 
   const [stockRes, scoreRes, agentRes, eventsRes] = await Promise.all([
     supabase.from('stocks').select('*').eq('ticker', ticker).maybeSingle(),
-    supabase.from('screen_scores').select('*').eq('ticker', ticker).eq('run_date', today).maybeSingle(),
+    supabase.from('screen_scores').select('*').eq('ticker', ticker).order('run_date', { ascending: false }).limit(1).maybeSingle(),
     supabase.from('agent_scores').select('*').eq('ticker', ticker).order('created_at', { ascending: false }).limit(5),
     supabase.from('trigger_events').select('*').eq('ticker', ticker).order('detected_at', { ascending: false }).limit(20),
   ])
