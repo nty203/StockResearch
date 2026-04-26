@@ -6,7 +6,7 @@ Weights (sum = 100):
 """
 from __future__ import annotations
 import logging
-from datetime import date
+from datetime import date, timedelta
 
 import pandas as pd
 
@@ -56,65 +56,68 @@ def _compute_market_gate(supabase_client) -> float:
         return 1.0
 
 
-def _build_stock_data(supabase_client, ticker: str) -> dict:
-    """Fetch and assemble stock data needed for scoring."""
-    data: dict = {"ticker": ticker}
+def _bulk_fetch_stock_data(supabase_client, tickers: list[str]) -> dict[str, dict]:
+    """Batch fetch all data for a list of tickers — single query per table."""
+    result: dict[str, dict] = {t: {"ticker": t} for t in tickers}
 
-    # Latest financials (last 2 quarters)
+    # Financials — fetch all 8 most recent quarters per ticker at once
+    # Supabase doesn't support LIMIT per group, so fetch last 2 years worth and slice in Python
     fin_res = (
         supabase_client.table("financials_q")
-        .select("fq, revenue, op_income, op_margin, roe, roic, fcf, debt_ratio")
-        .eq("ticker", ticker)
+        .select("ticker, fq, revenue, op_income, op_margin, roe, roic, fcf, debt_ratio")
+        .in_("ticker", tickers)
         .order("fq", desc=True)
-        .limit(8)
         .execute()
     )
-    fins = fin_res.data or []
-    if fins:
+    fins_by_ticker: dict[str, list] = {}
+    for row in (fin_res.data or []):
+        fins_by_ticker.setdefault(row["ticker"], []).append(row)
+
+    for ticker, fins in fins_by_ticker.items():
+        fins = fins[:8]  # Already sorted desc, take 8 most recent quarters
+        if not fins:
+            continue
         latest = fins[0]
         prev = fins[1] if len(fins) > 1 else {}
-        older = fins[3] if len(fins) > 3 else {}
-        # Annualise TTM revenue (sum of 4 quarters)
+        data = result[ticker]
         data["revenue_ttm"] = sum(f.get("revenue", 0) or 0 for f in fins[:4]) or None
         data["revenue_prev"] = sum(f.get("revenue", 0) or 0 for f in fins[4:8]) or None
-        data["revenue_2y_ago"] = None  # would need 8+ quarters
+        data["revenue_2y_ago"] = None
         data["op_margin_ttm"] = latest.get("op_margin")
-        data["op_margin_prev"] = prev.get("op_margin")
+        data["op_margin_prev"] = prev.get("op_margin") if isinstance(prev, dict) else None
         data["roic"] = latest.get("roic")
         data["fcf"] = latest.get("fcf")
         data["debt_ratio"] = latest.get("debt_ratio")
 
-    # Price data
+    # Prices — fetch last ~300 calendar days (covers 252 trading days) with date filter
+    # This keeps payload manageable: 50 tickers × 300 days × ~50 bytes ≈ 750KB per batch
+    price_cutoff = (date.today() - timedelta(days=300)).isoformat()
     price_res = (
         supabase_client.table("prices_daily")
-        .select("close, volume")
-        .eq("ticker", ticker)
+        .select("ticker, date, close, volume")
+        .in_("ticker", tickers)
+        .gte("date", price_cutoff)
         .order("date", desc=True)
-        .limit(252)
         .execute()
     )
-    prices = price_res.data or []
-    if prices:
+    prices_by_ticker: dict[str, list] = {}
+    for row in (price_res.data or []):
+        t = row["ticker"]
+        if len(prices_by_ticker.get(t, [])) < 252:
+            prices_by_ticker.setdefault(t, []).append(row)
+
+    for ticker, prices in prices_by_ticker.items():
+        if not prices:
+            continue
+        data = result[ticker]
         data["price"] = prices[0]["close"]
         data["price_52w_high"] = max(p["close"] for p in prices)
-        # Use 20-day average volume × price for trading value (avoids single-day zero)
         recent = prices[:20]
         avg_vol = sum(p.get("volume") or 0 for p in recent) / len(recent)
-        avg_price = sum(p["close"] for p in recent) / len(recent)
-        data["avg_daily_value"] = avg_vol * avg_price if avg_vol > 0 else None
+        avg_price_val = sum(p["close"] for p in recent) / len(recent)
+        data["avg_daily_value"] = avg_vol * avg_price_val if avg_vol > 0 else None
 
-    # Stock meta
-    stock_res = (
-        supabase_client.table("stocks")
-        .select("market")
-        .eq("ticker", ticker)
-        .single()
-        .execute()
-    )
-    if stock_res.data:
-        data["market"] = stock_res.data.get("market")
-
-    return data
+    return result
 
 
 def _categorize_score(raw_score: float, filter_result) -> dict[str, float]:
@@ -156,13 +159,24 @@ def compute_scores(run_date: str | None = None) -> list[dict]:
     res = client.table("stocks").select("ticker, market").eq("is_active", True).execute()
     stocks = res.data or []
 
+    tickers = [s["ticker"] for s in stocks]
+    market_by_ticker = {s["ticker"]: s.get("market", "") for s in stocks}
+
+    # Batch fetch all data — 2 queries per 50-ticker batch vs 3×N individual queries
+    BATCH = 50
+    bulk_data: dict[str, dict] = {}
+    for i in range(0, len(tickers), BATCH):
+        batch = tickers[i : i + BATCH]
+        bulk_data.update(_bulk_fetch_stock_data(client, batch))
+
     raw_scores: list[dict] = []
     for stock in stocks:
         ticker = stock["ticker"]
-        market = stock.get("market", "")
+        market = market_by_ticker.get(ticker, "")
         try:
-            stock_data = _build_stock_data(client, ticker)
+            stock_data = bulk_data.get(ticker, {"ticker": ticker})
             stock_data["ticker"] = ticker
+            stock_data["market"] = market
 
             if market in ("KOSPI", "KOSDAQ"):
                 filter_result = apply_kr_filters(stock_data, settings)
