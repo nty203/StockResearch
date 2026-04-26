@@ -14,6 +14,7 @@ export type Stock = {
   name_en: string | null
   sector_wics: string | null
   industry: string | null
+  sector_tag: string | null   // 방산/전력기기/바이오/로봇/원전 등
   is_active: boolean
   created_at: string
 }
@@ -42,6 +43,8 @@ export type FinancialQ = {
   fcf: number | null
   debt_ratio: number | null
   interest_coverage: number | null
+  order_backlog: number | null      // 수주잔고 (원)
+  order_backlog_prev: number | null // 전기 수주잔고 (YoY 성장률용)
   created_at: string
 }
 
@@ -104,6 +107,15 @@ export type AgentScore = {
   created_at: string
 }
 
+export type RiseCategory =
+  | '수주잔고_선행'
+  | '빅테크_파트너'
+  | '임상_파이프라인'
+  | '플랫폼_독점'
+  | '정책_수혜'
+  | '수익성_급전환'
+  | '공급_병목'
+
 export type TriggerEvent = {
   id: string
   ticker: string
@@ -114,6 +126,7 @@ export type TriggerEvent = {
   matched_keywords: string[]
   summary: string
   golden: boolean
+  rise_category: RiseCategory | null
 }
 
 export type Watchlist = {
@@ -167,23 +180,52 @@ export type FailureCase = {
   lesson_md: string | null
 }
 
+export type BacktestRun = {
+  id: string
+  run_date: string
+  triggered_by: string | null
+  dart_used: boolean
+  created_at: string
+}
+
+export type BacktestResult = {
+  id: string
+  run_id: string
+  ticker: string
+  name: string | null
+  market: string | null
+  snapshot_date: string
+  peak_date: string | null
+  actual_x: number | null
+  score_10x: number | null
+  passed: boolean
+  failed_filters: string[] | null
+  cats: Record<string, number> | null
+  price_at_snapshot: number | null
+  rs_score: number | null
+  is_target: boolean
+  created_at: string
+}
+
 // Supabase Database type for createClient<Database>
 export type Database = {
   public: {
     Tables: {
-      stocks:          { Row: Stock;         Insert: Omit<Stock, 'id' | 'created_at'>;         Update: Partial<Omit<Stock, 'id'>>;         Relationships: never[] }
-      prices_daily:    { Row: PriceDaily;    Insert: PriceDaily;                               Update: Partial<PriceDaily>;                Relationships: never[] }
-      financials_q:    { Row: FinancialQ;    Insert: Omit<FinancialQ, 'id' | 'created_at'>;    Update: Partial<Omit<FinancialQ, 'id'>>;    Relationships: never[] }
-      filings:         { Row: Filing;        Insert: Omit<Filing, 'id' | 'created_at'>;         Update: Partial<Omit<Filing, 'id'>>;        Relationships: never[] }
-      news:            { Row: News;          Insert: Omit<News, 'id'>;                          Update: Partial<Omit<News, 'id'>>;           Relationships: never[] }
-      screen_scores:   { Row: ScreenScore;   Insert: Omit<ScreenScore, 'created_at'>;           Update: Partial<ScreenScore>;               Relationships: never[] }
-      agent_scores:    { Row: AgentScore;    Insert: Omit<AgentScore, 'id' | 'created_at'>;     Update: Partial<Omit<AgentScore, 'id'>>;    Relationships: never[] }
-      trigger_events:  { Row: TriggerEvent;  Insert: Omit<TriggerEvent, 'id'>;                  Update: Partial<Omit<TriggerEvent, 'id'>>;  Relationships: never[] }
-      watchlist:       { Row: Watchlist;     Insert: Omit<Watchlist, 'id' | 'added_at'>;        Update: Partial<Omit<Watchlist, 'id'>>;     Relationships: never[] }
-      analysis_queue:  { Row: AnalysisQueue; Insert: Omit<AnalysisQueue, 'id' | 'created_at'>; Update: Partial<Omit<AnalysisQueue, 'id'>>; Relationships: never[] }
-      pipeline_runs:   { Row: PipelineRun;   Insert: Omit<PipelineRun, 'id'>;                   Update: Partial<Omit<PipelineRun, 'id'>>;   Relationships: never[] }
-      settings:        { Row: Setting;       Insert: Setting;                                   Update: Partial<Setting>;                   Relationships: never[] }
-      failure_cases:   { Row: FailureCase;   Insert: Omit<FailureCase, 'id'>;                   Update: Partial<Omit<FailureCase, 'id'>>;   Relationships: never[] }
+      stocks:           { Row: Stock;          Insert: Omit<Stock, 'id' | 'created_at'>;          Update: Partial<Omit<Stock, 'id'>>;          Relationships: never[] }
+      prices_daily:     { Row: PriceDaily;     Insert: PriceDaily;                                Update: Partial<PriceDaily>;                 Relationships: never[] }
+      financials_q:     { Row: FinancialQ;     Insert: Omit<FinancialQ, 'id' | 'created_at'>;     Update: Partial<Omit<FinancialQ, 'id'>>;     Relationships: never[] }
+      filings:          { Row: Filing;         Insert: Omit<Filing, 'id' | 'created_at'>;          Update: Partial<Omit<Filing, 'id'>>;         Relationships: never[] }
+      news:             { Row: News;           Insert: Omit<News, 'id'>;                           Update: Partial<Omit<News, 'id'>>;            Relationships: never[] }
+      screen_scores:    { Row: ScreenScore;    Insert: Omit<ScreenScore, 'created_at'>;            Update: Partial<ScreenScore>;                Relationships: never[] }
+      agent_scores:     { Row: AgentScore;     Insert: Omit<AgentScore, 'id' | 'created_at'>;      Update: Partial<Omit<AgentScore, 'id'>>;     Relationships: never[] }
+      trigger_events:   { Row: TriggerEvent;   Insert: Omit<TriggerEvent, 'id'>;                   Update: Partial<Omit<TriggerEvent, 'id'>>;   Relationships: never[] }
+      watchlist:        { Row: Watchlist;      Insert: Omit<Watchlist, 'id' | 'added_at'>;         Update: Partial<Omit<Watchlist, 'id'>>;      Relationships: never[] }
+      analysis_queue:   { Row: AnalysisQueue;  Insert: Omit<AnalysisQueue, 'id' | 'created_at'>;  Update: Partial<Omit<AnalysisQueue, 'id'>>;  Relationships: never[] }
+      pipeline_runs:    { Row: PipelineRun;    Insert: Omit<PipelineRun, 'id'>;                    Update: Partial<Omit<PipelineRun, 'id'>>;    Relationships: never[] }
+      settings:         { Row: Setting;        Insert: Setting;                                    Update: Partial<Setting>;                    Relationships: never[] }
+      failure_cases:    { Row: FailureCase;    Insert: Omit<FailureCase, 'id'>;                    Update: Partial<Omit<FailureCase, 'id'>>;    Relationships: never[] }
+      backtest_runs:    { Row: BacktestRun;    Insert: Omit<BacktestRun, 'id' | 'created_at'>;     Update: Partial<Omit<BacktestRun, 'id'>>;    Relationships: never[] }
+      backtest_results: { Row: BacktestResult; Insert: Omit<BacktestResult, 'id' | 'created_at'>; Update: Partial<Omit<BacktestResult, 'id'>>; Relationships: never[] }
     }
     Views: { [_ in never]: never }
     Functions: { [_ in never]: never }

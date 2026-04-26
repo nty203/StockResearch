@@ -4,8 +4,12 @@ import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import type { TriggerEvent } from '@stock/shared'
 
+type TriggerEventWithStock = TriggerEvent & {
+  stocks?: { name_kr?: string | null; name_en?: string | null; market?: string | null } | null
+}
+
 export function GoldenSignalFeed() {
-  const { data, isLoading } = useQuery<TriggerEvent[]>({
+  const { data, isLoading } = useQuery<TriggerEventWithStock[]>({
     queryKey: ['goldenSignals'],
     queryFn: async () => {
       const res = await fetch('/api/signals?golden=true&days=7&limit=3')
@@ -34,7 +38,7 @@ export function GoldenSignalFeed() {
       {!isLoading && data && data.length > 0 && (
         <div className="space-y-2">
           {data.map((signal) => (
-            <SignalCard key={signal.id} signal={signal} />
+            <SignalCard key={signal.id} signal={signal as TriggerEventWithStock} />
           ))}
         </div>
       )}
@@ -42,7 +46,8 @@ export function GoldenSignalFeed() {
   )
 }
 
-function SignalCard({ signal }: { signal: TriggerEvent }) {
+function SignalCard({ signal }: { signal: TriggerEventWithStock }) {
+  const name = signal.stocks?.name_kr || signal.stocks?.name_en
   return (
     <div className="bg-card border border-gold/20 rounded p-3 flex items-center justify-between">
       <div>
@@ -51,7 +56,12 @@ function SignalCard({ signal }: { signal: TriggerEvent }) {
             href={`/stocks/${signal.ticker}`}
             className="text-sm font-semibold text-text1 hover:text-accent"
           >
-            {signal.ticker}
+            {name ? (
+              <>
+                <span>{name}</span>
+                <span className="text-text2 text-[11px] font-normal ml-1">({signal.ticker})</span>
+              </>
+            ) : signal.ticker}
           </Link>
           <span className="text-xs text-text2">{signal.event_type}</span>
         </div>

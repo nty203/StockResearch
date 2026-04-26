@@ -31,19 +31,44 @@ TRIGGER_TYPES = [
 
 BIGTECH_KEYWORDS = ["MSFT", "Microsoft", "Google", "Alphabet", "Amazon", "AWS",
                      "Oracle", "Meta", "NVIDIA", "Apple", "Tesla", "PPA",
-                     "하이퍼스케일", "하이퍼스케일러", "빅테크", "CSP"]
+                     "하이퍼스케일", "하이퍼스케일러", "빅테크", "CSP",
+                     "삼성전자", "SK하이닉스", "LG전자"]
 
 CAPEX_KEYWORDS = ["증설", "신공장", "CAPEX", "설비투자", "ground breaking",
                   "groundbreaking", "착공", "공장 건설", "생산라인", "라인 증설",
-                  "capacity expansion", "new facility", "manufacturing expansion"]
+                  "capacity expansion", "new facility", "manufacturing expansion",
+                  "생산능력", "capa", "캐파"]
 
 GLOBAL_MEGA_KEYWORDS = ["방산", "원전", "SMR", "nuclear", "defense", "NATO",
                          "방위", "국방", "수출", "해외 수주", "overseas contract",
-                         "조원", "trillion won", "billion dollar"]
+                         "조원", "trillion won", "billion dollar",
+                         # 방산 하드웨어
+                         "K-9", "K-2", "FA-50", "Redback", "자주포", "폴란드", "호주", "루마니아",
+                         "방위산업", "무기 수출",
+                         # 원전 세부
+                         "APR-1400", "계측제어", "MMIS", "체코", "두코바니", "원안위",
+                         # 전력기기
+                         "HVDC", "GIS", "초고압", "변압기", "납기 확정", "전력기자재"]
 
 BIGTECH_PARTNER_KEYWORDS = ["전략적 파트너십", "strategic partnership", "MOU",
                               "공급 계약", "supply agreement", "preferred supplier",
-                              "독점 공급", "exclusive supply", "벤더 선정"]
+                              "독점 공급", "exclusive supply", "벤더 선정",
+                              # 전략적 지분투자 (vs. 단순 재무투자)
+                              "전략적 투자", "유상증자 참여", "콜옵션", "call option",
+                              "지분 취득", "최대주주", "자회사 편입"]
+
+# 바이오/제약 임상 파이프라인 키워드
+BIOTECH_PIPELINE_KEYWORDS = ["임상", "1상", "2상", "3상", "IND", "임상시험계획",
+                               "FDA 승인", "FDA approval", "식약처", "MFDS",
+                               "기술이전", "license out", "마일스톤", "milestone",
+                               "GLP-1", "세마글루타이드", "CDMO", "빅파마",
+                               "품목허가", "NDA", "BLA", "CE 인증"]
+
+# 로봇/자동화 생태계 키워드
+ROBOTICS_ECOSYSTEM_KEYWORDS = ["협동로봇", "휴머노이드", "humanoid", "다이나믹셀",
+                                 "액추에이터", "actuator", "ROS", "로봇 밀도",
+                                 "물류 자동화", "공장 자동화", "로봇 도입",
+                                 "AI 로봇", "자율주행 로봇"]
 
 MONOPOLY_KEYWORDS = ["독점", "유일", "sole supplier", "only supplier", "시장점유율",
                       "market share", "지배적", "dominant", "1위", "No.1"]
@@ -72,7 +97,9 @@ RAW_MATERIAL_KEYWORDS = ["원자재 하락", "리튬", "희토류", "rare earth"
 
 GEOPOLITICAL_KEYWORDS = ["리쇼어링", "reshoring", "국산화", "localization",
                           "미중 갈등", "US-China", "탈중국", "공급망 재편",
-                          "supply chain", "IRA", "CHIPS Act", "반도체법"]
+                          "supply chain", "IRA", "CHIPS Act", "반도체법",
+                          "NATO 재무장", "방산 수출 확대", "원전 르네상스",
+                          "에너지 안보", "AI 데이터센터 전력"]
 
 SPINOFF_KEYWORDS = ["분할", "spinoff", "물적분할", "분사", "지주회사",
                     "구조조정", "restructuring", "사업 분리", "IPO 예정"]
@@ -122,6 +149,27 @@ def _confidence(hits: int, total: int, has_amount: bool) -> float:
     return round(base, 2)
 
 
+# ── 트리거 유형 → 상승 원인 카테고리 매핑 ────────────────────────────────────
+# 기본 매핑 — sector_tag 정보가 있으면 classify() 호출자가 덮어쓸 수 있음
+TRIGGER_TO_RISE_CATEGORY: dict[str, str] = {
+    "단일_수주":     "수주잔고_선행",
+    "CAPEX_증설":    "수주잔고_선행",
+    "글로벌_메가계약": "수주잔고_선행",
+    "빅테크_파트너": "빅테크_파트너",
+    "시장_독점":     "플랫폼_독점",
+    "기술_돌파":     "플랫폼_독점",
+    "수익성_급등":   "수익성_급전환",
+    "내부자_매수":   "빅테크_파트너",
+    "기관_집중":     "빅테크_파트너",
+    "규제_해소":     "정책_수혜",
+    "공급_병목":     "공급_병목",
+    "원자재_가격":   "공급_병목",
+    "지정학_수혜":   "정책_수혜",
+    "스핀오프":      "수익성_급전환",
+    "실적_서프라이즈": "수익성_급전환",
+}
+
+
 @dataclass
 class TriggerResult:
     trigger_type: str
@@ -129,6 +177,7 @@ class TriggerResult:
     matched_keywords: list[str] = field(default_factory=list)
     parsed_amount: float | None = None
     summary: str = ""
+    rise_category: str | None = None  # 상승 원인 카테고리
 
 
 def classify(text: str, headline: str = "") -> list[TriggerResult]:
@@ -315,6 +364,65 @@ def classify(text: str, headline: str = "") -> list[TriggerResult]:
             matched_keywords=hits,
             summary=f"실적 서프라이즈: {', '.join(hits[:3])}",
         ))
+
+    # ── 확장 트리거: 플랫폼 기업 조기 포착용 ──────────────────────────────────
+
+    # 전략적 지분투자 (콜옵션 포함 시 confidence 보너스)
+    hits_bt = _keyword_hit(combined, BIGTECH_KEYWORDS)
+    hits_pt = _keyword_hit(combined, BIGTECH_PARTNER_KEYWORDS)
+    callopt_words = ["콜옵션", "call option", "최대주주 전환", "자회사 편입"]
+    has_callopt = any(w.lower() in combined.lower() for w in callopt_words)
+    if hits_bt and any(k in hits_pt for k in ["유상증자 참여", "지분 취득", "전략적 투자"]):
+        conf = _confidence(len(hits_bt) + len(hits_pt), 5, False)
+        if has_callopt:
+            conf = min(1.0, conf + 0.25)  # 콜옵션 구조 = 미래 지배구조 변화 예고
+        results.append(TriggerResult(
+            trigger_type="빅테크_파트너",
+            confidence=conf,
+            matched_keywords=hits_bt[:2] + hits_pt[:2],
+            summary=f"전략적 지분투자: {', '.join((hits_bt + hits_pt)[:3])}{'(+콜옵션)' if has_callopt else ''}",
+        ))
+
+    # 바이오 임상 파이프라인 진행 (기술_돌파 서브타입)
+    hits = _keyword_hit(combined, BIOTECH_PIPELINE_KEYWORDS)
+    if len(hits) >= 2:
+        amount = _extract_amount_usd(combined) or _extract_amount_krw(combined)
+        conf = _confidence(len(hits), len(BIOTECH_PIPELINE_KEYWORDS), amount is not None)
+        if amount and amount >= 1000:  # 마일스톤 1000억+ or $100M+
+            conf = min(1.0, conf + 0.2)
+        results.append(TriggerResult(
+            trigger_type="기술_돌파",
+            confidence=conf,
+            matched_keywords=hits,
+            parsed_amount=amount,
+            summary=f"바이오 임상/기술이전: {', '.join(hits[:3])}",
+        ))
+
+    # 로봇/자동화 생태계 채택 (공급_병목 또는 시장_독점 서브타입)
+    hits = _keyword_hit(combined, ROBOTICS_ECOSYSTEM_KEYWORDS)
+    if hits:
+        hits_bigtech2 = _keyword_hit(combined, BIGTECH_KEYWORDS)
+        conf = _confidence(len(hits), len(ROBOTICS_ECOSYSTEM_KEYWORDS), False)
+        if hits_bigtech2:
+            conf = min(1.0, conf + 0.15)  # 빅테크 로봇 채택
+        results.append(TriggerResult(
+            trigger_type="시장_독점",
+            confidence=conf,
+            matched_keywords=hits[:3],
+            summary=f"로봇 생태계 채택: {', '.join(hits[:3])}",
+        ))
+
+    # rise_category 자동 할당
+    for r in results:
+        if r.rise_category is None:
+            r.rise_category = TRIGGER_TO_RISE_CATEGORY.get(r.trigger_type)
+
+    # 바이오 임상 키워드가 포함된 경우 임상_파이프라인으로 오버라이드
+    biotech_hits = _keyword_hit(combined, BIOTECH_PIPELINE_KEYWORDS)
+    if len(biotech_hits) >= 2:
+        for r in results:
+            if r.trigger_type in ("기술_돌파", "규제_해소", "실적_서프라이즈"):
+                r.rise_category = "임상_파이프라인"
 
     results.sort(key=lambda r: r.confidence, reverse=True)
     return results

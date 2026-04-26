@@ -4,6 +4,7 @@ export type {
   QueueStatus,
   WatchlistStatus,
   PipelineStage,
+  RiseCategory,
   Stock,
   PriceDaily,
   FinancialQ,
@@ -17,4 +18,6 @@ export type {
   PipelineRun,
   Setting,
   FailureCase,
+  BacktestRun,
+  BacktestResult,
 } from './schema'

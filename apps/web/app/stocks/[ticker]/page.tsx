@@ -73,6 +73,64 @@ function fmtBillion(n: number | null) {
   return n.toFixed(0)
 }
 
+function buildCategorySummary(
+  cat: string,
+  val: number | null,
+  financials: Financials,
+  priceContext: PriceContext
+): string | null {
+  if (val == null || val <= 0) return null
+
+  switch (cat) {
+    case 'growth': {
+      const parts: string[] = []
+      if (financials.rev_growth_pct != null && financials.rev_growth_pct >= 20)
+        parts.push(`매출 YoY +${financials.rev_growth_pct.toFixed(0)}%`)
+      return parts.length > 0 ? parts.join(' · ') : '매출 성장 확인'
+    }
+    case 'momentum': {
+      if (priceContext.pct_from_high != null && priceContext.pct_from_high <= 20)
+        return `고점 대비 -${priceContext.pct_from_high.toFixed(1)}%`
+      return '상승 모멘텀'
+    }
+    case 'quality': {
+      const parts: string[] = []
+      if (financials.op_margin != null && financials.op_margin > 10)
+        parts.push(`OPM ${financials.op_margin.toFixed(0)}%`)
+      if (financials.roic != null && financials.roic > 15)
+        parts.push(`ROIC ${financials.roic.toFixed(0)}%`)
+      if (financials.fcf != null && financials.fcf > 0)
+        parts.push('FCF+')
+      if (
+        financials.op_margin != null &&
+        financials.op_margin_prev != null &&
+        financials.op_margin > financials.op_margin_prev
+      )
+        parts.push('이익률 개선')
+      return parts.length > 0 ? parts.slice(0, 2).join(' · ') : null
+    }
+    case 'sponsorship':
+      return '외국인 지분 10%+'
+    case 'value':
+      return 'P/S 밸류 양호'
+    case 'safety': {
+      if (financials.debt_ratio != null) {
+        const label =
+          financials.debt_ratio <= 50 ? '매우 건전' : financials.debt_ratio <= 100 ? '건전' : '양호'
+        return `부채비율 ${financials.debt_ratio.toFixed(0)}% ${label}`
+      }
+      return '재무 안전성 확인'
+    }
+    case 'size': {
+      if (priceContext.avg_daily_value != null)
+        return `거래대금 ${fmtBillion(priceContext.avg_daily_value)}/일`
+      return '유동성 양호'
+    }
+    default:
+      return null
+  }
+}
+
 function StatusDot({ ok }: { ok: boolean | null }) {
   if (ok == null) return <span className="text-[var(--color-text-2)] text-xs">—</span>
   return ok
@@ -383,6 +441,7 @@ export default function StockDetailPage() {
               {SCORE_CATEGORIES.map(cat => {
                 const val = (score as unknown as Record<string, unknown>)[cat.key] as number | null
                 const pct = val != null ? Math.min(100, Math.round((val / cat.max) * 100)) : 0
+                const summary = buildCategorySummary(cat.key, val, financials, priceContext)
                 return (
                   <div key={cat.key}>
                     <div className="flex justify-between text-xs text-[var(--color-text-2)] mb-0.5">
@@ -395,6 +454,9 @@ export default function StockDetailPage() {
                         style={{ width: `${pct}%` }}
                       />
                     </div>
+                    {summary && (
+                      <p className="text-[10px] text-[var(--color-text-2)] mt-0.5 leading-snug">{summary}</p>
+                    )}
                   </div>
                 )
               })}

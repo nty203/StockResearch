@@ -152,5 +152,59 @@ def apply_kr_filters(stock_data: dict, settings: dict | None = None) -> FilterRe
             score += s
             result.scores_by_filter["f12_momentum"] = s
 
+    # f13: Backlog Coverage Ratio (BCR = order_backlog / revenue_ttm)
+    # 수주잔고가 매출의 0.5배 이상 = 향후 성장 가시성 확보
+    order_backlog = stock_data.get("order_backlog")
+    if order_backlog is not None and rev_ttm and rev_ttm > 0:
+        bcr = order_backlog / rev_ttm
+        if bcr >= 0.5:
+            s = min(10.0, bcr * 5.0)  # 0.5x → 2.5점, 2x → 10점
+            score += s
+            result.scores_by_filter["f13_bcr"] = s
+
+    # f14: Backlog YoY growth
+    # 수주잔고가 전년 대비 20%+ 증가 = 미래 수주 가속 신호
+    order_backlog_prev = stock_data.get("order_backlog_prev")
+    if order_backlog is not None and order_backlog_prev is not None and order_backlog_prev > 0:
+        backlog_growth = (order_backlog - order_backlog_prev) / order_backlog_prev * 100
+        if backlog_growth >= 20:
+            s = min(10.0, (backlog_growth - 20) / 8.0)
+            score += s
+            result.scores_by_filter["f14_backlog_growth"] = s
+
+    # f15: OPM inflection point (저마진에서 급등)
+    # 영업이익률이 낮은 베이스(10% 미만)에서 1pp+ 상승 = 수익성 전환 초입 포착
+    if op_margin is not None and op_margin_prev is not None:
+        if op_margin_prev < 10 and op_margin > op_margin_prev:
+            improvement = op_margin - op_margin_prev
+            if improvement >= 1.0:
+                s = min(8.0, improvement * 2.0)
+                score += s
+                result.scores_by_filter["f15_opm_inflection"] = s
+
+    # Safety score: based on actual debt ratio (lower is better)
+    if debt_ratio is not None:
+        if debt_ratio <= 50:
+            ss = 10.0
+        elif debt_ratio <= 100:
+            ss = 7.0
+        elif debt_ratio <= 150:
+            ss = 4.0
+        else:
+            ss = 2.0
+        result.scores_by_filter["safety_score"] = ss
+
+    # Size score: based on avg daily trading value
+    if dv is not None:
+        if dv >= 50_000_000_000:    # 500억+
+            sz = 10.0
+        elif dv >= 20_000_000_000:  # 200억+
+            sz = 7.0
+        elif dv >= 10_000_000_000:  # 100억+
+            sz = 4.0
+        else:
+            sz = 2.0
+        result.scores_by_filter["size_score"] = sz
+
     result.score = round(score, 2)
     return result

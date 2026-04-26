@@ -6,6 +6,7 @@ snapshot_date 시점의 실제 가격·재무 데이터로 filters_kr을 돌려
 사용법:
   uv run python -m src.screening.validate_100x
   uv run python -m src.screening.validate_100x --no-dart   # DART API 없이 가격만
+  uv run python -m src.screening.validate_100x --save      # Supabase에 결과 저장
 
 검증 대상:
   에코프로   086520  snapshot 2020-01-02, 실제 ~107x (2023-07-26 고점 기준)
@@ -30,6 +31,44 @@ import FinanceDataReader as fdr
 
 logger = logging.getLogger(__name__)
 
+
+def _save_to_supabase(rows: list[dict], use_dart: bool) -> None:
+    """backtest_runs + backtest_results에 결과 저장."""
+    from ..upsert import get_client
+    client = get_client()
+
+    run_res = client.table("backtest_runs").insert({
+        "dart_used": use_dart,
+        "triggered_by": "github_actions" if os.environ.get("GITHUB_RUN_ID") else "manual",
+    }).execute()
+    run_id = (run_res.data or [{}])[0].get("id")
+    if not run_id:
+        logger.error("Failed to create backtest_run row")
+        return
+
+    records = []
+    for r in rows:
+        cats = r.get("cats") or {}
+        records.append({
+            "run_id":          run_id,
+            "ticker":          r["ticker"],
+            "name":            r["name"],
+            "market":          r.get("market"),
+            "snapshot_date":   r["snap"],
+            "peak_date":       r.get("peak"),
+            "actual_x":        float(r["real_x"]) if isinstance(r.get("real_x"), (int, float)) else None,
+            "score_10x":       float(r["score"]),
+            "passed":          bool(r["passed"]),
+            "failed_filters":  r.get("failed") or [],
+            "cats":            cats,
+            "price_at_snapshot": r.get("price"),
+            "rs_score":        r.get("rs_score"),
+            "is_target":       r.get("is_target", False),
+        })
+
+    client.table("backtest_results").insert(records).execute()
+    logger.info("Saved %d backtest results (run_id=%s)", len(records), run_id)
+
 # ── 검증 대상 정의 ──────────────────────────────────────────────────────────
 TARGETS = [
     {"ticker": "086520", "name": "에코프로",    "snapshot": "2020-01-02", "peak": "2023-07-26", "actual_x": 107.0, "market": "KOSDAQ"},
@@ -38,6 +77,9 @@ TARGETS = [
     {"ticker": "042700", "name": "한미반도체",  "snapshot": "2021-01-04", "peak": "2024-06-26", "actual_x":  19.0, "market": "KOSDAQ"},
     {"ticker": "196170", "name": "알테오젠",    "snapshot": "2020-01-02", "peak": "2024-05-14", "actual_x":  50.0, "market": "KOSDAQ"},
     {"ticker": "298040", "name": "효성중공업",  "snapshot": "2022-01-03", "peak": "2024-06-28", "actual_x":  18.0, "market": "KOSPI"},
+    # 케이스 스터디 추가 종목
+    {"ticker": "012450", "name": "한화에어로스페이스", "snapshot": "2021-06-30", "peak": "2024-12-31", "actual_x": 20.0, "market": "KOSPI"},
+    {"ticker": "267260", "name": "HD현대일렉트릭",     "snapshot": "2022-06-30", "peak": "2024-07-31", "actual_x":  8.0, "market": "KOSPI"},
 ]
 
 CONTROLS = [
@@ -198,40 +240,44 @@ def _compute_score(stock_data: dict) -> tuple[float, bool, list[str], dict]:
     if not fr.passed:
         return 0.0, False, fr.failed_filters, {}
 
-    # 카테고리별 raw score
+    # 카테고리별 raw score (score.py _categorize_score와 동일한 로직)
     scores = fr.scores_by_filter
     cats = {
-        "growth":      min(100, scores.get("f03", 0) + scores.get("f04", 0)),
+        "growth":      min(100, scores.get("f03", 0) + scores.get("f04", 0)
+                          + scores.get("f13_bcr", 0) + scores.get("f14_backlog_growth", 0)),
         "momentum":    min(100, scores.get("f11_rs", 0) + scores.get("f12_momentum", 0)),
-        "quality":     min(100, scores.get("f05_op_margin", 0) + scores.get("f05_margin_trend", 0) + scores.get("f06_roic", 0) + scores.get("f07_fcf", 0)),
+        "quality":     min(100, scores.get("f05_op_margin", 0) + scores.get("f05_margin_trend", 0)
+                          + scores.get("f15_opm_inflection", 0)
+                          + scores.get("f06_roic", 0) + scores.get("f07_fcf", 0)),
         "sponsorship": min(100, scores.get("f10_foreign", 0)),
         "value":       0.0,
-        "safety":      max(0.0, 10.0 - (10.0 if scores.get("debt_penalty") else 0.0)),
-        "size":        min(100, scores.get("f01", 0) + 5),
+        "safety":      min(100, scores.get("safety_score", 5.0)),
+        "size":        min(100, scores.get("size_score", 5.0)),
     }
     score_10x = sum(cats[c] * DEFAULT_WEIGHTS.get(c, 0) / 100 for c in cats)
     return round(score_10x, 1), True, [], cats
 
 
-def run_validation(use_dart: bool = True) -> None:
+def run_validation(use_dart: bool = True, save: bool = False) -> None:
     """모든 대상·대조군을 평가하고 결과 테이블 출력."""
     all_stocks = TARGETS + CONTROLS
     rows = []
 
     for s in all_stocks:
-        ticker   = s["ticker"]
-        name     = s["name"]
-        snap     = s["snapshot"]
-        peak     = s["peak"]
-        actual_x = s.get("actual_x", "?")
-        label    = "★타겟" if s in TARGETS else "  대조"
+        ticker    = s["ticker"]
+        name      = s["name"]
+        snap      = s["snapshot"]
+        peak      = s["peak"]
+        actual_x  = s.get("actual_x", "?")
+        is_target = s in TARGETS
+        label     = "★타겟" if is_target else "  대조"
 
         print(f"\n[{label}] {name} ({ticker}) snapshot: {snap}")
 
         # 1. 가격 데이터
         price_data = _get_price_data(ticker, snap)
         if not price_data:
-            print("  ✗ 가격 데이터 없음 — 건너뜀")
+            print("  NG 가격 데이터 없음 -- 건너뜀")
             continue
 
         # 2. DART 재무 데이터
@@ -254,16 +300,21 @@ def run_validation(use_dart: bool = True) -> None:
         real_x = _get_actual_multiple(ticker, snap, peak)
 
         rows.append({
-            "label":    label,
-            "ticker":   ticker,
-            "name":     name,
-            "snap":     snap,
-            "score":    score_10x,
-            "passed":   passed,
-            "failed":   failed,
-            "cats":     cats,
-            "real_x":   real_x or actual_x,
-            "dart_ok":  dart_ok,
+            "label":     label,
+            "ticker":    ticker,
+            "name":      name,
+            "market":    s.get("market", "KOSPI"),
+            "snap":      snap,
+            "peak":      peak,
+            "score":     score_10x,
+            "passed":    passed,
+            "failed":    failed,
+            "cats":      cats,
+            "real_x":    real_x or actual_x,
+            "dart_ok":   dart_ok,
+            "is_target": is_target,
+            "price":     price_data.get("price"),
+            "rs_score":  price_data.get("rs_score"),
         })
 
         passed_str = "OK  통과" if passed else f"NG  탈락 ({', '.join(failed)})"
@@ -322,8 +373,16 @@ def run_validation(use_dart: bool = True) -> None:
         print(f"정밀도(Precision): {precision*100:.0f}% (통과 종목 중 실제 타겟 비율)")
     print()
     if not rows[0].get("dart_ok") if rows else True:
-        print("* DART_API_KEY 미설정 — 재무 데이터 없이 가격/모멘텀만 반영됨.")
+        print("* DART_API_KEY 미설정 -- 재무 데이터 없이 가격/모멘텀만 반영됨.")
         print("  정확한 검증을 위해 DART_API_KEY를 설정 후 재실행하세요.")
+
+    if save and rows:
+        print("\nSupabase에 결과 저장 중...")
+        try:
+            _save_to_supabase(rows, use_dart)
+            print("저장 완료.")
+        except Exception as e:
+            logger.error("Supabase 저장 실패: %s", e)
 
 
 if __name__ == "__main__":
@@ -332,6 +391,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="100배 상승 종목 사전 탐지 검증")
     parser.add_argument("--no-dart", action="store_true", help="DART API 없이 가격·모멘텀만 검증")
+    parser.add_argument("--save", action="store_true", help="결과를 Supabase에 저장")
     parser.add_argument("--ticker", help="단일 종목만 검증 (예: 086520)")
     args = parser.parse_args()
 
@@ -367,4 +427,4 @@ if __name__ == "__main__":
             print(f"점수:   {score_10x:.1f} / 100")
             print(f"카테고리: {cats}")
     else:
-        run_validation(use_dart=use_dart)
+        run_validation(use_dart=use_dart, save=args.save)

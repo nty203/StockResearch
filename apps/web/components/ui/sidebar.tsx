@@ -9,6 +9,7 @@ import {
   Inbox,
   Bookmark,
   Settings,
+  FlaskConical,
 } from 'lucide-react'
 
 const nav = [
@@ -16,6 +17,7 @@ const nav = [
   { href: '/signals',    label: '시그널',      icon: Zap },
   { href: '/watchlist',  label: '워치리스트',  icon: Bookmark },
   { href: '/queue',      label: '분석 큐',     icon: Inbox },
+  { href: '/backtest',   label: '백테스트',    icon: FlaskConical },
   { href: '/settings',   label: '설정',        icon: Settings },
 ]
 

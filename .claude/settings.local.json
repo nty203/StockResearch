@@ -2,7 +2,23 @@
   "permissions": {
     "allow": [
       "Skill(plan-eng-review)",
-      "Skill(plan-eng-review:*)"
+      "Skill(plan-eng-review:*)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_snapshot",
+      "mcp__plugin_playwright_playwright__browser_wait_for",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "mcp__plugin_playwright_playwright__browser_evaluate",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__plugin_playwright_playwright__browser_type",
+      "mcp__plugin_playwright_playwright__browser_select_option",
+      "mcp__plugin_playwright_playwright__browser_close",
+      "mcp__plugin_playwright_playwright__browser_fill_form",
+      "PowerShell(Stop-Process -Force)",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "mcp__plugin_playwright_playwright__browser_console_messages",
+      "PowerShell(Get-ChildItem \"$env:APPDATA\\\\xdg.config\\\\wrangler\" -ErrorAction SilentlyContinue; Get-ChildItem \"$env:USERPROFILE\\\\.wrangler\" -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-ChildItem \"$env:APPDATA\\\\xdg.config\" -ErrorAction SilentlyContinue | Select-Object Name)",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\tzero\\\\Documents\\\\ai\\\\StockResearch\"; git log --oneline -10 -- uv.lock)"
     ]
   }
 }
