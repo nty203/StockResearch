@@ -42,7 +42,7 @@ def collect_dart_financials(tickers: list[str], years: list[int]) -> list[dict]:
             for reprt_code, quarter_suffix in REPRT_CODES.items():
                 fq = f"{year}{quarter_suffix}"
                 try:
-                    df = dart.finstate(ticker, year, reprt_code=reprt_code, fs_div="CFS")
+                    df = dart.finstate(ticker, year, reprt_code=reprt_code)
                     if df is None or df.empty:
                         continue
                     # Parse key metrics from IFRS statements

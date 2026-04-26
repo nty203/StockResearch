@@ -63,9 +63,16 @@ export function ScoreTable() {
                   <td className="px-4 py-2">
                     <Link
                       href={`/stocks/${row.ticker}`}
-                      className="font-medium text-text1 hover:text-accent"
+                      className="hover:text-accent"
                     >
-                      {row.ticker}
+                      {(row as ScreenScore & { name_kr?: string }).name_kr && (
+                        <span className="font-medium text-text1">
+                          {(row as ScreenScore & { name_kr?: string }).name_kr}
+                        </span>
+                      )}
+                      <span className={`text-text2 text-[11px] ${(row as ScreenScore & { name_kr?: string }).name_kr ? ' ml-1' : 'font-medium text-text1 text-xs'}`}>
+                        {(row as ScreenScore & { name_kr?: string }).name_kr ? `(${row.ticker})` : row.ticker}
+                      </span>
                     </Link>
                   </td>
                   <td className="px-4 py-2 text-right font-medium text-text1">

@@ -16,13 +16,24 @@ export async function GET(req: Request) {
     .limit(1)
     .single()
 
-  const { data, error } = await supabase
-    .from('screen_scores')
-    .select('ticker, score_10x, growth, momentum, quality, sponsorship, value, safety, size, market_gate, passed, run_date')
-    .eq('run_date', latest?.run_date ?? new Date().toISOString().slice(0, 10))
-    .order('score_10x', { ascending: false })
-    .limit(limit)
+  const runDate = latest?.run_date ?? new Date().toISOString().slice(0, 10)
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
+  const [scoresRes, namesRes] = await Promise.all([
+    supabase
+      .from('screen_scores')
+      .select('ticker, score_10x, growth, momentum, quality, sponsorship, value, safety, size, market_gate, passed, run_date')
+      .eq('run_date', runDate)
+      .order('score_10x', { ascending: false })
+      .limit(limit),
+    supabase
+      .from('stocks')
+      .select('ticker, name_kr'),
+  ])
+
+  if (scoresRes.error) return Response.json({ error: scoresRes.error.message }, { status: 500 })
+
+  const nameMap = Object.fromEntries((namesRes.data ?? []).map(s => [s.ticker, s.name_kr]))
+  const data = (scoresRes.data ?? []).map(row => ({ ...row, name_kr: nameMap[row.ticker] ?? null }))
+
   return Response.json(data)
 }
