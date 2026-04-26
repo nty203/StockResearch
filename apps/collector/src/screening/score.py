@@ -97,9 +97,11 @@ def _build_stock_data(supabase_client, ticker: str) -> dict:
     if prices:
         data["price"] = prices[0]["close"]
         data["price_52w_high"] = max(p["close"] for p in prices)
-        recent_vol = prices[0].get("volume") or 0
-        avg_price = sum(p["close"] for p in prices[:20]) / min(20, len(prices))
-        data["avg_daily_value"] = recent_vol * avg_price if recent_vol else None
+        # Use 20-day average volume × price for trading value (avoids single-day zero)
+        recent = prices[:20]
+        avg_vol = sum(p.get("volume") or 0 for p in recent) / len(recent)
+        avg_price = sum(p["close"] for p in recent) / len(recent)
+        data["avg_daily_value"] = avg_vol * avg_price if avg_vol > 0 else None
 
     # Stock meta
     stock_res = (

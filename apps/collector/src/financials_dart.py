@@ -92,7 +92,7 @@ def run(years: list[int] | None = None) -> int:
     from datetime import date
     if years is None:
         y = date.today().year
-        years = [y - 1, y]
+        years = [y - 2, y - 1, y]
 
     client = get_client()
     res = client.table("stocks").select("ticker").in_("market", ["KOSPI", "KOSDAQ"]).eq("is_active", True).execute()

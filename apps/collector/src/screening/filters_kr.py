@@ -54,18 +54,22 @@ def apply_kr_filters(stock_data: dict, settings: dict | None = None) -> FilterRe
     failed: list[str] = []
 
     # ── Mandatory filters ──────────────────────────────────────────────────
+    # f01: only exclude when market_cap is known AND below threshold.
+    # When None (no data), pass — universe is already limited to is_active=True.
     mc = stock_data.get("market_cap")
-    if mc is None or mc < cfg["kr_min_market_cap"]:
+    if mc is not None and mc < cfg["kr_min_market_cap"]:
         failed.append("f01_market_cap")
 
     dv = stock_data.get("avg_daily_value")
-    if dv is None or dv < cfg["kr_min_daily_value"]:
+    if dv is not None and dv < cfg["kr_min_daily_value"]:
         failed.append("f02_daily_value")
 
     rev_ttm = stock_data.get("revenue_ttm")
     rev_prev = stock_data.get("revenue_prev")
     rev_growth = _pct_change(rev_ttm, rev_prev)
-    if rev_growth is None or rev_growth < cfg["kr_min_revenue_growth"]:
+    # Only exclude when we have prior-year data and growth is below threshold.
+    # When rev_growth is None (no prior data yet), pass — scoring will be low.
+    if rev_growth is not None and rev_growth < cfg["kr_min_revenue_growth"]:
         failed.append("f03_revenue_growth")
 
     debt_ratio = stock_data.get("debt_ratio")
