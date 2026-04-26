@@ -76,9 +76,10 @@ def apply_kr_filters(stock_data: dict, settings: dict | None = None) -> FilterRe
     if debt_ratio is not None and debt_ratio > cfg["kr_max_debt_ratio"]:
         failed.append("f09_debt_ratio")
 
-    # f08: order backlog proxy — has revenue or backlog data
+    # f08: order backlog proxy — only fail when revenue is positively known to be zero/negative.
+    # None = no data = pass (consistent with f01/f02/f03 relaxation logic).
     backlog = stock_data.get("order_backlog")
-    if backlog is None and (rev_ttm is None or rev_ttm <= 0):
+    if backlog is None and rev_ttm is not None and rev_ttm <= 0:
         failed.append("f08_backlog")
 
     if failed:

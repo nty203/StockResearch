@@ -120,10 +120,25 @@ class TestFailingStock:
         assert "f03_revenue_growth" in result.failed_filters
 
     def test_returns_filter_result_type(self):
+        # All-None data passes with zero score (benefit of the doubt — unknown != bad).
+        # Only known-bad data (e.g. revenue explicitly 0 or below threshold) should fail.
         stock = {"ticker": "000003"}
         result = apply_kr_filters(stock)
         assert isinstance(result, FilterResult)
+        assert result.passed is True  # No data → pass (score will be 0)
+        assert result.score == 0.0
+
+    def test_fails_when_revenue_is_zero(self):
+        # When revenue_ttm is positively known to be 0, f08 should fail.
+        stock = {
+            "ticker": "000004",
+            "revenue_ttm": 0,
+            "order_backlog": None,
+        }
+        result = apply_kr_filters(stock)
+        assert isinstance(result, FilterResult)
         assert result.passed is False
+        assert "f08_backlog" in result.failed_filters
 
 
 class TestPeakRiskPenalty:
