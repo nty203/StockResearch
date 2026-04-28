@@ -1,0 +1,33 @@
+name: 100x Category Scanner
+
+on:
+  schedule:
+    - cron: '0 21 * * *'   # 매일 06:00 KST (UTC 21:00) — collect-daily(02:00 KST)와 분리
+  workflow_dispatch:         # /settings 페이지 수동 재실행 버튼용 — 반드시 유지
+
+jobs:
+  hundredx:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30     # 1,000 stocks × 7 detectors 예상 10-15분
+    defaults:
+      run:
+        working-directory: apps/collector
+    env:
+      SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+      SUPABASE_DB_URL:      ${{ secrets.SUPABASE_DB_URL }}
+      TELEGRAM_BOT_TOKEN:   ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID:     ${{ secrets.TELEGRAM_CHAT_ID }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Run 100x category scanner
+        run: uv run python -m src.hundredx.scanner

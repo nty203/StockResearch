@@ -249,7 +249,7 @@ function ResultRow({ r }: { r: BacktestResult }) {
       {expanded && (
         <tr className="bg-[var(--color-card)] border-b border-[var(--color-border)]">
           <td colSpan={6} className="px-4 py-3">
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <p className="text-xs font-medium text-[var(--color-text-2)] mb-2">카테고리별 점수</p>
                 <div className="space-y-1.5">
@@ -610,7 +610,8 @@ export default function BacktestPage() {
                   </span>
                 </div>
               </div>
-              <table className="w-full">
+              <div className="overflow-x-auto">
+              <table className="w-full min-w-[560px]">
                 <thead>
                   <tr className="text-xs text-[var(--color-text-2)] border-b border-[var(--color-border)]">
                     <th className="px-4 py-2.5 text-left">종목</th>
@@ -640,6 +641,7 @@ export default function BacktestPage() {
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
 
             {runs.length > 1 && (

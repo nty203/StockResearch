@@ -18,7 +18,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ ticker:
     supabase.from('screen_scores').select('*').eq('ticker', ticker).order('run_date', { ascending: false }).limit(1).maybeSingle(),
     supabase.from('agent_scores').select('*').eq('ticker', ticker).order('created_at', { ascending: false }).limit(5),
     supabase.from('trigger_events').select('*').eq('ticker', ticker).order('detected_at', { ascending: false }).limit(20),
-    supabase.from('financials_q').select('fq,revenue,op_income,op_margin,roe,roic,fcf,debt_ratio').eq('ticker', ticker).order('fq', { ascending: false }).limit(8),
+    supabase.from('financials_q').select('fq,revenue,op_income,op_margin,roe,roic,fcf,debt_ratio,order_backlog').eq('ticker', ticker).order('fq', { ascending: false }).limit(8),
     supabase.from('prices_daily').select('date,close,volume').eq('ticker', ticker).gte('date', cutoff).order('date', { ascending: false }).limit(252),
   ])
 
@@ -47,6 +47,8 @@ export async function GET(_req: Request, { params }: { params: Promise<{ ticker:
     fcf: latest?.fcf ?? null,
     debt_ratio: latest?.debt_ratio ?? null,
     roe: latest?.roe ?? null,
+    order_backlog: (ttm[0] as { order_backlog?: number | null })?.order_backlog ?? null,
+    order_backlog_prev: (prev[0] as { order_backlog?: number | null })?.order_backlog ?? null,
   }
 
   // Compute price context

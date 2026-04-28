@@ -24,14 +24,37 @@ export async function GET(req: Request) {
   if (error) return Response.json({ error: error.message }, { status: 500 })
 
   const tickers = [...new Set((data ?? []).map(r => r.ticker))]
-  const { data: stocksData } = tickers.length > 0
-    ? await supabase.from('stocks').select('ticker, name_kr, name_en, market').in('ticker', tickers)
-    : { data: [] }
-  const stockMap = Object.fromEntries((stocksData ?? []).map(s => [s.ticker, s]))
+
+  const [stocksRes, scoresRes] = await Promise.all([
+    tickers.length > 0
+      ? supabase.from('stocks').select('ticker, name_kr, name_en, market').in('ticker', tickers)
+      : Promise.resolve({ data: [] }),
+    tickers.length > 0
+      ? supabase
+          .from('screen_scores')
+          .select('ticker, score_10x, passed, growth, momentum, quality, sponsorship, scores_by_filter')
+          .in('ticker', tickers)
+          .gte('run_date', new Date(Date.now() - 7 * 86400_000).toISOString().slice(0, 10))
+          .order('run_date', { ascending: false })
+      : Promise.resolve({ data: [] }),
+  ])
+
+  const stockMap = Object.fromEntries(((stocksRes.data as { ticker: string }[] | null) ?? []).map((s: { ticker: string }) => [s.ticker, s]))
+
+  // Take only the most recent score per ticker
+  const seenScoreTickers = new Set<string>()
+  const scoreMap: Record<string, { score_10x: number | null; passed: boolean; growth: number; momentum: number; quality: number; sponsorship: number; scores_by_filter: Record<string, number> | null }> = {}
+  for (const row of (scoresRes.data ?? []) as { ticker: string; score_10x: number | null; passed: boolean; growth: number; momentum: number; quality: number; sponsorship: number; scores_by_filter: Record<string, number> | null }[]) {
+    if (!seenScoreTickers.has(row.ticker)) {
+      seenScoreTickers.add(row.ticker)
+      scoreMap[row.ticker] = row
+    }
+  }
 
   const merged = (data ?? []).map(r => ({
     ...r,
     stocks: stockMap[r.ticker] ?? null,
+    score: scoreMap[r.ticker] ?? null,
   }))
   return Response.json(merged)
 }

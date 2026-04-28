@@ -109,13 +109,13 @@ export default function SettingsPage() {
   ] as const
 
   return (
-    <div className="flex gap-6">
-      <nav className="w-48 shrink-0 space-y-1">
+    <div className="flex flex-col md:flex-row md:gap-6">
+      <nav className="flex md:flex-col gap-2 md:gap-1 md:w-48 md:shrink-0 overflow-x-auto md:overflow-visible pb-2 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 mb-2 md:mb-0">
         {SECTIONS.map(s => (
           <button
             key={s.id}
             onClick={() => setSection(s.id)}
-            className={`w-full text-left px-3 py-2 text-sm rounded transition-colors ${
+            className={`shrink-0 md:w-full text-left px-3 py-2 text-sm rounded transition-colors min-h-[40px] whitespace-nowrap ${
               section === s.id
                 ? 'bg-[var(--color-card)] text-[var(--color-text-1)]'
                 : 'text-[var(--color-text-2)] hover:text-[var(--color-text-1)]'
@@ -142,12 +142,12 @@ export default function SettingsPage() {
                 const failed = run?.status === 'error'
                 const workflow = WORKFLOW_MAP[stage]
                 return (
-                  <div key={stage} className="flex items-center gap-4 px-4 py-3">
+                  <div key={stage} className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3">
                     <span className={`text-sm w-4 ${ok ? 'text-[var(--color-success)]' : failed ? 'text-[var(--color-error)]' : 'text-[var(--color-text-2)]'}`}>
                       {ok ? '✓' : failed ? '✗' : '—'}
                     </span>
                     <span className="text-sm text-[var(--color-text-1)] w-20">{STAGE_LABELS[stage]}</span>
-                    <span className="text-sm text-[var(--color-text-2)] flex-1">
+                    <span className="text-sm text-[var(--color-text-2)] flex-1 min-w-0">
                       {run ? (ok ? timeAgo(run.ended_at ?? run.started_at) : failed ? '실패' : '실행 중') : '미실행'}
                     </span>
                     {run?.rows_processed != null && (
@@ -156,7 +156,7 @@ export default function SettingsPage() {
                     <button
                       onClick={() => triggerWorkflow(workflow)}
                       disabled={triggering === workflow}
-                      className="text-xs px-2 py-1 rounded bg-[var(--color-card)] text-[var(--color-accent)] hover:bg-[var(--color-border)] disabled:opacity-50"
+                      className="text-xs px-2 py-1 rounded bg-[var(--color-card)] text-[var(--color-accent)] hover:bg-[var(--color-border)] disabled:opacity-50 min-h-[32px]"
                     >
                       {triggering === workflow ? '실행 중...' : '재실행'}
                     </button>

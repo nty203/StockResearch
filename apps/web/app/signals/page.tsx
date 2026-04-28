@@ -6,8 +6,43 @@ import { useQuery } from '@tanstack/react-query'
 import type { TriggerEvent, RiseCategory } from '@stock/shared'
 import { RiseCategoryBadge, RISE_CATEGORY_META } from '@/components/ui/rise-category-badge'
 
+interface SignalScore {
+  score_10x: number | null
+  passed: boolean
+  growth: number
+  momentum: number
+  quality: number
+  sponsorship: number
+  scores_by_filter: Record<string, number> | null
+}
+
 interface SignalRow extends TriggerEvent {
   stocks?: { name_kr: string | null; name_en: string | null; market: string }
+  score?: SignalScore | null
+}
+
+// 점수 기반 주요 카테고리 도출 (간이 버전 — signals 카드용)
+function deriveScoreCategory(score: SignalScore): RiseCategory | null {
+  const s = score.scores_by_filter
+  if (!s) {
+    // fallback: highest raw category
+    const cats: [RiseCategory, number][] = [
+      ['수주잔고_선행', score.growth],
+      ['수익성_급전환', score.quality],
+      ['빅테크_파트너', score.sponsorship],
+      ['플랫폼_독점', score.momentum],
+    ]
+    const top = cats.sort((a, b) => b[1] - a[1])[0]
+    return top[1] > 0 ? top[0] : null
+  }
+  const votes: [RiseCategory, number][] = [
+    ['수주잔고_선행', (s['f13_bcr'] ?? 0) * 2.5 + (s['f14_backlog_growth'] ?? 0) * 2],
+    ['수익성_급전환', (s['f15_opm_inflection'] ?? 0) * 3 + (s['f05_margin_trend'] ?? 0) * 1.5],
+    ['플랫폼_독점', (s['f06_roic'] ?? 0) + (s['f05_op_margin'] ?? 0) + (s['f07_fcf'] ?? 0)],
+    ['빅테크_파트너', (s['f10_foreign'] ?? 0) * 3 + (s['us10_institutional'] ?? 0) * 3],
+  ]
+  const top = votes.sort((a, b) => b[1] - a[1])[0]
+  return top[1] > 0 ? top[0] : null
 }
 
 const ALL_CATEGORIES = Object.keys(RISE_CATEGORY_META) as RiseCategory[]
@@ -34,7 +69,7 @@ export default function SignalsPage() {
 
   return (
     <div className="space-y-5">
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div>
           <h1 className="text-xl font-semibold text-[var(--color-text-1)]">시그널</h1>
           <p className="text-sm text-[var(--color-text-2)] mt-1">
@@ -43,7 +78,7 @@ export default function SignalsPage() {
         </div>
 
         {/* 기간 + 골든 필터 */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
           <select
             value={days}
             onChange={e => setDays(Number(e.target.value))}
@@ -143,8 +178,13 @@ export default function SignalsPage() {
 
 function SignalCard({ signal }: { signal: SignalRow }) {
   const name = signal.stocks?.name_kr || signal.stocks?.name_en
+  const scoreCategory = signal.score?.passed ? deriveScoreCategory(signal.score) : null
+  // 트리거 카테고리와 스코어 카테고리가 다르면 둘 다 표시
+  const showScoreCat = scoreCategory && scoreCategory !== signal.rise_category
+
   return (
-    <div className="rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] p-4">
+    <a href={`/stocks/${signal.ticker}`}
+       className="block rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] p-4 hover:border-[var(--color-accent)]/50 transition-colors">
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-1.5 min-w-0">
           <div className="flex flex-wrap items-center gap-2">
@@ -162,8 +202,16 @@ function SignalCard({ signal }: { signal: SignalRow }) {
                 골든
               </span>
             )}
+            {/* 트리거 기반 카테고리 */}
             {signal.rise_category && (
               <RiseCategoryBadge category={signal.rise_category} />
+            )}
+            {/* 스코어 기반 카테고리 (다를 때만) */}
+            {showScoreCat && (
+              <span className="text-[10px] text-[var(--color-text-2)] flex items-center gap-1">
+                <span>정량↗</span>
+                <RiseCategoryBadge category={scoreCategory} />
+              </span>
             )}
           </div>
           <p className="text-sm text-[var(--color-text-2)] line-clamp-2">{signal.summary}</p>
@@ -181,16 +229,21 @@ function SignalCard({ signal }: { signal: SignalRow }) {
           )}
         </div>
 
-        <div className="text-right shrink-0">
+        <div className="text-right shrink-0 space-y-1">
           <div className="text-sm font-medium text-[var(--color-text-1)]">
             신뢰도 {Math.round((signal.confidence ?? 0) * 100)}%
           </div>
-          <div className="text-xs text-[var(--color-text-2)] mt-0.5">
+          {signal.score?.score_10x != null && signal.score.passed && (
+            <div className="text-xs font-medium text-[var(--color-accent)]">
+              10X {Math.round(signal.score.score_10x)}점
+            </div>
+          )}
+          <div className="text-xs text-[var(--color-text-2)]">
             {new Date(signal.detected_at).toLocaleDateString('ko-KR')}
           </div>
         </div>
       </div>
-    </div>
+    </a>
   )
 }
 

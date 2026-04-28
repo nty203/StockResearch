@@ -110,10 +110,10 @@ EARNINGS_KEYWORDS = ["어닝 서프라이즈", "earnings surprise", "컨센서�
 
 def _extract_amount_krw(text: str) -> float | None:
     """Extract amount in KRW billions from Korean text."""
-    # 조 단위 (trillion KRW)
+    # 조 단위 (trillion KRW): 1조 = 1,000 billion KRW
     m = re.search(r"(\d+(?:\.\d+)?)\s*조\s*원?", text)
     if m:
-        return float(m.group(1)) * 1_000_000  # billions
+        return float(m.group(1)) * 1_000  # billions
 
     # 억 단위 (100M KRW)
     m = re.search(r"(\d+(?:,\d{3})*(?:\.\d+)?)\s*억\s*원?", text)

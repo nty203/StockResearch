@@ -81,7 +81,7 @@ export default function WatchlistPage() {
               key={item.id}
               className="rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] p-4 space-y-3"
             >
-              <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start justify-between gap-3 flex-wrap">
                 <div className="flex-1 min-w-0">
                   <Link href={`/stocks/${item.ticker}`} className="hover:text-[var(--color-accent)]">
                     <span className="text-base font-semibold text-[var(--color-text-1)]">{item.ticker}</span>
@@ -118,7 +118,7 @@ export default function WatchlistPage() {
                   )}
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-4 text-sm">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm">
                 <div>
                   <span className="text-[var(--color-text-2)]">목표가</span>
                   <p className="text-[var(--color-text-1)] font-medium">

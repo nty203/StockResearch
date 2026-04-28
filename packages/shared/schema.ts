@@ -4,7 +4,7 @@
 export type Market = 'KOSPI' | 'KOSDAQ' | 'NYSE' | 'NASDAQ'
 export type QueueStatus = 'PENDING' | 'CLAIMED' | 'COMPLETED' | 'FAILED' | 'INVALID'
 export type WatchlistStatus = 'candidate' | 'yellow' | 'green'
-export type PipelineStage = 'universe' | 'prices' | 'financials' | 'filings' | 'news' | 'scores' | 'queue' | 'notify' | 'queue_reset'
+export type PipelineStage = 'universe' | 'prices' | 'financials' | 'filings' | 'news' | 'scores' | 'queue' | 'notify' | 'queue_reset' | 'hundredx'
 
 export type Stock = {
   id: string
@@ -208,6 +208,41 @@ export type BacktestResult = {
   created_at: string
 }
 
+export type HundredxLibraryStock = {
+  id: string
+  ticker: string
+  category: RiseCategory
+  pre_rise_signals: Record<string, unknown> | null
+  earliest_signal_date: string | null
+  rise_start_date: string | null
+  peak_multiplier: number | null
+  notes: string | null
+  created_at: string
+}
+
+export type HundredxEvidence = {
+  source_type: string
+  source_id: string
+  text_excerpt: string
+  date: string | null
+  amount: number | null
+}
+
+export type HundredxCategoryMatch = {
+  id: string
+  ticker: string
+  category: RiseCategory
+  confidence: number
+  evidence: HundredxEvidence[]
+  first_detected_at: string | null
+  detected_at: string
+  exited_at: string | null
+  alert_sent_at: string | null
+  analog_ticker: string | null
+  analog_date: string | null
+  analog_multiplier: number | null
+}
+
 // Supabase Database type for createClient<Database>
 export type Database = {
   public: {
@@ -227,6 +262,8 @@ export type Database = {
       failure_cases:    { Row: FailureCase;    Insert: Omit<FailureCase, 'id'>;                    Update: Partial<Omit<FailureCase, 'id'>>;    Relationships: never[] }
       backtest_runs:    { Row: BacktestRun;    Insert: Omit<BacktestRun, 'id' | 'created_at'>;     Update: Partial<Omit<BacktestRun, 'id'>>;    Relationships: never[] }
       backtest_results: { Row: BacktestResult; Insert: Omit<BacktestResult, 'id' | 'created_at'>; Update: Partial<Omit<BacktestResult, 'id'>>; Relationships: never[] }
+      hundredx_library_stocks:    { Row: HundredxLibraryStock;    Insert: Omit<HundredxLibraryStock, 'id' | 'created_at'>;    Update: Partial<Omit<HundredxLibraryStock, 'id'>>;    Relationships: never[] }
+      hundredx_category_matches:  { Row: HundredxCategoryMatch;   Insert: Omit<HundredxCategoryMatch, 'id'>;                  Update: Partial<Omit<HundredxCategoryMatch, 'id'>>;  Relationships: never[] }
     }
     Views: { [_ in never]: never }
     Functions: { [_ in never]: never }

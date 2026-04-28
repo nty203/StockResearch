@@ -109,7 +109,7 @@ export default function QueuePage() {
           {claimed.map(item => {
             const h = hoursAgo(item.claimed_at)
             return (
-              <div key={item.id} className="rounded bg-[var(--color-surface)] border border-[var(--color-border)] px-4 py-2.5 flex items-center gap-4">
+              <div key={item.id} className="rounded bg-[var(--color-surface)] border border-[var(--color-border)] px-4 py-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
                 <div className="flex-1 min-w-0">
                   <span className="text-sm font-medium text-[var(--color-text-1)]">{item.ticker}</span>
                   <span className="text-xs text-[var(--color-text-2)] ml-2">{item.prompt_type}</span>
@@ -119,7 +119,7 @@ export default function QueuePage() {
                     </span>
                   )}
                 </div>
-                <div className="flex gap-2 shrink-0">
+                <div className="flex gap-2 flex-wrap shrink-0">
                   <button
                     onClick={() => { setUploadId(item.id); setUploadText(''); setUploadError(null) }}
                     className="text-xs px-2 py-1 rounded bg-[var(--color-accent)]/20 text-[var(--color-accent)]"
@@ -159,7 +159,7 @@ export default function QueuePage() {
 
       {uploadId && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-          <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 w-full max-w-lg space-y-4">
+          <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4 sm:p-6 w-full max-w-lg space-y-4">
             <h2 className="text-base font-semibold text-[var(--color-text-1)]">분석 결과 업로드</h2>
             <textarea
               value={uploadText}
@@ -195,12 +195,12 @@ export default function QueuePage() {
 
 function QueueRow({ item, onUploadClick }: { item: AnalysisQueue; onUploadClick: () => void }) {
   return (
-    <div className="rounded bg-[var(--color-surface)] border border-[var(--color-border)] px-4 py-2.5 flex items-center gap-4">
+    <div className="rounded bg-[var(--color-surface)] border border-[var(--color-border)] px-4 py-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
       <div className="flex-1 min-w-0">
         <span className="text-sm font-medium text-[var(--color-text-1)]">{item.ticker}</span>
         <span className="text-xs text-[var(--color-text-2)] ml-2">{item.prompt_type}</span>
       </div>
-      <div className="flex gap-2 shrink-0">
+      <div className="flex gap-2 flex-wrap shrink-0">
         {item.storage_path_prompt && (
           <a
             href={`/api/queue/${item.id}/download`}

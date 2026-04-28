@@ -4,7 +4,8 @@ export const runtime = 'edge'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
-import type { ScreenScore, AgentScore, TriggerEvent, Stock } from '@stock/shared'
+import type { ScreenScore, AgentScore, TriggerEvent, Stock, RiseCategory } from '@stock/shared'
+import { RiseCategoryBadge, RISE_CATEGORY_META } from '@/components/ui/rise-category-badge'
 
 type Tab = 'overview' | 'events' | 'risk'
 
@@ -19,6 +20,8 @@ interface Financials {
   fcf: number | null
   debt_ratio: number | null
   roe: number | null
+  order_backlog: number | null
+  order_backlog_prev: number | null
 }
 
 interface PriceContext {
@@ -36,6 +39,212 @@ interface StockDetail {
   financials: Financials
   priceContext: PriceContext
 }
+
+// ── 100X 판단 근거 도출 ──────────────────────────────────────────────────────
+
+type FilterEvidence = { label: string; value: string; positive: boolean }
+
+type RiseReason = {
+  category: RiseCategory
+  headline: string
+  evidence: FilterEvidence[]
+  why100x: string
+  confidence: 'high' | 'medium' | 'low'
+  secondaryCategories: RiseCategory[]
+}
+
+function deriveRiseReason(
+  scoresMap: Record<string, number> | null | undefined,
+  financials: Financials,
+  priceContext: PriceContext,
+  events: TriggerEvent[],
+): RiseReason | null {
+  if (!scoresMap) return null
+
+  type Candidate = { cat: RiseCategory; score: number; reason: Omit<RiseReason, 'category' | 'secondaryCategories'> }
+  const candidates: Candidate[] = []
+
+  // ── 1. 수주잔고_선행 ────────────────────────────────────────────────────────
+  const bcrScore = scoresMap['f13_bcr'] ?? 0
+  const backlogGrowthScore = scoresMap['f14_backlog_growth'] ?? 0
+  if (bcrScore > 0 || backlogGrowthScore > 0) {
+    const bcr = bcrScore / 5 // f13_bcr = min(10, BCR*5) → BCR = score/5
+    const ev: FilterEvidence[] = []
+    if (bcr > 0) {
+      const bcrDisplay = financials.order_backlog && financials.revenue_ttm
+        ? (financials.order_backlog / financials.revenue_ttm).toFixed(1) + 'x'
+        : bcr.toFixed(1) + 'x'
+      ev.push({ label: '수주잔고/매출(BCR)', value: bcrDisplay + ' 확보', positive: true })
+    }
+    if (backlogGrowthScore > 0) {
+      const pctApprox = 20 + backlogGrowthScore * 8
+      ev.push({ label: '수주잔고 YoY', value: `+${pctApprox.toFixed(0)}%+ 증가`, positive: true })
+    }
+    if (financials.rev_growth_pct != null)
+      ev.push({ label: '매출 성장', value: `${financials.rev_growth_pct.toFixed(0)}% YoY`, positive: financials.rev_growth_pct >= 20 })
+    if (financials.order_backlog != null)
+      ev.push({ label: '수주잔고 잔액', value: fmtBillion(financials.order_backlog), positive: true })
+
+    candidates.push({
+      cat: '수주잔고_선행',
+      score: bcrScore * 2.5 + backlogGrowthScore * 2 + (scoresMap['f03'] ?? 0) * 0.5,
+      reason: {
+        headline: `수주잔고가 매출의 ${bcr > 0 ? bcr.toFixed(1) + 'x' : '확보'}되어 향후 12개월 매출이 선행으로 확정된 구간`,
+        evidence: ev,
+        why100x: '수주잔고는 매출보다 9~12개월 앞서는 선행지표입니다. 잔고가 쌓이는 구간에서 주가는 실적 인식 전에 반응하며, BCR 2x 이상 + YoY 성장 조합은 멀티플 재평가 트리거가 됩니다.',
+        confidence: bcrScore >= 6 ? 'high' : bcrScore >= 3 ? 'medium' : 'low',
+      },
+    })
+  }
+
+  // ── 2. 수익성_급전환 ────────────────────────────────────────────────────────
+  const opmInflection = scoresMap['f15_opm_inflection'] ?? 0
+  const marginTrend = scoresMap['f05_margin_trend'] ?? 0
+  const isLowBase = financials.op_margin_prev != null && financials.op_margin_prev < 10
+  if (opmInflection > 0 || (marginTrend > 0 && isLowBase)) {
+    const ev: FilterEvidence[] = []
+    if (financials.op_margin_prev != null && financials.op_margin != null) {
+      ev.push({ label: '영업이익률 전환', value: `${financials.op_margin_prev.toFixed(1)}% → ${financials.op_margin.toFixed(1)}%`, positive: true })
+      const improvement = financials.op_margin - financials.op_margin_prev
+      ev.push({ label: '이익률 개선폭', value: `+${improvement.toFixed(1)}pp`, positive: true })
+    }
+    if (financials.roic != null)
+      ev.push({ label: 'ROIC', value: `${financials.roic.toFixed(1)}%`, positive: financials.roic > 10 })
+
+    candidates.push({
+      cat: '수익성_급전환',
+      score: opmInflection * 3 + marginTrend * 1.5,
+      reason: {
+        headline: `저마진 베이스(${financials.op_margin_prev?.toFixed(1) ?? '?'}%)에서 영업이익률 급등 — 영업레버리지 전환점 포착`,
+        evidence: ev,
+        why100x: '고정비 구조에서 매출이 임계점을 넘으면 이익이 기하급수적으로 증가합니다. 전환 초입에서 EV/EBIT 멀티플이 적자→흑자로 바뀌는 순간 시장이 재평가하며, 이 구간의 주가 상승폭이 가장 큽니다.',
+        confidence: opmInflection >= 5 ? 'high' : 'medium',
+      },
+    })
+  }
+
+  // ── 3. 플랫폼_독점 ──────────────────────────────────────────────────────────
+  const roicScore = scoresMap['f06_roic'] ?? 0
+  const opMarginScore = scoresMap['f05_op_margin'] ?? 0
+  const fcfScore = scoresMap['f07_fcf'] ?? 0
+  if (roicScore > 3 && opMarginScore > 3 && bcrScore === 0) {
+    const ev: FilterEvidence[] = []
+    if (financials.roic != null) ev.push({ label: 'ROIC', value: `${financials.roic.toFixed(1)}%`, positive: financials.roic > 15 })
+    if (financials.op_margin != null) ev.push({ label: '영업이익률', value: `${financials.op_margin.toFixed(1)}%`, positive: financials.op_margin > 10 })
+    if (fcfScore > 0 && financials.fcf != null) ev.push({ label: 'FCF', value: fmtBillion(financials.fcf), positive: financials.fcf > 0 })
+
+    candidates.push({
+      cat: '플랫폼_독점',
+      score: roicScore + opMarginScore + fcfScore,
+      reason: {
+        headline: `ROIC ${financials.roic?.toFixed(0) ?? '?'}%, 고영업마진 — 경쟁자가 진입하기 어려운 플랫폼 해자 구조`,
+        evidence: ev,
+        why100x: '경제적 해자가 있는 플랫폼은 시장이 확대될수록 이익이 비선형으로 성장합니다. ROIC > 15%는 내부 자본을 복리로 재투자하고 있다는 신호이며, TAM 확대 + 독점 구조는 장기 10배 이상 상승의 핵심 조건입니다.',
+        confidence: roicScore >= 5 && opMarginScore >= 5 ? 'high' : 'medium',
+      },
+    })
+  }
+
+  // ── 4. 빅테크_파트너 ────────────────────────────────────────────────────────
+  const foreignScore = scoresMap['f10_foreign'] ?? 0
+  const institutionalScore = scoresMap['us10_institutional'] ?? 0
+  const partnerTriggers = events.filter(e =>
+    ['빅테크_파트너', '단일_수주', '기관_집중', '내부자_매수'].includes(e.event_type)
+  )
+  if (foreignScore > 0 || institutionalScore > 0 || partnerTriggers.length > 0) {
+    const ev: FilterEvidence[] = []
+    if (foreignScore > 0) ev.push({ label: '외국인 지분', value: '10%+ 확보', positive: true })
+    if (institutionalScore > 0) ev.push({ label: '기관 지분', value: '30%+ 확보', positive: true })
+    partnerTriggers.slice(0, 2).forEach(e =>
+      ev.push({ label: e.event_type, value: e.summary.slice(0, 35) + (e.summary.length > 35 ? '…' : ''), positive: true })
+    )
+    const hasQuantScore = foreignScore > 0 || institutionalScore > 0
+
+    candidates.push({
+      cat: '빅테크_파트너',
+      score: foreignScore * 3 + institutionalScore * 3 + partnerTriggers.length * 4,
+      reason: {
+        headline: '스마트머니 선행 진입 — 정보 비대칭 구간에서 대형 자금 축적 중',
+        evidence: ev,
+        why100x: '외국인/기관의 대규모 지분 축적은 미공개 대형 계약이나 구조 변화를 앞서 감지한 결과인 경우가 많습니다. 이들이 매집 완료 후 공시가 나오면 주가가 급격히 반응합니다.',
+        confidence: hasQuantScore && partnerTriggers.length > 0 ? 'high' : 'medium',
+      },
+    })
+  }
+
+  // ── 5. 임상_파이프라인 ──────────────────────────────────────────────────────
+  const clinicalTriggers = events.filter(e => e.rise_category === '임상_파이프라인')
+  if (clinicalTriggers.length > 0) {
+    candidates.push({
+      cat: '임상_파이프라인',
+      score: clinicalTriggers[0].confidence * 30,
+      reason: {
+        headline: 'FDA/식약처 임상 단계 진행 — 다음 단계 전환 시 밸류에이션 전면 재평가',
+        evidence: clinicalTriggers.slice(0, 3).map(e => ({
+          label: e.event_type,
+          value: e.summary.slice(0, 40) + (e.summary.length > 40 ? '…' : ''),
+          positive: true,
+        })),
+        why100x: '임상 단계별 성공 확률을 반영한 확률조정 NPV에서 다음 단계 진입 시 리스크 프리미엄이 급락하고 피크 매출 기준 밸류에이션으로 전환됩니다. 각 단계 전환이 독립적인 10배 모멘트입니다.',
+        confidence: clinicalTriggers[0].confidence >= 0.6 ? 'high' : 'medium',
+      },
+    })
+  }
+
+  // ── 6. 정책_수혜 ────────────────────────────────────────────────────────────
+  const policyTriggers = events.filter(e => ['규제_해소', '지정학_수혜'].includes(e.event_type))
+  if (policyTriggers.length > 0) {
+    candidates.push({
+      cat: '정책_수혜',
+      score: policyTriggers[0].confidence * 20,
+      reason: {
+        headline: '정책/지정학 tailwind — 정부 수요 또는 규제 해소로 수주 파이프라인 팽창',
+        evidence: policyTriggers.slice(0, 2).map(e => ({
+          label: e.event_type,
+          value: e.summary.slice(0, 40) + (e.summary.length > 40 ? '…' : ''),
+          positive: true,
+        })),
+        why100x: '정책 수혜 산업은 정부 예산이 앞세운 수요 폭발로 단기간에 기업 규모가 10배 이상 커지는 사례가 반복됩니다. 수주 잔고가 빠르게 쌓이는 구간이 최적 진입점입니다.',
+        confidence: 'medium',
+      },
+    })
+  }
+
+  // ── 7. 공급_병목 ────────────────────────────────────────────────────────────
+  const bottleneckTriggers = events.filter(e => ['공급_병목', '원자재_가격'].includes(e.event_type))
+  if (bottleneckTriggers.length > 0) {
+    candidates.push({
+      cat: '공급_병목',
+      score: bottleneckTriggers[0].confidence * 15,
+      reason: {
+        headline: '공급 제약 구간 수혜 — 수요 초과 상황에서 가격 결정력 확보',
+        evidence: bottleneckTriggers.slice(0, 2).map(e => ({
+          label: e.event_type,
+          value: e.summary.slice(0, 40) + (e.summary.length > 40 ? '…' : ''),
+          positive: true,
+        })),
+        why100x: '공급이 제한된 상황에서 수요가 급증하면 가격이 급등하고 마진이 폭발적으로 개선됩니다. 희소성이 지속되는 동안 기업은 시장을 독점하는 것과 유사한 이익 구조를 갖습니다.',
+        confidence: 'medium',
+      },
+    })
+  }
+
+  if (candidates.length === 0) return null
+  candidates.sort((a, b) => b.score - a.score)
+  const top = candidates[0]
+  const secondaryCategories = candidates
+    .slice(1, 3)
+    .filter(c => c.score >= top.score * 0.4)
+    .map(c => c.cat)
+
+  return {
+    category: top.cat,
+    ...top.reason,
+    secondaryCategories,
+  }
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
 
 const SCORE_CATEGORIES = [
   { key: 'growth',      label: '성장성',   max: 28 },
@@ -73,7 +282,6 @@ function fmtBillion(n: number | null) {
   return n.toFixed(0)
 }
 
-// 필터코드 → 한국어 라벨 (Python 스코어링 엔진의 scores_by_filter 키와 1:1 대응)
 const FILTER_LABEL: Record<string, string> = {
   f03:               '매출 YoY 성장',
   f04:               '성장 가속',
@@ -109,10 +317,7 @@ const CATEGORY_FILTERS: Record<string, string[]> = {
   size:        ['size_score'],
 }
 
-function buildCategorySummary(
-  cat: string,
-  scoresMap: Record<string, number> | null | undefined
-): string | null {
+function buildCategorySummary(cat: string, scoresMap: Record<string, number> | null | undefined): string | null {
   if (!scoresMap) return null
   const filters = CATEGORY_FILTERS[cat] ?? []
   const fired = filters.filter(f => (scoresMap[f] ?? 0) > 0)
@@ -137,6 +342,71 @@ function MetricRow({ label, value, ok, sub }: { label: string; value: string; ok
     </tr>
   )
 }
+
+// ── RiseReasonPanel ───────────────────────────────────────────────────────────
+
+function ConfidencePip({ level }: { level: 'high' | 'medium' | 'low' }) {
+  const colors = { high: 'bg-[var(--color-success)]', medium: 'bg-[var(--color-gold)]', low: 'bg-[var(--color-text-2)]' }
+  const labels = { high: '근거 강함', medium: '근거 보통', low: '근거 약함' }
+  return (
+    <span className="flex items-center gap-1 text-[10px] text-[var(--color-text-2)]">
+      <span className={`inline-block w-2 h-2 rounded-full ${colors[level]}`} />
+      {labels[level]}
+    </span>
+  )
+}
+
+function RiseReasonPanel({ reason }: { reason: RiseReason }) {
+  const meta = RISE_CATEGORY_META[reason.category]
+  return (
+    <div className={`rounded-lg border border-current/20 p-4 space-y-3 ${meta.bg.replace('/15', '/8')}`}>
+      <div className="flex items-start justify-between gap-3 flex-wrap">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-xs font-semibold text-[var(--color-text-2)]">100X 상승 판단 근거</span>
+            <RiseCategoryBadge category={reason.category} />
+            {reason.secondaryCategories.map(cat => (
+              <RiseCategoryBadge key={cat} category={cat} />
+            ))}
+          </div>
+          <p className={`text-sm font-medium ${meta.color}`}>{reason.headline}</p>
+        </div>
+        <ConfidencePip level={reason.confidence} />
+      </div>
+
+      {/* Evidence */}
+      <div className="grid grid-cols-2 gap-x-4 gap-y-1 sm:grid-cols-3">
+        {reason.evidence.map((ev, i) => (
+          <div key={i} className="flex items-start gap-1.5">
+            <span className={`shrink-0 text-xs mt-0.5 ${ev.positive ? 'text-[var(--color-success)]' : 'text-[var(--color-error)]'}`}>
+              {ev.positive ? '✓' : '✗'}
+            </span>
+            <div>
+              <p className="text-[10px] text-[var(--color-text-2)] leading-tight">{ev.label}</p>
+              <p className={`text-xs font-medium leading-tight ${ev.positive ? 'text-[var(--color-text-1)]' : 'text-[var(--color-error)]'}`}>
+                {ev.value}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Why 100x */}
+      <details className="group">
+        <summary className="cursor-pointer text-xs text-[var(--color-text-2)] hover:text-[var(--color-text-1)] list-none flex items-center gap-1">
+          <span className="group-open:hidden">▶</span>
+          <span className="hidden group-open:inline">▼</span>
+          왜 100배인가?
+        </summary>
+        <p className="mt-2 text-xs text-[var(--color-text-2)] leading-relaxed border-l-2 border-[var(--color-border)] pl-3">
+          {reason.why100x}
+        </p>
+      </details>
+    </div>
+  )
+}
+
+// ── Main Page ─────────────────────────────────────────────────────────────────
 
 export default function StockDetailPage() {
   const { ticker } = useParams<{ ticker: string }>()
@@ -169,14 +439,17 @@ export default function StockDetailPage() {
 
   const { stock, score, agentScores, events, financials, priceContext } = data
   const failedSet = new Set(score?.failed_filters ?? [])
+  const riseReason = score?.passed
+    ? deriveRiseReason(score.scores_by_filter, financials, priceContext, events)
+    : null
 
   return (
     <div className="space-y-6">
       {/* Hero */}
       <div className="rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] p-6">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
               <span className="text-2xl font-bold text-[var(--color-text-1)]">{ticker}</span>
               {(stock.name_kr || stock.name_en) && (
                 <span className="text-lg text-[var(--color-text-2)]">{stock.name_kr || stock.name_en}</span>
@@ -189,6 +462,7 @@ export default function StockDetailPage() {
                   {score.passed ? '필터 통과' : '필터 미통과'}
                 </span>
               )}
+              {riseReason && <RiseCategoryBadge category={riseReason.category} />}
             </div>
             {stock.sector_wics && (
               <p className="text-sm text-[var(--color-text-2)] mt-1">{stock.sector_wics}{stock.industry ? ` · ${stock.industry}` : ''}</p>
@@ -202,7 +476,7 @@ export default function StockDetailPage() {
             )}
           </div>
           {score && (
-            <div className="text-right shrink-0">
+            <div className="sm:text-right shrink-0">
               <div className="text-3xl font-bold text-[var(--color-text-1)]">{Math.round(score.score_10x ?? 0)}</div>
               <div className="text-xs text-[var(--color-text-2)]">10X Score</div>
               {score.percentile > 0 && (
@@ -213,9 +487,9 @@ export default function StockDetailPage() {
         </div>
       </div>
 
-      <div className="flex gap-6">
+      <div className="flex flex-col md:flex-row md:gap-6">
         {/* Main content */}
-        <div className="flex-1 min-w-0 space-y-4">
+        <div className="flex-1 min-w-0 space-y-4 order-2 md:order-1">
           <div className="flex gap-1 border-b border-[var(--color-border)]">
             {(['overview', 'events', 'risk'] as Tab[]).map(t => (
               <button
@@ -234,6 +508,9 @@ export default function StockDetailPage() {
 
           {tab === 'overview' && (
             <div className="space-y-4">
+              {/* 100X 판단 근거 패널 — 필터 통과 종목에만 표시 */}
+              {riseReason && <RiseReasonPanel reason={riseReason} />}
+
               {/* Failed filters */}
               {score && !score.passed && failedSet.size > 0 && (
                 <div className="rounded-lg bg-[var(--color-error)]/8 border border-[var(--color-error)]/30 p-4">
@@ -291,6 +568,16 @@ export default function StockDetailPage() {
                       value={fmt(financials.roe, 1, '%')}
                       ok={null}
                     />
+                    {financials.order_backlog != null && (
+                      <MetricRow
+                        label="수주잔고"
+                        value={fmtBillion(financials.order_backlog)}
+                        ok={true}
+                        sub={financials.revenue_ttm && financials.revenue_ttm > 0
+                          ? `BCR ${(financials.order_backlog / financials.revenue_ttm).toFixed(1)}x`
+                          : undefined}
+                      />
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -326,7 +613,7 @@ export default function StockDetailPage() {
                 <div className="rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] p-4">
                   <p className="text-xs font-semibold text-[var(--color-text-1)] mb-3">분기 실적 추이</p>
                   <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
+                    <table className="w-full text-xs min-w-[420px]">
                       <thead>
                         <tr className="text-[var(--color-text-2)] border-b border-[var(--color-border)]">
                           <th className="text-left py-1 pr-4 font-medium">분기</th>
@@ -374,6 +661,7 @@ export default function StockDetailPage() {
                               골든
                             </span>
                           )}
+                          {ev.rise_category && <RiseCategoryBadge category={ev.rise_category} />}
                           <span className="text-xs text-[var(--color-text-2)]">신뢰도 {(ev.confidence * 100).toFixed(0)}%</span>
                         </div>
                         <p className="text-sm text-[var(--color-text-2)] mt-1">{ev.summary}</p>
@@ -425,7 +713,7 @@ export default function StockDetailPage() {
 
         {/* Score sidebar */}
         {score && (
-          <div className="w-48 shrink-0 sticky top-20 self-start">
+          <div className="w-full md:w-48 md:shrink-0 md:sticky md:top-20 md:self-start order-1 md:order-2 mb-4 md:mb-0">
             <div className="rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] p-4 space-y-2">
               {SCORE_CATEGORIES.map(cat => {
                 const val = (score as unknown as Record<string, unknown>)[cat.key] as number | null

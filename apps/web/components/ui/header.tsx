@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { Menu } from 'lucide-react'
 
 interface LastRun {
   stage: string
@@ -18,7 +19,7 @@ function formatAge(isoDate: string | null): string {
   return `${Math.floor(hrs / 24)}일 전`
 }
 
-export function Header() {
+export function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   const { data } = useQuery<LastRun | null>({
     queryKey: ['lastRun'],
     queryFn: async () => {
@@ -31,12 +32,20 @@ export function Header() {
   })
 
   return (
-    <header className="h-12 flex items-center justify-between px-6 bg-surface border-b border-border flex-shrink-0">
-      <div className="flex items-center gap-3">
-        <MarketGateBadge market="KOSPI" />
-        <MarketGateBadge market="S&P500" />
+    <header className="h-12 flex items-center justify-between px-3 md:px-6 bg-surface border-b border-border flex-shrink-0">
+      <div className="flex items-center gap-2 md:gap-3">
+        <button
+          type="button"
+          aria-label="메뉴 열기"
+          onClick={onMenuClick}
+          className="md:hidden p-2 -ml-2 text-text2 hover:text-text1"
+        >
+          <Menu size={20} />
+        </button>
+        <MarketGateBadge market="KOSPI" short="KR" />
+        <MarketGateBadge market="S&P500" short="US" />
       </div>
-      <div className="text-xs text-text2">
+      <div className="hidden sm:block text-xs text-text2">
         {data
           ? `마지막 수집: ${formatAge(data.ended_at)}`
           : '수집 이력 없음'}
@@ -45,10 +54,12 @@ export function Header() {
   )
 }
 
-function MarketGateBadge({ market }: { market: string }) {
+function MarketGateBadge({ market, short }: { market: string; short: string }) {
   return (
     <span className="px-2 py-0.5 rounded text-xs bg-card border border-border text-text2">
-      {market} <span className="text-text2">—</span>
+      <span className="hidden sm:inline">{market}</span>
+      <span className="sm:hidden">{short}</span>
+      <span className="text-text2"> —</span>
     </span>
   )
 }

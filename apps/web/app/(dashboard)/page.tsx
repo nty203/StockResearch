@@ -11,7 +11,7 @@ export default function DashboardPage() {
       <SetupBanner />
 
       {/* Hero row: 골든 시그널 + 워치리스트 */}
-      <div className="grid grid-cols-[1fr_200px] gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_200px] gap-4">
         <GoldenSignalFeed />
         <WatchlistSummary />
       </div>
