@@ -57,10 +57,14 @@ export default function HundredxPage() {
 
   const { data, isLoading, error } = useQuery<ApiResponse>({
     queryKey: ['hundredx', minConfidence],
-    queryFn: () =>
-      fetch(`/api/hundredx?min_confidence=${minConfidence}`).then(r => r.json()),
+    queryFn: async () => {
+      const res = await fetch(`/api/hundredx?min_confidence=${minConfidence}`)
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      return res.json()
+    },
     staleTime: 60_000,
     refetchInterval: 60_000,
+    retry: false,
   })
 
   const toggle = (ticker: string) => {
@@ -117,7 +121,7 @@ export default function HundredxPage() {
         </div>
       )}
 
-      {!isLoading && !error && (data?.results.length ?? 0) === 0 && (
+      {!isLoading && !error && (data?.results?.length ?? 0) === 0 && (
         <div className="rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] p-8 text-center">
           <p className="text-sm text-[var(--color-text-2)]">
             현재 임계값({Math.round(minConfidence * 100)}%) 이상의 카테고리 탐지 종목이 없습니다.
@@ -128,12 +132,12 @@ export default function HundredxPage() {
         </div>
       )}
 
-      {(data?.results.length ?? 0) > 0 && (
+      {(data?.results?.length ?? 0) > 0 && (
         <div className="space-y-3">
           <div className="text-xs text-[var(--color-text-2)]">
-            {data?.count}개 종목 (Conviction 순)
+            {data?.count ?? data?.results?.length ?? 0}개 종목 (Conviction 순)
           </div>
-          {data?.results.map(result => (
+          {data?.results?.map(result => (
             <StockCard
               key={result.ticker}
               result={result}
