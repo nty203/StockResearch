@@ -2,11 +2,12 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Target, BookOpen } from 'lucide-react'
+import { Target, BookOpen, BarChart2 } from 'lucide-react'
 
 const nav = [
-  { href: '/',         label: '100배 시그널', icon: Target },
-  { href: '/library',  label: '라이브러리',   icon: BookOpen },
+  { href: '/',               label: '100배 시그널', icon: Target },
+  { href: '/library',        label: '라이브러리',   icon: BookOpen },
+  { href: '/library/stats',  label: '카테고리 통계', icon: BarChart2 },
 ]
 
 export function Sidebar({
@@ -32,11 +33,13 @@ export function Sidebar({
       </div>
       <nav className="flex-1 py-2 overflow-y-auto">
         {nav.map(({ href, label, icon: Icon }) => {
-          // / 와 /hundredx (alias)는 같은 콘텐츠 — 둘 다 '100배 시그널' active
+          // Exact-match for leaf paths; prefix for / and /hundredx alias
           const active =
             href === '/'
               ? pathname === '/' || pathname.startsWith('/hundredx')
-              : pathname.startsWith(href)
+              : href === '/library'
+              ? pathname === '/library'
+              : pathname === href || pathname.startsWith(href + '/')
           return (
             <Link
               key={href}
