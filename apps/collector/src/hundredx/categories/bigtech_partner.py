@@ -11,8 +11,17 @@ from __future__ import annotations
 from ..keywords import BIGTECH_KEYWORDS, BIGTECH_PARTNER_KEYWORDS
 from ..models import CategoryMatch
 
-_EQUITY_KEYWORDS = ["유상증자 참여", "지분 취득", "전략적 투자"]
-_CALLOPT_KEYWORDS = ["콜옵션", "call option", "최대주주 전환"]
+_EQUITY_KEYWORDS = [
+    "유상증자 참여", "지분 취득", "전략적 투자",
+    # English equivalents for US stocks
+    "equity investment", "strategic investment", "acquired stake",
+    "stake acquisition", "strategic partnership agreement",
+]
+_CALLOPT_KEYWORDS = [
+    "콜옵션", "call option", "최대주주 전환",
+    # English equivalents
+    "warrant", "option to acquire", "right to purchase", "controlling interest",
+]
 
 
 def _kw_hit(text: str, keywords: list[str]) -> list[str]:

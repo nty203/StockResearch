@@ -8,7 +8,7 @@ on:
 jobs:
   hundredx:
     runs-on: ubuntu-latest
-    timeout-minutes: 60     # 2,600+ KR stocks × 7 detectors — ~52 batches 예상 30-40분
+    timeout-minutes: 90     # 2,600 KR + 1,500 US stocks × 7 detectors — ~82 batches 예상 40-60분
     defaults:
       run:
         working-directory: apps/collector

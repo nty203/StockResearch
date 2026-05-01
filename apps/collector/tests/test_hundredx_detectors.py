@@ -280,3 +280,32 @@ class TestClinicalPipe:
         from src.hundredx.keywords import BIOTECH_PIPELINE_KEYWORDS
         from src.hundredx.categories.clinical_pipe import BIOTECH_PIPELINE_KEYWORDS as imported
         assert imported is BIOTECH_PIPELINE_KEYWORDS
+
+    def test_stage_transition_1_to_2_boosts_confidence(self):
+        # older filing: 1상, recent: 2상 → delta=1 → confidence=0.85
+        f_recent = _filing("임상 2상 진입 완료 (phase 2 initiated)", filing_id="f1")
+        f_older  = _filing("임상 1상 결과 발표 주요사항보고서", filing_id="f2")
+        result = detect_clinical({"ticker": "T"}, [f_recent, f_older])
+        assert result is not None
+        assert result.confidence == 0.85
+        # Stage transition evidence should appear
+        stage_ev = [e for e in result.evidence if e.get("source_type") == "stage_transition"]
+        assert len(stage_ev) == 1
+        assert stage_ev[0]["amount"] == 1.0
+
+    def test_stage_transition_1_to_3_boosts_to_max(self):
+        # 2-step jump (1상→3상) → confidence=0.9
+        f_recent = _filing("임상 3상 진입 FDA 신청 (phase 3)", filing_id="f1")
+        f_older  = _filing("임상 1상 안전성 확인 IND", filing_id="f2")
+        result = detect_clinical({"ticker": "T"}, [f_recent, f_older])
+        assert result is not None
+        assert result.confidence == 0.9
+
+    def test_stage_regression_no_boost(self):
+        # 3상 in older, 1상 in recent → no stage transition boost
+        f_recent = _filing("임상 1상 추가 코호트", filing_id="f1")
+        f_older  = _filing("임상 3상 완료 NDA 제출", filing_id="f2")
+        result = detect_clinical({"ticker": "T"}, [f_recent, f_older])
+        assert result is not None
+        # Both have keywords → base=0.7, no stage advance bonus
+        assert result.confidence == 0.7

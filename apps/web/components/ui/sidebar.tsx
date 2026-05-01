@@ -2,12 +2,13 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Target, BookOpen, BarChart2 } from 'lucide-react'
+import { Target, BookOpen, BarChart2, PlusCircle } from 'lucide-react'
 
 const nav = [
   { href: '/',               label: '100배 시그널', icon: Target },
   { href: '/library',        label: '라이브러리',   icon: BookOpen },
   { href: '/library/stats',  label: '카테고리 통계', icon: BarChart2 },
+  { href: '/library/add',    label: '종목 추가',    icon: PlusCircle },
 ]
 
 export function Sidebar({
@@ -39,7 +40,7 @@ export function Sidebar({
               ? pathname === '/' || pathname.startsWith('/hundredx')
               : href === '/library'
               ? pathname === '/library'
-              : pathname === href || pathname.startsWith(href + '/')
+              : pathname === href
           return (
             <Link
               key={href}

@@ -360,18 +360,20 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
         logger.info("Library loaded: %d categories, %d stocks",
                     len(lib), sum(len(v) for v in lib.values()))
 
-        # Fetch active KR stocks
+        # Fetch active KR + US stocks
         stocks_res = (
             client.table("stocks")
             .select("ticker, market, sector_tag")
             .eq("is_active", True)
-            .in_("market", ["KOSPI", "KOSDAQ"])
+            .in_("market", ["KOSPI", "KOSDAQ", "NYSE", "NASDAQ"])
             .execute()
         )
         stocks = stocks_res.data or []
         tickers = [s["ticker"] for s in stocks]
         sector_by_ticker = {s["ticker"]: s.get("sector_tag") for s in stocks}
-        logger.info("Scanning %d active KR stocks", len(tickers))
+        kr_count = sum(1 for s in stocks if s["market"] in ("KOSPI", "KOSDAQ"))
+        us_count = len(stocks) - kr_count
+        logger.info("Scanning %d active stocks (KR: %d, US: %d)", len(tickers), kr_count, us_count)
 
         # Pre-fetch all existing matches (for first_detected_at management)
         existing = _fetch_existing(client, tickers)

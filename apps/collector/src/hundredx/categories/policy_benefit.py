@@ -10,7 +10,11 @@ from __future__ import annotations
 from ..keywords import GEOPOLITICAL_KEYWORDS
 from ..models import CategoryMatch
 
-_POLICY_SECTORS = {"방산", "원전", "반도체", "전력기기"}
+_POLICY_SECTORS = {
+    "방산", "원전", "반도체", "전력기기",
+    # US sector_tag equivalents (from S&P1500 sector data)
+    "defense", "nuclear", "semiconductor", "power",
+}
 
 
 def _kw_hit(text: str, keywords: list[str]) -> list[str]:

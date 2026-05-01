@@ -83,7 +83,7 @@ DROP TABLE IF EXISTS trigger_events CASCADE;  -- 만약 PR1에서 trigger_events
 
 ## P2 — High Priority (Phase 2)
 
-### [TODO-01] Category hit rate dashboard (`/hundredx/stats`)
+### ✅ [TODO-01] Category hit rate dashboard — `/library/stats` (완료)
 
 **What:** Per-category validation page. For each of 7 categories, shows: "Detected N stocks matching in past 3 years. X achieved 100x+, Y achieved 30x+, avg lead time: Z months."
 
@@ -100,7 +100,7 @@ DROP TABLE IF EXISTS trigger_events CASCADE;  -- 만약 PR1에서 trigger_events
 
 ---
 
-### [TODO-02] clinical_pipe.py stage-progression comparison
+### ✅ [TODO-02] clinical_pipe.py stage-progression comparison (완료)
 
 **What:** Upgrade `clinical_pipe.py` from keyword presence detection to cross-filing stage comparison: detect "IND→Phase 1", "Phase 1→Phase 2", "Phase 2→NDA" transitions across the 2 most recent filings.
 
@@ -119,7 +119,7 @@ DROP TABLE IF EXISTS trigger_events CASCADE;  -- 만약 PR1에서 trigger_events
 
 ## P3 — Nice to Have (Phase 3)
 
-### [TODO-03] Research library admin UI
+### ✅ [TODO-03] Research library admin UI (완료)
 
 **What:** Web form at `/hundredx/library` to add new historical 100x stocks to `hundredx_library_stocks` table. Fields: ticker, category, earliest_signal_date, rise_start_date, peak_multiplier, notes.
 
@@ -136,7 +136,7 @@ DROP TABLE IF EXISTS trigger_events CASCADE;  -- 만약 PR1에서 trigger_events
 
 ---
 
-### [TODO-04] US-market extension for category detectors
+### ✅ [TODO-04] US-market extension for category detectors (완료)
 
 **What:** Extend all 7 category detectors to run on S&P1500 stocks (NASDAQ/NYSE) in addition to KOSPI/KOSDAQ. Requires: SEC filing text compatibility (already in `filings` table via 8-K), US sector_tag mapping, US financials from `financials_q`.
 
