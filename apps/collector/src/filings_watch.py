@@ -9,7 +9,7 @@ import OpenDartReader as DartReader
 import edgar
 
 from .upsert import get_client, upsert_batch, pipeline_run
-from .screening.settings_loader import load_settings
+from .utils.settings import load_settings
 
 logger = logging.getLogger(__name__)
 

@@ -1,12 +1,12 @@
-name: Weekly Backtest & Prune
+name: Weekly Library Update & Prune
 
 on:
   schedule:
     - cron: '0 13 * * 0'   # 일요일 22:00 KST (UTC 13:00)
-  workflow_dispatch:         # /settings 페이지 수동 재실행 버튼용 — 반드시 유지
+  workflow_dispatch:         # 수동 재실행 — 반드시 유지
 
 jobs:
-  backtest-then-prune:
+  update-then-prune:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     defaults:
@@ -33,9 +33,10 @@ jobs:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
         run: uv run python -m src.financials_dart
 
-      # 백테스트 먼저, 완료 후 prune 실행 — 병렬 실행 금지 (데이터 경합 방지)
-      - name: Run backtest
-        run: uv run python -m src.screening.backtest
+      # hundredx 라이브러리 multiplier 갱신 — 현재가 기반 latest_multiplier 추적
+      - name: Update hundredx library multipliers
+        run: uv run python -m src.hundredx.update_library
 
+      # 가격 prune — update_library 이후 실행 (rise_start_date 가격 baseline 사용)
       - name: Prune old prices (> 2 years)
-        run: uv run python -m src.screening.prune_prices
+        run: uv run python -m src.utils.prune_prices

@@ -12,7 +12,7 @@ Thresholds:
 Stage-progression comparison deferred to Phase 2 (DART phase notation inconsistency).
 """
 from __future__ import annotations
-from ...triggers.classifier import BIOTECH_PIPELINE_KEYWORDS
+from ..keywords import BIOTECH_PIPELINE_KEYWORDS
 from ..models import CategoryMatch
 
 

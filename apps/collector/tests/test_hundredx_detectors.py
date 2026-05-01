@@ -143,7 +143,7 @@ class TestBigtechPartner:
 
     def test_imports_from_classifier_not_duplicate(self):
         # Verify keyword lists come from classifier.py
-        from src.triggers.classifier import BIGTECH_KEYWORDS
+        from src.hundredx.keywords import BIGTECH_KEYWORDS
         from src.hundredx.categories.bigtech_partner import BIGTECH_KEYWORDS as imported
         assert imported is BIGTECH_KEYWORDS
 
@@ -178,7 +178,7 @@ class TestPlatformMono:
         assert result is None
 
     def test_imports_monopoly_keywords_from_classifier(self):
-        from src.triggers.classifier import MONOPOLY_KEYWORDS
+        from src.hundredx.keywords import MONOPOLY_KEYWORDS
         from src.hundredx.categories.platform_mono import MONOPOLY_KEYWORDS as imported
         assert imported is MONOPOLY_KEYWORDS
 
@@ -238,7 +238,7 @@ class TestSupplyChoke:
         assert result is None
 
     def test_imports_supply_keywords_from_classifier(self):
-        from src.triggers.classifier import SUPPLY_BOTTLENECK_KEYWORDS
+        from src.hundredx.keywords import SUPPLY_BOTTLENECK_KEYWORDS
         from src.hundredx.categories.supply_choke import SUPPLY_BOTTLENECK_KEYWORDS as imported
         assert imported is SUPPLY_BOTTLENECK_KEYWORDS
 
@@ -277,6 +277,6 @@ class TestClinicalPipe:
         assert result is None  # f3 not checked
 
     def test_imports_biotech_keywords_from_classifier(self):
-        from src.triggers.classifier import BIOTECH_PIPELINE_KEYWORDS
+        from src.hundredx.keywords import BIOTECH_PIPELINE_KEYWORDS
         from src.hundredx.categories.clinical_pipe import BIOTECH_PIPELINE_KEYWORDS as imported
         assert imported is BIOTECH_PIPELINE_KEYWORDS

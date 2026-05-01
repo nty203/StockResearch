@@ -16,6 +16,8 @@ from datetime import datetime, timezone
 from ..upsert import get_client, pipeline_run
 from ..utils.db_fetch import bulk_fetch_financials
 from .models import CategoryMatch
+from .fingerprint_match import best_match_in_category, FingerprintMatch
+from .timeline_match import best_timeline_in_category, progress_to_dict
 from .categories.backlog_lead import detect as detect_backlog_lead
 from .categories.profit_inflect import detect as detect_profit_inflect
 from .categories.bigtech_partner import detect as detect_bigtech_partner
@@ -49,6 +51,14 @@ def _load_library(client) -> dict[str, list[dict]]:
     for r in rows:
         lib.setdefault(r["category"], []).append(r)
     return lib
+
+
+def _flatten_lib(lib: dict[str, list[dict]]) -> list[dict]:
+    """Flatten {category: [rows]} → flat list[row] for fingerprint matcher."""
+    out: list[dict] = []
+    for rows in lib.values():
+        out.extend(rows)
+    return out
 
 
 def _find_analog_financial(lib: dict, category: str, signal_key: str, current_val: float) -> dict | None:
@@ -197,13 +207,23 @@ def _upsert_matches_with_analogs(
     lib: dict,
     now: datetime,
 ) -> None:
-    """Upsert matches with analog fields populated."""
+    """Upsert matches with analog + fingerprint fields populated.
+
+    analog_ticker is derived from the BEST fingerprint match if available
+    (more meaningful than 'closest BCR'); falls back to most-recent-in-category.
+    """
     if not matches:
         return
     rows = []
     for m in matches:
         fda = _resolve_first_detected(m, existing, now)
-        analog = _get_analog(lib, m)
+
+        # Resolve analog from fingerprint match if present, else fallback
+        if m.fingerprint_library_ticker:
+            analog = _find_lib_entry(lib, m.fingerprint_library_ticker, m.category)
+        else:
+            analog = _get_analog(lib, m)
+
         rows.append({
             "ticker": m.ticker,
             "category": m.category,
@@ -215,6 +235,11 @@ def _upsert_matches_with_analogs(
             "analog_ticker": analog.get("ticker") if analog else None,
             "analog_date": analog.get("rise_start_date") if analog else None,
             "analog_multiplier": analog.get("peak_multiplier") if analog else None,
+            "fingerprint_score": (
+                round(m.fingerprint_score, 3) if m.fingerprint_score is not None else None
+            ),
+            "fingerprint_dims": m.fingerprint_dims,
+            "timeline_progress": m.timeline_progress,
         })
     try:
         client.table("hundredx_category_matches").upsert(
@@ -222,6 +247,13 @@ def _upsert_matches_with_analogs(
         ).execute()
     except Exception as e:
         logger.warning("upsert_matches error: %s", e)
+
+
+def _find_lib_entry(lib: dict, ticker: str, category: str) -> dict | None:
+    for row in lib.get(category, []):
+        if row.get("ticker") == ticker:
+            return row
+    return None
 
 
 def _get_analog(lib: dict, match: CategoryMatch) -> dict | None:
@@ -380,6 +412,20 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                         if result is not None and result.confidence >= min_confidence:
                             result.ticker = ticker
                             result.category = category
+                            # Fingerprint match: compare current signals to library precedent
+                            fp = best_match_in_category(stock_data, f, _flatten_lib(lib), category)
+                            if fp is not None:
+                                result.fingerprint_score = fp.score
+                                result.fingerprint_library_ticker = fp.library_ticker
+                                result.fingerprint_dims = {
+                                    "matched": fp.matched_dims,
+                                    "missing": fp.missing_dims,
+                                    "details": fp.details,
+                                }
+                            # Timeline progress: which trigger stage in best library timeline?
+                            tl = best_timeline_in_category(stock_data, f, _flatten_lib(lib), category)
+                            if tl is not None:
+                                result.timeline_progress = progress_to_dict(tl)
                             all_matches.append(result)
                             active_after.add((ticker, category))
                     except Exception as e:

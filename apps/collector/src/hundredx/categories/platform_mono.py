@@ -7,7 +7,7 @@ Thresholds:
   2+ monopoly keywords + 1 patent/cert keyword → confidence 0.8
 """
 from __future__ import annotations
-from ...triggers.classifier import MONOPOLY_KEYWORDS
+from ..keywords import MONOPOLY_KEYWORDS
 from ..models import CategoryMatch
 
 _PATENT_CERT_KEYWORDS = ["특허", "patent", "인증", "certification", "인가", "sole supplier"]

@@ -51,11 +51,22 @@ export const RISE_CATEGORY_META: Record<RiseCategory, {
 }
 
 export function RiseCategoryBadge({ category, showDesc = false }: {
-  category: RiseCategory
+  category: RiseCategory | string
   showDesc?: boolean
 }) {
-  const meta = RISE_CATEGORY_META[category]
-  if (!meta) return null
+  const meta = RISE_CATEGORY_META[category as RiseCategory]
+  // Unknown / auto-discovered placeholder
+  if (!meta) {
+    const label = category || '미분류'
+    return (
+      <span
+        title="자동 발견 — 카테고리 미분류 (시그널 추출 대기)"
+        className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium text-[var(--color-text-2)] bg-[var(--color-card)] border border-dashed border-[var(--color-border)]"
+      >
+        {label}
+      </span>
+    )
+  }
   return (
     <span
       title={meta.desc}

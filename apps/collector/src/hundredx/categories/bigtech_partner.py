@@ -8,7 +8,7 @@ Thresholds:
   BigTech + both 콜옵션 AND 지분 취득 → confidence 0.9
 """
 from __future__ import annotations
-from ...triggers.classifier import BIGTECH_KEYWORDS, BIGTECH_PARTNER_KEYWORDS
+from ..keywords import BIGTECH_KEYWORDS, BIGTECH_PARTNER_KEYWORDS
 from ..models import CategoryMatch
 
 _EQUITY_KEYWORDS = ["유상증자 참여", "지분 취득", "전략적 투자"]

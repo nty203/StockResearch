@@ -2,9 +2,7 @@
 // Regenerate with: npx supabase gen types typescript --local > packages/shared/schema.ts
 
 export type Market = 'KOSPI' | 'KOSDAQ' | 'NYSE' | 'NASDAQ'
-export type QueueStatus = 'PENDING' | 'CLAIMED' | 'COMPLETED' | 'FAILED' | 'INVALID'
-export type WatchlistStatus = 'candidate' | 'yellow' | 'green'
-export type PipelineStage = 'universe' | 'prices' | 'financials' | 'filings' | 'news' | 'scores' | 'queue' | 'notify' | 'queue_reset' | 'hundredx'
+export type PipelineStage = 'universe' | 'prices' | 'financials' | 'filings' | 'news' | 'hundredx'
 
 export type Stock = {
   id: string
@@ -74,40 +72,6 @@ export type News = {
   lang: 'ko' | 'en'
 }
 
-export type ScreenScore = {
-  ticker: string
-  run_date: string
-  growth: number
-  momentum: number
-  quality: number
-  sponsorship: number
-  value: number
-  safety: number
-  size: number
-  market_gate: number
-  score_10x: number
-  percentile: number
-  passed: boolean
-  failed_filters: string[]
-  scores_by_filter: Record<string, number> | null
-  created_at: string
-}
-
-export type AgentScore = {
-  id: string
-  ticker: string
-  run_date: string
-  prompt_type: string
-  demand_score: number | null
-  moat_score: number | null
-  trigger_score: number | null
-  narrative_md: string | null
-  risks_md: string | null
-  bull_bear_ratio: number | null
-  agent_model: string | null
-  created_at: string
-}
-
 export type RiseCategory =
   | '수주잔고_선행'
   | '빅테크_파트너'
@@ -116,42 +80,6 @@ export type RiseCategory =
   | '정책_수혜'
   | '수익성_급전환'
   | '공급_병목'
-
-export type TriggerEvent = {
-  id: string
-  ticker: string
-  event_type: string
-  detected_at: string
-  confidence: number
-  source_filing_id: string | null
-  matched_keywords: string[]
-  summary: string
-  golden: boolean
-  rise_category: RiseCategory | null
-}
-
-export type Watchlist = {
-  id: string
-  ticker: string
-  status: WatchlistStatus
-  added_at: string
-  notes: string | null
-  target_price: number | null
-  stop_loss: number | null
-  position_size_plan: string | null
-}
-
-export type AnalysisQueue = {
-  id: string
-  ticker: string
-  prompt_type: string
-  status: QueueStatus
-  created_at: string
-  claimed_at: string | null
-  storage_path_prompt: string | null
-  storage_path_result: string | null
-  claimed_by: string | null
-}
 
 export type PipelineRun = {
   id: string
@@ -170,44 +98,6 @@ export type Setting = {
   updated_at: string
 }
 
-export type FailureCase = {
-  id: string
-  ticker: string
-  peak_at: string
-  peak_price: number
-  trough_at: string
-  trough_price: number
-  early_signals: string[]
-  lesson_md: string | null
-}
-
-export type BacktestRun = {
-  id: string
-  run_date: string
-  triggered_by: string | null
-  dart_used: boolean
-  created_at: string
-}
-
-export type BacktestResult = {
-  id: string
-  run_id: string
-  ticker: string
-  name: string | null
-  market: string | null
-  snapshot_date: string
-  peak_date: string | null
-  actual_x: number | null
-  score_10x: number | null
-  passed: boolean
-  failed_filters: string[] | null
-  cats: Record<string, number> | null
-  price_at_snapshot: number | null
-  rs_score: number | null
-  is_target: boolean
-  created_at: string
-}
-
 export type HundredxLibraryStock = {
   id: string
   ticker: string
@@ -216,6 +106,9 @@ export type HundredxLibraryStock = {
   earliest_signal_date: string | null
   rise_start_date: string | null
   peak_multiplier: number | null
+  latest_multiplier: number | null         // 최근 update 시점 가격 기준 배수
+  price_at_rise_start: number | null        // rise_start_date 기준가
+  latest_updated_at: string | null          // update_library 마지막 실행 시각
   notes: string | null
   created_at: string
 }
@@ -241,6 +134,30 @@ export type HundredxCategoryMatch = {
   analog_ticker: string | null
   analog_date: string | null
   analog_multiplier: number | null
+  fingerprint_score: number | null    // 0-1, similarity to library precedent
+  fingerprint_dims: {                  // matched/missing dimensions detail
+    matched: string[]
+    missing: string[]
+    details: Record<string, unknown>
+  } | null
+  timeline_progress: {                 // trigger sequence timeline match
+    library_ticker: string
+    library_category: string
+    library_peak_multiplier: number | null
+    fired_triggers: Array<{
+      seq: number
+      name: string
+      months_from_rise: number
+      fired_at_date: string | null
+      fired_at_months_ago: number | null
+      weight: number
+      matched_signals: string[]
+    }>
+    total_triggers: number
+    trajectory_score: number
+    current_position_months: number
+    next_expected: { seq: number; name: string; months_from_rise: number; expected_in_months: number } | null
+  } | null
 }
 
 // Supabase Database type for createClient<Database>
@@ -252,16 +169,8 @@ export type Database = {
       financials_q:     { Row: FinancialQ;     Insert: Omit<FinancialQ, 'id' | 'created_at'>;     Update: Partial<Omit<FinancialQ, 'id'>>;     Relationships: never[] }
       filings:          { Row: Filing;         Insert: Omit<Filing, 'id' | 'created_at'>;          Update: Partial<Omit<Filing, 'id'>>;         Relationships: never[] }
       news:             { Row: News;           Insert: Omit<News, 'id'>;                           Update: Partial<Omit<News, 'id'>>;            Relationships: never[] }
-      screen_scores:    { Row: ScreenScore;    Insert: Omit<ScreenScore, 'created_at'>;            Update: Partial<ScreenScore>;                Relationships: never[] }
-      agent_scores:     { Row: AgentScore;     Insert: Omit<AgentScore, 'id' | 'created_at'>;      Update: Partial<Omit<AgentScore, 'id'>>;     Relationships: never[] }
-      trigger_events:   { Row: TriggerEvent;   Insert: Omit<TriggerEvent, 'id'>;                   Update: Partial<Omit<TriggerEvent, 'id'>>;   Relationships: never[] }
-      watchlist:        { Row: Watchlist;      Insert: Omit<Watchlist, 'id' | 'added_at'>;         Update: Partial<Omit<Watchlist, 'id'>>;      Relationships: never[] }
-      analysis_queue:   { Row: AnalysisQueue;  Insert: Omit<AnalysisQueue, 'id' | 'created_at'>;  Update: Partial<Omit<AnalysisQueue, 'id'>>;  Relationships: never[] }
       pipeline_runs:    { Row: PipelineRun;    Insert: Omit<PipelineRun, 'id'>;                    Update: Partial<Omit<PipelineRun, 'id'>>;    Relationships: never[] }
       settings:         { Row: Setting;        Insert: Setting;                                    Update: Partial<Setting>;                    Relationships: never[] }
-      failure_cases:    { Row: FailureCase;    Insert: Omit<FailureCase, 'id'>;                    Update: Partial<Omit<FailureCase, 'id'>>;    Relationships: never[] }
-      backtest_runs:    { Row: BacktestRun;    Insert: Omit<BacktestRun, 'id' | 'created_at'>;     Update: Partial<Omit<BacktestRun, 'id'>>;    Relationships: never[] }
-      backtest_results: { Row: BacktestResult; Insert: Omit<BacktestResult, 'id' | 'created_at'>; Update: Partial<Omit<BacktestResult, 'id'>>; Relationships: never[] }
       hundredx_library_stocks:    { Row: HundredxLibraryStock;    Insert: Omit<HundredxLibraryStock, 'id' | 'created_at'>;    Update: Partial<Omit<HundredxLibraryStock, 'id'>>;    Relationships: never[] }
       hundredx_category_matches:  { Row: HundredxCategoryMatch;   Insert: Omit<HundredxCategoryMatch, 'id'>;                  Update: Partial<Omit<HundredxCategoryMatch, 'id'>>;  Relationships: never[] }
     }

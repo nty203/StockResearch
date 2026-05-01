@@ -7,7 +7,7 @@ Thresholds (after classifier.py 조 bug fix: 1조 = 1_000 in billion units):
   keyword + amount >= 1_000 (1조 KRW) → confidence 0.7
 """
 from __future__ import annotations
-from ...triggers.classifier import SUPPLY_BOTTLENECK_KEYWORDS, _extract_amount_krw
+from ..keywords import SUPPLY_BOTTLENECK_KEYWORDS, _extract_amount_krw
 from ..models import CategoryMatch
 
 # After the 조 unit bug fix in classifier.py, _extract_amount_krw("1조원") == 1_000

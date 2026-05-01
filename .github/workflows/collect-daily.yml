@@ -34,9 +34,3 @@ jobs:
       # 가격은 하루 1회 — 장 마감 후 전일 종가 upsert
       - name: Run prices
         run: uv run python -m src.prices
-
-      - name: Run screening scores
-        run: uv run python -m src.screening.score
-
-      - name: Run enqueue
-        run: uv run python -m src.queue.enqueue

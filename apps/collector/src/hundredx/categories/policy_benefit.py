@@ -7,7 +7,7 @@ Thresholds:
   + sector_tag IN ('방산', '원전', '반도체') → confidence 0.7
 """
 from __future__ import annotations
-from ...triggers.classifier import GEOPOLITICAL_KEYWORDS
+from ..keywords import GEOPOLITICAL_KEYWORDS
 from ..models import CategoryMatch
 
 _POLICY_SECTORS = {"방산", "원전", "반도체", "전력기기"}

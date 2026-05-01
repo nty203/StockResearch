@@ -1,0 +1,37 @@
+name: 100x Auto-populate (월간)
+
+# 사용자 3단계 요구사항 자동화:
+#   Step 1: 5년 안에 100배+ 오른 주식 자동 발견 (FinanceDataReader)
+#   Step 1b: 발견 종목의 rise_start_date ±18개월 DART 공시 백필
+#   Step 2: 백필된 데이터에서 시그널 자동 추출 + 카테고리 분류
+#   Step 3: (별도 daily workflow) 추출된 fingerprint로 현재 종목 매칭
+on:
+  schedule:
+    - cron: '0 18 1 * *'   # 매월 1일 03:00 KST (UTC 18:00 prev day)
+  workflow_dispatch:
+
+jobs:
+  auto-populate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90      # FDR scan은 종목당 1초+, 가용 universe에 비례
+    defaults:
+      run:
+        working-directory: apps/collector
+    env:
+      SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+      SUPABASE_DB_URL:      ${{ secrets.SUPABASE_DB_URL }}
+      DART_API_KEY:         ${{ secrets.DART_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Run auto-populate (discover + backfill + extract)
+        run: uv run python -m src.hundredx.auto_populate --years 5 --min-multiplier 30

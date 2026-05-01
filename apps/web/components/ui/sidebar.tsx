@@ -2,25 +2,11 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import {
-  LayoutDashboard,
-  TrendingUp,
-  Zap,
-  Inbox,
-  Bookmark,
-  Settings,
-  FlaskConical,
-  Target,
-} from 'lucide-react'
+import { Target, BookOpen } from 'lucide-react'
 
 const nav = [
-  { href: '/',           label: '대시보드',    icon: LayoutDashboard },
-  { href: '/hundredx',   label: '100배 시그널', icon: Target },
-  { href: '/signals',    label: '시그널',      icon: Zap },
-  { href: '/watchlist',  label: '워치리스트',  icon: Bookmark },
-  { href: '/queue',      label: '분석 큐',     icon: Inbox },
-  { href: '/backtest',   label: '백테스트',    icon: FlaskConical },
-  { href: '/settings',   label: '설정',        icon: Settings },
+  { href: '/',         label: '100배 시그널', icon: Target },
+  { href: '/library',  label: '라이브러리',   icon: BookOpen },
 ]
 
 export function Sidebar({
@@ -46,7 +32,11 @@ export function Sidebar({
       </div>
       <nav className="flex-1 py-2 overflow-y-auto">
         {nav.map(({ href, label, icon: Icon }) => {
-          const active = href === '/' ? pathname === '/' : pathname.startsWith(href)
+          // / 와 /hundredx (alias)는 같은 콘텐츠 — 둘 다 '100배 시그널' active
+          const active =
+            href === '/'
+              ? pathname === '/' || pathname.startsWith('/hundredx')
+              : pathname.startsWith(href)
           return (
             <Link
               key={href}
