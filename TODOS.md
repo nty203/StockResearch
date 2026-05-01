@@ -52,7 +52,7 @@
 
 ## P2 — Reduction follow-up
 
-### [TODO-08] DB 테이블 drop PR2
+### ✅ [TODO-08] DB 테이블 drop PR2 (완료)
 
 **What:** 다음 production 마이그레이션 PR (`007_drop_legacy_tables.sql`) 작성:
 ```sql
