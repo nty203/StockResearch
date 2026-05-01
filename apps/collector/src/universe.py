@@ -12,12 +12,12 @@ logger = logging.getLogger(__name__)
 SP1500_INDEXES = ["S&P500", "S&P400", "S&P600"]
 
 
-KOSPI_ACTIVE_LIMIT = 100   # 시총 상위 N개만 is_active=True
-KOSDAQ_ACTIVE_LIMIT = 0    # 0 = 전체 비활성 (나중에 필요시 확장)
+KOSPI_ACTIVE_LIMIT = None   # None = 전체 활성, 숫자 = 시총 상위 N개만 is_active=True
+KOSDAQ_ACTIVE_LIMIT = None  # None = 전체 활성
 
 
 def collect_kr_universe() -> list[dict]:
-    """Fetch KOSPI + KOSDAQ tickers from KRX. Only top-N by market cap are active."""
+    """Fetch KOSPI + KOSDAQ tickers from KRX. All stocks are active by default."""
     rows = []
     for market in ("KOSPI", "KOSDAQ"):
         df = fdr.StockListing(market)
@@ -26,7 +26,6 @@ def collect_kr_universe() -> list[dict]:
         if marcap_col:
             df = df.sort_values(marcap_col, ascending=False).reset_index(drop=True)
         limit = KOSPI_ACTIVE_LIMIT if market == "KOSPI" else KOSDAQ_ACTIVE_LIMIT
-        active_set = set(range(limit)) if limit > 0 else set()
 
         for idx, r in df.iterrows():
             ticker = str(r.get("Code", r.get("Symbol", ""))).strip()
@@ -39,7 +38,7 @@ def collect_kr_universe() -> list[dict]:
                 "name_en": None,
                 "sector_wics": str(r.get("Sector", r.get("Industry", ""))),
                 "industry": str(r.get("Industry", "")),
-                "is_active": idx in active_set,
+                "is_active": True if limit is None else (idx < limit),
             })
     return rows
 

@@ -11,14 +11,36 @@ from .upsert import get_client, upsert_batch, pipeline_run
 logger = logging.getLogger(__name__)
 
 TWO_YEARS_AGO = (date.today() - timedelta(days=730)).isoformat()
+INCREMENTAL_DAYS = 14    # existing tickers: only fetch this many days back
+EXISTENCE_CHECK_CHUNK = 100  # tickers per "has prices?" query
 BATCH_SIZE = 20  # tickers per yfinance batch request
 
 
-def collect_kr_prices(tickers: list[str]) -> list[dict]:
+def _get_tickers_with_prices(client, tickers: list[str]) -> set[str]:
+    """Return subset of tickers that already have any price data in DB."""
+    found: set[str] = set()
+    # Query in small chunks to stay within URL length limits
+    for i in range(0, len(tickers), EXISTENCE_CHECK_CHUNK):
+        chunk = tickers[i : i + EXISTENCE_CHECK_CHUNK]
+        # Only need to find ≥1 row per ticker; filter to last 10 days max per chunk
+        recent = (date.today() - timedelta(days=10)).isoformat()
+        res = (
+            client.table("prices_daily")
+            .select("ticker")
+            .in_("ticker", chunk)
+            .gte("date", recent)
+            .limit(EXISTENCE_CHECK_CHUNK * 12)  # 10 days × 100 tickers + buffer
+            .execute()
+        )
+        found.update(r["ticker"] for r in (res.data or []))
+    return found
+
+
+def collect_kr_prices(tickers: list[str], start: str = TWO_YEARS_AGO) -> list[dict]:
     rows = []
     for ticker in tickers:
         try:
-            df = fdr.DataReader(ticker, TWO_YEARS_AGO)
+            df = fdr.DataReader(ticker, start)
             if df.empty:
                 continue
             df = df.reset_index()
@@ -71,6 +93,26 @@ def collect_us_prices(tickers: list[str]) -> list[dict]:
     return rows
 
 
+def _collect_kr_incremental(client, kr_tickers: list[str]) -> list[dict]:
+    """Collect KR prices: incremental window for existing tickers, full 2-year for new ones."""
+    existing = _get_tickers_with_prices(client, kr_tickers)
+    new_tickers = [t for t in kr_tickers if t not in existing]
+    old_tickers = [t for t in kr_tickers if t in existing]
+
+    incremental_start = (date.today() - timedelta(days=INCREMENTAL_DAYS)).isoformat()
+    logger.info(
+        "KR prices: %d incremental (last %dd), %d new (2y history)",
+        len(old_tickers), INCREMENTAL_DAYS, len(new_tickers),
+    )
+
+    rows: list[dict] = []
+    if old_tickers:
+        rows += collect_kr_prices(old_tickers, start=incremental_start)
+    if new_tickers:
+        rows += collect_kr_prices(new_tickers, start=TWO_YEARS_AGO)
+    return rows
+
+
 def run(market_filter: str | None = None) -> int:
     client = get_client()
     res = client.table("stocks").select("ticker, market").eq("is_active", True).execute()
@@ -80,11 +122,11 @@ def run(market_filter: str | None = None) -> int:
     us_tickers = [s["ticker"] for s in stocks if s["market"] in ("NYSE", "NASDAQ")]
 
     if market_filter == "KR":
-        rows = collect_kr_prices(kr_tickers)
+        rows = _collect_kr_incremental(client, kr_tickers)
     elif market_filter == "US":
         rows = collect_us_prices(us_tickers)
     else:
-        rows = collect_kr_prices(kr_tickers) + collect_us_prices(us_tickers)
+        rows = _collect_kr_incremental(client, kr_tickers) + collect_us_prices(us_tickers)
 
     with pipeline_run(client, "prices") as (rows_out, _):
         count = upsert_batch(client, "prices_daily", rows, on_conflict="ticker,date")

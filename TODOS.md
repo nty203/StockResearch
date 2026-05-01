@@ -7,20 +7,14 @@
 
 ## P1 — Top Priority (Reduction follow-ups)
 
-### [TODO-05] Universe 확장 — KOSPI/KOSDAQ 전체 커버
+### ✅ [TODO-05] Universe 확장 — KOSPI/KOSDAQ 전체 커버 (완료)
 
-**What:** universe.py가 현재 `is_active=True`를 KOSPI 상위 100개로 제한 (commit d3498da). 활성 universe를 KOSPI + KOSDAQ 전체(약 3,273 → 2,500+)로 확장. Daily collector의 prices/financials 부담을 평가하고 batch 사이즈/주기 조정.
-
-**Why:** hundredx scanner가 universe의 약 3%만 스캔 중 — auto-discover가 정작 큰 multi-bagger를 놓침. Outside voice 지적: "코드를 줄여도 입력 set이 starve돼있으면 의미 없음." 100x 시스템의 효과는 universe 크기에 선형 비례.
-
-**Pros:** discover.py의 자동 발견 종목 수 30배+ 증가 가능. fingerprint matching의 후보 풀 확장. "100배 후보를 못 찾는다"는 가장 큰 risk 해소.
-
-**Cons:** GitHub Actions 시간 증가 (~5분 → ~30분 추정). DART API 호출량 증가. Supabase 저장 용량 증가. cf workflow timeout 60분 한계 점검 필요.
-
-**Context:** 현재 universe.py가 왜 100개로 제한했는지(d3498da)는 free tier Supabase 부담 우려였을 가능성. hundredx scanner 자체는 BATCH_SIZE=50으로 처리 가능하므로 universe 확장 후 scanner 시간만 5x 증가. 30분 워크플로우 timeout이라 충분.
-
-**Effort:** M (human ~3h) → S (CC+gstack ~30min — universe.py 로직 + 워크플로우 timeout 조정 + 테스트)
-**Priority:** P1 | **Depends on:** PR1 reduction merged
+**완료 내용:**
+- `universe.py`: `KOSPI_ACTIVE_LIMIT=100` → `None` (전체 활성), `KOSDAQ_ACTIVE_LIMIT=0` → `None`
+- `prices.py`: 신규/기존 종목 분리 수집 — 기존(최근 10일 이내 가격 있음): 14일 증분, 신규: 2년 전체
+- `collect-hundredx.yml`: timeout 30→60분 (2,600+ KR 종목 스캔)
+- `collect-daily.yml`: timeout 60→90분 (초기 KOSDAQ 1,700+ 종목 2년 백필)
+- 테스트: 103/103 통과
 
 ---
 
@@ -44,28 +38,15 @@
 
 ---
 
-### [TODO-07] hundredx 모듈 테스트 커버리지 확장
+### ✅ [TODO-07] hundredx 모듈 테스트 커버리지 확장 (완료)
 
-**What:** 현재 hundredx 테스트 = 82 cases (detector 52, scanner 11, fingerprint 11, timeline 8). 다음 5개 모듈은 테스트 0개:
-- `discover.py` — 5y 가격 윈도우 max/trough 알고리즘
-- `extract_signals.py` — 정량/키워드/카테고리 자동 추출
-- `backfill_history.py` — DART historical 공시 백필
-- `update_library.py` — 주간 latest_multiplier 갱신
-- `auto_populate.py` — 3단계 orchestrator
-
-**Why:** 100배 시스템이 프로덕트로 자리 잡으려면 회귀 방지 필수. Outside voice 지적: '2,312 LOC인데 82 tests = 28 LOC/test, critical path 위주만 커버.'
-
-**Pros:** 회귀 방지. CI 안정성. 새 모듈 변경 시 기존 동작 보호. 알고리즘 의도 명확화 (테스트가 spec 역할).
-
-**Cons:** 5개 모듈 합 ~25 신규 테스트 추정 (해피 패스 + 엣지 케이스). 시간 투자.
-
-**Context:** test_fingerprint_match.py / test_timeline_match.py 패턴 참고. mock for Supabase client + DART API. 우선순위:
-- discover.py — 알고리즘이 단순해서 테스트 가성비 최고 (해피 패스 + window edge cases)
-- extract_signals.py — _categorize_from_filings 분류 정확도가 핵심
-- update_library.py — 가격 fallback 로직 (이번 세션에서 발견된 버그 영역)
-
-**Effort:** M (human ~6h) → S (CC+gstack ~45min — 5 모듈 × ~5 cases)
-**Priority:** P1 | **Depends on:** PR1 merge
+**완료 내용:**
+- `test_discover.py` — `_find_best_multiplier` 8 cases (running min 알고리즘 edge cases)
+- `test_extract_signals.py` — `_fq_to_date`, `_compute_quant_at_rise`, `_categorize_from_filings`, `_max_filing_amount` 13 cases
+- `test_backfill_history.py` — DART 백필 mocked 6 cases (skip/insert/exception 경로)
+- `test_update_library.py` — 멀티플라이어 계산 로직 6 cases (fallback 경로 포함)
+- `test_auto_populate.py` — orchestrator 5 cases (3단계 호출 순서, force 플래그)
+- 총 테스트: 103 → 153 (50개 추가), 전체 통과
 
 ---
 
