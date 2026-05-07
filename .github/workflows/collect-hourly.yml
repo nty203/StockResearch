@@ -29,9 +29,11 @@ jobs:
 
       # prices는 하루 1회로 충분 (주가는 일봉 데이터) — daily 워크플로우에서 실행
       - name: Run filings watcher
+        continue-on-error: true
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
         run: uv run python -m src.filings_watch
 
       - name: Run news RSS
+        continue-on-error: true
         run: uv run python -m src.news_rss

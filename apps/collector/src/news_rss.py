@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 
 import feedparser
 
-from .upsert import get_client, upsert_batch, pipeline_run
+from .upsert import get_client, upsert_batch, pipeline_run, retry_execute
 
 logger = logging.getLogger(__name__)
 
@@ -69,8 +69,12 @@ def collect_rss_news(ticker_set: set[str]) -> list[dict]:
 
 def run() -> int:
     client = get_client()
-    res = client.table("stocks").select("ticker").eq("is_active", True).execute()
-    ticker_set = {r["ticker"] for r in (res.data or [])}
+    try:
+        res = retry_execute(lambda: client.table("stocks").select("ticker").eq("is_active", True).execute())
+        ticker_set = {r["ticker"] for r in (res.data or [])}
+    except Exception as e:
+        logger.error("Failed to fetch stocks list: %s", e)
+        return 0
 
     rows = collect_rss_news(ticker_set)
     with pipeline_run(client, "news") as (rows_out, _):

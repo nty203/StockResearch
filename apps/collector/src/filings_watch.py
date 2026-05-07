@@ -8,7 +8,7 @@ import feedparser
 import OpenDartReader as DartReader
 import edgar
 
-from .upsert import get_client, upsert_batch, pipeline_run
+from .upsert import get_client, upsert_batch, pipeline_run, retry_execute
 from .utils.settings import load_settings
 
 logger = logging.getLogger(__name__)
@@ -134,8 +134,12 @@ def run() -> int:
     settings = load_settings(client)
     lookback_days = int(settings.get("filings_lookback_days", 2))
 
-    res = client.table("stocks").select("ticker, market").eq("is_active", True).execute()
-    stocks = res.data or []
+    try:
+        res = retry_execute(lambda: client.table("stocks").select("ticker, market").eq("is_active", True).execute())
+        stocks = res.data or []
+    except Exception as e:
+        logger.error("Failed to fetch stocks list: %s", e)
+        return 0
     kr_ticker_set = {s["ticker"] for s in stocks if s["market"] in ("KOSPI", "KOSDAQ")}
     us_tickers = {s["ticker"] for s in stocks if s["market"] in ("NYSE", "NASDAQ")}
 

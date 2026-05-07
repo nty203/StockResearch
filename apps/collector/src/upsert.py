@@ -3,13 +3,31 @@ from __future__ import annotations
 
 import logging
 import os
+import time
 from contextlib import contextmanager
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, Callable, TypeVar
 
 from supabase import create_client, Client
 
 logger = logging.getLogger(__name__)
+
+_T = TypeVar("_T")
+
+
+def retry_execute(fn: Callable[[], _T], retries: int = 3, base_delay: float = 5.0) -> _T:
+    """Supabase .execute() 호출을 지수 백오프로 재시도."""
+    last_exc: Exception | None = None
+    for attempt in range(retries):
+        try:
+            return fn()
+        except Exception as exc:
+            last_exc = exc
+            if attempt < retries - 1:
+                wait = base_delay * (2 ** attempt)
+                logger.warning("Supabase retry %d/%d in %.0fs: %s", attempt + 1, retries, wait, exc)
+                time.sleep(wait)
+    raise last_exc  # type: ignore[misc]
 
 
 @contextmanager
@@ -68,15 +86,14 @@ def upsert_batch(
     if not rows:
         return 0
     total = 0
-    try:
-        for i in range(0, len(rows), chunk_size):
-            chunk = rows[i : i + chunk_size]
-            kwargs: dict[str, Any] = {}
-            if on_conflict:
-                kwargs["on_conflict"] = on_conflict
-            res = client.table(table).upsert(chunk, **kwargs).execute()
+    for i in range(0, len(rows), chunk_size):
+        chunk = rows[i : i + chunk_size]
+        kwargs: dict[str, Any] = {}
+        if on_conflict:
+            kwargs["on_conflict"] = on_conflict
+        try:
+            res = retry_execute(lambda: client.table(table).upsert(chunk, **kwargs).execute())
             total += len(res.data or chunk)
-    except Exception as e:
-        logger.warning("upsert_batch error on %s: %s", table, e)
-        return 0
+        except Exception as e:
+            logger.warning("upsert_batch error on %s (chunk %d): %s", table, i, e)
     return total

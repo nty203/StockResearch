@@ -69,6 +69,8 @@ interface StockResult {
     sector_tag: string | null
   } | null
   conviction: number
+  grade: 'S' | 'A' | 'B' | 'C'
+  best_fingerprint_score: number | null
   first_signal_at: string | null
   categories: CategoryEntry[]
 }
@@ -76,12 +78,20 @@ interface StockResult {
 interface ApiResponse {
   results: StockResult[]
   count: number
+  grade_counts?: { S: number; A: number; B: number; C: number }
 }
 
 const CONFIDENCE_PRESETS = [0.5, 0.7, 0.9] as const
+const GRADE_META = {
+  S: { label: 'S', desc: '라이브러리 패턴 고일치 + 높은 Conviction', bg: 'bg-[var(--color-gold)]/20', color: 'text-[var(--color-gold)]', border: 'border-[var(--color-gold)]/50' },
+  A: { label: 'A', desc: '라이브러리 패턴 일치 또는 높은 Conviction', bg: 'bg-[var(--color-success)]/15', color: 'text-[var(--color-success)]', border: 'border-[var(--color-success)]/40' },
+  B: { label: 'B', desc: '부분 패턴 일치 또는 중간 Conviction', bg: 'bg-[var(--color-accent)]/10', color: 'text-[var(--color-accent)]', border: 'border-[var(--color-accent)]/30' },
+  C: { label: 'C', desc: '신뢰도 기준 통과 (패턴 미확인)', bg: 'bg-[var(--color-card)]', color: 'text-[var(--color-text-2)]', border: 'border-[var(--color-border)]' },
+} as const
 
 export default function HundredxPage() {
   const [minConfidence, setMinConfidence] = useState<number>(0.5)
+  const [gradeFilter, setGradeFilter] = useState<'ALL' | 'S' | 'A' | 'B' | 'C'>('ALL')
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
 
   const { data, isLoading, error } = useQuery<ApiResponse>({
@@ -150,6 +160,39 @@ export default function HundredxPage() {
         </div>
       )}
 
+      {/* Grade filter bar */}
+      {(data?.results?.length ?? 0) > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          <button
+            onClick={() => setGradeFilter('ALL')}
+            className={`text-xs px-2.5 py-1 rounded border transition-colors ${
+              gradeFilter === 'ALL'
+                ? 'bg-[var(--color-accent)]/20 border-[var(--color-accent)] text-[var(--color-accent)]'
+                : 'border-[var(--color-border)] text-[var(--color-text-2)]'
+            }`}
+          >
+            전체 ({data?.results?.length ?? 0})
+          </button>
+          {(['S', 'A', 'B', 'C'] as const).map(g => {
+            const meta = GRADE_META[g]
+            const cnt = data?.grade_counts?.[g] ?? data?.results?.filter(r => r.grade === g).length ?? 0
+            return (
+              <button
+                key={g}
+                onClick={() => setGradeFilter(g)}
+                className={`text-xs px-2.5 py-1 rounded border transition-colors font-medium ${
+                  gradeFilter === g
+                    ? `${meta.bg} ${meta.color} ${meta.border}`
+                    : 'border-[var(--color-border)] text-[var(--color-text-2)]'
+                }`}
+              >
+                {g} ({cnt})
+              </button>
+            )
+          })}
+        </div>
+      )}
+
       {!isLoading && !error && (data?.results?.length ?? 0) === 0 && (
         <div className="rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] p-8 text-center">
           <p className="text-sm text-[var(--color-text-2)]">
@@ -163,17 +206,26 @@ export default function HundredxPage() {
 
       {(data?.results?.length ?? 0) > 0 && (
         <div className="space-y-3">
-          <div className="text-xs text-[var(--color-text-2)]">
-            {data?.count ?? data?.results?.length ?? 0}개 종목 (Conviction 순)
-          </div>
-          {data?.results?.map(result => (
-            <StockCard
-              key={result.ticker}
-              result={result}
-              expanded={expanded.has(result.ticker)}
-              onToggle={() => toggle(result.ticker)}
-            />
-          ))}
+          {(() => {
+            const filtered = gradeFilter === 'ALL'
+              ? data!.results
+              : data!.results.filter(r => r.grade === gradeFilter)
+            return (
+              <>
+                <div className="text-xs text-[var(--color-text-2)]">
+                  {filtered.length}개 종목 {gradeFilter !== 'ALL' && `(등급 ${gradeFilter})`} — Conviction + 등급 순
+                </div>
+                {filtered.map(result => (
+                  <StockCard
+                    key={result.ticker}
+                    result={result}
+                    expanded={expanded.has(result.ticker)}
+                    onToggle={() => toggle(result.ticker)}
+                  />
+                ))}
+              </>
+            )
+          })()}
         </div>
       )}
     </div>
@@ -191,13 +243,26 @@ function StockCard({
 }) {
   const name = result.stock?.name_kr || result.stock?.name_en || result.ticker
   const market = result.stock?.market
+  const sector = result.stock?.sector_tag
+  const grade = result.grade ?? 'C'
+  const gradeMeta = GRADE_META[grade]
 
   const firstSignalText = result.first_signal_at
     ? formatRelativeDays(result.first_signal_at)
     : null
 
+  // Conviction color: green ≥70, yellow ≥45, gray <45
+  const convictionColor =
+    result.conviction >= 70 ? 'text-[var(--color-success)]' :
+    result.conviction >= 45 ? 'text-[var(--color-warning)]' :
+    'text-[var(--color-text-1)]'
+
   return (
-    <div className="rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] overflow-hidden">
+    <div className={`rounded-lg bg-[var(--color-surface)] border overflow-hidden ${
+      grade === 'S' ? 'border-[var(--color-gold)]/40' :
+      grade === 'A' ? 'border-[var(--color-success)]/30' :
+      'border-[var(--color-border)]'
+    }`}>
       {/* Header */}
       <button
         onClick={onToggle}
@@ -205,6 +270,11 @@ function StockCard({
       >
         <div className="space-y-1.5 min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
+            {/* Grade badge */}
+            <span className={`text-[11px] font-bold px-1.5 py-0.5 rounded border ${gradeMeta.bg} ${gradeMeta.color} ${gradeMeta.border}`}
+              title={gradeMeta.desc}>
+              {grade}
+            </span>
             <span className="text-base font-semibold text-[var(--color-text-1)]">
               {name}
             </span>
@@ -216,6 +286,11 @@ function StockCard({
                 {market}
               </span>
             )}
+            {sector && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--color-card)]/60 text-[var(--color-text-2)]">
+                {sector}
+              </span>
+            )}
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {result.categories.map(c => (
@@ -225,10 +300,17 @@ function StockCard({
         </div>
 
         <div className="text-right shrink-0">
-          <div className="text-xl font-bold text-[var(--color-accent)]">
+          <div className={`text-xl font-bold ${convictionColor}`}>
             {result.conviction.toFixed(1)}
           </div>
           <div className="text-[10px] text-[var(--color-text-2)]">Conviction</div>
+          {result.best_fingerprint_score != null && result.best_fingerprint_score > 0 && (
+            <div className="text-[10px] text-[var(--color-text-2)] mt-0.5">
+              패턴 <span className={result.best_fingerprint_score >= 0.5 ? 'text-[var(--color-success)]' : 'text-[var(--color-text-1)]'}>
+                {Math.round(result.best_fingerprint_score * 100)}%
+              </span>
+            </div>
+          )}
           <div className="text-xs text-[var(--color-text-2)] mt-1">
             {result.categories.length}/7 카테고리
           </div>

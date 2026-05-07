@@ -1,0 +1,5 @@
+# 100x Discovery Exclusion List (Tickers to skip)
+# Format: ticker # Name (Reason)
+
+002070 # 비비안 (10배 미달/데이터 노이즈)
+001570 # 금양 (상장폐지/제외 요청)

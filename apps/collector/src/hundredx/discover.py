@@ -21,6 +21,7 @@ Usage:
 from __future__ import annotations
 import argparse
 import logging
+import os
 from datetime import date, timedelta
 from dataclasses import dataclass
 
@@ -124,29 +125,48 @@ def discover_for_ticker(ticker: str, years: int = 5) -> DiscoveredStock | None:
     )
 
 
-def run(years: int = 5, min_multiplier: float = 100.0,
+def run(years: int = 10, min_multiplier: float = 100.0,
         market_filter: str | None = None,
         auto_insert: bool = True) -> list[DiscoveredStock]:
-    """Discover stocks that achieved >= min_multiplier within `years` years."""
+    """Discover stocks that achieved >= min_multiplier within `years` years.
+
+    Default window is 10 years to capture full cycle 100x cases (e.g. 셀트리온 80x took 8y).
+    KR universe only — US stocks use yfinance in a separate path if needed.
+    """
     client = get_client()
 
+    # Load exclusion list
+    exclude_path = os.path.join(os.path.dirname(__file__), "exclude.txt")
+    exclude_tickers = set()
+    if os.path.exists(exclude_path):
+        with open(exclude_path, "r", encoding="utf-8") as f:
+            for line in f:
+                t = line.split("#")[0].strip()
+                if t:
+                    exclude_tickers.add(t)
+        logger.info("Loaded %d excluded tickers", len(exclude_tickers))
+
     with pipeline_run(client, "hundredx") as (rows_out, _):
-        # Fetch active KR universe
-        markets = ["KOSPI", "KOSDAQ"] if market_filter is None else [market_filter]
+        # Fetch active KR universe (KOSPI + KOSDAQ only — 10y data via FinanceDataReader)
+        kr_markets = ["KOSPI", "KOSDAQ"]
+        if market_filter is not None:
+            kr_markets = [market_filter] if market_filter in kr_markets else []
         res = (
             client.table("stocks")
             .select("ticker, market, name_kr, sector_tag")
             .eq("is_active", True)
-            .in_("market", markets)
+            .in_("market", kr_markets)
             .execute()
         )
         stocks = res.data or []
-        logger.info("Discovering across %d active KR stocks (5y window, min %.0fx)",
-                    len(stocks), min_multiplier)
+        logger.info("Discovering across %d active KR stocks (%dy window, min %.0fx)",
+                    len(stocks), years, min_multiplier)
 
         discovered: list[DiscoveredStock] = []
         for i, s in enumerate(stocks):
             ticker = s["ticker"]
+            if ticker in exclude_tickers:
+                continue
             if i % 100 == 0 and i > 0:
                 logger.info("Progress: %d/%d (found %d so far)", i, len(stocks), len(discovered))
             result = discover_for_ticker(ticker, years=years)
@@ -206,7 +226,8 @@ def run(years: int = 5, min_multiplier: float = 100.0,
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     parser = argparse.ArgumentParser()
-    parser.add_argument("--years", type=int, default=5)
+    parser.add_argument("--years", type=int, default=10,
+                        help="Price history window in years (default 10 to capture full-cycle 100x)")
     parser.add_argument("--min-multiplier", type=float, default=100.0,
                         help="Min peak multiplier (e.g. 100 for true 100x, 30 for 30배+)")
     parser.add_argument("--market", choices=["KOSPI", "KOSDAQ"], default=None)

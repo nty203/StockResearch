@@ -34,4 +34,6 @@ jobs:
         run: uv sync --frozen
 
       - name: Run auto-populate (discover + backfill + extract)
-        run: uv run python -m src.hundredx.auto_populate --years 5 --min-multiplier 30
+        # 10년 윈도우: 셀트리온(140x, 9년) 같은 장기 사이클 100배 종목 포착
+        # min-multiplier 100: 진짜 100배 달성 종목만 라이브러리에 추가
+        run: uv run python -m src.hundredx.auto_populate --years 10 --min-multiplier 100

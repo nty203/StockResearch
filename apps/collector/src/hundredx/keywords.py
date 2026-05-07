@@ -43,12 +43,15 @@ GLOBAL_MEGA_KEYWORDS = ["방산", "원전", "SMR", "nuclear", "defense", "NATO",
                          "방위", "국방", "수출", "해외 수주", "overseas contract",
                          "조원", "trillion won", "billion dollar",
                          # 방산 하드웨어
-                         "K-9", "K-2", "FA-50", "Redback", "자주포", "폴란드", "호주", "루마니아",
-                         "방위산업", "무기 수출",
+                         "K-9", "K-2", "FA-50", "Redback", "K2전차", "자주포", "폴란드", "호주", "루마니아",
+                         "방위산업", "무기 수출", "천무", "비궁", "신궁", "해성",
                          # 원전 세부
-                         "APR-1400", "계측제어", "MMIS", "체코", "두코바니", "원안위",
+                         "APR-1400", "계측제어", "MMIS", "체코", "두코바니", "원안위", "i-SMR",
                          # 전력기기
-                         "HVDC", "GIS", "초고압", "변압기", "납기 확정", "전력기자재"]
+                         "HVDC", "GIS", "초고압", "변압기", "납기 확정", "전력기자재",
+                         # 조선·발전엔진 (데이터센터 수요)
+                         "힘센엔진", "HiMSEN", "발전엔진 수주", "데이터센터 발전", "중속엔진 수주",
+                         "AEG", "BTM 전력", "가스엔진 수주"]
 
 BIGTECH_PARTNER_KEYWORDS = ["전략적 파트너십", "strategic partnership", "MOU",
                               "공급 계약", "supply agreement", "preferred supplier",
@@ -90,7 +93,14 @@ REGULATORY_KEYWORDS = ["규제 완화", "승인", "허가", "FDA approval", "CE 
                         "regulatory approval", "규제 해소", "법안 통과"]
 
 SUPPLY_BOTTLENECK_KEYWORDS = ["공급 부족", "supply shortage", "병목", "bottleneck",
-                               "수급 불균형", "공급 타이트", "수요 초과", "sold out"]
+                               "수급 불균형", "공급 타이트", "수요 초과", "sold out",
+                               # 발전엔진 / 데이터센터 전력 병목
+                               "납기 확대", "리드타임", "lead time", "수주 적체",
+                               "엔진 공급", "발전엔진", "중속엔진", "4행정 엔진",
+                               "HBM 수요", "HBM 공급", "테스트 장비 부족",
+                               "핸들러 공급", "검사장비 부족",
+                               # 전력 인프라 병목
+                               "데이터센터 전력", "AI 전력 수요", "전력망 병목", "변압기 납기"]
 
 RAW_MATERIAL_KEYWORDS = ["원자재 하락", "리튬", "희토류", "rare earth",
                           "commodity price", "원재료 가격", "소재 가격"]
@@ -99,7 +109,13 @@ GEOPOLITICAL_KEYWORDS = ["리쇼어링", "reshoring", "국산화", "localization
                           "미중 갈등", "US-China", "탈중국", "공급망 재편",
                           "supply chain", "IRA", "CHIPS Act", "반도체법",
                           "NATO 재무장", "방산 수출 확대", "원전 르네상스",
-                          "에너지 안보", "AI 데이터센터 전력"]
+                          "에너지 안보", "AI 데이터센터 전력",
+                          # 추가: 방산 지정학
+                          "포괄적 전략 동반자", "한미 동맹", "방산 협력",
+                          "우크라이나 재건", "러시아 위협", "유럽 재무장",
+                          # 에너지 전환
+                          "탈탄소", "탄소중립", "에너지 전환", "전력 부족",
+                          "데이터센터 전력 수요", "AI 발전 수요"]
 
 SPINOFF_KEYWORDS = ["분할", "spinoff", "물적분할", "분사", "지주회사",
                     "구조조정", "restructuring", "사업 분리", "IPO 예정"]

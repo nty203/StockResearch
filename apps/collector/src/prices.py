@@ -6,7 +6,7 @@ from datetime import date, timedelta
 import FinanceDataReader as fdr
 import yfinance as yf
 
-from .upsert import get_client, upsert_batch, pipeline_run
+from .upsert import get_client, upsert_batch, pipeline_run, retry_execute
 
 logger = logging.getLogger(__name__)
 
@@ -115,8 +115,12 @@ def _collect_kr_incremental(client, kr_tickers: list[str]) -> list[dict]:
 
 def run(market_filter: str | None = None) -> int:
     client = get_client()
-    res = client.table("stocks").select("ticker, market").eq("is_active", True).execute()
-    stocks = res.data or []
+    try:
+        res = retry_execute(lambda: client.table("stocks").select("ticker, market").eq("is_active", True).execute())
+        stocks = res.data or []
+    except Exception as e:
+        logger.error("Failed to fetch stocks list: %s", e)
+        return 0
 
     kr_tickers = [s["ticker"] for s in stocks if s["market"] in ("KOSPI", "KOSDAQ")]
     us_tickers = [s["ticker"] for s in stocks if s["market"] in ("NYSE", "NASDAQ")]

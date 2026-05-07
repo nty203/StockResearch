@@ -29,6 +29,7 @@ jobs:
 
       # 재무 데이터 — DART API 일 20,000건 제한으로 주 1회 실행
       - name: Run financials (DART)
+        continue-on-error: true
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
         run: uv run python -m src.financials_dart

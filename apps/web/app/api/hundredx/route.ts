@@ -62,7 +62,7 @@ export async function GET(req: Request) {
   type Stock = { ticker: string; name_kr: string | null; name_en: string | null; market: string | null; sector_tag: string | null }
   const stockMap: Record<string, Stock> = Object.fromEntries(((stocksRes.data as Stock[] | null) ?? []).map(s => [s.ticker, s]))
 
-  // Group by ticker, compute conviction = (len/7)*50 + avg_conf*50
+  // Group by ticker
   const byTicker: Record<string, Match[]> = {}
   for (const m of rows) {
     if (!byTicker[m.ticker]) byTicker[m.ticker] = []
@@ -70,11 +70,39 @@ export async function GET(req: Request) {
   }
 
   const result = Object.entries(byTicker).map(([ticker, cats]) => {
-    const breadth = (cats.length / 7) * 50
-    // Use fingerprint_score when available (closer to library precedent),
-    // fall back to rule-based confidence otherwise
-    const avgConf = cats.reduce((s, c) => s + (c.fingerprint_score ?? c.confidence), 0) / cats.length
-    const conviction = breadth + avgConf * 50
+    // ── Conviction formula (max = 100) ────────────────────────────────────────
+    // 1. Fingerprint bonus (0–40): library pattern match is the strongest signal.
+    //    Requires ≥0.30 to contribute — below that the match is noise.
+    const bestFP = Math.max(0, ...cats.map(c => c.fingerprint_score ?? 0))
+    const fpBonus = bestFP >= 0.30 ? Math.round(bestFP * 40 * 10) / 10 : 0
+
+    // 2. Confidence depth (0–40): average rule-based detector confidence.
+    //    Uses raw confidence (not fingerprint) so the two signals are independent.
+    const avgConf = cats.reduce((s, c) => s + c.confidence, 0) / cats.length
+    const confScore = Math.round(avgConf * 40 * 10) / 10
+
+    // 3. Breadth (0–15): multiple category matches mean different dimensions agree.
+    //    Caps at 3 categories to avoid inflation from correlated categories.
+    const breadthScore = Math.round(Math.min(15, (cats.length / 3) * 15) * 10) / 10
+
+    // 4. Timeline progress bonus (0–5): fired ≥1 trigger stage in library timeline.
+    const bestTimeline = cats.reduce(
+      (best, c) => Math.max(best, c.timeline_progress?.trajectory_score ?? 0), 0
+    )
+    const timelineBonus = bestTimeline >= 0.25 ? Math.round(bestTimeline * 5 * 10) / 10 : 0
+
+    const conviction = fpBonus + confScore + breadthScore + timelineBonus
+
+    // ── Quality grade ─────────────────────────────────────────────────────────
+    // S: library fingerprint ≥0.65 AND conviction ≥65 — confirmed analogue
+    // A: fingerprint ≥0.45 OR conviction ≥55
+    // B: fingerprint ≥0.25 OR conviction ≥40
+    // C: passes min_confidence threshold (baseline)
+    let grade: 'S' | 'A' | 'B' | 'C'
+    if (bestFP >= 0.65 && conviction >= 65) grade = 'S'
+    else if (bestFP >= 0.45 || conviction >= 55) grade = 'A'
+    else if (bestFP >= 0.25 || conviction >= 40) grade = 'B'
+    else grade = 'C'
 
     // First-signal date = oldest first_detected_at across categories
     const firstSignal = cats
@@ -86,6 +114,8 @@ export async function GET(req: Request) {
       ticker,
       stock: stockMap[ticker] ?? null,
       conviction: Math.round(conviction * 10) / 10,
+      grade,
+      best_fingerprint_score: bestFP > 0 ? Math.round(bestFP * 1000) / 1000 : null,
       first_signal_at: firstSignal,
       categories: cats.map(c => ({
         category: c.category,
@@ -109,7 +139,21 @@ export async function GET(req: Request) {
     }
   })
 
-  result.sort((a, b) => b.conviction - a.conviction)
+  // Sort: grade weight first (S→A→B→C), then conviction descending
+  const gradeOrder: Record<string, number> = { S: 0, A: 1, B: 2, C: 3 }
+  result.sort((a, b) => {
+    const gd = gradeOrder[a.grade] - gradeOrder[b.grade]
+    return gd !== 0 ? gd : b.conviction - a.conviction
+  })
 
-  return Response.json({ results: result, count: result.length })
+  return Response.json({
+    results: result,
+    count: result.length,
+    grade_counts: {
+      S: result.filter(r => r.grade === 'S').length,
+      A: result.filter(r => r.grade === 'A').length,
+      B: result.filter(r => r.grade === 'B').length,
+      C: result.filter(r => r.grade === 'C').length,
+    },
+  })
 }
