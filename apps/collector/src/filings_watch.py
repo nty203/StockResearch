@@ -15,9 +15,10 @@ logger = logging.getLogger(__name__)
 
 # Keywords from report 5-E recipe
 KEYWORDS_KR = [
-    "수주", "공급계약", "MOU", "업무협약", "증설", "신공장", "CAPEX",
+    "수주", "공급계약", "단일판매", "MOU", "업무협약", "증설", "신공장", "CAPEX",
     "빅테크", "MSFT", "Google", "Amazon", "Oracle", "AWS", "Azure",
     "방산", "원전", "AI 데이터센터", "HBM", "TC본더", "CoWoS",
+    "액체냉각", "액침냉각", "HVDC", "송전망", "발전기", "발전엔진", "힘센엔진",
 ]
 KEYWORDS_US = [
     "contract award", "supply agreement", "capacity expansion", "capex",
