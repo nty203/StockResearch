@@ -19,6 +19,18 @@ REPRT_CODES = {
     "11011": "Q4",
 }
 
+# DART 수주잔고 계정명 후보 목록 (사업보고서마다 표기가 다름)
+_BACKLOG_ACCOUNT_NAMES = [
+    "수주잔액",
+    "수주잔고",
+    "수주 잔액",
+    "수주 잔고",
+    "수주잔량",
+    "order backlog",
+    "미이행 계약",
+    "이행 예정 수주",
+]
+
 
 def _safe_float(v) -> float | None:
     if v is None:
@@ -27,6 +39,20 @@ def _safe_float(v) -> float | None:
         return float(str(v).replace(",", ""))
     except (ValueError, TypeError):
         return None
+
+
+def _parse_backlog(df) -> float | None:
+    """DART 재무제표 df에서 수주잔고 추출 — 계정명 다수 시도."""
+    for name in _BACKLOG_ACCOUNT_NAMES:
+        mask = df["account_nm"].str.contains(name, case=False, na=False)
+        rows = df[mask]
+        if not rows.empty:
+            val = rows.iloc[0].get("thstrm_amount", rows.iloc[0].get("당기"))
+            result = _safe_float(val)
+            if result is not None and result > 0:
+                logger.debug("order_backlog found via '%s': %s", name, result)
+                return result
+    return None
 
 
 def collect_dart_financials(tickers: list[str], years: list[int]) -> list[dict]:
@@ -73,6 +99,9 @@ def _parse_dart_df(df, ticker: str, fq: str) -> dict | None:
 
     op_margin = (op_income / revenue * 100) if (revenue and op_income) else None
 
+    # 수주잔고: 별도 계정명으로 다수 시도
+    order_backlog = _parse_backlog(df)
+
     return {
         "ticker": ticker,
         "fq": fq,
@@ -80,6 +109,7 @@ def _parse_dart_df(df, ticker: str, fq: str) -> dict | None:
         "op_income": op_income,
         "net_income": net_income,
         "op_margin": op_margin,
+        "order_backlog": order_backlog,
         "roe": None,
         "roic": None,
         "fcf": None,

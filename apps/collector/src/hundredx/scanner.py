@@ -89,18 +89,28 @@ def _find_analog_text(lib: dict, category: str) -> dict | None:
 def _fetch_existing(client, tickers: list[str]) -> dict[tuple[str, str], dict]:
     """Bulk-fetch existing hundredx_category_matches for given tickers.
 
-    Returns dict keyed by (ticker, category) with the existing row.
+    쪼개기 조회(Chunking)를 적용해 URL 길이 제한 및 400 Bad Request 에러 방지.
     """
     if not tickers:
         return {}
-    res = (
-        client.table("hundredx_category_matches")
-        .select("ticker, category, first_detected_at, exited_at, alert_sent_at")
-        .in_("ticker", tickers)
-        .execute()
-    )
-    return {(r["ticker"], r["category"]): r for r in (res.data or [])}
 
+    chunk_size = 500
+    rows = []
+    for i in range(0, len(tickers), chunk_size):
+        chunk = tickers[i : i + chunk_size]
+        try:
+            res = (
+                client.table("hundredx_category_matches")
+                .select("ticker, category, first_detected_at, exited_at, alert_sent_at")
+                .in_("ticker", chunk)
+                .execute()
+            )
+            if res.data:
+                rows.extend(res.data)
+        except Exception as e:
+            logger.warning("Error fetching existing matches chunk: %s", e)
+
+    return {(r["ticker"], r["category"]): r for r in rows}
 
 # ── Filings batch fetch ───────────────────────────────────────────────────────
 
@@ -359,22 +369,30 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
         lib = _load_library(client)
         logger.info("Library loaded: %d categories, %d stocks",
                     len(lib), sum(len(v) for v in lib.values()))
+        # Fetch active KR + US stocks via pagination (bypassing PostgREST 1000 row hard limit)
+        stocks = []
+        page_size = 1000
+        offset = 0
+        while True:
+            res = (
+                client.table("stocks")
+                .select("ticker, market, sector_tag")
+                .eq("is_active", True)
+                .in_("market", ["KOSPI", "KOSDAQ", "NYSE", "NASDAQ"])
+                .range(offset, offset + page_size - 1)
+                .execute()
+            )
+            data = res.data or []
+            stocks.extend(data)
+            if len(data) < page_size:
+                break
+            offset += page_size
 
-        # Fetch active KR + US stocks
-        stocks_res = (
-            client.table("stocks")
-            .select("ticker, market, sector_tag")
-            .eq("is_active", True)
-            .in_("market", ["KOSPI", "KOSDAQ", "NYSE", "NASDAQ"])
-            .execute()
-        )
-        stocks = stocks_res.data or []
         tickers = [s["ticker"] for s in stocks]
         sector_by_ticker = {s["ticker"]: s.get("sector_tag") for s in stocks}
         kr_count = sum(1 for s in stocks if s["market"] in ("KOSPI", "KOSDAQ"))
         us_count = len(stocks) - kr_count
         logger.info("Scanning %d active stocks (KR: %d, US: %d)", len(tickers), kr_count, us_count)
-
         # Pre-fetch all existing matches (for first_detected_at management)
         existing = _fetch_existing(client, tickers)
         active_before: set[tuple[str, str]] = {
@@ -411,6 +429,12 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                         # clinical_pipe gets 2-year filings; others get 90d
                         f = filings_clinical if category == "임상_파이프라인" else filings
                         result = detector_fn(stock_data, f)
+                        
+                        if ticker in ("083450", "082740"):
+                            logger.info(f"[DEBUG HUNDREDX] Ticker {ticker} against detector {category} returned: {result}")
+                            if result:
+                                logger.info(f"[DEBUG HUNDREDX] Confidence: {result.confidence}, Min required: {min_confidence}")
+
                         if result is not None and result.confidence >= min_confidence:
                             result.ticker = ticker
                             result.category = category
