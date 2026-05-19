@@ -29,7 +29,7 @@ from .categories.clinical_pipe import detect as detect_clinical_pipe
 logger = logging.getLogger(__name__)
 
 BATCH_SIZE = 50
-MIN_CONFIDENCE = float(os.environ.get("HUNDREDX_MIN_CONFIDENCE", "0.5"))
+MIN_CONFIDENCE = float(os.environ.get("HUNDREDX_MIN_CONFIDENCE", "0.7"))
 
 DETECTORS = [
     ("수주잔고_선행",  detect_backlog_lead),
