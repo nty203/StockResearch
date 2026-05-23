@@ -25,7 +25,8 @@ from .categories.platform_mono import detect as detect_platform_mono
 from .categories.policy_benefit import detect as detect_policy_benefit
 from .categories.supply_choke import detect as detect_supply_choke
 from .categories.clinical_pipe import detect as detect_clinical_pipe
-from .pptr_detector import detect_from_pptr
+from .pptr_detector import BLOCKED_PPTR_CATEGORIES, detect_from_pptr
+from .pptr_near_miss import analyze_pptr_near_misses
 
 logger = logging.getLogger(__name__)
 
@@ -71,13 +72,72 @@ def _extract_pptr_rules(lib: dict[str, list[dict]]) -> list[dict]:
             if pptr and isinstance(pptr, dict) and "resolutions" in pptr:
                 for res in pptr["resolutions"]:
                     if "detector_rule" in res:
+                        category = res["detector_rule"].get("category", r.get("category"))
+                        if category in BLOCKED_PPTR_CATEGORIES:
+                            continue
+                        producer_id = res.get("producer_id")
                         rules.append({
                             "library_ticker": r["ticker"],
-                            "producer_id": res.get("producer_id"),
-                            "category": res["detector_rule"].get("category", r.get("category")),
-                            "conditions": res["detector_rule"].get("conditions", {})
+                            "producer_id": producer_id,
+                            "rule_id": res.get("rule_id") or f"{r['ticker']}:{producer_id}:{category}",
+                            "category": category,
+                            "conditions": res["detector_rule"].get("conditions", {}),
+                            "performance": res.get("performance") or res.get("performance_summary"),
                         })
     return rules
+
+
+def _upsert_pptr_rules(client, rules: list[dict]) -> None:
+    """Persist PPTR rule definitions so match outcomes can be tracked later."""
+    if not rules:
+        return
+    rows = []
+    for rule in rules:
+        rows.append({
+            "rule_id": rule.get("rule_id"),
+            "library_ticker": rule.get("library_ticker"),
+            "producer_id": rule.get("producer_id"),
+            "category": rule.get("category"),
+            "conditions": rule.get("conditions") or {},
+            "detector_rule": {
+                "category": rule.get("category"),
+                "conditions": rule.get("conditions") or {},
+            },
+            "performance_summary": rule.get("performance") or {},
+        })
+    try:
+        client.table("pptr_rules").upsert(rows, on_conflict="rule_id").execute()
+    except Exception as e:
+        logger.warning("upsert_pptr_rules error: %s", e)
+
+
+def _insert_pptr_near_misses(client, near_misses: list[dict], now: datetime) -> None:
+    """Persist partial PPTR firings as learning data; never block scanner."""
+    if not near_misses:
+        return
+    rows = []
+    seen = set()
+    for near in near_misses:
+        key = (near.get("rule_id"), near.get("ticker"))
+        if key in seen:
+            continue
+        seen.add(key)
+        rows.append({
+            "rule_id": near.get("rule_id"),
+            "ticker": near.get("ticker"),
+            "category": near.get("category"),
+            "detected_at": now.isoformat(),
+            "near_miss_score": near.get("near_miss_score"),
+            "matched_conditions": near.get("matched_conditions") or [],
+            "missing_conditions": near.get("missing_conditions") or [],
+            "details": near.get("details") or {},
+        })
+    if not rows:
+        return
+    try:
+        client.table("pptr_rule_near_misses").insert(rows).execute()
+    except Exception as e:
+        logger.warning("insert_pptr_near_misses error: %s", e)
 
 
 def _find_analog_financial(lib: dict, category: str, signal_key: str, current_val: float) -> dict | None:
@@ -244,8 +304,12 @@ def _upsert_matches_with_analogs(
     if not matches:
         return
     rows = []
+    pptr_rows = []
     for m in matches:
         fda = _resolve_first_detected(m, existing, now)
+        pptr_match = getattr(m, "pptr_match", None)
+        pptr_rule_id = pptr_match.get("rule_id") if pptr_match else None
+        pptr_breakdown = pptr_match.get("confidence_breakdown") if pptr_match else None
 
         # Resolve analog from fingerprint match if present, else fallback
         if m.fingerprint_library_ticker:
@@ -270,13 +334,31 @@ def _upsert_matches_with_analogs(
             "fingerprint_dims": m.fingerprint_dims,
             "timeline_progress": m.timeline_progress,
             "pptr_match": getattr(m, "pptr_match", None),
+            "pptr_rule_id": pptr_rule_id,
+            "pptr_confidence_breakdown": pptr_breakdown,
         })
+        if pptr_rule_id:
+            pptr_rows.append({
+                "rule_id": pptr_rule_id,
+                "ticker": m.ticker,
+                "category": m.category,
+                "matched_at": now.isoformat(),
+                "confidence": round(m.confidence, 3),
+                "confidence_breakdown": pptr_breakdown or {},
+                "matched_conditions": pptr_match.get("matched_conditions", []),
+                "evidence": m.evidence,
+            })
     try:
         client.table("hundredx_category_matches").upsert(
             rows, on_conflict="ticker,category"
         ).execute()
     except Exception as e:
         logger.warning("upsert_matches error: %s", e)
+    if pptr_rows:
+        try:
+            client.table("pptr_rule_matches").insert(pptr_rows).execute()
+        except Exception as e:
+            logger.warning("insert_pptr_rule_matches error: %s", e)
 
 
 def _find_lib_entry(lib: dict, ticker: str, category: str) -> dict | None:
@@ -388,6 +470,7 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
         # Pre-fetch library (one query, ~12 rows)
         lib = _load_library(client)
         pptr_rules = _extract_pptr_rules(lib)
+        _upsert_pptr_rules(client, pptr_rules)
         logger.info("Library loaded: %d categories, %d stocks, %d PPTR rules",
                     len(lib), sum(len(v) for v in lib.values()), len(pptr_rules))
         # Fetch active KR + US stocks via pagination (bypassing PostgREST 1000 row hard limit)
@@ -423,6 +506,7 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
         }
 
         all_matches: list[CategoryMatch] = []
+        all_near_misses: list[dict] = []
         active_after: set[tuple[str, str]] = set()
 
         # Process in batches of 50
@@ -481,12 +565,21 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                 # ── PPTR Detector (보완 탐지) ──
                 try:
                     if pptr_rules:
-                        pptr_matches = detect_from_pptr(stock_data, filings, pptr_rules)
+                        pptr_filings_by_id = {
+                            str(f.get("id") or f.get("source_id") or f.get("filed_at") or idx): f
+                            for idx, f in enumerate(filings + filings_clinical)
+                        }
+                        pptr_filings = list(pptr_filings_by_id.values())
+                        pptr_matches = detect_from_pptr(stock_data, pptr_filings, pptr_rules)
                         for pm in pptr_matches:
                             # 만약 동일 종목+카테고리가 이미 7개 디텍터에서 탐지되었다면 스킵
                             if (ticker, pm.category) not in active_after:
                                 all_matches.append(pm)
                                 active_after.add((ticker, pm.category))
+                        if not pptr_matches:
+                            all_near_misses.extend(
+                                analyze_pptr_near_misses(stock_data, pptr_filings, pptr_rules)
+                            )
                 except Exception as e:
                     logger.warning("PPTR Detector error on %s: %s", ticker, e)
 
@@ -494,6 +587,9 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
         if all_matches:
             _upsert_matches_with_analogs(client, all_matches, existing, lib, now)
             logger.info("Upserted %d category matches", len(all_matches))
+        if all_near_misses:
+            _insert_pptr_near_misses(client, all_near_misses, now)
+            logger.info("Inserted %d PPTR near misses", len(all_near_misses))
 
         # Mark exits
         exits = _mark_exits(client, active_before, active_after, now)

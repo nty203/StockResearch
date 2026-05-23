@@ -6,6 +6,8 @@ from __future__ import annotations
 from datetime import datetime, timezone
 import json
 
+MIN_SPECIAL_ONLY_VOLUME_SPIKE_RATIO = 20.0
+
 
 def _safe_float(val, default=0.0) -> float:
     try:
@@ -26,6 +28,79 @@ def _format_special_fact(key: str, value) -> str:
     if isinstance(value, float):
         return f"{label}: {value:.2f}"
     return f"{label}: {value}"
+
+
+def _unique(values: list) -> list:
+    """Return truthy values in insertion order without duplicates."""
+    out = []
+    seen = set()
+    for value in values:
+        if not value or value in seen:
+            continue
+        seen.add(value)
+        out.append(value)
+    return out
+
+
+def _signals_from_triggers(triggers: list[dict]) -> dict:
+    """Mine detector-friendly signals from timeline triggers."""
+    out: dict = {}
+    trigger_keywords = []
+    trigger_amounts = []
+
+    for trigger in triggers:
+        signals = trigger.get("signals") or {}
+        if not isinstance(signals, dict):
+            continue
+
+        trigger_keywords.extend(signals.get("keywords") or [])
+        amount = signals.get("amount")
+        if amount is not None:
+            trigger_amounts.append(amount)
+
+        quant = signals.get("quant")
+        if isinstance(quant, dict):
+            for key in ("bcr_at_signal", "opm_delta_at_signal", "opm_at_signal"):
+                if key in quant and key not in out:
+                    out[key] = quant[key]
+
+    trigger_keywords = _unique(trigger_keywords)
+    if trigger_keywords:
+        out["keywords"] = trigger_keywords[:12]
+        out["min_keyword_matches"] = max(2, min(4, len(out["keywords"]) // 3 or 1))
+
+    amount_values = []
+    for amount in trigger_amounts:
+        try:
+            amount_values.append(float(amount))
+        except (TypeError, ValueError):
+            pass
+    if amount_values:
+        out["amount_threshold_billions"] = min(amount_values)
+
+    return out
+
+
+def _is_actionable_special(special: dict) -> bool:
+    """Keep only special conditions that are specific enough for PPTR matching."""
+    if not isinstance(special, dict):
+        return False
+    if special.get("news_keywords") or special.get("keywords"):
+        return True
+    spike = _safe_float(special.get("max_volume_spike_ratio"), 0.0)
+    return special.get("volume_spike_required") is True and spike >= MIN_SPECIAL_ONLY_VOLUME_SPIKE_RATIO
+
+
+def _is_actionable_quant(key: str, value, quant: dict) -> bool:
+    """Avoid generating broad PPTR rules from weak or negative financial values."""
+    if key == "opm_prev":
+        return False
+    if key == "opm_delta_at_signal":
+        return _safe_float(value, 0.0) > 0
+    if key == "opm_at_signal":
+        delta = quant.get("opm_delta_at_signal")
+        return delta is None or _safe_float(delta, 0.0) > 0
+    return True
 
 
 def generate_pptr(library_row: dict) -> dict:
@@ -69,6 +144,7 @@ def generate_pptr(library_row: dict) -> dict:
     sector = pre_rise_signals.get("sector_required")
     amount_th = pre_rise_signals.get("amount_threshold_billions")
     min_kw = pre_rise_signals.get("min_keyword_matches", 1)
+    trigger_signals = _signals_from_triggers(triggers)
 
     # 1. 문제 재정의 (Redefine)
     redefine = {
@@ -265,26 +341,41 @@ def generate_pptr(library_row: dict) -> dict:
         
         if quant:
             for k, v in quant.items():
+                if not _is_actionable_quant(k, v, quant):
+                    continue
                 detector_rule["conditions"][f"{k}"] = v
         if sector:
             detector_rule["conditions"]["sector_required"] = sector
         if keywords:
             detector_rule["conditions"]["keywords"] = keywords
             detector_rule["conditions"]["min_keyword_matches"] = min_kw
+        elif trigger_signals.get("keywords"):
+            detector_rule["conditions"]["keywords"] = trigger_signals["keywords"]
+            detector_rule["conditions"]["min_keyword_matches"] = trigger_signals["min_keyword_matches"]
         if amount_th:
             detector_rule["conditions"]["amount_threshold_billions"] = amount_th
-        if special:
+        elif trigger_signals.get("amount_threshold_billions"):
+            detector_rule["conditions"]["amount_threshold_billions"] = trigger_signals["amount_threshold_billions"]
+        for key in ("bcr_at_signal", "opm_delta_at_signal", "opm_at_signal"):
+            if (
+                key not in detector_rule["conditions"]
+                and key in trigger_signals
+                and _is_actionable_quant(key, trigger_signals[key], trigger_signals)
+            ):
+                detector_rule["conditions"][key] = trigger_signals[key]
+        if special and _is_actionable_special(special):
             detector_rule["conditions"]["special"] = special
 
-        resolutions.append({
-            "priority": 1,
-            "action": f"{category} 카테고리 {peak_multi:.1f}x 상승 패턴 감지 시 매수 검토",
-            "producer_id": top_pr_id,
-            "expected_effect": "상승 초기 포착 가능성",
-            "risk": "거시 경제 및 개별 악재 존재 시 무효화",
-            "difficulty": "낮음 (자동 탐지됨)",
-            "detector_rule": detector_rule
-        })
+        if detector_rule["conditions"]:
+            resolutions.append({
+                "priority": 1,
+                "action": f"{category} 카테고리 {peak_multi:.1f}x 상승 패턴 감지 시 매수 검토",
+                "producer_id": top_pr_id,
+                "expected_effect": "상승 초기 포착 가능성",
+                "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+                "difficulty": "낮음 (자동 탐지됨)",
+                "detector_rule": detector_rule
+            })
 
     # 7. Conclusion
     top3_traces = [t["trace"] for t in traces[:3]]

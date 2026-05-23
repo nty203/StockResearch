@@ -28,16 +28,42 @@ def _parse_date(entry) -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def _find_ticker_mentions(text: str, ticker_set: set[str]) -> list[str]:
+def _build_mention_map(stocks: list[dict]) -> dict[str, str]:
+    """Build mention token -> ticker map from tickers and company names."""
+    mention_map: dict[str, str] = {}
+    for stock in stocks:
+        ticker = stock.get("ticker")
+        if not ticker:
+            continue
+        values = [
+            ticker,
+            stock.get("name_kr"),
+            stock.get("name_en"),
+        ]
+        for value in values:
+            token = str(value or "").strip()
+            if len(token) < 2:
+                continue
+            mention_map[token.lower()] = ticker
+    return mention_map
+
+
+def _find_ticker_mentions(text: str, ticker_set: set[str], mention_map: dict[str, str] | None = None) -> list[str]:
     """Find stock ticker mentions in article text."""
+    mention_map = mention_map or {}
     # Korean: 6-digit codes
     kr = set(re.findall(r"\b(\d{6})\b", text)) & ticker_set
     # US: uppercase words 1-5 chars
     us = set(re.findall(r"\b([A-Z]{1,5})\b", text)) & ticker_set
-    return list(kr | us)
+    by_name = {
+        ticker
+        for token, ticker in mention_map.items()
+        if token in text.lower()
+    }
+    return list(kr | us | by_name)
 
 
-def collect_rss_news(ticker_set: set[str]) -> list[dict]:
+def collect_rss_news(ticker_set: set[str], mention_map: dict[str, str] | None = None) -> list[dict]:
     rows = []
     for feed_url, lang in RSS_FEEDS:
         try:
@@ -46,7 +72,7 @@ def collect_rss_news(ticker_set: set[str]) -> list[dict]:
                 title = entry.get("title", "")
                 summary = entry.get("summary", entry.get("description", ""))
                 full_text = f"{title} {summary}"
-                tickers = _find_ticker_mentions(full_text, ticker_set)
+                tickers = _find_ticker_mentions(full_text, ticker_set, mention_map)
                 if not tickers:
                     continue
                 published = _parse_date(entry)
@@ -70,13 +96,20 @@ def collect_rss_news(ticker_set: set[str]) -> list[dict]:
 def run() -> int:
     client = get_client()
     try:
-        res = retry_execute(lambda: client.table("stocks").select("ticker").eq("is_active", True).execute())
-        ticker_set = {r["ticker"] for r in (res.data or [])}
+        res = retry_execute(
+            lambda: client.table("stocks")
+            .select("ticker, name_kr, name_en")
+            .eq("is_active", True)
+            .execute()
+        )
+        stocks = res.data or []
+        ticker_set = {r["ticker"] for r in stocks}
+        mention_map = _build_mention_map(stocks)
     except Exception as e:
         logger.error("Failed to fetch stocks list: %s", e)
         return 0
 
-    rows = collect_rss_news(ticker_set)
+    rows = collect_rss_news(ticker_set, mention_map)
     with pipeline_run(client, "news") as (rows_out, _):
         count = upsert_batch(client, "news", rows, on_conflict="ticker,url")
         rows_out[0] = count

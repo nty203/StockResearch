@@ -76,5 +76,13 @@ def bulk_fetch_financials(client, tickers: list[str]) -> dict[str, dict]:
         avg_vol = sum(p.get("volume") or 0 for p in recent) / len(recent)
         avg_price_val = sum(p["close"] for p in recent) / len(recent)
         data["avg_daily_value"] = avg_vol * avg_price_val if avg_vol > 0 else None
+        baseline = prices[20:80]
+        baseline_avg_vol = (
+            sum(p.get("volume") or 0 for p in baseline) / len(baseline)
+            if baseline
+            else avg_vol
+        )
+        if baseline_avg_vol > 0:
+            data["max_volume_spike_ratio"] = max((p.get("volume") or 0) / baseline_avg_vol for p in recent)
 
     return result

@@ -2,8 +2,8 @@ name: Weekly Library Update & Prune
 
 on:
   schedule:
-    - cron: '0 13 * * 0'   # 일요일 22:00 KST (UTC 13:00)
-  workflow_dispatch:         # 수동 재실행 — 반드시 유지
+    - cron: '0 13 * * 0'   # Sunday 22:00 KST
+  workflow_dispatch:
 
 jobs:
   update-then-prune:
@@ -27,17 +27,17 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen
 
-      # 재무 데이터 — DART API 일 20,000건 제한으로 주 1회 실행
       - name: Run financials (DART)
         continue-on-error: true
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
         run: uv run python -m src.financials_dart
 
-      # hundredx 라이브러리 multiplier 갱신 — 현재가 기반 latest_multiplier 추적
       - name: Update hundredx library multipliers
         run: uv run python -m src.hundredx.update_library
 
-      # 가격 prune — update_library 이후 실행 (rise_start_date 가격 baseline 사용)
+      - name: Evaluate PPTR rule performance
+        run: uv run python -m src.hundredx.pptr_performance
+
       - name: Prune old prices (> 2 years)
         run: uv run python -m src.utils.prune_prices
