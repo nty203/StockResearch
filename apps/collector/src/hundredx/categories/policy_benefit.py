@@ -14,6 +14,9 @@ _POLICY_SECTORS = {
     # 2026-05-19 추가
     "조선", "엔진", "발전기", "발전엔진", "냉각", "열관리",
     "소재", "배터리",
+    # 2026-05-23 추가: 이차전지/EV 정책 수혜
+    "이차전지", "2차전지", "양극재", "음극재", "전구체",
+    "전기차", "ev", "battery",
     # US sector_tag equivalents
     "defense", "nuclear", "semiconductor", "power",
     "shipbuilding", "engine", "cooling",
@@ -29,6 +32,14 @@ _EXTRA_GEO_KEYWORDS = [
     "AI 전력", "데이터센터 전력", "전력망 투자", "송전망 확충",
     # 조선/엔진 정책
     "조선 수주 지원", "핵심 산업 육성",
+    # 이차전지/EV 정책 (IRA, CHIPS Act, 보조금)
+    "IRA", "Inflation Reduction Act", "배터리 보조금", "EV 보조금",
+    "전기차 보조금", "친환경 에너지", "탄소중립 정책", "에너지 전환 정책",
+    "K-배터리", "배터리 생태계", "이차전지 육성", "소재 국산화",
+    "전기차 전환", "EV 전환", "내연기관 금지",
+    # 조선 환경 규제 수혜
+    "환경 규제", "탈탄소 선박", "IMO 규제", "친환경 선박 전환",
+    "이중연료 엔진", "LNG 추진", "암모니아 추진",
 ]
 
 
@@ -39,8 +50,8 @@ def _kw_hit(text: str, keywords: list[str]) -> list[str]:
 
 def detect(stock_data: dict, filings: list[dict]) -> CategoryMatch | None:
     ticker = stock_data.get("ticker", "")
-    sector_tag = stock_data.get("sector_tag") or ""
-    in_target_sector = sector_tag in _POLICY_SECTORS
+    sector_tag = (stock_data.get("sector_tag") or "").lower()
+    in_target_sector = any(s.lower() in sector_tag for s in _POLICY_SECTORS)
 
     best_confidence = 0.0
     best_evidence: list[dict] = []

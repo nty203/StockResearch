@@ -31,3 +31,62 @@ jobs:
 
       - name: Run 100x category scanner
         run: uv run python -m src.hundredx.scanner
+
+      - name: Backfill NULL price performance (catch-up for existing matches)
+        run: |
+          uv run python - <<'EOF'
+          import os, sys
+          sys.path.insert(0, "src")
+          from supabase import create_client
+          from src.hundredx.backfill_price_performance import run as backfill
+
+          url = os.environ.get("SUPABASE_URL")
+          key = os.environ.get("SUPABASE_SERVICE_KEY")
+          if not url or not key:
+              print("SKIP: SUPABASE env vars not set")
+              exit(0)
+
+          client = create_client(url, key)
+          print("Starting price performance backfill (limit=2000)...")
+          try:
+              result = backfill(client, limit=2000)
+              print(f"  Updated: {result['updated']}")
+              print(f"  Skipped: {result['skipped']}")
+              print(f"  Total:   {result['total']}")
+          except Exception as e:
+              print(f"WARNING: Price backfill failed (non-fatal): {e}")
+          EOF
+
+      - name: Generate paper trading signals
+        run: |
+          uv run python - <<'EOF'
+          import os
+          from supabase import create_client
+          from src.hundredx.paper_trading.signal_generator import generate_daily_signals, generate_weekly_report
+          from datetime import date
+
+          url = os.environ.get("SUPABASE_URL")
+          key = os.environ.get("SUPABASE_SERVICE_KEY")
+          if not url or not key:
+              print("SKIP: SUPABASE env vars not set")
+              exit(0)
+
+          client = create_client(url, key)
+          today = date.today().isoformat()
+          print(f"Generating paper trading signals for {today}...")
+          try:
+              signals = generate_daily_signals(client, scan_date=today)
+              buys = [s for s in signals if s.signal_type == "BUY_SIGNAL"]
+              exits = [s for s in signals if s.signal_type == "EXIT_SIGNAL"]
+              watches = [s for s in signals if s.signal_type == "WATCH"]
+              print(f"  BUY_SIGNAL:  {len(buys)}")
+              print(f"  EXIT_SIGNAL: {len(exits)}")
+              print(f"  WATCH:       {len(watches)}")
+              for s in buys[:5]:
+                  print(f"    BUY  {s.ticker} | {s.category} | conf={s.confidence:.2f} | size={s.suggested_size_pct:.1%}")
+              for s in exits[:5]:
+                  print(f"    EXIT {s.ticker} | {s.reason}")
+          except Exception as e:
+              print(f"WARNING: Paper signal generation failed: {e}")
+              # Non-fatal -- scanner output is the primary deliverable
+          EOF

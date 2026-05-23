@@ -21,6 +21,9 @@ _AMOUNT_THRESHOLD_MID = 50       # 500억 KRW (billion units)
 _SUPPLY_CHOKE_SECTORS = {
     "조선", "방산", "전력기기", "반도체", "장비", "소재",
     "냉각", "열관리",
+    # 배터리/이차전지
+    "이차전지", "2차전지", "배터리", "양극재", "음극재", "전구체",
+    "battery", "cathode", "anode",
     # US sector equivalents
     "shipbuilding", "defense", "semiconductor", "power",
 }
