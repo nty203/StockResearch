@@ -16,7 +16,6 @@ import edgar
 
 from .upsert import get_client, upsert_batch, pipeline_run, retry_execute
 from .utils.settings import load_settings
-from .utils import telegram as tg
 
 logger = logging.getLogger(__name__)
 
@@ -451,22 +450,6 @@ def run() -> int:
         count = upsert_batch(client, "filings", deduped_rows, on_conflict="ticker,filed_at,filing_type")
         rows_out[0] = count
     logger.info("Filings upserted %d rows (dart/kind=%d, sec=%d)", count, len(dart_rows), len(sec_rows))
-
-    # 텔레그램 알림: 오늘 접수된 키워드 공시만 (재수집된 과거 공시 제외)
-    # - lookback_days=2로 실행하면 같은 공시가 매시간 재수집될 수 있음
-    # - filed_at이 오늘인 건만 알림 → 중복 발송 방지
-    try:
-        from datetime import datetime, timezone
-        today = date.today().isoformat()  # "2026-05-23"
-        fresh_filings = [
-            r for r in deduped_rows
-            if r.get("keywords") and str(r.get("filed_at", ""))[:10] >= today
-        ]
-        if fresh_filings:
-            tg.notify_filing_alert(fresh_filings)
-            logger.info("Telegram filing alert sent: %d fresh filings", len(fresh_filings))
-    except Exception as e:
-        logger.warning("Telegram filing alert failed: %s", e)
 
     return count
 
