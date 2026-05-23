@@ -28,6 +28,7 @@ from .categories.clinical_pipe import detect as detect_clinical_pipe
 from .pptr_detector import BLOCKED_PPTR_CATEGORIES, detect_from_pptr
 from .pptr_near_miss import analyze_pptr_near_misses
 from .price_performance import PricePerformance, fetch_window_performance
+from ..utils import telegram as tg
 
 logger = logging.getLogger(__name__)
 
@@ -568,37 +569,29 @@ def _mark_exits(client, active_before: set[tuple[str, str]], active_after: set[t
 
 # ── Telegram alerts ───────────────────────────────────────────────────────────
 
-def _send_alerts(client, new_matches: list[tuple[str, str, float, str | None]]) -> None:
+def _send_alerts(client, new_matches: list[tuple[str, str, float, str | None]], all_matches_count: int = 0, total_active: int = 0, elapsed_sec: float = 0) -> None:
     """Send Telegram alerts for new category entries (deduped by alert_sent_at).
 
     new_matches: list of (ticker, category, confidence, analog_summary)
     """
-    bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
-    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
-    if not bot_token or not chat_id:
+    if not tg.is_enabled():
         logger.info("Telegram not configured — skipping alerts")
         return
 
-    import urllib.request
-    import json
     now = datetime.now(timezone.utc).isoformat()
 
-    if len(new_matches) <= 3:
-        for ticker, category, confidence, analog in new_matches:
-            msg = f"[100x 시그널] NEW: {ticker}\n카테고리: {category} (신뢰도: {confidence:.2f})"
-            if analog:
-                msg += f"\n유사 종목: {analog}"
-            _telegram_send(bot_token, chat_id, msg)
-    else:
-        lines = "\n".join(
-            f"{i+1}. {t} — {cat} ({conf:.2f}) [NEW]"
-            for i, (t, cat, conf, _) in enumerate(new_matches[:3])
-        )
-        extra = len(new_matches) - 3
-        msg = f"[100x 시그널] 오늘 {len(new_matches)}개 종목 신규 탐지\n{lines}"
-        if extra > 0:
-            msg += f"\n+{extra}개 더 → 앱에서 확인"
-        _telegram_send(bot_token, chat_id, msg)
+    # Build rich match payload for notify_new_matches
+    if new_matches:
+        rich_matches = [
+            {
+                "ticker": ticker,
+                "category": category,
+                "confidence": confidence,
+                "headline": analog or "",  # analog_summary as headline fallback
+            }
+            for ticker, category, confidence, analog in new_matches
+        ]
+        tg.notify_new_matches(rich_matches, total_scanned=all_matches_count)
 
     # Mark alert_sent_at
     for ticker, category, _, _ in new_matches:
@@ -608,18 +601,6 @@ def _send_alerts(client, new_matches: list[tuple[str, str, float, str | None]]) 
             ).eq("ticker", ticker).eq("category", category).execute()
         except Exception as e:
             logger.warning("alert_sent_at update error %s/%s: %s", ticker, category, e)
-
-
-def _telegram_send(bot_token: str, chat_id: str, text: str) -> None:
-    import urllib.request
-    import json
-    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-    payload = json.dumps({"chat_id": chat_id, "text": text}).encode()
-    req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
-    try:
-        urllib.request.urlopen(req, timeout=10)
-    except Exception as e:
-        logger.warning("Telegram send failed: %s", e)
 
 
 # ── Main scan ─────────────────────────────────────────────────────────────────
@@ -792,9 +773,40 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                     )
                 new_entries.append((m.ticker, m.category, m.confidence, analog_summary))
 
+        # Fetch total active count for summary
+        try:
+            active_res = (
+                client.table("hundredx_category_matches")
+                .select("ticker", count="exact")
+                .is_("exited_at", "null")
+                .execute()
+            )
+            total_active = active_res.count or len(all_matches)
+        except Exception:
+            total_active = len(all_matches)
+
+        elapsed_sec = (datetime.now(timezone.utc) - now).total_seconds()
+
         if new_entries:
-            _send_alerts(client, new_entries)
+            _send_alerts(client, new_entries, all_matches_count=len(tickers), total_active=total_active, elapsed_sec=elapsed_sec)
             logger.info("Sent alerts for %d new entries", len(new_entries))
+
+        # Send daily scanner summary (even if no new entries)
+        try:
+            top_for_summary = [
+                {"ticker": t, "category": cat, "confidence": conf}
+                for t, cat, conf, _ in sorted(new_entries, key=lambda x: -x[2])[:5]
+            ] if new_entries else []
+            updated_count = len(all_matches) - len(new_entries)
+            tg.notify_scanner_summary(
+                new_count=len(new_entries),
+                updated_count=max(0, updated_count),
+                total_active=total_active,
+                elapsed_sec=elapsed_sec,
+                top_matches=top_for_summary,
+            )
+        except Exception as e:
+            logger.warning("Telegram summary failed: %s", e)
 
         rows_out[0] = len(all_matches)
 

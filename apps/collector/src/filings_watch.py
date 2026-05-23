@@ -16,6 +16,7 @@ import edgar
 
 from .upsert import get_client, upsert_batch, pipeline_run, retry_execute
 from .utils.settings import load_settings
+from .utils import telegram as tg
 
 logger = logging.getLogger(__name__)
 
@@ -450,6 +451,15 @@ def run() -> int:
         count = upsert_batch(client, "filings", deduped_rows, on_conflict="ticker,filed_at,filing_type")
         rows_out[0] = count
     logger.info("Filings upserted %d rows (dart/kind=%d, sec=%d)", count, len(dart_rows), len(sec_rows))
+
+    # 텔레그램 알림: 키워드 매칭 공시만 (수주공시 자동분류 포함)
+    try:
+        keyword_filings = [r for r in deduped_rows if r.get("keywords")]
+        if keyword_filings:
+            tg.notify_filing_alert(keyword_filings)
+    except Exception as e:
+        logger.warning("Telegram filing alert failed: %s", e)
+
     return count
 
 
