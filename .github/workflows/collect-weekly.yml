@@ -41,4 +41,8 @@ jobs:
         run: uv run python -m src.hundredx.pptr_performance
 
       - name: Prune old prices (> 2 years)
+        continue-on-error: true   # timeout은 치명적 오류 아님 — 다음 주 재시도
+        timeout-minutes: 10
+        env:
+          PRICE_PRUNE_WINDOW_DAYS: "1"  # 하루 단위 삭제 (REST timeout 방지)
         run: uv run python -m src.utils.prune_prices
