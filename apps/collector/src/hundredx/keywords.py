@@ -34,10 +34,16 @@ TRIGGER_TYPES = [
     "단기_테마",       # 20. Meme / Short-term theme spike
 ]
 
-BIGTECH_KEYWORDS = ["MSFT", "Microsoft", "Google", "Alphabet", "Amazon", "AWS",
-                     "Oracle", "Meta", "NVIDIA", "Apple", "Tesla", "PPA",
-                     "하이퍼스케일", "하이퍼스케일러", "빅테크", "CSP",
-                     "삼성전자", "SK하이닉스", "LG전자"]
+BIGTECH_KEYWORDS = [
+    # 글로벌 빅테크
+    "MSFT", "Microsoft", "Google", "Alphabet", "Amazon", "AWS",
+    "Oracle", "Meta", "NVIDIA", "Apple", "Tesla", "PPA",
+    "하이퍼스케일", "하이퍼스케일러", "빅테크", "CSP",
+    # 한국 대형 전략투자사 (지분투자/파트너십)
+    "삼성전자", "SK하이닉스", "LG전자", "LG에너지솔루션",
+    "현대차", "현대모비스", "기아", "포스코",
+    "네이버", "카카오",
+]
 
 CAPEX_KEYWORDS = ["증설", "신공장", "CAPEX", "설비투자", "ground breaking",
                   "groundbreaking", "착공", "공장 건설", "생산라인", "라인 증설",
@@ -71,11 +77,31 @@ BIGTECH_PARTNER_KEYWORDS = ["전략적 파트너십", "strategic partnership", "
                               "지분 취득", "최대주주", "자회사 편입"]
 
 # 바이오/제약 임상 파이프라인 키워드
-BIOTECH_PIPELINE_KEYWORDS = ["임상", "1상", "2상", "3상", "IND", "임상시험계획",
-                               "FDA 승인", "FDA approval", "식약처", "MFDS",
-                               "기술이전", "license out", "마일스톤", "milestone",
-                               "GLP-1", "세마글루타이드", "CDMO", "빅파마",
-                               "품목허가", "NDA", "BLA", "CE 인증"]
+BIOTECH_PIPELINE_KEYWORDS = [
+    # 임상 단계
+    "임상", "1상", "2상", "3상", "IND", "임상시험계획",
+    "임상시험", "clinical trial", "임상 완료", "임상 성공",
+    # 허가/승인
+    "FDA 승인", "FDA approval", "식약처", "MFDS", "품목허가",
+    "NDA", "BLA", "CE 인증", "시판허가", "허가 신청", "EMA",
+    # 기술이전/라이선스
+    "기술이전", "license out", "라이선스 아웃", "기술수출",
+    "마일스톤", "milestone", "선급금", "upfront payment",
+    # GLP-1 / 비만 치료
+    "GLP-1", "GLP1", "세마글루타이드", "semaglutide",
+    "위고비", "오젬픽", "wegovy", "ozempic",
+    "비만 치료", "당뇨 치료",
+    # 빅파마 / 외부 파트너
+    "CDMO", "빅파마", "글로벌 제약사",
+    "Merck", "Pfizer", "AstraZeneca", "Roche", "Novartis",
+    "Lilly", "Eli Lilly", "AbbVie",
+    # 바이오시밀러 / 항체
+    "바이오시밀러", "biosimilar", "단클론항체", "ADC",
+    # 안과 / 희귀질환
+    "점안제", "안과", "ophthalmic", "황반변성", "희귀의약품", "orphan drug",
+    # 면역항암
+    "면역항암", "PD-L1", "PD-1", "CAR-T",
+]
 
 # 로봇/자동화 생태계 키워드
 ROBOTICS_ECOSYSTEM_KEYWORDS = ["협동로봇", "휴머노이드", "humanoid", "다이나믹셀",

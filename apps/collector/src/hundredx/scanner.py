@@ -454,6 +454,99 @@ def _get_analog(lib: dict, match: CategoryMatch) -> dict | None:
     return _find_analog_text(lib, category)
 
 
+# ── Category deduplication ───────────────────────────────────────────────────
+
+# Categories that should NEVER be crowded out by other categories
+# (they represent fundamentally different investment theses)
+_ALWAYS_KEEP_CATEGORIES = frozenset({
+    "임상_파이프라인",   # bio/pharma — completely different from industrial
+    "수익성_급전환",     # financial event — distinct from supply/partnership
+})
+
+# Category priority order for tiebreaking (higher index = higher priority)
+_CATEGORY_PRIORITY = {
+    "수주잔고_선행":  1,
+    "정책_수혜":     2,
+    "공급_병목":     3,
+    "플랫폼_독점":   4,
+    "수익성_급전환": 5,
+    "임상_파이프라인": 6,
+    "빅테크_파트너": 7,
+}
+
+
+def _deduplicate_categories(matches: list[CategoryMatch]) -> list[CategoryMatch]:
+    """Keep only the best-confidence category match per ticker.
+
+    Rationale:
+    - Same ticker appearing in 5-7 categories simultaneously creates noise
+      and degrades the signal (e.g., 373220 at 0.750 in ALL categories)
+    - Exception: categories in _ALWAYS_KEEP_CATEGORIES are preserved alongside
+      the best other category (they represent distinct investment theses)
+
+    Algorithm:
+    1. For each ticker, identify all matching categories
+    2. If ≤1 category → keep as-is
+    3. If >1 category:
+       a. Among non-always-keep categories, keep only the best (by confidence,
+          then by _CATEGORY_PRIORITY)
+       b. Always keep _ALWAYS_KEEP_CATEGORIES entries if they also passed threshold
+    """
+    if not matches:
+        return matches
+
+    # Group by ticker
+    by_ticker: dict[str, list[CategoryMatch]] = {}
+    for m in matches:
+        by_ticker.setdefault(m.ticker, []).append(m)
+
+    result: list[CategoryMatch] = []
+    dedup_count = 0
+
+    for ticker, ticker_matches in by_ticker.items():
+        if len(ticker_matches) <= 1:
+            result.extend(ticker_matches)
+            continue
+
+        # Split into "always keep" vs "deduplicate"
+        always_keep = [m for m in ticker_matches if m.category in _ALWAYS_KEEP_CATEGORIES]
+        to_dedup = [m for m in ticker_matches if m.category not in _ALWAYS_KEEP_CATEGORIES]
+
+        kept = list(always_keep)
+
+        if to_dedup:
+            # Sort by confidence desc, then category priority desc
+            to_dedup.sort(
+                key=lambda m: (
+                    m.confidence,
+                    _CATEGORY_PRIORITY.get(m.category, 0),
+                ),
+                reverse=True,
+            )
+            kept.append(to_dedup[0])  # keep best
+            demoted = len(to_dedup) - 1
+            if demoted > 0:
+                dedup_count += demoted
+                logger.debug(
+                    "Dedup %s: kept %s (conf=%.3f), demoted %d others: %s",
+                    ticker,
+                    to_dedup[0].category,
+                    to_dedup[0].confidence,
+                    demoted,
+                    [m.category for m in to_dedup[1:]],
+                )
+
+        result.extend(kept)
+
+    if dedup_count > 0:
+        logger.info(
+            "Category dedup: %d matches -> %d (removed %d duplicate categories)",
+            len(matches), len(result), dedup_count,
+        )
+
+    return result
+
+
 # ── Exit marking ──────────────────────────────────────────────────────────────
 
 def _mark_exits(client, active_before: set[tuple[str, str]], active_after: set[tuple[str, str]], now: datetime) -> int:
@@ -654,6 +747,13 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                 except Exception as e:
                     logger.warning("PPTR Detector error on %s: %s", ticker, e)
 
+        # ── Category deduplication: keep best-confidence category per ticker ──
+        # A single ticker firing all 7 categories dilutes signal quality.
+        # Keep only the highest-confidence category per ticker; demote the rest.
+        if all_matches:
+            all_matches = _deduplicate_categories(all_matches)
+            active_after = {(m.ticker, m.category) for m in all_matches}
+
         # Upsert all matches
         if all_matches:
             price_performances = _fetch_price_performances(all_matches, market_by_ticker)
@@ -665,7 +765,7 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                 now,
                 price_performances=price_performances,
             )
-            logger.info("Upserted %d category matches", len(all_matches))
+            logger.info("Upserted %d category matches (after dedup)", len(all_matches))
         if all_near_misses:
             _insert_pptr_near_misses(client, all_near_misses, now)
             logger.info("Inserted %d PPTR near misses", len(all_near_misses))

@@ -125,10 +125,11 @@ class TestBigtechPartner:
         assert result.confidence == 0.9
 
     def test_bigtech_equity_no_callopt_lower(self):
+        # LG전자(KR bigtech investor) + equity hit => 0.80 (raised from 0.70 for KR big tech)
         filing = _filing("LG전자, 로보티즈 지분 취득 전략적 투자")
         result = detect_bigtech({"ticker": "108490"}, [filing])
         assert result is not None
-        assert result.confidence == 0.7
+        assert result.confidence == 0.80
 
     def test_no_bigtech_keyword_no_match(self):
         filing = _filing("일반 공급 계약 체결 완료")
@@ -150,6 +151,35 @@ class TestBigtechPartner:
     def test_empty_filings_no_match(self):
         result = detect_bigtech({"ticker": "000001"}, [])
         assert result is None
+
+    def test_samsung_robotics_investment_detected(self):
+        """277810 (레인보우로보틱스) type: 삼성전자 유상증자 + 콜옵션 → 0.90"""
+        filing = _filing("삼성전자 레인보우로보틱스 유상증자 참여 지분 취득 및 콜옵션 계약")
+        result = detect_bigtech({"ticker": "277810"}, [filing])
+        assert result is not None
+        assert result.confidence >= 0.90
+
+    def test_kr_bigtech_equity_only_gets_0_80(self):
+        """KR 대기업 지분 취득만으로도 0.80 (global bigtech의 0.70보다 높음)"""
+        filing = _filing("현대차 로봇 스타트업 지분 취득 전략적 투자")
+        result = detect_bigtech({"ticker": "TEST01"}, [filing])
+        assert result is not None
+        assert result.confidence == 0.80
+
+    def test_hyperscaler_pcb_supply_detected(self):
+        """이수페타시스 type: 하이퍼스케일러 대상 고다층 PCB 공급 → 탐지"""
+        # sector_tag = "PCB" → in_target_sector=True; hyperscaler + bigtech keywords
+        filing = _filing("Microsoft Azure 데이터센터 향 고다층 MLB PCB 공급 계약 체결")
+        result = detect_bigtech({"ticker": "007660", "sector_tag": "pcb 기판 인쇄회로"}, [filing])
+        assert result is not None
+        assert result.confidence >= 0.70
+
+    def test_global_bigtech_supply_with_sector_match(self):
+        """NVIDIA + 공급 계약 + 반도체 섹터 → 탐지 (sector bonus)"""
+        filing = _filing("NVIDIA 향 냉각 솔루션 공급 계약 체결 확정")
+        result = detect_bigtech({"ticker": "TEST02", "sector_tag": "냉각 열관리"}, [filing])
+        assert result is not None
+        assert result.confidence >= 0.75
 
 
 # ── TestPlatformMono ──────────────────────────────────────────────────────────
@@ -247,17 +277,20 @@ class TestSupplyChoke:
 
 class TestClinicalPipe:
     def test_keyword_in_one_filing(self):
+        # Single filing with general clinical keywords: 0.70 (raised from 0.5 to pass scanner min_conf)
         filing = _filing("FDA IND 임상시험계획 승인 획득", filing_id="f1")
         result = detect_clinical({"ticker": "T"}, [filing])
         assert result is not None
-        assert result.confidence == 0.5
+        assert result.confidence == 0.70
 
     def test_keyword_in_both_filings_higher_confidence(self):
+        # f1: general keywords (임상, 1상, IND); f2: strong keywords (기술이전, 마일스톤)
+        # 2+ strong keywords => base=0.75; + license_hits w/o amount => 0.75+0.07=0.82
         f1 = _filing("임상 1상 진입 IND 제출", filing_id="f1")
         f2 = _filing("기술이전 마일스톤 달성", filing_id="f2")
         result = detect_clinical({"ticker": "T"}, [f1, f2])
         assert result is not None
-        assert result.confidence == 0.7
+        assert result.confidence == 0.82
 
     def test_no_biotech_keywords_no_match(self):
         filing = _filing("일반 영업 공시")
@@ -307,5 +340,35 @@ class TestClinicalPipe:
         f_older  = _filing("임상 3상 완료 NDA 제출", filing_id="f2")
         result = detect_clinical({"ticker": "T"}, [f_recent, f_older])
         assert result is not None
-        # Both have keywords → base=0.7, no stage advance bonus
-        assert result.confidence == 0.7
+        # Both have general keywords, no strong keywords → base=0.72 (raised from 0.70)
+        assert result.confidence == 0.72
+
+    def test_glp1_strong_keyword_boosts_confidence(self):
+        """펩트론 type: GLP-1 펩타이드 신약 → strong keyword → 0.70+"""
+        filing = _filing("GLP-1 기반 펩타이드 신약 후보물질 임상 1상 진입")
+        result = detect_clinical({"ticker": "087010"}, [filing])
+        assert result is not None
+        # GLP-1 is a strong keyword → base >= 0.72
+        assert result.confidence >= 0.70
+
+    def test_license_out_with_amount_high_confidence(self):
+        """기술이전 + 마일스톤 + 대형 계약 → 높은 confidence"""
+        filing = _filing("Merck에 기술이전, 마일스톤 1500억원 규모 라이선스 계약 체결")
+        result = detect_clinical({"ticker": "T"}, [filing])
+        assert result is not None
+        # license_hits + amount >= 100bn → big bonus
+        assert result.confidence >= 0.82
+
+    def test_ophthalmic_keywords_detected(self):
+        """삼천당제약 type: 안과 점안제 → 탐지"""
+        filing = _filing("점안제 황반변성 치료제 임상 3상 완료 품목허가 신청")
+        result = detect_clinical({"ticker": "000250"}, [filing])
+        assert result is not None
+        assert result.confidence >= 0.70
+
+    def test_single_strong_keyword_passes_scanner_threshold(self):
+        """단일 강력 키워드(GLP-1/기술이전 등)가 scanner 최소 신뢰도(0.70) 통과"""
+        filing = _filing("바이오시밀러 허가신청 FDA 제출 완료")
+        result = detect_clinical({"ticker": "T"}, [filing])
+        assert result is not None
+        assert result.confidence >= 0.70  # Must pass scanner MIN_CONFIDENCE=0.70
