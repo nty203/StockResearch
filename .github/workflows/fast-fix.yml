@@ -35,6 +35,9 @@ jobs:
       - name: Push DB Migrations
         run: supabase db push --db-url ${{ secrets.SUPABASE_DB_URL }}
 
+      - name: Run extract signals (force update categories)
+        run: uv run python -m src.hundredx.extract_signals --force
+
       - name: Run analyze library PPTR
         run: uv run python -m src.hundredx.analyze_library_pptr
 
