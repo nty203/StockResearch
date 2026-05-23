@@ -55,18 +55,37 @@ class TestDeduplicateCategories:
         assert "공급_병목" not in cats
         assert len(result) == 2
 
-    def test_always_keep_clinical_preserved_alongside_best(self):
-        """임상_파이프라인 is always-keep: preserved even if another category has higher conf."""
+    def test_clinical_deduped_when_lower_confidence(self):
+        """임상_파이프라인은 더 이상 always-keep이 아님.
+
+        비바이오 종목이 CE 인증 등 범용 키워드로 임상을 잘못 탐지할 경우,
+        높은 confidence 카테고리가 있으면 dedup으로 제거되어야 함.
+        (바이오 종목은 clinical_pipe.py가 높은 confidence를 부여하므로 1위를 차지함)
+        """
         m_clinical = _match("B", "임상_파이프라인", 0.72)
         m_backlog = _match("B", "수주잔고_선행", 0.90)
         m_supply = _match("B", "공급_병목", 0.85)
         result = _deduplicate_categories([m_clinical, m_backlog, m_supply])
-        # clinical is always kept, plus the best non-always-keep (수주잔고_선행 @ 0.90)
+        # 수주잔고_선행(0.90)이 최고 confidence → 수익성_급전환 always-keep 없으므로 1개만
         cats = {m.category for m in result}
-        assert "임상_파이프라인" in cats
         assert "수주잔고_선행" in cats
         assert "공급_병목" not in cats
-        assert len(result) == 2
+        # 임상은 낮은 confidence(0.72) → dedup으로 제거
+        assert "임상_파이프라인" not in cats
+        assert len(result) == 1
+
+    def test_clinical_wins_when_highest_confidence(self):
+        """바이오 종목에서 임상_파이프라인이 가장 높은 confidence면 정상 보존."""
+        m_clinical = _match("BIO", "임상_파이프라인", 0.90)
+        m_backlog = _match("BIO", "수주잔고_선행", 0.72)
+        m_supply = _match("BIO", "공급_병목", 0.75)
+        result = _deduplicate_categories([m_clinical, m_backlog, m_supply])
+        cats = {m.category for m in result}
+        # 임상(0.90)이 최고 → 보존됨
+        assert "임상_파이프라인" in cats
+        assert "수주잔고_선행" not in cats
+        assert "공급_병목" not in cats
+        assert len(result) == 1
 
     def test_always_keep_profit_preserved(self):
         """수익성_급전환 is always-keep."""
@@ -99,13 +118,18 @@ class TestDeduplicateCategories:
         assert len(result) == 1
         assert result[0].category == "빅테크_파트너"
 
-    def test_preserve_all_when_only_always_keep(self):
-        """If a ticker only has always-keep categories, all are preserved."""
+    def test_profit_always_keep_with_clinical(self):
+        """수익성_급전환(always-keep) + 임상_파이프라인: profit은 보존, clinical은 dedup 대상.
+
+        임상(0.72) < 수익성(0.80) → to_dedup에서 수익성_급전환이 always-keep이므로
+        always_keep=[수익성_급전환], to_dedup=[임상_파이프라인] → best to_dedup = 임상
+        결과: 수익성_급전환(always-keep) + 임상_파이프라인(to_dedup 유일)
+        """
         m1 = _match("E", "임상_파이프라인", 0.72)
         m2 = _match("E", "수익성_급전환", 0.80)
         result = _deduplicate_categories([m1, m2])
-        # Both are always-keep → both preserved
         cats = {m.category for m in result}
-        assert "임상_파이프라인" in cats
+        # 수익성_급전환은 always-keep, 임상은 to_dedup 유일 → 둘 다 보존
         assert "수익성_급전환" in cats
+        assert "임상_파이프라인" in cats
         assert len(result) == 2

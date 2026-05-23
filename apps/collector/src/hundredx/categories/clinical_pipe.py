@@ -11,6 +11,11 @@ Stage-progression comparison (Phase 2 upgrade):
   - 안과/희귀질환/항암 세부 키워드 추가
   - 다중 강력 키워드 히트 시 confidence 보너스
 
+개선 사항 (2026-05-23 v2):
+  - 비바이오 섹터 early-exit 추가 (조선/엔진/방산/기계/전선 등은 즉시 None)
+  - CE 인증 → 의료기기/의약품 한정 키워드로 교체 (산업용 CE 마킹 false positive 방지)
+  - 범용 단어(안전성, 유효성, 데이터 분석) _GENERAL_CLINICAL_KEYWORDS에서 제거
+
 Confidence table:
   keyword 1개 공시에만    → 0.70 (기존 0.5 → 상향)
   keyword 2개 공시 모두   → 0.75 (기존 0.7)
@@ -22,6 +27,26 @@ from __future__ import annotations
 import re
 from ..keywords import BIOTECH_PIPELINE_KEYWORDS
 from ..models import CategoryMatch
+
+# ── 비바이오 섹터 exclusion ────────────────────────────────────────────────────
+# sector_tag에 이 단어 중 하나라도 포함되면 임상 파이프라인 탐지 스킵
+# (엔진/조선/방산 등은 CE 마킹·안전시험·유효성 등 범용 단어로 false positive 발생)
+_NON_BIOTECH_SECTORS = frozenset({
+    # 조선/엔진
+    "조선", "엔진", "선박", "마린", "해양",
+    # 방산/기계
+    "방산", "방위", "기계", "중공업",
+    # 전선/전력기기
+    "전선", "전력기기", "변압기", "전기",
+    # 철강/소재
+    "철강", "소재", "화학",
+    # 자동차/부품
+    "자동차", "타이어",
+    # 건설/인프라
+    "건설", "시멘트",
+    # IT 하드웨어 (반도체 제외 - 바이오 칩 있음)
+    "shipbuilding", "marine", "defense", "machinery", "steel",
+})
 
 # Stage hierarchy: higher number = later / more advanced
 _STAGE_PATTERNS: list[tuple[int, list[str]]] = [
@@ -67,15 +92,17 @@ _STRONG_CLINICAL_KEYWORDS = [
     "CAR-NK", "키트루다", "keytruda",
     # CDMO / CMO
     "CDMO", "CMO", "위탁생산", "위탁개발",
-    # 인증
-    "CE 인증", "EU 허가", "PMDA",
+    # 인증 (의료기기/의약품 전용 — 산업용 CE 마킹은 제외)
+    "의료기기 CE 인증", "의약품 CE 인증", "의료기기 유럽 허가", "EU 의약품 허가", "PMDA",
 ]
 
 # 일반 임상 키워드 (기존)
+# ⚠️  "안전성", "유효성", "데이터 분석", "safety", "efficacy" 는 산업용 공시에서도
+#     빈번하게 등장하는 범용 단어라 제거. "CE 인증"은 산업용 CE 마킹과 혼동 방지.
 _GENERAL_CLINICAL_KEYWORDS = BIOTECH_PIPELINE_KEYWORDS + [
     "펩타이드", "peptide", "바이오의약품", "biologics", "단백질 의약품",
     "임상시험", "clinical trial", "임상 완료", "임상 성공", "IND 신청",
-    "임상 결과", "데이터 분석", "안전성", "유효성", "efficacy", "safety",
+    "임상 결과",
     "환자 등록", "patient enrollment", "용량 코호트",
     "NDA", "BLA", "식약처", "MFDS", "FDA", "EMA",
     "품목허가", "시판허가", "신약 허가",
@@ -126,6 +153,13 @@ def _detect_milestone_amount(text: str) -> float | None:
 
 def detect(stock_data: dict, filings: list[dict]) -> CategoryMatch | None:
     ticker = stock_data.get("ticker", "")
+
+    # ── 비바이오 섹터 early exit ──────────────────────────────────────────────
+    # 조선/엔진/방산/전선/기계 등은 CE 인증·안전시험 등 범용 단어로 false positive 발생.
+    # sector_tag 기반으로 바이오/제약이 아닌 섹터는 즉시 제외.
+    sector_tag = (stock_data.get("sector_tag") or "").lower()
+    if sector_tag and any(s in sector_tag for s in _NON_BIOTECH_SECTORS):
+        return None
 
     # filings is already pre-limited to 2 most recent by scanner._fetch_filings_2y
     filings_with_hits: list[tuple[dict, list[str], list[str], int | None, float | None]] = []
