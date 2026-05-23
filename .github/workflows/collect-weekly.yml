@@ -29,6 +29,7 @@ jobs:
 
       - name: Run financials (DART)
         continue-on-error: true
+        timeout-minutes: 25
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
         run: uv run python -m src.financials_dart
