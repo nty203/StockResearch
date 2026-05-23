@@ -173,14 +173,54 @@ def compute_pptr_confidence(
     evidence: list[dict],
     stock_data: dict,
     now: datetime | None = None,
+    filings: list[dict] | None = None,
 ) -> tuple[float, dict]:
-    """Return (confidence, explainable breakdown) for a PPTR match."""
+    """Return (confidence, explainable breakdown) for a PPTR match.
+
+    우선순위:
+      1. LightGBM ML 모델 (pptr_model_versions.is_production=TRUE 존재 시)
+      2. 기존 선형 합산 모델 (fallback)
+
+    ML 모델이 활성화되면 breakdown에 "model": "lgbm" 표시.
+    """
     now = now or datetime.now(timezone.utc)
     if now.tzinfo is None:
         now = now.replace(tzinfo=timezone.utc)
 
     category = rule.get("category")
     conditions = rule.get("conditions") or {}
+
+    # ── ML 모델 시도 ─────────────────────────────────────────────────────
+    try:
+        from .ml.confidence_model import get_model
+        ml_model = get_model(auto_load=True)
+        if ml_model._is_trained:
+            match_meta = {
+                "matched_conditions": matched_conditions,
+                "keyword_hits": sum(
+                    1 for e in evidence if e.get("source_type") == "keywords"
+                ),
+            }
+            conf, feat_dict = ml_model.predict_single(
+                stock_data=stock_data,
+                filings=filings or [],
+                match_meta=match_meta,
+                category=category or "미분류",
+            )
+            breakdown = {
+                "model": "lgbm",
+                "ml_confidence": round(conf, 3),
+                "top_features": {
+                    k: round(v, 3)
+                    for k, v in list(feat_dict.items())[:10]
+                    if v != 0.0
+                },
+            }
+            return round(conf, 3), breakdown
+    except Exception:
+        pass  # ML 모델 로드 실패 → 선형 fallback
+
+    # ── 선형 fallback (기존 로직) ─────────────────────────────────────────
     base = CATEGORY_BASE_RATES.get(category, DEFAULT_BASE_RATE)
     condition_adj, condition_detail = _condition_score(matched_conditions, conditions)
     performance_adj, performance_detail = _performance_score(rule.get("performance"))
@@ -189,6 +229,7 @@ def compute_pptr_confidence(
 
     confidence = _clamp(base + condition_adj + performance_adj + recency_adj + refutation_adj)
     breakdown = {
+        "model": "linear_fallback",
         "base_rate": round(base, 3),
         "condition_score": round(condition_adj, 3),
         "performance_score": round(performance_adj, 3),

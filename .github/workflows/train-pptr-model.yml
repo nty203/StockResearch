@@ -1,0 +1,158 @@
+name: Train PPTR LightGBM Model
+
+# 월 1회 모델 학습 — survivorship-free 샘플 충분 시 자동 실행
+# 필요 조건: pptr_training_samples 테이블에 ≥100 학습 샘플 존재
+# 모델 저장: apps/collector/models/pptr_confidence_lgbm.pkl
+# DB 기록: pptr_model_versions 테이블
+on:
+  schedule:
+    - cron: '0 3 10 * *'   # 매월 10일 12:00 KST (UTC 03:00) — survivorship(5일) 이후 실행
+  workflow_dispatch:       # /settings 수동 실행 버튼용 — 반드시 유지
+
+jobs:
+  train-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60    # LightGBM 학습 + calibration + 저장 최대 1시간
+    defaults:
+      run:
+        working-directory: apps/collector
+    env:
+      SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+      SUPABASE_DB_URL:      ${{ secrets.SUPABASE_DB_URL }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      # Step 1: 학습 데이터 충분한지 사전 체크
+      - name: Check training data availability
+        id: check_data
+        run: |
+          uv run python - <<'EOF'
+          import os
+          import sys
+          from supabase import create_client
+
+          url = os.environ["SUPABASE_URL"]
+          key = os.environ["SUPABASE_SERVICE_KEY"]
+          client = create_client(url, key)
+
+          MIN_TRAIN_SAMPLES = 100
+          try:
+              r = (client.table("pptr_training_samples")
+                   .select("id", count="exact")
+                   .eq("split", "train")
+                   .execute())
+              n_train = r.count or 0
+              print(f"Train samples: {n_train:,} (minimum required: {MIN_TRAIN_SAMPLES})")
+              if n_train < MIN_TRAIN_SAMPLES:
+                  print(f"SKIP: Insufficient training data. Run collect-survivorship first.")
+                  # Write skip flag
+                  with open(os.environ.get("GITHUB_OUTPUT", "/dev/null"), "a") as f:
+                      f.write("should_train=false\n")
+              else:
+                  print(f"OK: Proceeding with model training.")
+                  with open(os.environ.get("GITHUB_OUTPUT", "/dev/null"), "a") as f:
+                      f.write("should_train=true\n")
+          except Exception as e:
+              print(f"ERROR checking data: {e}")
+              sys.exit(1)
+          EOF
+
+      # Step 2: 모델 학습 (데이터 충분한 경우만)
+      - name: Train LightGBM confidence model
+        if: steps.check_data.outputs.should_train == 'true'
+        run: |
+          uv run python - <<'EOF'
+          import os
+          import sys
+          from supabase import create_client
+          from src.hundredx.ml.confidence_model import train_and_save
+
+          url = os.environ["SUPABASE_URL"]
+          key = os.environ["SUPABASE_SERVICE_KEY"]
+          client = create_client(url, key)
+
+          print("Starting LightGBM model training...")
+          try:
+              result = train_and_save(client=client)
+              print(f"\n=== Training Complete ===")
+              print(f"Version tag:     {result.get('version_tag', 'unknown')}")
+              print(f"Train samples:   {result.get('n_train', 0):,}")
+              print(f"Val samples:     {result.get('n_val', 0):,}")
+              print(f"Brier (val):     {result.get('brier_val', 'N/A')}")
+              print(f"AUC (val):       {result.get('auc_val', 'N/A')}")
+              print(f"Best iteration:  {result.get('best_iteration', 'N/A')}")
+              print(f"Model path:      {result.get('model_path', 'N/A')}")
+              print(f"Production:      {result.get('is_production', False)}")
+
+              # Governance gate: Brier ≤ 0.22 → promote to production
+              brier = result.get("brier_val")
+              if brier and float(brier) <= 0.22:
+                  print(f"\n✅ Brier {float(brier):.4f} ≤ 0.22 → Model promoted to production")
+              elif brier:
+                  print(f"\n⚠️  Brier {float(brier):.4f} > 0.22 → Not promoted to production")
+                  print("   Run more data collection cycles before retraining.")
+          except Exception as e:
+              print(f"ERROR during training: {e}")
+              import traceback
+              traceback.print_exc()
+              sys.exit(1)
+          EOF
+
+      # Step 3: 학습 건너뜀 알림
+      - name: Skip training notification
+        if: steps.check_data.outputs.should_train != 'true'
+        run: |
+          echo "Model training skipped: insufficient training data."
+          echo "Run collect-survivorship workflow to accumulate more samples."
+
+      # Step 4: 모델 성능 리포트 (학습 완료 시)
+      - name: Print model performance report
+        if: steps.check_data.outputs.should_train == 'true'
+        run: |
+          uv run python - <<'EOF'
+          import os
+          from supabase import create_client
+
+          url = os.environ["SUPABASE_URL"]
+          key = os.environ["SUPABASE_SERVICE_KEY"]
+          client = create_client(url, key)
+
+          try:
+              # 최신 production 모델 조회
+              r = (client.table("pptr_model_versions")
+                   .select("*")
+                   .eq("is_production", True)
+                   .order("trained_at", desc=True)
+                   .limit(1)
+                   .execute())
+              if r.data:
+                  m = r.data[0]
+                  print(f"\n=== Production Model ===")
+                  print(f"Version:    {m.get('version_tag')}")
+                  print(f"Trained at: {m.get('trained_at', '')[:19]}")
+                  print(f"n_train:    {m.get('n_train', 0):,}")
+                  print(f"n_val:      {m.get('n_val', 0):,}")
+                  print(f"Brier val:  {m.get('brier_val', 'N/A')}")
+                  print(f"AUC val:    {m.get('auc_val', 'N/A')}")
+
+                  # Top features
+                  feats = m.get("feature_importances", {})
+                  if feats:
+                      top = sorted(feats.items(), key=lambda x: -x[1])[:10]
+                      print(f"\nTop 10 features:")
+                      for feat, score in top:
+                          print(f"  {feat:<40} {score:.1f}")
+              else:
+                  print("No production model found in DB.")
+          except Exception as e:
+              print(f"WARNING: Could not fetch model report: {e}")
+          EOF
