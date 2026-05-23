@@ -108,15 +108,16 @@ export async function GET(req: Request) {
     const timelineBonus = bestTimeline >= 0.25 ? Math.round(bestTimeline * 5 * 10) / 10 : 0
 
     const conviction = fpBonus + confScore + breadthScore + timelineBonus
+    const hasPptrMatch = cats.some(c => c.pptr_match)
 
     // ── Quality grade ─────────────────────────────────────────────────────────
-    // S: library fingerprint ≥0.65 AND conviction ≥65 — confirmed analogue
-    // A: fingerprint ≥0.45 OR conviction ≥55
-    // B: fingerprint ≥0.25 OR conviction ≥40
+    // S: PPTR full match + library fingerprint ≥0.65 AND conviction ≥65
+    // A: PPTR full match + fingerprint ≥0.45 OR conviction ≥55
+    // B: non-PPTR/fingerprint candidate, still below A-grade quality gate
     // C: passes min_confidence threshold (baseline)
     let grade: 'S' | 'A' | 'B' | 'C'
-    if (bestFP >= 0.65 && conviction >= 65) grade = 'S'
-    else if (bestFP >= 0.45 || conviction >= 55) grade = 'A'
+    if (hasPptrMatch && bestFP >= 0.65 && conviction >= 65) grade = 'S'
+    else if (hasPptrMatch && (bestFP >= 0.45 || conviction >= 55)) grade = 'A'
     else if (bestFP >= 0.25 || conviction >= 40) grade = 'B'
     else grade = 'C'
 
