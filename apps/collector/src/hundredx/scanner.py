@@ -245,6 +245,33 @@ def _fetch_filings_2y(client, tickers: list[str]) -> dict[str, list[dict]]:
 
 # ── Upsert helpers ────────────────────────────────────────────────────────────
 
+def _signal_date_from_evidence(match: CategoryMatch, now: datetime) -> datetime:
+    """evidence에서 실제 시그널 발생일 추출 (공시/뉴스 날짜).
+
+    오늘 탐지했더라도 공시가 2주 전에 났으면 그 날짜를 시그널 날짜로 사용.
+    """
+    evid = match.evidence or []
+    dates: list[str] = []
+    for e in evid:
+        if not isinstance(e, dict):
+            continue
+        d = e.get("date") or e.get("filed_at")
+        if d:
+            try:
+                dt = str(d)[:10]
+                if dt >= "2020-01-01":
+                    dates.append(dt)
+            except Exception:
+                pass
+    if dates:
+        earliest = min(dates)
+        try:
+            return datetime.fromisoformat(earliest + "T00:00:00+00:00")
+        except Exception:
+            pass
+    return now
+
+
 def _resolve_first_detected(
     match: CategoryMatch,
     existing: dict[tuple[str, str], dict],
@@ -253,23 +280,21 @@ def _resolve_first_detected(
     """Determine first_detected_at for this match.
 
     Rules:
-    - New entry (not in existing): now
-    - Re-entry after exit (exited_at was set): now (NEW badge fires again)
+    - New entry or re-entry: 실제 시그널 발생일 (evidence 공시 날짜, 없으면 now)
     - Unchanged active entry: preserve existing first_detected_at
     """
     key = (match.ticker, match.category)
     row = existing.get(key)
-    if row is None:
-        return now
-    if row.get("exited_at") is not None:
-        return now  # re-entry: reset
+    if row is None or row.get("exited_at") is not None:
+        # 신규 탐지 or 재진입: 실제 시그널 발생일로 소급
+        return _signal_date_from_evidence(match, now)
     existing_ts = row.get("first_detected_at")
     if existing_ts:
         try:
             return datetime.fromisoformat(existing_ts.replace("Z", "+00:00"))
         except (ValueError, AttributeError):
             pass
-    return now
+    return _signal_date_from_evidence(match, now)
 
 
 def _upsert_matches(client, matches: list[CategoryMatch], existing: dict, now: datetime) -> None:
