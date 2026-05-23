@@ -253,6 +253,12 @@ def detect_from_pptr(
             if "special" not in matched_conditions:
                 matched_conditions.append("special")
 
+        # 퀀트 조건만 통과했고 키워드/파일링 증거가 없으면 스킵
+        # (BCR/OPM/revenue 수치만으로 모든 카테고리 발화하는 광범위 매칭 방지)
+        has_keyword_evidence = bool(best_filing or (has_special_keywords and len(best_hits) > 0))
+        if not has_keyword_evidence:
+            continue
+
         # Passed all conditions -> Match
         evidence = []
         if best_filing:

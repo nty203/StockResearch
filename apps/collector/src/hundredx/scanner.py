@@ -459,8 +459,11 @@ def _get_analog(lib: dict, match: CategoryMatch) -> dict | None:
 
 # Categories that should NEVER be crowded out by other categories
 # (they represent fundamentally different investment theses)
+# ⚠️  임상_파이프라인은 _ALWAYS_KEEP에서 제거:
+#     clinical_pipe.py에 비바이오 섹터 early-exit가 추가됐으므로, 비바이오 종목에서
+#     임상이 탐지됐다면 detector 버그 → dedup으로 제거되어야 함.
+#     (바이오 종목에서도 임상이 최고 confidence면 to_dedup 1위를 차지하므로 보존됨)
 _ALWAYS_KEEP_CATEGORIES = frozenset({
-    "임상_파이프라인",   # bio/pharma — completely different from industrial
     "수익성_급전환",     # financial event — distinct from supply/partnership
 })
 
@@ -560,10 +563,42 @@ def _mark_exits(client, active_before: set[tuple[str, str]], active_after: set[t
         try:
             client.table("hundredx_category_matches").update(
                 {"exited_at": now.isoformat()}
-            ).eq("ticker", ticker).eq("category", category).execute()
+            ).eq("ticker", ticker).eq("category", category).is_("exited_at", "null").execute()
             count += 1
         except Exception as e:
             logger.warning("exit mark error %s/%s: %s", ticker, category, e)
+    return count
+
+
+def _enforce_dedup_in_db(client, all_matches: list[CategoryMatch], existing: dict, now: datetime) -> int:
+    """크로스-런 dedup 일관성 보장: 이번 스캔에서 매칭된 종목의 비-dedup 카테고리 강제 종료.
+
+    이전 실행에서 dedup으로 탈락한 카테고리가 다음 실행에서 다른 카테고리가 dedup 우승하면서
+    재부활하는 oscillation 버그를 방지합니다.
+    """
+    # 이번 dedup 결과: ticker → kept categories
+    dedup_by_ticker: dict[str, set[str]] = {}
+    for m in all_matches:
+        dedup_by_ticker.setdefault(m.ticker, set()).add(m.category)
+
+    count = 0
+    for ticker, kept_cats in dedup_by_ticker.items():
+        # DB에서 이 ticker의 현재 active 카테고리 조회
+        stale = [
+            (t, c) for (t, c), row in existing.items()
+            if t == ticker
+            and row.get("exited_at") is None
+            and c not in kept_cats
+        ]
+        for _, category in stale:
+            try:
+                client.table("hundredx_category_matches").update(
+                    {"exited_at": now.isoformat()}
+                ).eq("ticker", ticker).eq("category", category).is_("exited_at", "null").execute()
+                count += 1
+                logger.debug("Enforced dedup exit: %s/%s", ticker, category)
+            except Exception as e:
+                logger.warning("enforce_dedup exit error %s/%s: %s", ticker, category, e)
     return count
 
 
@@ -751,7 +786,13 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
             _insert_pptr_near_misses(client, all_near_misses, now)
             logger.info("Inserted %d PPTR near misses", len(all_near_misses))
 
-        # Mark exits
+        # 크로스-런 dedup 일관성: 이번에 매칭된 종목의 비-dedup 카테고리 강제 종료
+        if all_matches:
+            dedup_exits = _enforce_dedup_in_db(client, all_matches, existing, now)
+            if dedup_exits:
+                logger.info("Enforced dedup: exited %d stale categories", dedup_exits)
+
+        # Mark exits (종목 자체가 사라진 경우)
         exits = _mark_exits(client, active_before, active_after, now)
         if exits:
             logger.info("Marked %d exits", exits)
