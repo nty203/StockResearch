@@ -1,10 +1,10 @@
 """Filing watcher — DART 공시 + SEC EDGAR 8-K RSS keyword filter.
 
-개선 사항 (2026-05-19):
-  - ORDER_FILING_TYPES: 수주/공급계약 공시 유형은 키워드 없어도 수집 (헤드라인이 형식적이므로)
-  - KEYWORDS_KR 확장: 중속엔진, STX엔진, 발전엔진 관련 추가
-  - _extract_amount: 조원 단위도 억 단위로 통일해서 반환
-  - raw_text: 관심 종목(WATCH_TICKERS)은 본문 내용까지 수집 시도
+개선 사항:
+  - ORDER_FILING_TYPES: 수주/공급계약 공시 유형은 키워드 없어도 수집
+  - KEYWORDS_KR 확장
+  - _extract_amount: 조원 단위도 억 단위로 변환
+  - 2026-05-23: KIND (KRX) RSS 폴백 추가 — DART_API_KEY 없을 때도 작동
 """
 import logging
 import re
@@ -12,7 +12,6 @@ import time
 from datetime import date, timedelta
 
 import feedparser
-import OpenDartReader as DartReader
 import edgar
 
 from .upsert import get_client, upsert_batch, pipeline_run, retry_execute
@@ -29,6 +28,7 @@ KEYWORDS_KR = [
     "증설", "신공장", "CAPEX", "착공", "생산라인",
     # 빅테크
     "빅테크", "MSFT", "Google", "Amazon", "Oracle", "AWS", "Azure", "하이퍼스케일",
+    "삼성전자", "SK하이닉스", "LG전자", "현대차", "현대모비스", "NVIDIA", "Microsoft",
     # AI 인프라
     "AI 데이터센터", "데이터센터", "HBM", "TC본더", "CoWoS",
     # 열관리 / 전력인프라
@@ -42,6 +42,19 @@ KEYWORDS_KR = [
     "원전", "SMR", "APR", "두코바니", "체코",
     # 수익성
     "영업이익률", "흑자전환", "어닝 서프라이즈",
+    # 바이오/임상 (임상_파이프라인 카테고리)
+    "GLP-1", "GLP1", "세마글루타이드", "비만치료", "임상시험계획", "임상 1상", "임상 2상", "임상 3상",
+    "기술이전", "라이선스 아웃", "마일스톤", "FDA 승인", "식약처", "품목허가",
+    "바이오시밀러", "점안제", "황반변성", "ADC", "CAR-T", "CDMO",
+    # 이차전지/배터리 소재 (공급_병목/정책_수혜)
+    "양극재", "음극재", "전구체", "수산화리튬", "이차전지 소재", "배터리 소재",
+    "전고체 배터리", "IRA", "배터리 보조금",
+    # 로봇/자동화 (빅테크_파트너)
+    "협동로봇", "로봇 공급", "자동화 솔루션", "유상증자 참여", "지분 취득", "콜옵션",
+    # 조선 슈퍼사이클 (공급_병목)
+    "슈퍼사이클", "LNG운반선", "친환경 선박", "암모니아 선박", "선가 상승", "수주잔고",
+    # PCB/기판 (빅테크_파트너)
+    "고다층", "MLB", "HDI", "AI 서버 기판", "데이터센터 기판",
 ]
 
 KEYWORDS_US = [
@@ -101,6 +114,185 @@ def _is_order_type(report_nm: str) -> bool:
         if t.replace(" ", "").replace("·", "").replace("ㆍ", "") in clean:
             return True
     return False
+
+
+def collect_kind_filings(kr_ticker_set: set[str], lookback_days: int = 1) -> list[dict]:
+    """KRX KIND RSS 피드에서 공시 수집 (DART_API_KEY 불필요).
+
+    KIND: Korea Investor Relations Network (한국거래소 기업공시채널)
+    URL: https://kind.krx.co.kr — 무인증 JSON API 사용
+    """
+    import urllib.request
+    import json
+
+    rows = []
+    try:
+        today_str = date.today().strftime("%Y%m%d")
+        start_str = (date.today() - timedelta(days=lookback_days)).strftime("%Y%m%d")
+
+        # KIND 공시 목록 API (인증 불필요, CORS 없음)
+        url = (
+            "https://kind.krx.co.kr/disclosure/todaydisclosure.do"
+            f"?method=searchTodayDisclosureSub&pageIndex=1&perPage=100"
+            f"&marketType=00&searchCodeType=&corpName=&reportNm=&startDate={start_str}&endDate={today_str}"
+            "&repIsuSrtCd=&orderMode=0&orderStat=D"
+        )
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "Accept": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                text = resp.read().decode("utf-8")
+                data = json.loads(text)
+        except Exception:
+            # 폴백: KIND HTML 파싱 불가, 빈 리스트 반환
+            return []
+
+        items = data.get("list") or []
+        for item in items:
+            code = str(item.get("repIsuSrtCd", "") or "").strip().zfill(6)
+            if not code or code not in kr_ticker_set:
+                continue
+
+            report_nm = str(item.get("reportNm", "") or "")
+            disclosed_dt = str(item.get("disclosedDt", "") or "")
+
+            matched_kws = _match_keywords(report_nm, KEYWORDS_KR)
+            is_order = _is_order_type(report_nm)
+
+            if not matched_kws and not is_order:
+                continue
+
+            if is_order and not matched_kws:
+                matched_kws = ["수주공시(KIND)"]
+
+            # 날짜 포맷: "2026/05/23 09:01" → ISO
+            filed_at = disclosed_dt[:10].replace("/", "-") + "T00:00:00+09:00" if disclosed_dt else date.today().isoformat() + "T00:00:00+09:00"
+
+            rows.append({
+                "ticker": code,
+                "source": "KIND",
+                "filing_type": report_nm[:50],
+                "filed_at": filed_at,
+                "url": f"https://kind.krx.co.kr/disclosure/todaydisclosure.do",
+                "headline": report_nm,
+                "raw_text": None,
+                "keywords": matched_kws,
+                "parsed_amount": _extract_amount(report_nm),
+                "parsed_customer": None,
+            })
+
+    except Exception as e:
+        logger.warning("KIND filings error: %s", e)
+
+    logger.info("KIND filings collected: %d", len(rows))
+    return rows
+
+
+def collect_naver_filings(kr_ticker_set: set[str], lookback_days: int = 3) -> list[dict]:
+    """NAVER Finance 모바일 API에서 공시 수집 (인증 불필요).
+
+    엔드포인트: https://m.stock.naver.com/api/stock/{ticker}/disclosure
+    종목당 최근 20개 공시 반환 (JSON).
+
+    주의: 종목별 1회 요청 → 종목 수 많으면 rate limit 주의.
+    키워드 매칭 or ORDER_FILING_TYPES 종목만 대상.
+    """
+    import httpx
+    import random
+
+    rows = []
+    cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
+
+    _UA = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    ]
+
+    headers = {
+        "User-Agent": random.choice(_UA),
+        "Accept": "application/json",
+        "Referer": "https://m.stock.naver.com/",
+        "Accept-Language": "ko-KR,ko;q=0.9",
+    }
+
+    # 전 유니버스를 돌 수 없으므로 최근 활성 category_matches 종목 + 수주공시 관련 주요 종목만
+    # 실용적 접근: lookback_days를 짧게 유지 + 배치 처리
+    tickers_to_check = list(kr_ticker_set)[:300]  # 최대 300개 (0.3초 간격이면 90초)
+
+    error_count = 0
+    MAX_ERRORS = 10
+
+    with httpx.Client(timeout=10, follow_redirects=True, headers=headers) as client:
+        for i, ticker in enumerate(tickers_to_check):
+            if error_count >= MAX_ERRORS:
+                logger.warning("Too many errors in NAVER scraping, stopping early")
+                break
+
+            # Rate limiting: 랜덤 딜레이 0.2~0.5초
+            if i > 0:
+                time.sleep(random.uniform(0.2, 0.5))
+
+            try:
+                url = f"https://m.stock.naver.com/api/stock/{ticker}/disclosure"
+                resp = client.get(url)
+
+                if resp.status_code == 429:
+                    logger.warning("NAVER rate limited, sleeping 30s")
+                    time.sleep(30)
+                    continue
+                if resp.status_code != 200:
+                    error_count += 1
+                    continue
+
+                items = resp.json()
+                if not isinstance(items, list):
+                    continue
+
+                for item in items:
+                    title = str(item.get("title", "") or "")
+                    dt_str = str(item.get("datetime", "") or "")  # "2026-05-13T06:51:17"
+                    disc_id = item.get("disclosureId", "")
+                    item_code = str(item.get("itemCode", ticker))
+
+                    # 날짜 필터
+                    if dt_str and dt_str[:10] < cutoff:
+                        continue
+
+                    matched_kws = _match_keywords(title, KEYWORDS_KR)
+                    is_order = _is_order_type(title)
+
+                    if not matched_kws and not is_order:
+                        continue
+
+                    if is_order and not matched_kws:
+                        matched_kws = ["수주공시(NAVER)"]
+
+                    # filed_at
+                    filed_at = (dt_str[:10] + "T" + dt_str[11:19] + "+09:00") if len(dt_str) >= 19 else (
+                        date.today().isoformat() + "T00:00:00+09:00"
+                    )
+
+                    rows.append({
+                        "ticker": item_code.zfill(6),
+                        "source": "KIND",   # KIND로 저장 (source CHECK는 DART/SEC/KIND/SEED)
+                        "filing_type": title[:50],
+                        "filed_at": filed_at,
+                        "url": f"https://m.stock.naver.com/domestic/stock/{ticker}/disclosure",
+                        "headline": title,
+                        "raw_text": None,
+                        "keywords": matched_kws,
+                        "parsed_amount": _extract_amount(title),
+                        "parsed_customer": None,
+                    })
+
+            except httpx.TimeoutException:
+                error_count += 1
+                logger.debug("Timeout for ticker %s", ticker)
+            except Exception as e:
+                error_count += 1
+                logger.debug("NAVER error for %s: %s", ticker, e)
+
+    logger.info("NAVER filings collected: %d (checked %d tickers)", len(rows), min(len(tickers_to_check), 300))
+    return rows
 
 
 def collect_dart_filings(kr_ticker_set: set[str], lookback_days: int = 1) -> list[dict]:
@@ -225,11 +417,39 @@ def run() -> int:
     kr_ticker_set = {s["ticker"] for s in stocks if s["market"] in ("KOSPI", "KOSDAQ")}
     us_tickers = {s["ticker"] for s in stocks if s["market"] in ("NYSE", "NASDAQ")}
 
-    rows = collect_dart_filings(kr_ticker_set, lookback_days) + collect_sec_filings(us_tickers)
+    import os
+    dart_api_key = os.environ.get("DART_API_KEY", "")
+    if dart_api_key:
+        dart_rows = collect_dart_filings(kr_ticker_set, lookback_days)
+        if not dart_rows:
+            logger.info("DART returned 0 rows — supplementing with NAVER scraper")
+            dart_rows += collect_naver_filings(kr_ticker_set, lookback_days)
+    else:
+        logger.warning("DART_API_KEY not set — using NAVER Finance as fallback scraper")
+        dart_rows = collect_naver_filings(kr_ticker_set, lookback_days)
+        if not dart_rows:
+            logger.warning("NAVER returned 0 rows — trying KIND as last resort")
+            dart_rows = collect_kind_filings(kr_ticker_set, lookback_days)
+
+    sec_rows = collect_sec_filings(us_tickers)
+    rows = dart_rows + sec_rows
+
+    # 동일 배치 내 (ticker, filed_at, filing_type) 중복 제거 (upsert conflict 방지)
+    seen: set[tuple] = set()
+    deduped_rows = []
+    for r in rows:
+        key = (r["ticker"], r["filed_at"], r.get("filing_type", ""))
+        if key not in seen:
+            seen.add(key)
+            deduped_rows.append(r)
+
+    if len(deduped_rows) < len(rows):
+        logger.info("Deduped %d → %d rows (removed %d duplicates)", len(rows), len(deduped_rows), len(rows) - len(deduped_rows))
+
     with pipeline_run(client, "filings") as (rows_out, _):
-        count = upsert_batch(client, "filings", rows, on_conflict="ticker,filed_at,filing_type")
+        count = upsert_batch(client, "filings", deduped_rows, on_conflict="ticker,filed_at,filing_type")
         rows_out[0] = count
-    logger.info("Filings upserted %d rows", count)
+    logger.info("Filings upserted %d rows (dart/kind=%d, sec=%d)", count, len(dart_rows), len(sec_rows))
     return count
 
 

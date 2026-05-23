@@ -17,6 +17,15 @@ from ..models import CategoryMatch
 _AMOUNT_THRESHOLD_HIGH = 1_000   # 1조 KRW (billion units)
 _AMOUNT_THRESHOLD_MID = 50       # 500억 KRW (billion units)
 
+# 섹터 무관하게 공급병목을 강력히 지시하는 키워드 (conf 0.75 보장)
+_HIGH_CONVICTION_SUPPLY = {
+    "HBM", "HBM3E", "HBM4", "HBM3", "HBM2E", "고대역폭 메모리",
+    "TC본더", "TC 본더", "CoWoS",
+    "슈퍼사이클", "LNG 운반선", "LNG운반선",
+    "액체냉각", "액침냉각", "immersion cooling",
+    "HVDC",
+}
+
 # 공급병목 수혜 섹터
 _SUPPLY_CHOKE_SECTORS = {
     "조선", "방산", "전력기기", "반도체", "장비", "소재",
@@ -53,10 +62,18 @@ def detect(stock_data: dict, filings: list[dict]) -> CategoryMatch | None:
 
         amount = _extract_amount_krw(text)
 
+        # 고신뢰도 키워드 포함 여부
+        high_conv_hits = [kw for kw in hits if kw in _HIGH_CONVICTION_SUPPLY]
+
         # ── confidence 결정 ────────────────────────────────────────────────
         if amount is not None and amount >= _AMOUNT_THRESHOLD_HIGH:
             # 1조 이상 대형 수주 → 최고 신뢰도
             conf = 0.85
+        elif high_conv_hits:
+            # HBM/TC본더/슈퍼사이클 등 고신뢰도 키워드 → 섹터 무관하게 0.75
+            conf = 0.75
+            if amount is not None and amount >= _AMOUNT_THRESHOLD_MID:
+                conf = min(0.85, conf + 0.05)  # 금액도 있으면 보너스
         elif amount is not None and amount >= _AMOUNT_THRESHOLD_MID:
             # 500억 이상 중형 수주 → 높은 신뢰도
             conf = 0.7

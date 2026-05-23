@@ -63,11 +63,42 @@ def _find_ticker_mentions(text: str, ticker_set: set[str], mention_map: dict[str
     return list(kr | us | by_name)
 
 
+_RSS_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (compatible; StockResearch/1.0; +https://github.com/nty203/StockResearch)",
+    "Accept": "application/rss+xml, application/atom+xml, text/xml, */*",
+    "Accept-Encoding": "gzip, deflate",
+}
+
+
+def _parse_feed_with_retry(feed_url: str, max_retries: int = 3) -> object:
+    """feedparser.parse with User-Agent and retry logic."""
+    import socket
+    for attempt in range(max_retries):
+        try:
+            feed = feedparser.parse(
+                feed_url,
+                agent=_RSS_HEADERS["User-Agent"],
+                request_headers=_RSS_HEADERS,
+            )
+            if feed.bozo and feed.bozo_exception and not feed.entries:
+                raise feed.bozo_exception
+            return feed
+        except (OSError, socket.timeout) as e:
+            if attempt < max_retries - 1:
+                wait = 2.0 * (attempt + 1)
+                logger.warning("RSS fetch error %s: %s (retry %d in %.1fs)", feed_url, e, attempt + 1, wait)
+                time.sleep(wait)
+        except Exception as e:
+            logger.warning("RSS non-retryable error %s: %s", feed_url, e)
+            break
+    return feedparser.FeedParserDict()
+
+
 def collect_rss_news(ticker_set: set[str], mention_map: dict[str, str] | None = None) -> list[dict]:
     rows = []
     for feed_url, lang in RSS_FEEDS:
         try:
-            feed = feedparser.parse(feed_url)
+            feed = _parse_feed_with_retry(feed_url)
             for entry in feed.entries:
                 title = entry.get("title", "")
                 summary = entry.get("summary", entry.get("description", ""))

@@ -136,21 +136,18 @@ def run(client=None, dry_run: bool = False, limit: int = 5000) -> dict:
 
 
 def _flush_updates(client, rows: list[dict]) -> None:
-    """Upsert a batch of price performance updates."""
-    try:
-        client.table("hundredx_category_matches").upsert(
-            rows, on_conflict="ticker,category"
-        ).execute()
-    except Exception as e:
-        logger.warning(f"Batch upsert failed: {e}")
-        # Try one by one
-        for row in rows:
-            try:
-                client.table("hundredx_category_matches").update({
-                    k: v for k, v in row.items() if k not in ("ticker", "category")
-                }).eq("ticker", row["ticker"]).eq("category", row["category"]).execute()
-            except Exception as e2:
-                logger.warning(f"Single update failed for {row['ticker']}/{row['category']}: {e2}")
+    """Update price performance for existing rows (uses UPDATE, not UPSERT to avoid NOT NULL issues)."""
+    for row in rows:
+        try:
+            price_fields = {
+                k: v for k, v in row.items()
+                if k not in ("ticker", "category")
+            }
+            client.table("hundredx_category_matches").update(
+                price_fields
+            ).eq("ticker", row["ticker"]).eq("category", row["category"]).is_("exited_at", "null").execute()
+        except Exception as e:
+            logger.warning(f"Update failed for {row.get('ticker')}/{row.get('category')}: {e}")
 
 
 if __name__ == "__main__":

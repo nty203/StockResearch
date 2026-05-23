@@ -58,6 +58,14 @@ def detect(stock_data: dict, filings: list[dict]) -> CategoryMatch | None:
 
     all_keywords = GEOPOLITICAL_KEYWORDS + _EXTRA_GEO_KEYWORDS
 
+    # 섹터 무관하게 단독으로 0.70 이상을 보장하는 초강력 정책 키워드
+    _HIGH_CONVICTION_POLICY = {
+        "원전", "SMR", "소형모듈원전", "체코", "두코바니", "APR1000", "APR1400", "APR-1400",
+        "방산", "방위산업", "K방산", "K-방산", "무기 수출",
+        "폴란드", "루마니아", "FA-50", "K-9", "K-2", "천무",
+        "IRA", "Inflation Reduction Act", "배터리 보조금", "K-배터리",
+    }
+
     for filing in filings:
         text = (filing.get("raw_text") or "") + " " + (filing.get("headline") or "")
         if not text.strip():
@@ -67,8 +75,15 @@ def detect(stock_data: dict, filings: list[dict]) -> CategoryMatch | None:
         if not hits:
             continue
 
+        # 초강력 키워드 포함 여부 확인
+        high_conv_hits = [kw for kw in hits if kw in _HIGH_CONVICTION_POLICY]
+
         # 기본 confidence
-        conf = 0.7 if in_target_sector else 0.5
+        if high_conv_hits:
+            # 핵심 정책 키워드 → 섹터 무관하게 0.70 기본
+            conf = 0.7
+        else:
+            conf = 0.7 if in_target_sector else 0.5
 
         # 2개 이상 키워드 히트 보너스
         if len(hits) >= 2:
