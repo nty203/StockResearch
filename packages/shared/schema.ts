@@ -134,6 +134,17 @@ export type HundredxCategoryMatch = {
   analog_ticker: string | null
   analog_date: string | null
   analog_multiplier: number | null
+  price_baseline_date: string | null
+  price_baseline_close: number | null
+  price_latest_date: string | null
+  price_latest_close: number | null
+  price_peak_date: string | null
+  price_peak_close: number | null
+  price_current_multiplier: number | null
+  price_change_pct: number | null
+  price_peak_multiplier: number | null
+  price_peak_change_pct: number | null
+  price_performance_updated_at: string | null
   fingerprint_score: number | null    // 0-1, similarity to library precedent
   fingerprint_dims: {                  // matched/missing dimensions detail
     matched: string[]

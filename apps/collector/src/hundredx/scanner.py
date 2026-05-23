@@ -27,11 +27,13 @@ from .categories.supply_choke import detect as detect_supply_choke
 from .categories.clinical_pipe import detect as detect_clinical_pipe
 from .pptr_detector import BLOCKED_PPTR_CATEGORIES, detect_from_pptr
 from .pptr_near_miss import analyze_pptr_near_misses
+from .price_performance import PricePerformance, fetch_window_performance
 
 logger = logging.getLogger(__name__)
 
 BATCH_SIZE = 50
 MIN_CONFIDENCE = float(os.environ.get("HUNDREDX_MIN_CONFIDENCE", "0.7"))
+PRICE_PERFORMANCE_YEARS = int(os.environ.get("HUNDREDX_PRICE_PERFORMANCE_YEARS", "3"))
 
 DETECTORS = [
     ("수주잔고_선행",  detect_backlog_lead),
@@ -180,7 +182,14 @@ def _fetch_existing(client, tickers: list[str]) -> dict[tuple[str, str], dict]:
         try:
             res = (
                 client.table("hundredx_category_matches")
-                .select("ticker, category, first_detected_at, exited_at, alert_sent_at")
+                .select(
+                    "ticker, category, first_detected_at, exited_at, alert_sent_at, "
+                    "price_baseline_date, price_baseline_close, price_latest_date, "
+                    "price_latest_close, price_peak_date, price_peak_close, "
+                    "price_current_multiplier, price_change_pct, "
+                    "price_peak_multiplier, price_peak_change_pct, "
+                    "price_performance_updated_at"
+                )
                 .in_("ticker", chunk)
                 .execute()
             )
@@ -289,12 +298,67 @@ def _upsert_matches(client, matches: list[CategoryMatch], existing: dict, now: d
         logger.warning("upsert_matches error: %s", e)
 
 
+def _fetch_price_performances(
+    matches: list[CategoryMatch],
+    market_by_ticker: dict[str, str | None],
+) -> dict[str, PricePerformance]:
+    """Fetch 3-year low-to-latest performance only for matched tickers."""
+    result: dict[str, PricePerformance] = {}
+    for ticker in sorted({m.ticker for m in matches}):
+        perf = fetch_window_performance(
+            ticker,
+            market=market_by_ticker.get(ticker),
+            years=PRICE_PERFORMANCE_YEARS,
+        )
+        if perf is not None:
+            result[ticker] = perf
+    return result
+
+
+def _price_performance_payload(
+    perf: PricePerformance | None,
+    existing_row: dict | None,
+    now: datetime,
+) -> dict:
+    """Build DB fields, preserving prior values if a fresh fetch is unavailable."""
+    if perf is not None:
+        return {
+            "price_baseline_date": perf.baseline_date,
+            "price_baseline_close": perf.baseline_close,
+            "price_latest_date": perf.latest_date,
+            "price_latest_close": perf.latest_close,
+            "price_peak_date": perf.peak_date,
+            "price_peak_close": perf.peak_close,
+            "price_current_multiplier": perf.current_multiplier,
+            "price_change_pct": perf.current_return_pct,
+            "price_peak_multiplier": perf.peak_multiplier,
+            "price_peak_change_pct": perf.peak_return_pct,
+            "price_performance_updated_at": now.isoformat(),
+        }
+
+    existing_row = existing_row or {}
+    return {
+        "price_baseline_date": existing_row.get("price_baseline_date"),
+        "price_baseline_close": existing_row.get("price_baseline_close"),
+        "price_latest_date": existing_row.get("price_latest_date"),
+        "price_latest_close": existing_row.get("price_latest_close"),
+        "price_peak_date": existing_row.get("price_peak_date"),
+        "price_peak_close": existing_row.get("price_peak_close"),
+        "price_current_multiplier": existing_row.get("price_current_multiplier"),
+        "price_change_pct": existing_row.get("price_change_pct"),
+        "price_peak_multiplier": existing_row.get("price_peak_multiplier"),
+        "price_peak_change_pct": existing_row.get("price_peak_change_pct"),
+        "price_performance_updated_at": existing_row.get("price_performance_updated_at"),
+    }
+
+
 def _upsert_matches_with_analogs(
     client,
     matches: list[CategoryMatch],
     existing: dict,
     lib: dict,
     now: datetime,
+    price_performances: dict[str, PricePerformance] | None = None,
 ) -> None:
     """Upsert matches with analog + fingerprint fields populated.
 
@@ -305,8 +369,10 @@ def _upsert_matches_with_analogs(
         return
     rows = []
     pptr_rows = []
+    price_performances = price_performances or {}
     for m in matches:
         fda = _resolve_first_detected(m, existing, now)
+        existing_row = existing.get((m.ticker, m.category))
         pptr_match = getattr(m, "pptr_match", None)
         pptr_rule_id = pptr_match.get("rule_id") if pptr_match else None
         pptr_breakdown = pptr_match.get("confidence_breakdown") if pptr_match else None
@@ -317,7 +383,8 @@ def _upsert_matches_with_analogs(
         else:
             analog = _get_analog(lib, m)
 
-        rows.append({
+        perf = price_performances.get(m.ticker)
+        row = {
             "ticker": m.ticker,
             "category": m.category,
             "confidence": round(m.confidence, 3),
@@ -336,7 +403,9 @@ def _upsert_matches_with_analogs(
             "pptr_match": getattr(m, "pptr_match", None),
             "pptr_rule_id": pptr_rule_id,
             "pptr_confidence_breakdown": pptr_breakdown,
-        })
+        }
+        row.update(_price_performance_payload(perf, existing_row, now))
+        rows.append(row)
         if pptr_rule_id:
             pptr_rows.append({
                 "rule_id": pptr_rule_id,
@@ -347,6 +416,7 @@ def _upsert_matches_with_analogs(
                 "confidence_breakdown": pptr_breakdown or {},
                 "matched_conditions": pptr_match.get("matched_conditions", []),
                 "evidence": m.evidence,
+                "as_of_close": perf.latest_close if perf is not None else None,
             })
     try:
         client.table("hundredx_category_matches").upsert(
@@ -494,6 +564,7 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
 
         tickers = [s["ticker"] for s in stocks]
         sector_by_ticker = {s["ticker"]: s.get("sector_tag") for s in stocks}
+        market_by_ticker = {s["ticker"]: s.get("market") for s in stocks}
         kr_count = sum(1 for s in stocks if s["market"] in ("KOSPI", "KOSDAQ"))
         us_count = len(stocks) - kr_count
         logger.info("Scanning %d active stocks (KR: %d, US: %d)", len(tickers), kr_count, us_count)
@@ -585,7 +656,15 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
 
         # Upsert all matches
         if all_matches:
-            _upsert_matches_with_analogs(client, all_matches, existing, lib, now)
+            price_performances = _fetch_price_performances(all_matches, market_by_ticker)
+            _upsert_matches_with_analogs(
+                client,
+                all_matches,
+                existing,
+                lib,
+                now,
+                price_performances=price_performances,
+            )
             logger.info("Upserted %d category matches", len(all_matches))
         if all_near_misses:
             _insert_pptr_near_misses(client, all_near_misses, now)

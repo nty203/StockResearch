@@ -38,6 +38,17 @@ type Match = {
     producer_id: string
     matched_conditions: string[]
   } | null
+  price_baseline_date: string | null
+  price_baseline_close: number | null
+  price_latest_date: string | null
+  price_latest_close: number | null
+  price_peak_date: string | null
+  price_peak_close: number | null
+  price_current_multiplier: number | null
+  price_change_pct: number | null
+  price_peak_multiplier: number | null
+  price_peak_change_pct: number | null
+  price_performance_updated_at: string | null
 }
 
 export async function GET(req: Request) {
@@ -115,6 +126,8 @@ export async function GET(req: Request) {
       .filter((d): d is string => !!d)
       .sort()[0] ?? null
 
+    const priceRow = cats.find(c => c.price_current_multiplier != null || c.price_change_pct != null) ?? null
+
     return {
       ticker,
       stock: stockMap[ticker] ?? null,
@@ -122,6 +135,19 @@ export async function GET(req: Request) {
       grade,
       best_fingerprint_score: bestFP > 0 ? Math.round(bestFP * 1000) / 1000 : null,
       first_signal_at: firstSignal,
+      price_performance: priceRow ? {
+        baseline_date: priceRow.price_baseline_date,
+        baseline_close: priceRow.price_baseline_close,
+        latest_date: priceRow.price_latest_date,
+        latest_close: priceRow.price_latest_close,
+        peak_date: priceRow.price_peak_date,
+        peak_close: priceRow.price_peak_close,
+        current_multiplier: priceRow.price_current_multiplier,
+        change_pct: priceRow.price_change_pct,
+        peak_multiplier: priceRow.price_peak_multiplier,
+        peak_change_pct: priceRow.price_peak_change_pct,
+        updated_at: priceRow.price_performance_updated_at,
+      } : null,
       categories: cats.map(c => ({
         category: c.category,
         confidence: c.confidence,

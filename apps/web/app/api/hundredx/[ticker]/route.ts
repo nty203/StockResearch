@@ -35,6 +35,17 @@ export async function GET(_req: Request, { params }: { params: Promise<{ ticker:
     analog_ticker: string | null
     analog_date: string | null
     analog_multiplier: number | null
+    price_baseline_date: string | null
+    price_baseline_close: number | null
+    price_latest_date: string | null
+    price_latest_close: number | null
+    price_peak_date: string | null
+    price_peak_close: number | null
+    price_current_multiplier: number | null
+    price_change_pct: number | null
+    price_peak_multiplier: number | null
+    price_peak_change_pct: number | null
+    price_performance_updated_at: string | null
   }
   type LibStock = { ticker: string; category: string; pre_rise_signals: Record<string, unknown> | null; rise_start_date: string | null; peak_multiplier: number | null; notes: string | null }
 
@@ -54,6 +65,19 @@ export async function GET(_req: Request, { params }: { params: Promise<{ ticker:
       date: m.analog_date,
       multiplier: m.analog_multiplier,
       notes: libByTicker[m.analog_ticker]?.notes ?? null,
+    } : null,
+    price_performance: m.price_current_multiplier != null || m.price_change_pct != null ? {
+      baseline_date: m.price_baseline_date,
+      baseline_close: m.price_baseline_close,
+      latest_date: m.price_latest_date,
+      latest_close: m.price_latest_close,
+      peak_date: m.price_peak_date,
+      peak_close: m.price_peak_close,
+      current_multiplier: m.price_current_multiplier,
+      change_pct: m.price_change_pct,
+      peak_multiplier: m.price_peak_multiplier,
+      peak_change_pct: m.price_peak_change_pct,
+      updated_at: m.price_performance_updated_at,
     } : null,
   }))
 

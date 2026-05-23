@@ -79,6 +79,19 @@ interface StockResult {
   grade: 'S' | 'A' | 'B' | 'C'
   best_fingerprint_score: number | null
   first_signal_at: string | null
+  price_performance: {
+    baseline_date: string | null
+    baseline_close: number | null
+    latest_date: string | null
+    latest_close: number | null
+    peak_date: string | null
+    peak_close: number | null
+    current_multiplier: number | null
+    change_pct: number | null
+    peak_multiplier: number | null
+    peak_change_pct: number | null
+    updated_at: string | null
+  } | null
   categories: CategoryEntry[]
 }
 
@@ -324,6 +337,22 @@ function StockCard({
           {firstSignalText && (
             <div className="text-[10px] text-[var(--color-text-2)] mt-1">
               첫 신호 {firstSignalText}
+            </div>
+          )}
+          {result.price_performance?.change_pct != null && (
+            <div className="text-[10px] text-[var(--color-text-2)] mt-1 leading-tight">
+              <span>상승 </span>
+              <span className={result.price_performance.change_pct >= 0 ? 'text-[var(--color-success)]' : 'text-[var(--color-error)]'}>
+                {formatReturnPct(result.price_performance.change_pct)}
+              </span>
+              {result.price_performance.current_multiplier != null && (
+                <span className="ml-1">
+                  ({result.price_performance.current_multiplier.toFixed(1)}x)
+                </span>
+              )}
+              {result.price_performance.baseline_date && (
+                <div>{result.price_performance.baseline_date.slice(0, 7)} 저점</div>
+              )}
             </div>
           )}
         </div>
@@ -629,4 +658,10 @@ function formatRelativeDays(iso: string): string {
   if (days < 30) return `${Math.floor(days / 7)}주 전`
   if (days < 365) return `${Math.floor(days / 30)}개월 전`
   return `${Math.floor(days / 365)}년 전`
+}
+
+function formatReturnPct(value: number): string {
+  const rounded = Math.round(value)
+  const sign = rounded > 0 ? '+' : ''
+  return `${sign}${rounded.toLocaleString('ko-KR')}%`
 }

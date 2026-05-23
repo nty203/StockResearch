@@ -18,6 +18,7 @@ import logging
 from datetime import datetime, timezone, timedelta
 
 from ..upsert import get_client, pipeline_run
+from .price_performance import PricePerformance, fetch_since_date_performance
 
 logger = logging.getLogger(__name__)
 
@@ -87,9 +88,24 @@ def run() -> int:
         rows = lib_res.data or []
         logger.info("Processing %d library entries", len(rows))
 
+        tickers = sorted({r["ticker"] for r in rows})
+        stocks_res = (
+            client.table("stocks")
+            .select("ticker, market")
+            .in_("ticker", tickers)
+            .execute()
+            if tickers
+            else None
+        )
+        market_by_ticker = {
+            r["ticker"]: r.get("market")
+            for r in ((stocks_res.data if stocks_res else None) or [])
+        }
+
         # Cache prices per ticker (multi-category rows share the same ticker)
         rise_price_cache: dict[tuple[str, str], float | None] = {}
         latest_price_cache: dict[str, float | None] = {}
+        market_perf_cache: dict[tuple[str, str], PricePerformance | None] = {}
 
         for row in rows:
             ticker = row["ticker"]
@@ -98,19 +114,32 @@ def run() -> int:
                 skipped += 1
                 continue
 
+            perf_key = (ticker, rise_start)
+            if perf_key not in market_perf_cache:
+                market_perf_cache[perf_key] = fetch_since_date_performance(
+                    ticker,
+                    market_by_ticker.get(ticker),
+                    rise_start,
+                )
+            market_perf = market_perf_cache[perf_key]
+
             # rise-start price (cache by (ticker, date))
             cache_key = (ticker, rise_start)
             if cache_key not in rise_price_cache:
                 stored = row.get("price_at_rise_start")
                 rise_price_cache[cache_key] = (
-                    float(stored) if stored is not None
+                    market_perf.baseline_close if market_perf is not None
+                    else float(stored) if stored is not None
                     else _fetch_close_near_date(client, ticker, rise_start)
                 )
             rise_price = rise_price_cache[cache_key]
 
             # latest close
             if ticker not in latest_price_cache:
-                latest_price_cache[ticker] = _fetch_latest_close(client, ticker)
+                latest_price_cache[ticker] = (
+                    market_perf.latest_close if market_perf is not None
+                    else _fetch_latest_close(client, ticker)
+                )
             latest_price = latest_price_cache[ticker]
 
             if rise_price is None or latest_price is None or rise_price <= 0:
@@ -119,7 +148,8 @@ def run() -> int:
 
             latest_multiplier = round(latest_price / rise_price, 2)
             existing_peak = float(row.get("peak_multiplier") or 0.0)
-            new_peak = max(existing_peak, latest_multiplier)
+            observed_peak = market_perf.peak_multiplier if market_perf is not None else latest_multiplier
+            new_peak = max(existing_peak, observed_peak)
 
             try:
                 client.table("hundredx_library_stocks").update({
