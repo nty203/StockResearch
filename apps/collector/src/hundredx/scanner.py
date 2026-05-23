@@ -189,7 +189,7 @@ def _fetch_existing(client, tickers: list[str]) -> dict[tuple[str, str], dict]:
                     "price_latest_close, price_peak_date, price_peak_close, "
                     "price_current_multiplier, price_change_pct, "
                     "price_peak_multiplier, price_peak_change_pct, "
-                    "price_performance_updated_at"
+                    "price_performance_updated_at, evidence"
                 )
                 .in_("ticker", chunk)
                 .execute()
@@ -200,6 +200,47 @@ def _fetch_existing(client, tickers: list[str]) -> dict[tuple[str, str], dict]:
             logger.warning("Error fetching existing matches chunk: %s", e)
 
     return {(r["ticker"], r["category"]): r for r in rows}
+
+
+# ── LLM verdict helpers ───────────────────────────────────────────────────────
+
+def _get_llm_verdict(row: dict | None) -> str | None:
+    """evidence JSONB에서 LLM 검증 결과 추출.
+
+    Returns: "confirm" | "reject" | "uncertain" | None (미검증)
+    """
+    if not row:
+        return None
+    for ev in (row.get("evidence") or []):
+        if isinstance(ev, dict) and ev.get("source_type") == "llm_verdict":
+            text = ev.get("text_excerpt", "")
+            if "LLM confirm" in text:
+                return "confirm"
+            if "LLM reject" in text:
+                return "reject"
+            if "LLM uncertain" in text:
+                return "uncertain"
+    return None
+
+
+def _merge_llm_evidence(existing_evidence: list, new_evidence: list) -> list:
+    """새 scanner evidence에 기존 LLM 판단 evidence를 보존해서 병합.
+
+    LLM 검증 결과는 재스캔 시 덮어써지면 안 된다.
+    """
+    llm_entries = [
+        ev for ev in (existing_evidence or [])
+        if isinstance(ev, dict) and ev.get("source_type") == "llm_verdict"
+    ]
+    if not llm_entries:
+        return new_evidence
+    # llm_verdict는 맨 뒤에 보존 (scanner evidence + llm entries)
+    non_llm_new = [
+        ev for ev in (new_evidence or [])
+        if not (isinstance(ev, dict) and ev.get("source_type") == "llm_verdict")
+    ]
+    return non_llm_new + llm_entries
+
 
 # ── Filings batch fetch ───────────────────────────────────────────────────────
 
@@ -397,8 +438,16 @@ def _upsert_matches_with_analogs(
     pptr_rows = []
     price_performances = price_performances or {}
     for m in matches:
-        fda = _resolve_first_detected(m, existing, now)
         existing_row = existing.get((m.ticker, m.category))
+        llm_verdict = _get_llm_verdict(existing_row)
+
+        # LLM reject 보호: 한번 reject된 (ticker, category)는 재스캔해도 재진입 불가
+        # (재진입하려면 verify-stocks로 override 필요)
+        if llm_verdict == "reject":
+            logger.debug("LLM reject guard: skipping %s/%s", m.ticker, m.category)
+            continue
+
+        fda = _resolve_first_detected(m, existing, now)
         pptr_match = getattr(m, "pptr_match", None)
         pptr_rule_id = pptr_match.get("rule_id") if pptr_match else None
         pptr_breakdown = pptr_match.get("confidence_breakdown") if pptr_match else None
@@ -410,11 +459,17 @@ def _upsert_matches_with_analogs(
             analog = _get_analog(lib, m)
 
         perf = price_performances.get(m.ticker)
+        # LLM confirm/uncertain 보호: evidence에서 llm_verdict 항목 보존
+        evidence = _merge_llm_evidence(
+            existing_row.get("evidence") if existing_row else None,
+            m.evidence,
+        )
+
         row = {
             "ticker": m.ticker,
             "category": m.category,
             "confidence": round(m.confidence, 3),
-            "evidence": m.evidence,
+            "evidence": evidence,
             "first_detected_at": fda.isoformat(),
             "detected_at": now.isoformat(),
             "exited_at": None,
@@ -578,13 +633,29 @@ def _deduplicate_categories(matches: list[CategoryMatch]) -> list[CategoryMatch]
 
 # ── Exit marking ──────────────────────────────────────────────────────────────
 
-def _mark_exits(client, active_before: set[tuple[str, str]], active_after: set[tuple[str, str]], now: datetime) -> int:
-    """Set exited_at for (ticker, category) pairs that disappeared this scan."""
+def _mark_exits(
+    client,
+    active_before: set[tuple[str, str]],
+    active_after: set[tuple[str, str]],
+    now: datetime,
+    existing: dict | None = None,
+) -> int:
+    """Set exited_at for (ticker, category) pairs that disappeared this scan.
+
+    LLM-confirmed 종목은 스캐너가 재탐지 못해도 강제 종료하지 않는다.
+    (시그널 지속 여부는 LLM 재검증으로만 변경)
+    """
     exited = active_before - active_after
     if not exited:
         return 0
     count = 0
     for ticker, category in exited:
+        # LLM confirm 보호: 검증 완료된 종목은 스캐너가 못 잡아도 유지
+        if existing:
+            row = existing.get((ticker, category))
+            if _get_llm_verdict(row) == "confirm":
+                logger.debug("LLM confirm guard: skipping exit %s/%s", ticker, category)
+                continue
         try:
             client.table("hundredx_category_matches").update(
                 {"exited_at": now.isoformat()}
@@ -614,6 +685,8 @@ def _enforce_dedup_in_db(client, all_matches: list[CategoryMatch], existing: dic
             if t == ticker
             and row.get("exited_at") is None
             and c not in kept_cats
+            # LLM confirm 보호: dedup에서도 강제 종료 안 함
+            and _get_llm_verdict(row) != "confirm"
         ]
         for _, category in stale:
             try:
@@ -818,7 +891,7 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                 logger.info("Enforced dedup: exited %d stale categories", dedup_exits)
 
         # Mark exits (종목 자체가 사라진 경우)
-        exits = _mark_exits(client, active_before, active_after, now)
+        exits = _mark_exits(client, active_before, active_after, now, existing=existing)
         if exits:
             logger.info("Marked %d exits", exits)
 
