@@ -27,6 +27,11 @@ TRIGGER_TYPES = [
     "지정학_수혜",     # 13. Geopolitical beneficiary
     "스핀오프",        # 14. Spinoff / restructuring unlock
     "실적_서프라이즈", # 15. Earnings surprise
+    "전력망_투자",     # 16. Power grid infrastructure supercycle
+    "이차전지_사이클", # 17. Battery material supercycle
+    "조선_수주",       # 18. Shipbuilding supercycle
+    "가치_재평가",     # 19. Value unlock / Holding company revaluation
+    "단기_테마",       # 20. Meme / Short-term theme spike
 ]
 
 BIGTECH_KEYWORDS = ["MSFT", "Microsoft", "Google", "Alphabet", "Amazon", "AWS",
@@ -137,6 +142,20 @@ SPINOFF_KEYWORDS = ["분할", "spinoff", "물적분할", "분사", "지주회사
 EARNINGS_KEYWORDS = ["어닝 서프라이즈", "earnings surprise", "컨센서스 상회",
                      "beat estimate", "실적 호조", "예상치 초과", "깜짝 실적"]
 
+POWER_INFRA_KEYWORDS = ["전력기기", "변압기", "송전", "배전", "전력망", "AI 데이터센터", 
+                        "전력 케이블", "초고압", "HVDC", "전력 수요", "스마트그리드", "배전반"]
+
+BATTERY_KEYWORDS = ["2차전지", "이차전지", "양극재", "음극재", "전구체", "수산화리튬", "리튬", 
+                    "배터리", "ESS", "에너지저장장치", "셀 메이커", "전고체"]
+
+SHIPBUILDING_KEYWORDS = ["조선", "친환경 선박", "이중연료", "선박엔진", "수주잔고", "조선사", 
+                         "LNG 운반선", "선가", "인도량", "피크아웃 우려 해소", "슈퍼사이클"]
+
+VALUE_UNLOCK_KEYWORDS = ["지주사", "지주회사", "자사주 소각", "주주환원", "배당 확대", 
+                         "밸류업", "디스카운트 해소", "지배구조 개편", "경영권 분쟁"]
+
+THEME_SPIKE_KEYWORDS = ["작전", "투자경고", "단기 과열", "무상증자", "품절주", "정치 테마"]
+
 
 def _extract_amount_krw(text: str) -> float | None:
     """Extract amount in KRW billions from Korean text."""
@@ -195,8 +214,13 @@ TRIGGER_TO_RISE_CATEGORY: dict[str, str] = {
     "공급_병목":     "공급_병목",
     "원자재_가격":   "공급_병목",
     "지정학_수혜":   "정책_수혜",
-    "스핀오프":      "수익성_급전환",
+    "스핀오프":      "지주사_재평가",
     "실적_서프라이즈": "수익성_급전환",
+    "전력망_투자":     "전력_인프라",
+    "이차전지_사이클": "이차전지_소재",
+    "조선_수주":       "조선_슈퍼사이클",
+    "가치_재평가":     "지주사_재평가",
+    "단기_테마":       "단기_테마_급등",
 }
 
 
@@ -393,6 +417,61 @@ def classify(text: str, headline: str = "") -> list[TriggerResult]:
             confidence=conf,
             matched_keywords=hits,
             summary=f"실적 서프라이즈: {', '.join(hits[:3])}",
+        ))
+
+    # 16. 전력망_투자
+    hits = _keyword_hit(combined, POWER_INFRA_KEYWORDS)
+    if hits:
+        conf = _confidence(len(hits), len(POWER_INFRA_KEYWORDS), False)
+        results.append(TriggerResult(
+            trigger_type="전력망_투자",
+            confidence=conf,
+            matched_keywords=hits,
+            summary=f"전력/인프라: {', '.join(hits[:3])}",
+        ))
+
+    # 17. 이차전지_사이클
+    hits = _keyword_hit(combined, BATTERY_KEYWORDS)
+    if hits:
+        conf = _confidence(len(hits), len(BATTERY_KEYWORDS), False)
+        results.append(TriggerResult(
+            trigger_type="이차전지_사이클",
+            confidence=conf,
+            matched_keywords=hits,
+            summary=f"배터리 사이클: {', '.join(hits[:3])}",
+        ))
+
+    # 18. 조선_수주
+    hits = _keyword_hit(combined, SHIPBUILDING_KEYWORDS)
+    if hits:
+        conf = _confidence(len(hits), len(SHIPBUILDING_KEYWORDS), False)
+        results.append(TriggerResult(
+            trigger_type="조선_수주",
+            confidence=conf,
+            matched_keywords=hits,
+            summary=f"조선/엔진 수주: {', '.join(hits[:3])}",
+        ))
+
+    # 19. 가치_재평가
+    hits = _keyword_hit(combined, VALUE_UNLOCK_KEYWORDS)
+    if hits:
+        conf = _confidence(len(hits), len(VALUE_UNLOCK_KEYWORDS), False)
+        results.append(TriggerResult(
+            trigger_type="가치_재평가",
+            confidence=conf,
+            matched_keywords=hits,
+            summary=f"지주사/주주환원: {', '.join(hits[:3])}",
+        ))
+
+    # 20. 단기_테마
+    hits = _keyword_hit(combined, THEME_SPIKE_KEYWORDS)
+    if hits:
+        conf = _confidence(len(hits), len(THEME_SPIKE_KEYWORDS), False)
+        results.append(TriggerResult(
+            trigger_type="단기_테마",
+            confidence=conf,
+            matched_keywords=hits,
+            summary=f"단기 테마/작전: {', '.join(hits[:3])}",
         ))
 
     # ── 확장 트리거: 플랫폼 기업 조기 포착용 ──────────────────────────────────

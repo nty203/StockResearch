@@ -47,6 +47,11 @@ CATEGORY_KEYWORD_SETS: dict[str, list[str]] = {
     "정책_수혜":       cls.GEOPOLITICAL_KEYWORDS + cls.REGULATORY_KEYWORDS,
     "공급_병목":       cls.SUPPLY_BOTTLENECK_KEYWORDS + cls.RAW_MATERIAL_KEYWORDS,
     "임상_파이프라인": cls.BIOTECH_PIPELINE_KEYWORDS,
+    "전력_인프라":     cls.POWER_INFRA_KEYWORDS,
+    "이차전지_소재":   cls.BATTERY_KEYWORDS,
+    "조선_슈퍼사이클": cls.SHIPBUILDING_KEYWORDS,
+    "지주사_재평가":   cls.VALUE_UNLOCK_KEYWORDS,
+    "단기_테마_급등":   cls.THEME_SPIKE_KEYWORDS,
 }
 
 
