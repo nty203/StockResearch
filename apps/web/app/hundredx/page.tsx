@@ -48,6 +48,12 @@ interface TimelineProgress {
   next_expected: { seq: number; name: string; months_from_rise: number; expected_in_months: number } | null
 }
 
+interface PptrMatch {
+  library_ticker: string
+  producer_id: string
+  matched_conditions: string[]
+}
+
 interface CategoryEntry {
   category: RiseCategory
   confidence: number
@@ -57,6 +63,7 @@ interface CategoryEntry {
   analog: AnalogRef | null
   fingerprint: FingerprintInfo | null
   timeline: TimelineProgress | null
+  pptr: PptrMatch | null
 }
 
 interface StockResult {
@@ -369,6 +376,23 @@ function CategoryDetail({ cat, ticker }: { cat: CategoryEntry; ticker: string })
       {/* Timeline progress — 100배 종목의 trigger sequence 진행도 */}
       {cat.timeline && cat.timeline.fired_triggers.length > 0 && (
         <TimelineCard timeline={cat.timeline} />
+      )}
+
+      {/* PPTR Match — 라이브러리 PPTR 원인 패턴 일치 */}
+      {cat.pptr && (
+        <div className="mt-2 pt-2 border-t border-[var(--color-border)] space-y-1.5 bg-[var(--color-accent)]/5 rounded p-2 border-l-2 border-l-[var(--color-accent)]">
+          <p className="text-xs font-semibold text-[var(--color-accent)]">PPTR 원인 패턴 매칭</p>
+          <p className="text-[11px] text-[var(--color-text-2)] leading-relaxed">
+            이 종목은 라이브러리 <span className="text-[var(--color-text-1)] font-medium">{cat.pptr.library_ticker}</span>의 핵심 원인 패턴(<span className="text-[var(--color-text-1)]">{cat.pptr.producer_id}</span>)과 일치합니다.
+          </p>
+          <div className="flex flex-wrap gap-1 mt-1">
+            {cat.pptr.matched_conditions.map((cond, idx) => (
+              <span key={idx} className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-2)]">
+                ✓ {cond}
+              </span>
+            ))}
+          </div>
+        </div>
       )}
 
       {/* Fingerprint match — 100배 종목 패턴과의 유사도 */}

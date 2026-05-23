@@ -33,6 +33,13 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen
 
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Push DB Migrations
+        run: supabase db push --db-url ${{ secrets.SUPABASE_DB_URL }}
+
       - name: Run auto-populate (discover + backfill + extract)
         # 10년 윈도우: 셀트리온(140x, 9년) 같은 장기 사이클 100배 종목 포착
         # min-multiplier 100: 진짜 100배 달성 종목만 라이브러리에 추가

@@ -14,6 +14,7 @@ type LibRow = {
   price_at_rise_start: number | null
   latest_updated_at: string | null
   notes: string | null
+  pptr_analysis: Record<string, unknown> | null
 }
 
 export async function GET() {
@@ -26,7 +27,7 @@ export async function GET() {
 
   if (error) return Response.json({ error: error.message }, { status: 500 })
 
-  const rows = (libRows ?? []) as LibRow[]
+  const rows = (libRows ?? []) as unknown as LibRow[]
   const tickers = [...new Set(rows.map(r => r.ticker))]
 
   const namesRes = tickers.length > 0
@@ -51,6 +52,7 @@ export async function GET() {
       category: string
       pre_rise_signals: Record<string, unknown> | null
       notes: string | null
+      pptr_analysis: Record<string, unknown> | null
     }>
   }> = {}
 
@@ -74,6 +76,7 @@ export async function GET() {
       category: r.category,
       pre_rise_signals: r.pre_rise_signals,
       notes: r.notes,
+      pptr_analysis: r.pptr_analysis,
     })
   }
 

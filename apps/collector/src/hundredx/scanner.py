@@ -25,6 +25,7 @@ from .categories.platform_mono import detect as detect_platform_mono
 from .categories.policy_benefit import detect as detect_policy_benefit
 from .categories.supply_choke import detect as detect_supply_choke
 from .categories.clinical_pipe import detect as detect_clinical_pipe
+from .pptr_detector import detect_from_pptr
 
 logger = logging.getLogger(__name__)
 
@@ -59,6 +60,24 @@ def _flatten_lib(lib: dict[str, list[dict]]) -> list[dict]:
     for rows in lib.values():
         out.extend(rows)
     return out
+
+
+def _extract_pptr_rules(lib: dict[str, list[dict]]) -> list[dict]:
+    """Extract detector_rules from PPTR resolutions across all library stocks."""
+    rules = []
+    for cat_rows in lib.values():
+        for r in cat_rows:
+            pptr = r.get("pptr_analysis")
+            if pptr and isinstance(pptr, dict) and "resolutions" in pptr:
+                for res in pptr["resolutions"]:
+                    if "detector_rule" in res:
+                        rules.append({
+                            "library_ticker": r["ticker"],
+                            "producer_id": res.get("producer_id"),
+                            "category": res["detector_rule"].get("category", r.get("category")),
+                            "conditions": res["detector_rule"].get("conditions", {})
+                        })
+    return rules
 
 
 def _find_analog_financial(lib: dict, category: str, signal_key: str, current_val: float) -> dict | None:
@@ -250,6 +269,7 @@ def _upsert_matches_with_analogs(
             ),
             "fingerprint_dims": m.fingerprint_dims,
             "timeline_progress": m.timeline_progress,
+            "pptr_match": getattr(m, "pptr_match", None),
         })
     try:
         client.table("hundredx_category_matches").upsert(
@@ -367,8 +387,9 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
     with pipeline_run(client, "hundredx") as (rows_out, _):
         # Pre-fetch library (one query, ~12 rows)
         lib = _load_library(client)
-        logger.info("Library loaded: %d categories, %d stocks",
-                    len(lib), sum(len(v) for v in lib.values()))
+        pptr_rules = _extract_pptr_rules(lib)
+        logger.info("Library loaded: %d categories, %d stocks, %d PPTR rules",
+                    len(lib), sum(len(v) for v in lib.values()), len(pptr_rules))
         # Fetch active KR + US stocks via pagination (bypassing PostgREST 1000 row hard limit)
         stocks = []
         page_size = 1000
@@ -456,6 +477,18 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                             active_after.add((ticker, category))
                     except Exception as e:
                         logger.warning("Detector %s error on %s: %s", category, ticker, e)
+
+                # ── PPTR Detector (보완 탐지) ──
+                try:
+                    if pptr_rules:
+                        pptr_matches = detect_from_pptr(stock_data, filings, pptr_rules)
+                        for pm in pptr_matches:
+                            # 만약 동일 종목+카테고리가 이미 7개 디텍터에서 탐지되었다면 스킵
+                            if (ticker, pm.category) not in active_after:
+                                all_matches.append(pm)
+                                active_after.add((ticker, pm.category))
+                except Exception as e:
+                    logger.warning("PPTR Detector error on %s: %s", ticker, e)
 
         # Upsert all matches
         if all_matches:

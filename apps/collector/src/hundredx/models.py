@@ -17,3 +17,5 @@ class CategoryMatch:
     fingerprint_dims: dict | None = None                 # {matched: [...], missing: [...], details: {...}}
     # Timeline progress — which trigger sequence stage in best library timeline
     timeline_progress: dict | None = None                # full TimelineProgress serialization
+    # PPTR match — which library PPTR resolution triggered this match
+    pptr_match: dict | None = None                       # {library_ticker, producer_id, matched_conditions}

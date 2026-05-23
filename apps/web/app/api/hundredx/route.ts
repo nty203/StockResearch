@@ -33,6 +33,11 @@ type Match = {
     current_position_months: number
     next_expected: { seq: number; name: string; months_from_rise: number; expected_in_months: number } | null
   } | null
+  pptr_match: {
+    library_ticker: string
+    producer_id: string
+    matched_conditions: string[]
+  } | null
 }
 
 export async function GET(req: Request) {
@@ -51,7 +56,7 @@ export async function GET(req: Request) {
 
   if (error) return Response.json({ error: error.message }, { status: 500 })
 
-  const rows = (matches ?? []) as Match[]
+  const rows = (matches ?? []) as unknown as Match[]
   const tickers = [...new Set(rows.map(r => r.ticker))]
 
   // Join: stock metadata
@@ -135,6 +140,7 @@ export async function GET(req: Request) {
           details: c.fingerprint_dims?.details ?? {},
         } : null,
         timeline: c.timeline_progress ?? null,
+        pptr: c.pptr_match ?? null,
       })).sort((a, b) => (b.fingerprint?.score ?? b.confidence) - (a.fingerprint?.score ?? a.confidence)),
     }
   })

@@ -14,14 +14,14 @@ from __future__ import annotations
 import argparse
 import logging
 
-from . import discover, extract_signals, backfill_history
+from . import discover, extract_signals, backfill_history, analyze_library_pptr
 
 logger = logging.getLogger(__name__)
 
 
 def run(years: int = 5, min_multiplier: float = 50.0,
-        skip_backfill: bool = False) -> tuple[int, int, int]:
-    """Returns (discovered_count, backfilled_filings, extracted_count)."""
+        skip_backfill: bool = False) -> tuple[int, int, int, int]:
+    """Returns (discovered_count, backfilled_filings, extracted_count, pptr_count)."""
     logger.info("=== Step 1: Discover 100배+ stocks (>= %.0fx in %dy) ===", min_multiplier, years)
     discovered = discover.run(years=years, min_multiplier=min_multiplier, auto_insert=True)
     logger.info("Step 1 complete: %d stocks discovered", len(discovered))
@@ -36,7 +36,11 @@ def run(years: int = 5, min_multiplier: float = 50.0,
     extracted = extract_signals.run(force=backfilled > 0)
     logger.info("Step 2 complete: %d entries got fingerprints", extracted)
 
-    return len(discovered), backfilled, extracted
+    logger.info("=== Step 2.5: Generate PPTR Analysis ===")
+    pptr_count = analyze_library_pptr.run()
+    logger.info("Step 2.5 complete: %d library entries got PPTR analysis", pptr_count)
+
+    return len(discovered), backfilled, extracted, pptr_count
 
 
 if __name__ == "__main__":
@@ -48,9 +52,9 @@ if __name__ == "__main__":
     parser.add_argument("--skip-backfill", action="store_true",
                         help="Skip DART historical backfill step (faster but signals will be empty)")
     args = parser.parse_args()
-    n_disc, n_bf, n_ext = run(
+    n_disc, n_bf, n_ext, n_pptr = run(
         years=args.years,
         min_multiplier=args.min_multiplier,
         skip_backfill=args.skip_backfill,
     )
-    print(f"\n=== Auto-populate done: {n_disc} discovered, {n_bf} backfilled, {n_ext} fingerprinted ===")
+    print(f"\n=== Auto-populate done: {n_disc} discovered, {n_bf} backfilled, {n_ext} fingerprinted, {n_pptr} pptr ===")
