@@ -6,6 +6,9 @@ from src.hundredx.extract_signals import (
     _fq_to_date,
     _compute_quant_at_rise,
     _categorize_from_filings,
+    _categorize_from_texts,
+    _build_news_special,
+    _build_volume_special,
     _max_filing_amount,
 )
 
@@ -123,6 +126,54 @@ class TestCategorizeFromFilings:
         cat, keywords, count = _categorize_from_filings(filings)
         assert count > 0
         # Category should be 정책_수혜 since GEOPOLITICAL_KEYWORDS matches
+
+
+class TestNewsAndVolumeSpecial:
+    def test_categorize_from_texts_detects_macro_news(self):
+        cat, keywords, count = _categorize_from_texts([
+            "IRA 수혜와 supply chain 재편으로 국산화 수요 확대",
+            "AI 데이터센터 전력 부족과 전력망 투자 증가",
+        ])
+        assert count > 0
+        assert cat in ("정책_수혜", "전력_인프라")
+        assert keywords
+
+    def test_build_news_special_summarizes_hits(self):
+        news = [
+            {
+                "title": "IRA 수혜 기대",
+                "summary": "supply chain 재편과 국산화 수요 증가",
+            }
+        ]
+        result = _build_news_special(news)
+        assert result["news_macro_hits"] > 0
+        assert result["news_count"] == 1
+        assert result["news_keywords"]
+
+    def test_build_volume_special_detects_spike(self):
+        prices = [
+            {"date": f"2022-01-{day:02d}", "volume": 1000}
+            for day in range(1, 29)
+        ] + [
+            {"date": f"2022-02-{day:02d}", "volume": 1000}
+            for day in range(1, 23)
+        ] + [
+            {"date": "2022-02-23", "volume": 12000}
+        ]
+        result = _build_volume_special(prices)
+        assert result["max_volume_spike_ratio"] == pytest.approx(12.0)
+        assert result["volume_spike_date"] == "2022-02-23"
+        assert result["volume_spike_required"] is True
+
+    def test_build_volume_special_ignores_small_moves(self):
+        prices = [
+            {"date": f"2022-01-{day:02d}", "volume": 1000}
+            for day in range(1, 29)
+        ] + [
+            {"date": f"2022-02-{day:02d}", "volume": 1200}
+            for day in range(1, 23)
+        ]
+        assert _build_volume_special(prices) == {}
 
 
 class TestMaxFilingAmount:

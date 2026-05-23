@@ -14,6 +14,20 @@ def _safe_float(val, default=0.0) -> float:
         return default
 
 
+def _format_special_fact(key: str, value) -> str:
+    labels = {
+        "news_macro_hits": "news_macro_hits",
+        "news_category": "news_category",
+        "max_volume_spike_ratio": "max_volume_spike",
+        "volume_spike_date": "volume_spike_date",
+        "volume_spike_required": "volume_spike_required",
+    }
+    label = labels.get(key, key)
+    if isinstance(value, float):
+        return f"{label}: {value:.2f}"
+    return f"{label}: {value}"
+
+
 def generate_pptr(library_row: dict) -> dict:
     """라이브러리 종목 1행 → PPTR 7단계 분석 JSON 생성.
 
@@ -72,6 +86,12 @@ def generate_pptr(library_row: dict) -> dict:
         redefine["confirmed_facts"].append(f"notes: {notes}")
     if quant:
         redefine["confirmed_facts"].extend([f"{k}: {v}" for k, v in quant.items()])
+    if special:
+        redefine["confirmed_facts"].extend(
+            _format_special_fact(k, v)
+            for k, v in special.items()
+            if k != "news_keywords"
+        )
 
     # 2. Predicates
     predicates = []
@@ -121,6 +141,24 @@ def generate_pptr(library_row: dict) -> dict:
             "status": "confirmed"
         })
         p_id_seq += 1
+    if special.get("news_macro_hits"):
+        predicates.append({
+            "id": f"P{p_id_seq}",
+            "condition": f"뉴스/매크로 키워드 히트 >= {special['news_macro_hits']}개",
+            "how_to_check": "news.title + news.summary",
+            "status": "confirmed",
+            "value_at_signal": special["news_macro_hits"],
+        })
+        p_id_seq += 1
+    if special.get("max_volume_spike_ratio"):
+        predicates.append({
+            "id": f"P{p_id_seq}",
+            "condition": f"거래량 스파이크 >= {special['max_volume_spike_ratio']}x",
+            "how_to_check": "prices_daily.volume / rolling_60d_avg_volume",
+            "status": "confirmed",
+            "value_at_signal": special["max_volume_spike_ratio"],
+        })
+        p_id_seq += 1
 
     # 3. Producers & 4. Traces
     producers = []
@@ -162,12 +200,16 @@ def generate_pptr(library_row: dict) -> dict:
     # 특별한 이벤트가 있는 경우 Producer 추가
     if special:
         pr_id = f"PR{pr_id_seq}"
-        special_k = list(special.keys())[0]
-        special_v = special[special_k]
+        special_bits = [
+            _format_special_fact(k, v)
+            for k, v in special.items()
+            if k != "news_keywords"
+        ]
+        special_summary = "; ".join(special_bits[:4])
         producers.append({
             "id": pr_id,
             "category": "정책/특수이벤트",
-            "candidate": f"특수 조건: {special_k} = {special_v}",
+            "candidate": f"특수 조건: {special_summary}",
             "related_predicates": [p["id"] for p in predicates],
             "likelihood": "high",
             "reason": "pre_rise_signals.special 명시됨",
@@ -175,11 +217,11 @@ def generate_pptr(library_row: dict) -> dict:
         })
         traces.append({
             "producer_id": pr_id,
-            "trace": "라이브러리 기록 확인",
-            "where": "Manual review / Special Event",
+            "trace": special_summary or "라이브러리 특수 이벤트 확인",
+            "where": "News / prices_daily / Special Event",
             "importance": "high",
             "found": True,
-            "found_date": rise_start,
+            "found_date": special.get("volume_spike_date", rise_start),
             "judgment": "확정"
         })
         pr_id_seq += 1
@@ -231,6 +273,8 @@ def generate_pptr(library_row: dict) -> dict:
             detector_rule["conditions"]["min_keyword_matches"] = min_kw
         if amount_th:
             detector_rule["conditions"]["amount_threshold_billions"] = amount_th
+        if special:
+            detector_rule["conditions"]["special"] = special
 
         resolutions.append({
             "priority": 1,

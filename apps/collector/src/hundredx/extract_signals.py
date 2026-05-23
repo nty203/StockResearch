@@ -96,6 +96,40 @@ def _fetch_filings_around(client, ticker: str, rise_start: str, months_before: i
     return res.data or []
 
 
+def _fetch_news_around(client, ticker: str, rise_start: str, months_before: int = WINDOW_MONTHS_BEFORE) -> list[dict]:
+    """Fetch news rows within (rise_start - months_before, rise_start)."""
+    rise_dt = datetime.fromisoformat(rise_start)
+    start_dt = rise_dt - timedelta(days=int(months_before * 30.5))
+    res = (
+        client.table("news")
+        .select("id, ticker, source, title, summary, published_at, url, lang")
+        .eq("ticker", ticker)
+        .gte("published_at", start_dt.isoformat())
+        .lt("published_at", rise_dt.isoformat())
+        .order("published_at", desc=True)
+        .limit(2000)
+        .execute()
+    )
+    return res.data or []
+
+
+def _fetch_prices_around(client, ticker: str, rise_start: str, months_before: int = 6) -> list[dict]:
+    """Fetch daily prices within (rise_start - months_before, rise_start)."""
+    rise_dt = datetime.fromisoformat(rise_start)
+    start_dt = rise_dt - timedelta(days=int(months_before * 30.5))
+    res = (
+        client.table("prices_daily")
+        .select("ticker, date, close, volume")
+        .eq("ticker", ticker)
+        .gte("date", start_dt.date().isoformat())
+        .lt("date", rise_dt.date().isoformat())
+        .order("date", desc=False)
+        .limit(500)
+        .execute()
+    )
+    return res.data or []
+
+
 def _compute_quant_at_rise(financials: list[dict], rise_start: str) -> dict[str, float]:
     """Compute BCR, OPM transition, revenue growth from financials_q before rise_start."""
     rise_dt = datetime.fromisoformat(rise_start)
@@ -143,19 +177,15 @@ def _compute_quant_at_rise(financials: list[dict], rise_start: str) -> dict[str,
     return out
 
 
-def _categorize_from_filings(filings: list[dict]) -> tuple[str, list[str], int]:
-    """Score each category by total keyword hits across all filings.
+def _categorize_from_texts(texts: list[str]) -> tuple[str, list[str], int]:
+    """Score each category by total keyword hits across arbitrary text snippets.
 
     Returns: (best_category, matched_keywords_for_best, hit_count)
     """
-    if not filings:
+    if not texts:
         return "미분류", [], 0
 
-    # Combine all filing text
-    combined = " ".join(
-        ((f.get("raw_text") or "") + " " + (f.get("headline") or "")).lower()
-        for f in filings
-    )
+    combined = " ".join(t.lower() for t in texts if t)
 
     category_scores: dict[str, tuple[int, list[str]]] = {}
     for cat, keywords in CATEGORY_KEYWORD_SETS.items():
@@ -167,6 +197,84 @@ def _categorize_from_filings(filings: list[dict]) -> tuple[str, list[str], int]:
     if hit_count == 0:
         return "미분류", [], 0
     return cat_name, matched_kws, hit_count
+
+
+def _categorize_from_filings(filings: list[dict]) -> tuple[str, list[str], int]:
+    """Score each category by total keyword hits across all filings."""
+    return _categorize_from_texts([
+        (f.get("raw_text") or "") + " " + (f.get("headline") or "")
+        for f in filings
+    ])
+
+
+def _news_texts(news: list[dict]) -> list[str]:
+    return [
+        (n.get("title") or "") + " " + (n.get("summary") or "")
+        for n in news
+    ]
+
+
+def _build_news_special(news: list[dict]) -> dict[str, Any]:
+    """Summarize macro/category evidence found in pre-rise news."""
+    category, keywords, hit_count = _categorize_from_texts(_news_texts(news))
+    if hit_count == 0:
+        return {}
+
+    return {
+        "news_macro_hits": hit_count,
+        "news_category": category,
+        "news_keywords": list(dict.fromkeys(keywords))[:12],
+        "news_count": len(news),
+    }
+
+
+def _parse_date(value: Any) -> datetime | None:
+    if isinstance(value, datetime):
+        return value
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def _build_volume_special(prices: list[dict], lookback_days: int = 60) -> dict[str, Any]:
+    """Find the largest volume spike versus the previous rolling average."""
+    rows = sorted(
+        (p for p in prices if p.get("volume") is not None and _parse_date(p.get("date"))),
+        key=lambda p: _parse_date(p.get("date")),
+    )
+    if len(rows) <= 1:
+        return {}
+
+    max_ratio = 0.0
+    max_row: dict | None = None
+    for idx, row in enumerate(rows):
+        history = rows[max(0, idx - lookback_days):idx]
+        vols = [float(p.get("volume") or 0) for p in history if (p.get("volume") or 0) > 0]
+        if len(vols) < min(20, lookback_days):
+            continue
+        avg_volume = sum(vols) / len(vols)
+        volume = float(row.get("volume") or 0)
+        if avg_volume <= 0:
+            continue
+        ratio = volume / avg_volume
+        if ratio > max_ratio:
+            max_ratio = ratio
+            max_row = row
+
+    if not max_row or max_ratio < 5.0:
+        return {}
+
+    out: dict[str, Any] = {
+        "max_volume_spike_ratio": round(max_ratio, 2),
+        "volume_spike_date": str(max_row.get("date")),
+        "volume_spike_required": max_ratio >= 10.0,
+    }
+    if max_row.get("volume") is not None:
+        out["volume_at_spike"] = int(max_row["volume"])
+    return out
 
 
 def _max_filing_amount(filings: list[dict]) -> float | None:
@@ -195,10 +303,21 @@ def extract_for_entry(client, lib_row: dict, force: bool = False) -> dict | None
 
     financials = _fetch_financials_around(client, ticker, rise_start)
     filings = _fetch_filings_around(client, ticker, rise_start)
+    news = _fetch_news_around(client, ticker, rise_start)
+    prices = _fetch_prices_around(client, ticker, rise_start)
 
     quant = _compute_quant_at_rise(financials, rise_start)
-    category, keywords, kw_hits = _categorize_from_filings(filings)
+    filing_category, filing_keywords, filing_kw_hits = _categorize_from_filings(filings)
+    news_category, news_keywords, news_kw_hits = _categorize_from_texts(_news_texts(news))
+    if news_kw_hits > filing_kw_hits:
+        category, keywords, kw_hits = news_category, news_keywords, news_kw_hits
+    else:
+        category, keywords, kw_hits = filing_category, filing_keywords, filing_kw_hits
     amount_threshold = _max_filing_amount(filings)
+    special = {
+        **_build_news_special(news),
+        **_build_volume_special(prices),
+    }
 
     fingerprint: dict[str, Any] = {
         "auto_extracted": True,
@@ -206,8 +325,12 @@ def extract_for_entry(client, lib_row: dict, force: bool = False) -> dict | None
         "data_quality": {
             "financials_count": len(financials),
             "filings_count": len(filings),
+            "news_count": len(news),
+            "prices_count": len(prices),
             "had_quant": bool(quant),
             "had_keywords": kw_hits > 0,
+            "had_news_keywords": news_kw_hits > 0,
+            "had_volume_spike": "max_volume_spike_ratio" in special,
         },
     }
     if quant:
@@ -221,6 +344,8 @@ def extract_for_entry(client, lib_row: dict, force: bool = False) -> dict | None
         fingerprint["sector_required"] = sector_tag
     if amount_threshold:
         fingerprint["amount_threshold_billions"] = round(amount_threshold, 1)
+    if special:
+        fingerprint["special"] = special
 
     update_payload: dict[str, Any] = {"pre_rise_signals": fingerprint}
     # Update category only if currently 미분류 / NULL and we found one
