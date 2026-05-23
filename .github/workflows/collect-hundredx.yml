@@ -62,7 +62,6 @@ jobs:
           uv run python - <<'EOF'
           import os
           from supabase import create_client
-          from src.hundredx.paper_trading.signal_generator import generate_daily_signals, generate_weekly_report
           from datetime import date
 
           url = os.environ.get("SUPABASE_URL")
@@ -75,6 +74,7 @@ jobs:
           today = date.today().isoformat()
           print(f"Generating paper trading signals for {today}...")
           try:
+              from src.hundredx.paper_trading.signal_generator import generate_daily_signals
               signals = generate_daily_signals(client, scan_date=today)
               buys = [s for s in signals if s.signal_type == "BUY_SIGNAL"]
               exits = [s for s in signals if s.signal_type == "EXIT_SIGNAL"]
