@@ -2,6 +2,7 @@
 
 Usage:
   python _llm_fetch_candidates.py [--days 3] [--category 임상_파이프라인] [--limit 20]
+  python _llm_fetch_candidates.py --include-verified   # 이미 검증된 종목 포함
 
 출력: JSON (stdout)
   {
@@ -11,21 +12,25 @@ Usage:
         "ticker": "082740",
         "name": "한화엔진",
         "sector": "조선/엔진",
-        "category": "임상_파이프라인",
-        "confidence": 0.75,
-        "detected_at": "2026-05-23T...",
-        "filings": [
-          {
-            "id": "uuid",
-            "headline": "...",
-            "body": "...",  # raw_text 앞 500자
-            "filed_at": "2026-05-20"
-          }
-        ],
-        "evidence_keywords": ["CE 인증", "안전성"]
+        "category": "공급_병목",
+        "confidence": 0.80,
+        "detected_at": "2026-05-22T...",
+        "already_verified": false,        # true면 llm_verdict evidence 이미 있음
+        "llm_verdict": null,              # "confirm" | "reject" | "uncertain" | null
+        "is_library_stock": false,        # true면 library에 등록된 종목
+        "library_categories": [],         # library에 등록된 카테고리 목록
+        "financials": {
+          "op_margin": 12.3,             # 영업이익률 (%)
+          "roe": 18.5,                   # ROE (%)
+          "revenue_bn": 4200.0,          # 매출 (억원)
+          "net_income_bn": 320.0         # 순이익 (억원)
+        },
+        "filings": [...],
+        "evidence_keywords": ["TC본더", "HBM"]
       }
     ],
     "total": 12,
+    "skipped_verified": 5,
     "fetched_at": "2026-05-23T..."
   }
 """
@@ -47,40 +52,104 @@ from supabase import create_client
 client = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
 
 
+def _get_llm_verdict_from_evidence(ev_list: list) -> str | None:
+    """evidence 목록에서 llm_verdict 판정 추출."""
+    for ev in (ev_list or []):
+        if isinstance(ev, dict) and ev.get("source_type") == "llm_verdict":
+            text = ev.get("text_excerpt", "")
+            if "LLM confirm" in text:
+                return "confirm"
+            if "LLM reject" in text:
+                return "reject"
+            if "LLM uncertain" in text:
+                return "uncertain"
+    return None
+
+
+def _fetch_financials(ticker: str) -> dict:
+    """financials_q에서 최근 재무 수치 조회."""
+    try:
+        res = (
+            client.table("financials_q")
+            .select("op_margin, roe, roic, revenue, net_income")
+            .eq("ticker", ticker)
+            .limit(1)
+            .execute()
+        )
+        if res.data:
+            row = res.data[0]
+            rev = row.get("revenue")
+            ni = row.get("net_income")
+            return {
+                "op_margin": round(float(row["op_margin"]), 1) if row.get("op_margin") is not None else None,
+                "roe": round(float(row["roe"]), 1) if row.get("roe") is not None else None,
+                "roic": round(float(row["roic"]), 1) if row.get("roic") is not None else None,
+                "revenue_bn": round(float(rev) / 1e8, 0) if rev else None,
+                "net_income_bn": round(float(ni) / 1e8, 0) if ni else None,
+            }
+    except Exception:
+        pass
+    return {}
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--days", type=int, default=3, help="최근 N일 이내 탐지된 것만")
     parser.add_argument("--category", type=str, default=None, help="특정 카테고리만")
     parser.add_argument("--limit", type=int, default=20, help="최대 처리 건수")
     parser.add_argument("--ticker", type=str, default=None, help="특정 티커만")
+    parser.add_argument("--include-verified", action="store_true",
+                        help="이미 LLM 검증된 종목도 포함 (기본: 제외)")
     args = parser.parse_args()
 
     cutoff = (datetime.now(timezone.utc) - timedelta(days=args.days)).isoformat()
 
-    # 후보 조회
+    # library 종목 목록 사전 조회 (is_library_stock 판별용)
+    lib_res = client.table("hundredx_library_stocks").select("ticker, category").execute()
+    lib_by_ticker: dict[str, list[str]] = {}
+    for row in (lib_res.data or []):
+        lib_by_ticker.setdefault(row["ticker"], []).append(row["category"])
+
+    # 후보 조회 (verified 제외를 위해 evidence 포함)
     q = (
         client.table("hundredx_category_matches")
         .select("id, ticker, category, confidence, evidence, first_detected_at")
         .is_("exited_at", "null")
         .gte("first_detected_at", cutoff)
         .order("first_detected_at", desc=True)
-        .limit(args.limit)
+        .limit(args.limit * 3)  # 검증된 종목 제외 후에도 충분하도록 여유 있게 조회
     )
     if args.category:
         q = q.eq("category", args.category)
     if args.ticker:
         q = q.eq("ticker", args.ticker)
 
-    matches = q.execute().data or []
+    raw_matches = q.execute().data or []
 
     candidates = []
-    for m in matches:
+    skipped_verified = 0
+
+    for m in raw_matches:
+        if len(candidates) >= args.limit:
+            break
+
         ticker = m["ticker"]
+        ev_list = m.get("evidence") or []
+        llm_verdict = _get_llm_verdict_from_evidence(ev_list)
+        already_verified = llm_verdict is not None
+
+        # 이미 검증된 종목은 --include-verified 없으면 스킵
+        if already_verified and not args.include_verified:
+            skipped_verified += 1
+            continue
 
         # 종목 정보
         stk = client.table("stocks").select("name_kr, sector_tag").eq("ticker", ticker).execute()
-        name = stk.data[0].get("name_kr", ticker) if stk.data else ticker
-        sector = stk.data[0].get("sector_tag") or "" if stk.data else ""
+        name = stk.data[0].get("name_kr") or ticker if stk.data else ticker
+        sector = (stk.data[0].get("sector_tag") or "") if stk.data else ""
+
+        # 재무 수치
+        financials = _fetch_financials(ticker)
 
         # 관련 공시 (최근 3건)
         filings_res = (
@@ -102,16 +171,15 @@ def main():
             })
 
         # evidence에서 키워드 추출
-        ev_list = m.get("evidence") or []
         kw_hits = []
         for ev in ev_list:
             if ev.get("source_type") == "keywords":
                 excerpt = ev.get("text_excerpt", "")
-                # "공급 병목: k1, k2 | 섹터:..." 형식에서 키워드만 추출
                 if ": " in excerpt:
                     kw_part = excerpt.split("|")[0].split(": ", 1)[-1]
                     kw_hits.extend([k.strip() for k in kw_part.split(",") if k.strip()])
 
+        lib_cats = lib_by_ticker.get(ticker, [])
         candidates.append({
             "match_id": str(m["id"]),
             "ticker": ticker,
@@ -120,6 +188,11 @@ def main():
             "category": m["category"],
             "confidence": round(m.get("confidence") or 0, 3),
             "detected_at": str(m.get("first_detected_at", ""))[:19],
+            "already_verified": already_verified,
+            "llm_verdict": llm_verdict,
+            "is_library_stock": bool(lib_cats),
+            "library_categories": lib_cats,
+            "financials": financials,
             "filings": filings,
             "evidence_keywords": list(set(kw_hits))[:8],
         })
@@ -127,8 +200,14 @@ def main():
     result = {
         "candidates": candidates,
         "total": len(candidates),
+        "skipped_verified": skipped_verified,
         "fetched_at": datetime.now(timezone.utc).isoformat()[:19],
-        "params": {"days": args.days, "category": args.category, "limit": args.limit},
+        "params": {
+            "days": args.days,
+            "category": args.category,
+            "limit": args.limit,
+            "include_verified": args.include_verified,
+        },
     }
     print(json.dumps(result, ensure_ascii=False, indent=2))
 

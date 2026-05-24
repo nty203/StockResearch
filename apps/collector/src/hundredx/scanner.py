@@ -750,6 +750,15 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
         _upsert_pptr_rules(client, pptr_rules)
         logger.info("Library loaded: %d categories, %d stocks, %d PPTR rules",
                     len(lib), sum(len(v) for v in lib.values()), len(pptr_rules))
+
+        # Library self-match guard: (ticker, category) pairs that already exist in library.
+        # We skip these so that a library stock is not re-detected by its OWN historical criteria.
+        # (PPTR detector has the same guard; this extends it to keyword/filing detectors.)
+        lib_match_set: set[tuple[str, str]] = {
+            (row["ticker"], row["category"])
+            for rows in lib.values()
+            for row in rows
+        }
         # Fetch active KR + US stocks via pagination (bypassing PostgREST 1000 row hard limit)
         stocks = []
         page_size = 1000
@@ -819,6 +828,14 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                                 logger.info(f"[DEBUG HUNDREDX] Confidence: {result.confidence}, Min required: {min_confidence}")
 
                         if result is not None and result.confidence >= min_confidence:
+                            # Library self-match guard: skip if this exact (ticker, category)
+                            # is already registered in the library as a historical precedent.
+                            if (ticker, category) in lib_match_set:
+                                logger.debug(
+                                    "Library self-match skipped: %s/%s", ticker, category
+                                )
+                                continue
+
                             result.ticker = ticker
                             result.category = category
                             # Fingerprint match: compare current signals to library precedent

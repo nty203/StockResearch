@@ -16,6 +16,7 @@ interface Evidence {
 
 interface AnalogRef {
   ticker: string
+  name: string
   date: string | null
   multiplier: number | null
 }
@@ -39,6 +40,7 @@ interface FiredTrigger {
 
 interface TimelineProgress {
   library_ticker: string
+  library_name: string
   library_category: string
   library_peak_multiplier: number | null
   fired_triggers: FiredTrigger[]
@@ -50,6 +52,7 @@ interface TimelineProgress {
 
 interface PptrMatch {
   library_ticker: string
+  library_name: string
   producer_id: string
   matched_conditions: string[]
 }
@@ -412,7 +415,7 @@ function CategoryDetail({ cat, ticker }: { cat: CategoryEntry; ticker: string })
         <div className="mt-2 pt-2 border-t border-[var(--color-border)] space-y-1.5 bg-[var(--color-accent)]/5 rounded p-2 border-l-2 border-l-[var(--color-accent)]">
           <p className="text-xs font-semibold text-[var(--color-accent)]">PPTR 원인 패턴 매칭</p>
           <p className="text-[11px] text-[var(--color-text-2)] leading-relaxed">
-            이 종목은 라이브러리 <span className="text-[var(--color-text-1)] font-medium">{cat.pptr.library_ticker}</span>의 핵심 원인 패턴(<span className="text-[var(--color-text-1)]">{cat.pptr.producer_id}</span>)과 일치합니다.
+            이 종목은 라이브러리 <span className="text-[var(--color-text-1)] font-medium">{cat.pptr.library_name ?? cat.pptr.library_ticker}</span>의 핵심 원인 패턴(<span className="text-[var(--color-text-1)]">{cat.pptr.producer_id}</span>)과 일치합니다.
           </p>
           <div className="flex flex-wrap gap-1 mt-1">
             {cat.pptr.matched_conditions.map((cond, idx) => (
@@ -433,7 +436,7 @@ function CategoryDetail({ cat, ticker }: { cat: CategoryEntry; ticker: string })
       {!cat.fingerprint && cat.analog && (
         <div className="mt-2 pt-2 border-t border-[var(--color-border)] text-xs text-[var(--color-text-2)]">
           <span>유사 종목: </span>
-          <span className="text-[var(--color-text-1)]">{cat.analog.ticker}</span>
+          <span className="text-[var(--color-text-1)]">{cat.analog.name ?? cat.analog.ticker}</span>
           {cat.analog.date && (
             <span className="ml-1">({cat.analog.date.slice(0, 7)})</span>
           )}
@@ -462,7 +465,7 @@ function FingerprintCard({ fingerprint, analog }: { fingerprint: FingerprintInfo
           <span className="text-[var(--color-text-2)]">패턴 유사도: </span>
           <span className={`font-bold ${scoreColor}`}>{score}%</span>
           <span className="text-[var(--color-text-2)] ml-2">vs </span>
-          <span className="text-[var(--color-text-1)]">{analog.ticker}</span>
+          <span className="text-[var(--color-text-1)]">{analog.name ?? analog.ticker}</span>
           {analog.date && (
             <span className="text-[var(--color-text-2)] ml-1">({analog.date.slice(0, 7)})</span>
           )}
@@ -540,7 +543,7 @@ function TimelineCard({ timeline }: { timeline: TimelineProgress }) {
           </span>
         </div>
         <div className="text-[10px] text-[var(--color-text-2)]">
-          vs <span className="text-[var(--color-text-1)]">{timeline.library_ticker}</span>
+          vs <span className="text-[var(--color-text-1)]">{timeline.library_name ?? timeline.library_ticker}</span>
           {peak && <span className="text-[var(--color-gold)] ml-1">→ {peak}배</span>}
           <span className="ml-1">현재 {positionLabel}</span>
         </div>
@@ -648,6 +651,7 @@ const SOURCE_LABELS: Record<string, string> = {
   keywords: '키워드',
   news: '뉴스',
   report: '리포트',
+  llm_verdict: 'LLM검증',
 }
 
 function formatRelativeDays(iso: string): string {

@@ -78,6 +78,22 @@ export async function GET(req: Request) {
   type Stock = { ticker: string; name_kr: string | null; name_en: string | null; market: string | null; sector_tag: string | null }
   const stockMap: Record<string, Stock> = Object.fromEntries(((stocksRes.data as Stock[] | null) ?? []).map(s => [s.ticker, s]))
 
+  // Collect all referenced library tickers (analog, timeline, pptr) to join names
+  const libTickerSet = new Set<string>()
+  for (const r of rows) {
+    if (r.analog_ticker) libTickerSet.add(r.analog_ticker)
+    if (r.timeline_progress?.library_ticker) libTickerSet.add(r.timeline_progress.library_ticker)
+    if (r.pptr_match?.library_ticker) libTickerSet.add(r.pptr_match.library_ticker)
+  }
+  const libTickers = [...libTickerSet]
+  const libStocksRes = libTickers.length > 0
+    ? await supabase.from('stocks').select('ticker, name_kr').in('ticker', libTickers)
+    : { data: [] as { ticker: string; name_kr: string | null }[] }
+  const libNameMap: Record<string, string> = Object.fromEntries(
+    ((libStocksRes.data as { ticker: string; name_kr: string | null }[] | null) ?? [])
+      .map(s => [s.ticker, s.name_kr ?? s.ticker])
+  )
+
   // Group by ticker
   const byTicker: Record<string, Match[]> = {}
   for (const m of rows) {
@@ -149,26 +165,42 @@ export async function GET(req: Request) {
         peak_change_pct: priceRow.price_peak_change_pct,
         updated_at: priceRow.price_performance_updated_at,
       } : null,
-      categories: cats.map(c => ({
-        category: c.category,
-        confidence: c.confidence,
-        evidence: c.evidence ?? [],
-        first_detected_at: c.first_detected_at,
-        detected_at: c.detected_at,
-        analog: c.analog_ticker ? {
-          ticker: c.analog_ticker,
-          date: c.analog_date,
-          multiplier: c.analog_multiplier,
-        } : null,
-        fingerprint: c.fingerprint_score != null ? {
-          score: c.fingerprint_score,
-          matched: c.fingerprint_dims?.matched ?? [],
-          missing: c.fingerprint_dims?.missing ?? [],
+      categories: cats.map(c => {
+        // Fingerprint: skip if score=0 and no matched/missing dims (no comparison data available)
+        const fpMatched = c.fingerprint_dims?.matched ?? []
+        const fpMissing = c.fingerprint_dims?.missing ?? []
+        const fpHasData = (c.fingerprint_score != null && c.fingerprint_score > 0) ||
+          fpMatched.length > 0 || fpMissing.length > 0
+        const fingerprint = fpHasData ? {
+          score: c.fingerprint_score ?? 0,
+          matched: fpMatched,
+          missing: fpMissing,
           details: c.fingerprint_dims?.details ?? {},
-        } : null,
-        timeline: c.timeline_progress ?? null,
-        pptr: c.pptr_match ?? null,
-      })).sort((a, b) => (b.fingerprint?.score ?? b.confidence) - (a.fingerprint?.score ?? a.confidence)),
+        } : null
+
+        return {
+          category: c.category,
+          confidence: c.confidence,
+          evidence: c.evidence ?? [],
+          first_detected_at: c.first_detected_at,
+          detected_at: c.detected_at,
+          analog: c.analog_ticker ? {
+            ticker: c.analog_ticker,
+            name: libNameMap[c.analog_ticker] ?? c.analog_ticker,
+            date: c.analog_date,
+            multiplier: c.analog_multiplier,
+          } : null,
+          fingerprint,
+          timeline: c.timeline_progress ? {
+            ...c.timeline_progress,
+            library_name: libNameMap[c.timeline_progress.library_ticker] ?? c.timeline_progress.library_ticker,
+          } : null,
+          pptr: c.pptr_match ? {
+            ...c.pptr_match,
+            library_name: libNameMap[c.pptr_match.library_ticker] ?? c.pptr_match.library_ticker,
+          } : null,
+        }
+      }).sort((a, b) => (b.fingerprint?.score ?? b.confidence) - (a.fingerprint?.score ?? a.confidence)),
     }
   })
 
