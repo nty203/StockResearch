@@ -209,6 +209,12 @@ def _compute_quant_at_rise(financials: list[dict], rise_start: str) -> dict[str,
     # Note: DART backfill only provides revenue/op_income; ROIC requires balance sheet.
     # Populate when available (yfinance-sourced records); skip gracefully if absent.
     roic = latest.get("roic")
+    if roic is None:
+        # ROIC 근사 (Greenblatt/Phelps): NOPAT(≈ op_income×0.75) / Total Assets
+        op_income_ttm = sum((r.get("op_income") or 0) for r in relevant[:4]) or None
+        assets = latest.get("total_assets")
+        if op_income_ttm and assets and assets > 0:
+            roic = (op_income_ttm * 0.75) / assets * 100  # in %
     if roic is not None:
         out["roic_at_signal"] = round(roic, 4)
 
@@ -224,15 +230,16 @@ def _compute_quant_at_rise(financials: list[dict], rise_start: str) -> dict[str,
     if debt_ratio is not None:
         out["debt_ratio_at_signal"] = round(debt_ratio, 2)
 
-    # ── Revenue QoQ acceleration at signal time (Asness 2013) ─────────────────
-    if len(relevant) >= 3:
+    # ── Revenue YoY acceleration at signal time (Asness 2013) ─────────────────
+    # DART 누적 매출 보고 회피 — 같은 분기끼리 YoY 비교 (계절성+cumulative 동시 해결).
+    if len(relevant) >= 6:
         q0r = relevant[0].get("revenue")
-        q1r = relevant[1].get("revenue")
-        q2r = relevant[2].get("revenue")
-        if q0r and q1r and q2r and q1r > 0 and q2r > 0:
-            rev_qoq_now = (q0r - q1r) / q1r * 100
-            rev_qoq_prev = (q1r - q2r) / q2r * 100
-            out["revenue_qoq_acceleration_at_signal"] = round(rev_qoq_now - rev_qoq_prev, 2)
+        q_yoy = relevant[4].get("revenue")
+        q_1_yoy = relevant[5].get("revenue")
+        if q0r and q_yoy and q_yoy > 0 and q_1_yoy and q_1_yoy > 0:
+            rev_yoy_now = (q0r - q_yoy) / q_yoy * 100
+            rev_yoy_prev = (q_yoy - q_1_yoy) / q_1_yoy * 100
+            out["revenue_qoq_acceleration_at_signal"] = round(rev_yoy_now - rev_yoy_prev, 2)
 
     # ── Quality metrics (Piotroski/Sloan/Novy-Marx) ───────────────────────────
     # `relevant` is already sorted desc by fq — same shape compute_* expects.

@@ -113,19 +113,33 @@ def bulk_fetch_financials(client, tickers: list[str]) -> dict[str, dict]:
         data["gp_to_assets"] = compute_gp_to_assets(fins)
         data["accruals_ratio"] = compute_accruals_ratio(fins)
 
+        # ── ROIC 근사 (Greenblatt Magic Formula, Phelps 100-to-1) ───────────────
+        # 정통 ROIC = NOPAT / Invested Capital. Cash 데이터 부재로 단순화:
+        #   NOPAT_TTM ≈ op_income_TTM × 0.75 (한국 실효세율 ≈ 25%)
+        #   Invested Capital ≈ total_assets (cash 미공제 보수적 추정)
+        # Phelps 기준: ROIC > 9%; Greenblatt: > 15%.
+        if latest.get("roic") is None:
+            op_income_ttm = sum((f.get("op_income") or 0) for f in fins[:4]) or None
+            assets = latest.get("total_assets")
+            if op_income_ttm and assets and assets > 0:
+                roic_approx = (op_income_ttm * 0.75) / assets * 100  # in %
+                data["roic"] = round(roic_approx, 2)
+
         # ── Revenue QoQ acceleration (Asness et al. 2013) ─────────────────────
-        # 직전 분기 매출 성장률이 그 전 분기보다 가속 → multibagger 선행 신호.
-        # rev_qoq_now = (Q0 - Q-1) / Q-1; rev_qoq_prev = (Q-1 - Q-2) / Q-2.
-        # acceleration = rev_qoq_now - rev_qoq_prev (양수 = 가속, 음수 = 감속).
-        if len(fins) >= 3:
-            q0 = fins[0].get("revenue")
-            q_1 = fins[1].get("revenue")
-            q_2 = fins[2].get("revenue")
-            if q0 and q_1 and q_2 and q_1 > 0 and q_2 > 0:
-                rev_qoq_now = (q0 - q_1) / q_1 * 100
-                rev_qoq_prev = (q_1 - q_2) / q_2 * 100
-                data["revenue_qoq_now"] = round(rev_qoq_now, 2)
-                data["revenue_qoq_acceleration"] = round(rev_qoq_now - rev_qoq_prev, 2)
+        # DART 분기 보고서는 누적 매출 보고 (Q1=3mo, Q2=6mo, Q3=9mo, Q4=12mo).
+        # 단일 분기 매출로 변환 후 QoQ 비교 — 그렇지 않으면 Q1→Q2가 항상 +100%로 보임.
+        # 같은 분기끼리 YoY 비교가 가장 안전 (계절성 + cumulative 모두 해결).
+        if len(fins) >= 5:
+            q0 = fins[0].get("revenue")        # 현재 분기 (누적)
+            q_yoy = fins[4].get("revenue")     # 전년 동분기 (누적, 같은 분기 위치)
+            q_1_yoy = fins[5].get("revenue") if len(fins) >= 6 else None  # 2년 전 동분기
+            if q0 and q_yoy and q_yoy > 0:
+                rev_yoy_now = (q0 - q_yoy) / q_yoy * 100
+                data["revenue_yoy_now"] = round(rev_yoy_now, 2)
+                if q_1_yoy and q_1_yoy > 0:
+                    rev_yoy_prev = (q_yoy - q_1_yoy) / q_1_yoy * 100
+                    # acceleration = 올해 YoY가 작년 YoY보다 가속됐는가 (pp 단위)
+                    data["revenue_qoq_acceleration"] = round(rev_yoy_now - rev_yoy_prev, 2)
         data["f_score"] = compute_piotroski_f_score(fins)
 
     # Prices — fetch last ~300 calendar days (covers 252 trading days).
