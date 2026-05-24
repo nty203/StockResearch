@@ -90,9 +90,11 @@ def bulk_fetch_financials(client, tickers: list[str]) -> dict[str, dict]:
         latest = fins[0]
         prev = fins[1] if len(fins) > 1 else {}
         data = result[ticker]
-        data["revenue_ttm"] = sum(f.get("revenue", 0) or 0 for f in fins[:4]) or None
-        data["revenue_prev"] = sum(f.get("revenue", 0) or 0 for f in fins[4:8]) or None
-        data["revenue_2y_ago"] = sum(f.get("revenue", 0) or 0 for f in fins[8:12]) or None
+        # DART cumulative-quarterly aware TTM (Q4 = annual; Q1~Q3 = rolling-12 via prior Q4 + delta).
+        from ..hundredx.quality_metrics import ttm_from_cumulative
+        data["revenue_ttm"] = ttm_from_cumulative(fins, "revenue")
+        data["revenue_prev"] = ttm_from_cumulative(fins[4:], "revenue") if len(fins) >= 5 else None
+        data["revenue_2y_ago"] = ttm_from_cumulative(fins[8:], "revenue") if len(fins) >= 9 else None
         data["op_margin_ttm"] = latest.get("op_margin")
         data["op_margin_prev"] = prev.get("op_margin") if isinstance(prev, dict) else None
         data["roic"] = latest.get("roic")
@@ -119,7 +121,7 @@ def bulk_fetch_financials(client, tickers: list[str]) -> dict[str, dict]:
         #   Invested Capital ≈ total_assets (cash 미공제 보수적 추정)
         # Phelps 기준: ROIC > 9%; Greenblatt: > 15%.
         if latest.get("roic") is None:
-            op_income_ttm = sum((f.get("op_income") or 0) for f in fins[:4]) or None
+            op_income_ttm = ttm_from_cumulative(fins, "op_income")
             assets = latest.get("total_assets")
             if op_income_ttm and assets and assets > 0:
                 roic_approx = (op_income_ttm * 0.75) / assets * 100  # in %

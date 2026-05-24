@@ -178,7 +178,9 @@ def _compute_quant_at_rise(financials: list[dict], rise_start: str) -> dict[str,
 
     # BCR
     backlog = latest.get("order_backlog")
-    revenue_ttm = sum((r.get("revenue") or 0) for r in relevant[:4]) or None
+    # DART cumulative-quarterly aware TTM
+    from .quality_metrics import ttm_from_cumulative as _ttm
+    revenue_ttm = _ttm(relevant, "revenue")
     if backlog is not None and revenue_ttm and revenue_ttm > 0:
         out["bcr_at_signal"] = round(backlog / revenue_ttm, 3)
 
@@ -198,9 +200,9 @@ def _compute_quant_at_rise(financials: list[dict], rise_start: str) -> dict[str,
     if opm_now is not None and opm_prev is not None:
         out["opm_delta_at_signal"] = round(opm_now - opm_prev, 2)
 
-    # Revenue growth (TTM vs previous year TTM)
-    if len(relevant) >= 8:
-        rev_prev_ttm = sum((r.get("revenue") or 0) for r in relevant[4:8])
+    # Revenue growth (TTM vs previous year TTM) — DART-cumulative aware
+    if len(relevant) >= 5:
+        rev_prev_ttm = _ttm(relevant[4:], "revenue")
         if revenue_ttm and rev_prev_ttm and rev_prev_ttm > 0:
             out["revenue_growth_yoy"] = round((revenue_ttm - rev_prev_ttm) / rev_prev_ttm * 100, 1)
 
@@ -211,7 +213,7 @@ def _compute_quant_at_rise(financials: list[dict], rise_start: str) -> dict[str,
     roic = latest.get("roic")
     if roic is None:
         # ROIC 근사 (Greenblatt/Phelps): NOPAT(≈ op_income×0.75) / Total Assets
-        op_income_ttm = sum((r.get("op_income") or 0) for r in relevant[:4]) or None
+        op_income_ttm = _ttm(relevant, "op_income")
         assets = latest.get("total_assets")
         if op_income_ttm and assets and assets > 0:
             roic = (op_income_ttm * 0.75) / assets * 100  # in %

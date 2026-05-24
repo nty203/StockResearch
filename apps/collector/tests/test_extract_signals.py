@@ -45,16 +45,18 @@ def _fin(fq: str, revenue: float = 1000.0, op_margin: float = 5.0,
 
 class TestComputeQuantAtRise:
     def test_bcr_computed_from_backlog_and_revenue(self):
-        # 4 quarters: revenue 1000 each → TTM=4000, backlog=8000 → BCR=2.0
+        # DART cumulative: Q1=1k, Q2=2k(6mo), Q3=3k(9mo), Q4=4k(annual).
+        # TTM at 2022Q3 = Q4_2021 + Q3_2022 − Q3_2021 = 4000 + 3000 − 3000 = 4000.
+        # backlog=8000 → BCR=2.0
         fins = [
-            _fin("2022Q3", revenue=1000.0, order_backlog=8000.0),
-            _fin("2022Q2", revenue=1000.0),
+            _fin("2022Q3", revenue=3000.0, order_backlog=8000.0),
+            _fin("2022Q2", revenue=2000.0),
             _fin("2022Q1", revenue=1000.0),
-            _fin("2021Q4", revenue=1000.0),
+            _fin("2021Q4", revenue=4000.0),
+            _fin("2021Q3", revenue=3000.0),
         ]
         result = _compute_quant_at_rise(fins, "2022-10-01")
         assert "bcr_at_signal" in result
-        # TTM = 4000, backlog = 8000 → BCR = 2.0
         assert result["bcr_at_signal"] == pytest.approx(2.0, abs=0.01)
 
     def test_opm_delta_computed(self):
@@ -79,11 +81,18 @@ class TestComputeQuantAtRise:
         assert result == {}
 
     def test_revenue_growth_yoy_with_8_quarters(self):
-        # 4 recent quarters rev=2000 each, 4 prev quarters rev=1000 each → +100%
-        fins = (
-            [_fin(f"2023Q{q}", revenue=2000.0) for q in range(4, 0, -1)]
-            + [_fin(f"2022Q{q}", revenue=1000.0) for q in range(4, 0, -1)]
-        )
+        # DART cumulative — 2023 annual=8000, 2022 annual=4000 → growth +100%.
+        # Sequence (desc by fq): 2023Q4(8k), Q3(6k), Q2(4k), Q1(2k), 2022Q4(4k), Q3(3k), Q2(2k), Q1(1k)
+        fins = [
+            _fin("2023Q4", revenue=8000.0),
+            _fin("2023Q3", revenue=6000.0),
+            _fin("2023Q2", revenue=4000.0),
+            _fin("2023Q1", revenue=2000.0),
+            _fin("2022Q4", revenue=4000.0),
+            _fin("2022Q3", revenue=3000.0),
+            _fin("2022Q2", revenue=2000.0),
+            _fin("2022Q1", revenue=1000.0),
+        ]
         result = _compute_quant_at_rise(fins, "2024-01-01")
         assert "revenue_growth_yoy" in result
         assert result["revenue_growth_yoy"] == pytest.approx(100.0, abs=1.0)

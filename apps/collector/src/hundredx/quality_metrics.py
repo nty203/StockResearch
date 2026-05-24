@@ -22,9 +22,82 @@ from typing import Iterable
 
 
 def _sum_flow(records: list[dict], key: str, n: int = 4) -> float | None:
-    """Sum first n quarters of a flow field. Returns None if no data."""
+    """Sum first n quarters of a flow field. Returns None if no data.
+
+    NOTE: This is naive sum and is INCORRECT for DART cumulative quarterly data
+    (Q2=6mo, Q3=9mo, Q4=12mo cumulative). Use ttm_from_cumulative() instead
+    for revenue/op_income/net_income/cfo/gross_profit from DART.
+    """
     vals = [r.get(key) for r in records[:n] if r.get(key) is not None]
     return sum(vals) if vals else None
+
+
+def _fq_to_q(fq: str) -> int | None:
+    """Extract quarter number from fq string 'YYYYQN'. Returns None if 'YYYYY' (annual)."""
+    if not fq or len(fq) < 6:
+        return None
+    if fq[-2] != "Q":
+        return None
+    try:
+        return int(fq[-1])
+    except ValueError:
+        return None
+
+
+def ttm_from_cumulative(records: list[dict], key: str) -> float | None:
+    """Compute trailing-12-month value from DART cumulative quarterly reports.
+
+    DART quarterly reports are cumulative within fiscal year:
+      Q1=3mo, Q2=6mo cumulative, Q3=9mo cumulative, Q4=12mo (full year) cumulative.
+
+    Algorithm:
+      - If latest is Q4: TTM = Q4 (already full year)
+      - If latest is QN (N<4): TTM = Q4_prev_year + QN_current - QN_prev_year
+        (= Q(N+1..Q4)_prev_year + Q1..QN_current = rolling 12 months)
+
+    Returns None if insufficient data.
+
+    Records must be sorted descending by fq.
+    """
+    if not records:
+        return None
+    latest = records[0]
+    latest_q = _fq_to_q(latest.get("fq", ""))
+    if latest_q is None:
+        return None
+    latest_val = latest.get(key)
+    if latest_val is None:
+        return None
+
+    if latest_q == 4:
+        return latest_val  # Q4 cumulative = annual TTM
+
+    # Need Q4_prev_year and QN_prev_year (records[4] is same quarter, prior year)
+    if len(records) < 5:
+        return None
+    same_q_prev_year = records[4]
+    if _fq_to_q(same_q_prev_year.get("fq", "")) != latest_q:
+        return None  # sequence broken
+    same_q_prev_val = same_q_prev_year.get(key)
+    if same_q_prev_val is None:
+        return None
+
+    # Find Q4 of prior year — should be at index (4 - latest_q) ... no wait,
+    # records desc-sorted, so prior year's Q4 is at offset (4 - latest_q + 4)?
+    # Actually: latest=QN(year Y), records[1..3]=QN-1..Q1 of Y, records[4]=Q4(Y-1)... no.
+    # Records desc: [QN_Y, Q(N-1)_Y, ..., Q1_Y, Q4_Y-1, Q3_Y-1, ..., Q1_Y-1, Q4_Y-2, ...]
+    # So Q4 of prior year is at index latest_q (offset from latest by latest_q quarters back).
+    q4_prev_idx = latest_q  # e.g. latest=Q3 → records[3] should be Q4 of prior year
+    if q4_prev_idx >= len(records):
+        return None
+    q4_prev = records[q4_prev_idx]
+    if _fq_to_q(q4_prev.get("fq", "")) != 4:
+        return None
+    q4_prev_val = q4_prev.get(key)
+    if q4_prev_val is None:
+        return None
+
+    return q4_prev_val + latest_val - same_q_prev_val
 
 
 def _latest_stock(records: list[dict], key: str) -> float | None:
@@ -42,7 +115,7 @@ def compute_gp_to_assets(records: list[dict]) -> float | None:
     Threshold guidance (Novy-Marx 2013):
       > 0.33 = strong; > 0.25 = OK; > 0.20 = acceptable for growth stocks
     """
-    gp_ttm = _sum_flow(records, "gross_profit", 4)
+    gp_ttm = ttm_from_cumulative(records, "gross_profit")
     assets = _latest_stock(records, "total_assets")
     if gp_ttm is None or not assets or assets <= 0:
         return None
@@ -56,8 +129,8 @@ def compute_accruals_ratio(records: list[dict]) -> float | None:
       < 0.05 = clean earnings; < 0.10 = OK; > 0.10 = quality concern
       Negative ratio (CFO > NI) is a positive signal — cash exceeds reported income.
     """
-    ni_ttm = _sum_flow(records, "net_income", 4)
-    cfo_ttm = _sum_flow(records, "cfo", 4)
+    ni_ttm = ttm_from_cumulative(records, "net_income")
+    cfo_ttm = ttm_from_cumulative(records, "cfo")
     assets_now = _latest_stock(records, "total_assets")
     assets_4q = _stock_at_lag(records, "total_assets", 4)
     if ni_ttm is None or cfo_ttm is None or not assets_now:
@@ -104,20 +177,20 @@ def compute_piotroski_f_score(records: list[dict]) -> int | None:
     if len(records) < 5:
         return None
 
-    ni_ttm = _sum_flow(records, "net_income", 4)
-    cfo_ttm = _sum_flow(records, "cfo", 4)
-    rev_ttm = _sum_flow(records, "revenue", 4)
-    gp_ttm = _sum_flow(records, "gross_profit", 4)
+    ni_ttm = ttm_from_cumulative(records, "net_income")
+    cfo_ttm = ttm_from_cumulative(records, "cfo")
+    rev_ttm = ttm_from_cumulative(records, "revenue")
+    gp_ttm = ttm_from_cumulative(records, "gross_profit")
     assets_now = _latest_stock(records, "total_assets")
 
-    # Lag = 4 quarters ago
-    prior = records[4:]
-    if len(prior) < 4:
-        return None
-    ni_prev = _sum_flow(prior, "net_income", 4)
-    cfo_prev = _sum_flow(prior, "cfo", 4)
-    rev_prev = _sum_flow(prior, "revenue", 4)
-    gp_prev = _sum_flow(prior, "gross_profit", 4)
+    # Lag = 4 quarters ago — for "prior year TTM" comparison.
+    # If insufficient prior history, prior TTMs become None and those F-Score
+    # checks gracefully skip (no penalty, just lower max attainable).
+    prior = records[4:] if len(records) >= 5 else []
+    ni_prev = ttm_from_cumulative(prior, "net_income") if prior else None
+    cfo_prev = ttm_from_cumulative(prior, "cfo") if prior else None
+    rev_prev = ttm_from_cumulative(prior, "revenue") if prior else None
+    gp_prev = ttm_from_cumulative(prior, "gross_profit") if prior else None
     assets_prev = _latest_stock(prior, "total_assets")
     liab_now = _latest_stock(records, "total_liab")
     liab_prev = _latest_stock(prior, "total_liab")

@@ -928,18 +928,32 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                                 )
                                 continue
 
-                            # ── Piotroski F-Score 품질 게이트 ────────────────
-                            # 임상_파이프라인은 R&D 적자 페이즈 정상 → 게이트 면제.
-                            # 그 외 카테고리는 F-Score < 4면 confidence ×0.7 (회사 재무 취약 = FP 가능성 ↑),
-                            # F-Score >= 6이면 +0.05 부스트 (강한 재무 펀더멘털).
+                            # ── Piotroski F-Score 품질 게이트 (DART TTM 보정 후 캘리브레이션) ─
+                            # 라이브러리 100배 종목 분포 (TTM-from-cumulative 적용 후):
+                            #   median = 1, p25 = 0, p75 = 3 — 한국 100배는 pre-profitability 단계 다수.
+                            # 그래도 F-Score 0은 모든 지표 악화 → 거의 확실히 FP.
+                            #   F == 0 (모두 악화): ×0.7
+                            #   F >= 4 (상위 ~20%): +0.05 부스트
+                            # 임상_파이프라인은 R&D 적자 페이즈 정상 → 면제.
                             f_score = stock_data.get("f_score")
                             if f_score is not None and category != "임상_파이프라인":
-                                if f_score < 4:
+                                if f_score == 0:
                                     result.confidence = round(result.confidence * 0.7, 3)
                                     if result.confidence < min_confidence:
-                                        continue  # 게이트 fail
-                                elif f_score >= 6:
+                                        continue
+                                elif f_score >= 4:
                                     result.confidence = round(min(0.95, result.confidence + 0.05), 3)
+
+                            # ── Sloan accruals 게이트 (CFO > NI = clean earnings) ──
+                            # 라이브러리 58%가 음수 accruals (현금이익 우수). 양수 큰 값은 회계조정 의심.
+                            accruals = stock_data.get("accruals_ratio")
+                            if accruals is not None:
+                                if accruals < 0:
+                                    # CFO > NI: clean earnings, multibagger 친화적 패턴
+                                    result.confidence = round(min(0.95, result.confidence + 0.03), 3)
+                                elif accruals > 0.15:
+                                    # 과도한 발생주의 — 회계이익 의심
+                                    result.confidence = round(result.confidence * 0.85, 3)
 
                             # ── Convergent insider/buyback boost (Seyhun/O'Neil) ──
                             conv_hit, conv_label = _has_convergent_signal(f)
