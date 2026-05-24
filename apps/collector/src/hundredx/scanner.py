@@ -912,6 +912,22 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
         if exits:
             logger.info("Marked %d exits", exits)
 
+        # Library self-match cleanup: exit any active matches that are in the library
+        # (These can persist from before the self-match guard was added, or from edge cases)
+        self_match_exits = 0
+        for (ticker, category) in list(active_after):
+            if (ticker, category) in lib_match_set:
+                try:
+                    client.table("hundredx_category_matches").update(
+                        {"exited_at": now}
+                    ).eq("ticker", ticker).eq("category", category).is_("exited_at", None).execute()
+                    self_match_exits += 1
+                    logger.debug("Self-match cleanup: exited %s/%s", ticker, category)
+                except Exception as e:
+                    logger.warning("Self-match cleanup error %s/%s: %s", ticker, category, e)
+        if self_match_exits:
+            logger.info("Library self-match cleanup: exited %d stale entries", self_match_exits)
+
         # Send alerts for new entries (not yet alerted)
         new_entries: list[tuple[str, str, float, str | None]] = []
         for m in all_matches:
