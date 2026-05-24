@@ -639,13 +639,15 @@ def _get_analog(lib: dict, match: CategoryMatch) -> dict | None:
 
 # Categories that should NEVER be crowded out by other categories
 # (they represent fundamentally different investment theses)
+# ⚠️  2026-05-24: 평가 데이터 기반 결정 — 수익성_급전환 제거
+#     평가 인프라 측정 결과 수익성_급전환은 labeled 15건 중 0건 confirm.
+#     recall에는 기여하지만 같은 종목을 다른 detector가 이미 catch (per_detector @90d).
+#     ALWAYS_KEEP 유지 시 false-positive 다수 → labeled set 오염.
+#     제거 시: 다른 카테고리 fire 종목에선 흡수 (precision↑), 단독 fire 종목에서만 alert (recall 유지).
 # ⚠️  임상_파이프라인은 _ALWAYS_KEEP에서 제거:
 #     clinical_pipe.py에 비바이오 섹터 early-exit가 추가됐으므로, 비바이오 종목에서
 #     임상이 탐지됐다면 detector 버그 → dedup으로 제거되어야 함.
-#     (바이오 종목에서도 임상이 최고 confidence면 to_dedup 1위를 차지하므로 보존됨)
-_ALWAYS_KEEP_CATEGORIES = frozenset({
-    "수익성_급전환",     # financial event — distinct from supply/partnership
-})
+_ALWAYS_KEEP_CATEGORIES: frozenset[str] = frozenset()
 
 # Category priority order for tiebreaking (higher index = higher priority)
 _CATEGORY_PRIORITY = {
