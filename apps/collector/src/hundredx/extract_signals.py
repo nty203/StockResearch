@@ -69,8 +69,12 @@ def _fetch_financials_around(client, ticker: str, rise_start: str) -> list[dict]
 
 
 def _fq_to_date(fq: str) -> datetime | None:
-    """'2022Q3' → datetime(2022, 9, 30) (end of quarter)."""
+    """'2022Q3' → datetime(2022, 9, 30), '2022Y' → datetime(2022, 12, 31)."""
     try:
+        if len(fq) == 5 and fq[4] == 'Y':
+            # Annual data from yfinance backfill (e.g., '2022Y')
+            year = int(fq[:4])
+            return datetime(year, 12, 31)
         year, q = int(fq[:4]), int(fq[-1])
         month = q * 3
         # Approximate end-of-quarter day; fine for window comparison

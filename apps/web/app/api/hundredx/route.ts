@@ -103,19 +103,21 @@ export async function GET(req: Request) {
 
   const result = Object.entries(byTicker).map(([ticker, cats]) => {
     // ── Conviction formula (max = 100) ────────────────────────────────────────
-    // 1. Fingerprint bonus (0–40): library pattern match is the strongest signal.
-    //    Requires ≥0.30 to contribute — below that the match is noise.
+    // Pattern similarity (fingerprint) is the primary selection signal.
+    // Keyword confidence is secondary — it FINDS candidates, pattern CONFIRMS them.
+    //
+    // 1. Fingerprint score (0–55): pattern match to library precedent.
+    //    Requires ≥0.10 to contribute; ≥0.30 unlocks Grade B+.
     const bestFP = Math.max(0, ...cats.map(c => c.fingerprint_score ?? 0))
-    const fpBonus = bestFP >= 0.30 ? Math.round(bestFP * 40 * 10) / 10 : 0
+    const fpBonus = bestFP >= 0.10 ? Math.round(bestFP * 55 * 10) / 10 : 0
 
-    // 2. Confidence depth (0–40): average rule-based detector confidence.
-    //    Uses raw confidence (not fingerprint) so the two signals are independent.
+    // 2. Keyword confidence (0–30): rule-based detector confidence (secondary).
     const avgConf = cats.reduce((s, c) => s + c.confidence, 0) / cats.length
-    const confScore = Math.round(avgConf * 40 * 10) / 10
+    const confScore = Math.round(avgConf * 30 * 10) / 10
 
-    // 3. Breadth (0–15): multiple category matches mean different dimensions agree.
+    // 3. Breadth (0–10): multiple category matches add modest evidence.
     //    Caps at 3 categories to avoid inflation from correlated categories.
-    const breadthScore = Math.round(Math.min(15, (cats.length / 3) * 15) * 10) / 10
+    const breadthScore = Math.round(Math.min(10, (cats.length / 3) * 10) * 10) / 10
 
     // 4. Timeline progress bonus (0–5): fired ≥1 trigger stage in library timeline.
     const bestTimeline = cats.reduce(
@@ -127,14 +129,14 @@ export async function GET(req: Request) {
     const hasPptrMatch = cats.some(c => c.pptr_match)
 
     // ── Quality grade ─────────────────────────────────────────────────────────
-    // S: PPTR full match + library fingerprint ≥0.65 AND conviction ≥65
-    // A: PPTR full match + fingerprint ≥0.45 OR conviction ≥55
-    // B: non-PPTR/fingerprint candidate, still below A-grade quality gate
-    // C: passes min_confidence threshold (baseline)
+    // S: PPTR full match + pattern ≥0.65 + conviction ≥65  → highest confidence
+    // A: PPTR full match + (pattern ≥0.45 OR conviction ≥55)
+    // B: pattern ≥0.30 confirmed (keyword-only cannot reach B without pattern data)
+    // C: keyword-only detection, pattern similarity not yet confirmed (needs review)
     let grade: 'S' | 'A' | 'B' | 'C'
     if (hasPptrMatch && bestFP >= 0.65 && conviction >= 65) grade = 'S'
     else if (hasPptrMatch && (bestFP >= 0.45 || conviction >= 55)) grade = 'A'
-    else if (bestFP >= 0.25 || conviction >= 40) grade = 'B'
+    else if (bestFP >= 0.30) grade = 'B'
     else grade = 'C'
 
     // First-signal date = oldest first_detected_at across categories
@@ -150,6 +152,9 @@ export async function GET(req: Request) {
       stock: stockMap[ticker] ?? null,
       conviction: Math.round(conviction * 10) / 10,
       grade,
+      // has_pattern_data: true = fingerprint score ≥0.10 (library pattern confirmed)
+      // false = keyword-only detection, awaiting pattern similarity confirmation
+      has_pattern_data: bestFP >= 0.10,
       best_fingerprint_score: bestFP > 0 ? Math.round(bestFP * 1000) / 1000 : null,
       first_signal_at: firstSignal,
       price_performance: priceRow ? {
