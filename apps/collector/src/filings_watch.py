@@ -311,6 +311,11 @@ def collect_dart_filings(kr_ticker_set: set[str], lookback_days: int = 1) -> lis
         logger.error("DART_API_KEY not set")
         return []
 
+    try:
+        import OpenDartReader as DartReader
+    except ImportError:
+        logger.error("OpenDartReader not installed — falling back to KIND/Naver")
+        return []
     dart = DartReader(api_key)
     start = (date.today() - timedelta(days=lookback_days)).isoformat()
     rows = []
@@ -346,14 +351,24 @@ def collect_dart_filings(kr_ticker_set: set[str], lookback_days: int = 1) -> lis
             if is_order and not matched_kws:
                 matched_kws = ["수주공시(유형자동)"]
 
+            # DART 본문 fetch — detector 키워드 매칭에 필수 (2026-05-24 추가)
+            rcept_no = str(r.get("rcept_no", "") or "")
+            body_text: str | None = None
+            if rcept_no:
+                try:
+                    from .utils.dart_body import fetch_body
+                    body_text = fetch_body(rcept_no, api_key)
+                except Exception as exc:
+                    logger.debug("body fetch failed rcept=%s: %s", rcept_no, exc)
+
             rows.append({
                 "ticker": stock_code,
                 "source": "DART",
                 "filing_type": headline[:50],
                 "filed_at": str(r.get("rcept_dt", ""))[:10] + "T00:00:00+09:00",
-                "url": f"https://dart.fss.or.kr/dsaf001/main.do?rcpNo={r.get('rcept_no', '')}",
+                "url": f"https://dart.fss.or.kr/dsaf001/main.do?rcpNo={rcept_no}",
                 "headline": headline,
-                "raw_text": None,
+                "raw_text": body_text,
                 "keywords": matched_kws,
                 "parsed_amount": _extract_amount(headline),
                 "parsed_customer": None,

@@ -25,6 +25,10 @@ _BACKLOG_TEXT_PATTERNS = [
     re.compile(r"계약잔액\s*[：:]\s*(\d[\d,]*(?:\.\d+)?)\s*억"),
 ]
 
+# DART 단일판매·공급계약 body 표준 패턴 — 계약금액(원) NNNNN,NNN,NNN
+# 이 패턴은 단일 계약 금액이며 누적이 아님 — 합산해 추정 backlog 계산.
+_CONTRACT_AMOUNT_RE = re.compile(r"계약금액\s*\(원\)\s*[\-\s]*([\d,]{9,})")
+
 _LARGE_ORDER_PATTERN = re.compile(
     r"(\d+(?:\.\d+)?)\s*조|(\d[\d,]*(?:\.\d+)?)\s*억"
 )
@@ -51,23 +55,49 @@ def _extract_backlog_from_text(text: str) -> float | None:
     return None
 
 
+def _parse_contract_amount_from_body(text: str) -> float | None:
+    """DART 단일판매·공급계약 body의 '계약금액(원)' 값을 억원 단위로 반환.
+
+    body 형식 예: '계약금액(원) 1,034,321,600,000' → 10,343억
+    또는 '계약금액(원) -    270,050,000,000 3.32' (정정공시) → 가장 큰 숫자 사용.
+    """
+    matches = _CONTRACT_AMOUNT_RE.findall(text)
+    if not matches:
+        return None
+    vals = [int(m.replace(",", "")) for m in matches if m.replace(",", "").isdigit()]
+    if not vals:
+        return None
+    return max(vals) / 100_000_000  # 원 → 억
+
+
 def _estimate_backlog_from_orders(filings: list[dict]) -> float | None:
-    """최근 90일 수주공시 금액 합산으로 수주잔고 추정 (언더추정)."""
+    """최근 90일 수주공시 금액 합산으로 수주잔고 추정 (언더추정).
+
+    소스 우선순위: ① body의 '계약금액(원)' → ② 명시적 수주잔고 패턴 → ③ parsed_amount(헤드라인)
+    """
     total = 0.0
     found = False
     for f in filings:
         text = (f.get("raw_text") or "") + " " + (f.get("headline") or "")
         # 수주 관련 공시인지 확인
         if not any(kw.lower() in text.lower() for kw in _ORDER_SIGNAL_KEYWORDS):
-            continue
+            # 헤드라인이 '단일판매·공급계약' 같은 표준 유형이면 키워드 없어도 수용
+            headline = f.get("headline", "") or ""
+            if "단일판매" not in headline and "공급계약" not in headline:
+                continue
 
         # 명시적 수주잔고 있으면 우선 사용
         backlog = _extract_backlog_from_text(text)
         if backlog is not None:
             return backlog  # 직접 수주잔고 값이 있으면 합산 불필요
 
-        # 없으면 수주 금액 파싱해서 합산 (근사)
-        amount = f.get("parsed_amount")
+        # body 계약금액 우선 (DART body 표준 패턴)
+        amount = _parse_contract_amount_from_body(text)
+
+        # 없으면 헤드라인 parsed_amount 사용
+        if amount is None:
+            amount = f.get("parsed_amount")
+
         if amount is not None and amount > 0:
             total += amount
             found = True
