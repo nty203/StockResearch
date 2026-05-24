@@ -577,7 +577,9 @@ def _upsert_matches_with_analogs(
             "fingerprint_score": (
                 round(m.fingerprint_score, 3) if m.fingerprint_score is not None else None
             ),
+            "fingerprint_library_ticker": getattr(m, "fingerprint_library_ticker", None),
             "fingerprint_dims": m.fingerprint_dims,
+            "convergent_signals": getattr(m, "convergent_signals", None),
             "timeline_progress": m.timeline_progress,
             "pptr_match": getattr(m, "pptr_match", None),
             "pptr_rule_id": pptr_rule_id,

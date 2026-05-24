@@ -67,26 +67,49 @@ def _get_llm_verdict_from_evidence(ev_list: list) -> str | None:
 
 
 def _fetch_financials(ticker: str) -> dict:
-    """financials_q에서 최근 재무 수치 조회."""
+    """financials_q에서 최근 재무 수치 + 품질 지표(F-Score/accruals/GP-A) 계산."""
     try:
         res = (
             client.table("financials_q")
-            .select("op_margin, roe, roic, revenue, net_income")
+            .select(
+                "fq, op_margin, roe, roic, revenue, net_income, op_income, "
+                "gross_profit, cfo, total_assets, total_equity, total_liab, debt_ratio, shares_out"
+            )
             .eq("ticker", ticker)
-            .limit(1)
+            .like("fq", "%Q%")
+            .order("fq", desc=True)
+            .limit(12)
             .execute()
         )
-        if res.data:
-            row = res.data[0]
-            rev = row.get("revenue")
-            ni = row.get("net_income")
-            return {
-                "op_margin": round(float(row["op_margin"]), 1) if row.get("op_margin") is not None else None,
-                "roe": round(float(row["roe"]), 1) if row.get("roe") is not None else None,
-                "roic": round(float(row["roic"]), 1) if row.get("roic") is not None else None,
-                "revenue_bn": round(float(rev) / 1e8, 0) if rev else None,
-                "net_income_bn": round(float(ni) / 1e8, 0) if ni else None,
-            }
+        if not res.data:
+            return {}
+        rows = res.data
+        row = rows[0]
+        rev = row.get("revenue")
+        ni = row.get("net_income")
+        out = {
+            "op_margin": round(float(row["op_margin"]), 1) if row.get("op_margin") is not None else None,
+            "roe": round(float(row["roe"]), 1) if row.get("roe") is not None else None,
+            "roic": round(float(row["roic"]), 1) if row.get("roic") is not None else None,
+            "revenue_bn": round(float(rev) / 1e8, 0) if rev else None,
+            "net_income_bn": round(float(ni) / 1e8, 0) if ni else None,
+            "debt_ratio": round(float(row["debt_ratio"]), 1) if row.get("debt_ratio") is not None else None,
+        }
+        # 품질 지표 (Piotroski/Sloan/Novy-Marx) — 검증 정밀도 향상용
+        try:
+            import sys, os
+            sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
+            from hundredx.quality_metrics import (
+                compute_gp_to_assets, compute_accruals_ratio, compute_piotroski_f_score,
+            )
+            out["f_score"] = compute_piotroski_f_score(rows)
+            gp = compute_gp_to_assets(rows)
+            out["gp_to_assets"] = round(gp, 3) if gp is not None else None
+            ac = compute_accruals_ratio(rows)
+            out["accruals_ratio"] = round(ac, 3) if ac is not None else None
+        except Exception:
+            pass
+        return out
     except Exception:
         pass
     return {}
@@ -113,7 +136,11 @@ def main():
     # 후보 조회 (verified 제외를 위해 evidence 포함)
     q = (
         client.table("hundredx_category_matches")
-        .select("id, ticker, category, confidence, evidence, first_detected_at")
+        .select(
+            "id, ticker, category, confidence, evidence, first_detected_at, "
+            "fingerprint_score, fingerprint_library_ticker, fingerprint_dims, "
+            "convergent_signals"
+        )
         .is_("exited_at", "null")
         .gte("first_detected_at", cutoff)
         .order("first_detected_at", desc=True)
@@ -180,6 +207,10 @@ def main():
                     kw_hits.extend([k.strip() for k in kw_part.split(",") if k.strip()])
 
         lib_cats = lib_by_ticker.get(ticker, [])
+        # Fingerprint / convergent / quality 시그널 (LLM 판단 보조)
+        fp_score = m.get("fingerprint_score")
+        fp_lib = m.get("fingerprint_library_ticker")
+        conv = m.get("convergent_signals") or []
         candidates.append({
             "match_id": str(m["id"]),
             "ticker": ticker,
@@ -195,6 +226,10 @@ def main():
             "financials": financials,
             "filings": filings,
             "evidence_keywords": list(set(kw_hits))[:8],
+            # Scanner가 함께 산출한 보조 시그널 — 검증 정밀도 향상용
+            "fingerprint_score": round(fp_score, 2) if fp_score is not None else None,
+            "fingerprint_library_ref": fp_lib,
+            "convergent_signals": conv,  # ["insider_buy×2", "buyback×1"] 형태
         })
 
     result = {
