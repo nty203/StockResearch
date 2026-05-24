@@ -80,6 +80,7 @@ interface StockResult {
   } | null
   conviction: number
   grade: 'S' | 'A' | 'B' | 'C'
+  has_pattern_data: boolean
   best_fingerprint_score: number | null
   first_signal_at: string | null
   price_performance: {
@@ -108,8 +109,8 @@ const CONFIDENCE_PRESETS = [0.5, 0.7, 0.9] as const
 const GRADE_META = {
   S: { label: 'S', desc: '라이브러리 패턴 고일치 + 높은 Conviction', bg: 'bg-[var(--color-gold)]/20', color: 'text-[var(--color-gold)]', border: 'border-[var(--color-gold)]/50' },
   A: { label: 'A', desc: '라이브러리 패턴 일치 또는 높은 Conviction', bg: 'bg-[var(--color-success)]/15', color: 'text-[var(--color-success)]', border: 'border-[var(--color-success)]/40' },
-  B: { label: 'B', desc: '부분 패턴 일치 또는 중간 Conviction', bg: 'bg-[var(--color-accent)]/10', color: 'text-[var(--color-accent)]', border: 'border-[var(--color-accent)]/30' },
-  C: { label: 'C', desc: '신뢰도 기준 통과 (패턴 미확인)', bg: 'bg-[var(--color-card)]', color: 'text-[var(--color-text-2)]', border: 'border-[var(--color-border)]' },
+  B: { label: 'B', desc: '패턴 유사도 30%+ 확인 (라이브러리 패턴 부합)', bg: 'bg-[var(--color-accent)]/10', color: 'text-[var(--color-accent)]', border: 'border-[var(--color-accent)]/30' },
+  C: { label: 'C', desc: '키워드 탐지 (패턴 미확인 — 검토 필요)', bg: 'bg-[var(--color-card)]', color: 'text-[var(--color-text-2)]', border: 'border-[var(--color-border)]' },
 } as const
 
 export default function HundredxPage() {
@@ -327,11 +328,15 @@ function StockCard({
             {result.conviction.toFixed(1)}
           </div>
           <div className="text-[10px] text-[var(--color-text-2)]">Conviction</div>
-          {result.best_fingerprint_score != null && result.best_fingerprint_score > 0 && (
+          {result.best_fingerprint_score != null && result.best_fingerprint_score > 0 ? (
             <div className="text-[10px] text-[var(--color-text-2)] mt-0.5">
-              패턴 <span className={result.best_fingerprint_score >= 0.5 ? 'text-[var(--color-success)]' : 'text-[var(--color-text-1)]'}>
+              패턴 <span className={result.best_fingerprint_score >= 0.5 ? 'text-[var(--color-success)]' : result.best_fingerprint_score >= 0.30 ? 'text-[var(--color-warning)]' : 'text-[var(--color-text-1)]'}>
                 {Math.round(result.best_fingerprint_score * 100)}%
               </span>
+            </div>
+          ) : (
+            <div className="text-[10px] text-[var(--color-text-2)] mt-0.5 opacity-50">
+              패턴 미확인
             </div>
           )}
           <div className="text-xs text-[var(--color-text-2)] mt-1">
