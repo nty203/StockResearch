@@ -32,3 +32,6 @@ __pycache__/
 .playwright-mcp/
 qa-*.png
 apps/web/.vercel/
+
+# ML model artifacts (regenerated via training)
+apps/collector/models/
