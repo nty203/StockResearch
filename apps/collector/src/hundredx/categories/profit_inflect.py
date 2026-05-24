@@ -67,6 +67,20 @@ def detect(stock_data: dict, filings: list[dict]) -> CategoryMatch | None:
             best_confidence = conf
             reason_text = f"저마진 탈출 OPM 체질개선 (OPM {op_margin_prev:.1f}% → {op_margin_ttm:.1f}% (+{gap:.1f}pp))"
 
+    # ── 4차: 매출총이익률 leading indicator (Lev & Thiagarajan 1993) ─────
+    # GP margin 확장은 OPM 폭발 2~3분기 선행. 아직 OPM gap이 작아도 GP 가속이
+    # 보이면 조기 진입 신호 (conf 0.65, 라이브러리 fingerprint로 검증 필요).
+    gp_to_assets = stock_data.get("gp_to_assets")
+    revenue_qoq_acc = stock_data.get("revenue_qoq_acceleration")
+    if gp_to_assets is not None and gp_to_assets > 0.25 and revenue_qoq_acc is not None and revenue_qoq_acc > 5.0:
+        conf = 0.65
+        if conf > best_confidence:
+            best_confidence = conf
+            reason_text = (
+                f"매출총이익 + QoQ 가속 (GP/A {gp_to_assets:.2f}, "
+                f"매출 QoQ 가속 +{revenue_qoq_acc:.1f}pp) — OPM 폭발 선행 신호"
+            )
+
     if best_confidence == 0.0:
         return None
 

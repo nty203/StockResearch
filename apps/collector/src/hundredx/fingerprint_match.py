@@ -51,6 +51,8 @@ _QUANT_FIELD_TO_STOCK_KEY = {
     "f_score_at_signal":        "f_score",          # Piotroski 0-9
     # Revenue acceleration (Asness 2013, multibagger leading indicator)
     "revenue_qoq_acceleration_at_signal": "revenue_qoq_acceleration",
+    # Market cap at signal time (Mayer 100 Baggers: small-cap = higher multibagger probability)
+    "market_cap_at_signal": "market_cap",
 }
 
 
@@ -148,6 +150,10 @@ def _quant_match(library_quant: dict, current_quant: dict) -> tuple[list[str], l
         elif lib_field == "f_score_at_signal":
             # F-Score is discrete 0-9; allow ±2 around library value
             ok = current_value >= lib_value - 2
+        elif lib_field == "market_cap_at_signal":
+            # Lower market cap is better (Mayer 100B). Match if current cap
+            # is within 5× of library at-signal cap (i.e. similar scale or smaller).
+            ok = current_value <= lib_value * 5
         else:
             ok = current_value >= lib_value * (1 - _QUANT_TOLERANCE)
 

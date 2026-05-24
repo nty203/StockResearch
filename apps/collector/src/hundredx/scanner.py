@@ -66,6 +66,47 @@ _BUYBACK_KEYWORDS = [
 ]
 
 
+# ── Sector × Category deny matrix ─────────────────────────────────────────
+# 라이브러리 49개 종목 sector × category 분포에서 도출한 명백한 비현실적 조합.
+# 한 카테고리가 "이 섹터에서는 절대 안 일어남"인 경우만 차단 (보수적).
+# 예: 조선 회사가 임상 파이프라인을 가질 수 없음 / 바이오 회사가 조선 슈퍼사이클을 탈 수 없음.
+# 키워드는 sector_tag/sector_wics에 contains() 매칭.
+_SECTOR_DENY_MATRIX: dict[str, list[str]] = {
+    "임상_파이프라인": [
+        "조선", "엔진", "방산", "건설", "pcb",
+        "이차전지", "배터리", "철강", "유틸리티", "통신",
+        "자동차부품", "전력기기", "반도체",
+    ],
+    "조선_슈퍼사이클": [
+        "바이오", "제약", "임상", "반도체", "pcb",
+        "이차전지", "배터리", "자동차부품", "게임", "유통",
+    ],
+    "이차전지_소재": [
+        "바이오", "제약", "임상", "조선", "엔진",
+        "방산", "건설", "pcb", "게임",
+    ],
+    "빅테크_파트너": [
+        "바이오", "제약", "임상", "조선", "건설",
+        "철강", "유틸리티", "유통", "운송",
+    ],
+    "공급_병목": [
+        "바이오", "제약", "임상", "게임", "유통", "엔터테인먼트",
+    ],
+    "플랫폼_독점": [
+        "조선", "엔진", "건설", "철강", "유틸리티",
+    ],
+}
+
+
+def _category_blocked_by_sector(category: str, sector_tag: str | None) -> bool:
+    """Return True if (category, sector) is in deny matrix — block detector."""
+    if not sector_tag:
+        return False  # 섹터 미상은 통과 (보수적)
+    deny = _SECTOR_DENY_MATRIX.get(category, [])
+    sect_lower = sector_tag.lower()
+    return any(kw in sect_lower for kw in deny)
+
+
 def _has_convergent_signal(filings: list[dict]) -> tuple[bool, str | None]:
     """Returns (True, label) if any filing has insider buy or buyback keywords."""
     for f in filings:
@@ -864,6 +905,10 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                 filings_clinical = filings_2y.get(ticker, [])
 
                 for category, detector_fn in DETECTORS:
+                    # ── Sector × category deny matrix ──
+                    # 명백한 비현실적 조합은 detector 호출 전 차단 (CPU 절약 + FP 차단).
+                    if _category_blocked_by_sector(category, stock_data.get("sector_tag")):
+                        continue
                     try:
                         # clinical_pipe gets 2-year filings; others get 90d
                         f = filings_clinical if category == "임상_파이프라인" else filings
