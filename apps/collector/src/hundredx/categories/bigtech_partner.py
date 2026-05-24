@@ -9,7 +9,14 @@
   - 5. 강화: 삼성/LG/SK 계열사 전략투자 포착
 """
 from __future__ import annotations
-from ..keywords import BIGTECH_KEYWORDS
+from ..keywords import (
+    BIGTECH_KEYWORDS,
+    SPACE_KEYWORDS,
+    CYBERSEC_KEYWORDS,
+    QUANTUM_KEYWORDS,
+    HUMANOID_KEYWORDS,
+    AI_INFERENCE_KEYWORDS,
+)
 from ..models import CategoryMatch
 
 _EQUITY_KEYWORDS = [
@@ -54,6 +61,12 @@ _HYPERSCALER_SUPPLY_KEYWORDS = [
     # 전력 인프라
     "전력기기", "변압기", "UPS", "PDU",
 ]
+
+# 2026 신규 100배 테마 — 위성/사이버보안/양자/휴머노이드/AI추론
+_EMERGING_THEME_KEYWORDS = (
+    SPACE_KEYWORDS + CYBERSEC_KEYWORDS + QUANTUM_KEYWORDS +
+    HUMANOID_KEYWORDS + AI_INFERENCE_KEYWORDS
+)
 
 _BIGTECH_SECTORS = {
     # 기존 섹터
@@ -104,6 +117,7 @@ def detect(stock_data: dict, filings: list[dict]) -> CategoryMatch | None:
         callopt_hits = _kw_hit(text, _CALLOPT_KEYWORDS)
         supply_hits = _kw_hit(text, _SUPPLY_KEYWORDS)
         hyperscaler_hits = _kw_hit(text, _HYPERSCALER_SUPPLY_KEYWORDS)
+        emerging_hits = _kw_hit(text, _EMERGING_THEME_KEYWORDS)
 
         # ── 1차: 지분 취득 및 콜옵션 투자 구조 (M&A) ─────────────────
         if equity_hits and callopt_hits:
@@ -122,6 +136,13 @@ def detect(stock_data: dict, filings: list[dict]) -> CategoryMatch | None:
         # ── 3차: 하이퍼스케일러 공급망 편입 (PCB/서버 부품 등) ────────
         elif hyperscaler_hits and (bigtech_hits or kr_investor_hits):
             conf = 0.72
+        # ── 4차: 2026 emerging tech 테마 (위성/사이버/양자/휴머노이드/AI추론) ──
+        elif emerging_hits and supply_hits and (bigtech_hits or kr_investor_hits):
+            # 빅테크와의 emerging tech 공급/협력 — 신생 100배 테마
+            conf = 0.73
+        elif emerging_hits and len(emerging_hits) >= 3:
+            # 3개 이상 emerging 키워드 단독 — 강한 테마 신호
+            conf = 0.70
         else:
             continue
 
