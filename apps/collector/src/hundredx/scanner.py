@@ -107,16 +107,41 @@ def _category_blocked_by_sector(category: str, sector_tag: str | None) -> bool:
     return any(kw in sect_lower for kw in deny)
 
 
-def _has_convergent_signal(filings: list[dict]) -> tuple[bool, str | None]:
-    """Returns (True, label) if any filing has insider buy or buyback keywords."""
+def _count_convergent_signals(filings: list[dict]) -> dict:
+    """Count insider buy / buyback filings — multiple events = stronger signal.
+
+    Returns dict:
+      {"insider_buy": int, "buyback": int, "cluster": bool, "labels": [str, ...]}
+
+    cluster=True 의 정의: 임원매수가 2건 이상 OR 임원매수+자사주매입 동시 발생.
+    Seyhun(1988): "cluster buying" (다중 인사이더 매수) 효과 +12% 초과수익 (단건 +8.7%).
+    """
+    insider = 0
+    buyback = 0
     for f in filings:
         text = ((f.get("raw_text") or "") + " " + (f.get("headline") or "")).lower()
-        for kw in _INSIDER_BUY_KEYWORDS:
-            if kw.lower() in text:
-                return True, "insider_buy"
-        for kw in _BUYBACK_KEYWORDS:
-            if kw.lower() in text:
-                return True, "buyback"
+        if any(kw.lower() in text for kw in _INSIDER_BUY_KEYWORDS):
+            insider += 1
+        elif any(kw.lower() in text for kw in _BUYBACK_KEYWORDS):
+            buyback += 1
+    labels = []
+    if insider > 0: labels.append(f"insider_buy×{insider}")
+    if buyback > 0: labels.append(f"buyback×{buyback}")
+    cluster = insider >= 2 or (insider >= 1 and buyback >= 1)
+    return {
+        "insider_buy": insider,
+        "buyback": buyback,
+        "cluster": cluster,
+        "labels": labels,
+    }
+
+
+def _has_convergent_signal(filings: list[dict]) -> tuple[bool, str | None]:
+    """Backwards-compat thin wrapper used in places that don't need counts."""
+    c = _count_convergent_signals(filings)
+    if c["cluster"]: return True, "cluster"
+    if c["insider_buy"] > 0: return True, "insider_buy"
+    if c["buyback"] > 0: return True, "buyback"
     return False, None
 
 
@@ -956,15 +981,18 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                                     result.confidence = round(result.confidence * 0.85, 3)
 
                             # ── Convergent insider/buyback boost (Seyhun/O'Neil) ──
-                            conv_hit, conv_label = _has_convergent_signal(f)
-                            if conv_hit:
-                                result.confidence = round(min(0.95, result.confidence + 0.05), 3)
-                                # Tag for downstream UI/analysis
-                                if not hasattr(result, "convergent_signals") or result.convergent_signals is None:
-                                    try:
-                                        result.convergent_signals = [conv_label]
-                                    except Exception:
-                                        pass
+                            # 단건 임원매수/자사주매입: +0.03
+                            # cluster (2건 이상 OR 임원+자사주 동시): +0.07 (Seyhun cluster effect)
+                            conv = _count_convergent_signals(f)
+                            if conv["cluster"]:
+                                result.confidence = round(min(0.95, result.confidence + 0.07), 3)
+                            elif conv["insider_buy"] > 0 or conv["buyback"] > 0:
+                                result.confidence = round(min(0.95, result.confidence + 0.03), 3)
+                            if conv["labels"]:
+                                try:
+                                    result.convergent_signals = conv["labels"]
+                                except Exception:
+                                    pass
 
                             result.ticker = ticker
                             result.category = category
