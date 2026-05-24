@@ -37,6 +37,28 @@ logger = logging.getLogger(__name__)
 
 WINDOW_MONTHS_BEFORE = 18
 
+# Category → sector fallback when stocks.sector_tag is NULL.
+# Used to prevent cross-sector fingerprint matching (e.g., 조선 stocks matching
+# 이차전지 library patterns purely because OPM numbers happen to be similar).
+# Only set for categories where all library stocks share a clear sector identity.
+# Ambiguous categories (공급_병목, 수익성_급전환, etc.) are left as None → no sector filter.
+CATEGORY_SECTOR_FALLBACK: dict[str, str | None] = {
+    "조선_슈퍼사이클":  "조선",
+    "이차전지_소재":    "이차전지/배터리",
+    "임상_파이프라인":  "바이오/제약",
+    "전력_인프라":      "전력기기/전선",
+    "빅테크_파트너":    None,   # 반도체, PCB, 광통신 등 다양 — 종목별 sector_tag 사용
+    "공급_병목":        None,
+    "수익성_급전환":    None,
+    "수주잔고_선행":    None,
+    "정책_수혜":        None,
+    "플랫폼_독점":      None,
+    "지주사_재평가":    None,
+    "단기_테마_급등":   None,
+    "기술_독점":        None,
+    "산업_혁신":        None,
+}
+
 # Keyword set per category (subset of classifier.py — used to bias category selection
 # and produce fingerprint keywords automatically)
 CATEGORY_KEYWORD_SETS: dict[str, list[str]] = {
@@ -344,8 +366,12 @@ def extract_for_entry(client, lib_row: dict, force: bool = False) -> dict | None
         unique = list(dict.fromkeys(keywords))[:12]
         fingerprint["keywords"] = unique
         fingerprint["min_keyword_matches"] = max(1, len(unique) // 3)
-    if sector_tag:
-        fingerprint["sector_required"] = sector_tag
+    # sector_required: prefer stocks.sector_tag; fall back to category-level hint.
+    # This prevents cross-sector false positives (e.g., 조선 stock matching 이차전지
+    # library pattern purely because OPM numbers coincide).
+    effective_sector = sector_tag or CATEGORY_SECTOR_FALLBACK.get(lib_row.get("category", ""))
+    if effective_sector:
+        fingerprint["sector_required"] = effective_sector
     if amount_threshold:
         fingerprint["amount_threshold_billions"] = round(amount_threshold, 1)
     if special:
