@@ -56,7 +56,11 @@ def bulk_fetch_financials(client, tickers: list[str]) -> dict[str, dict]:
     # Fetch ~3 years of data per ticker, then filter in Python.
     fin_res = (
         client.table("financials_q")
-        .select("ticker, fq, revenue, op_income, op_margin, roe, roic, fcf, debt_ratio, order_backlog")
+        .select(
+            "ticker, fq, revenue, op_income, op_margin, net_income, "
+            "roe, roic, fcf, debt_ratio, order_backlog, "
+            "gross_profit, cfo, total_assets, total_equity, total_liab, shares_out"
+        )
         .in_("ticker", tickers)
         .like("fq", "%Q%")        # quarterly only — excludes '2022Y', '2025Y' etc.
         .order("fq", desc=True)
@@ -98,6 +102,31 @@ def bulk_fetch_financials(client, tickers: list[str]) -> dict[str, dict]:
         data["order_backlog_prev"] = fins[4].get("order_backlog") if len(fins) >= 5 else None
         # Store most-recent fq for downstream recency checks
         data["_latest_fq"] = fins[0]["fq"]
+
+        # ── Quality / efficiency metrics (Piotroski / Sloan / Novy-Marx) ──────
+        # Computed lazily from the same quarterly stream — no extra DB hit.
+        from ..hundredx.quality_metrics import (
+            compute_gp_to_assets,
+            compute_accruals_ratio,
+            compute_piotroski_f_score,
+        )
+        data["gp_to_assets"] = compute_gp_to_assets(fins)
+        data["accruals_ratio"] = compute_accruals_ratio(fins)
+
+        # ── Revenue QoQ acceleration (Asness et al. 2013) ─────────────────────
+        # 직전 분기 매출 성장률이 그 전 분기보다 가속 → multibagger 선행 신호.
+        # rev_qoq_now = (Q0 - Q-1) / Q-1; rev_qoq_prev = (Q-1 - Q-2) / Q-2.
+        # acceleration = rev_qoq_now - rev_qoq_prev (양수 = 가속, 음수 = 감속).
+        if len(fins) >= 3:
+            q0 = fins[0].get("revenue")
+            q_1 = fins[1].get("revenue")
+            q_2 = fins[2].get("revenue")
+            if q0 and q_1 and q_2 and q_1 > 0 and q_2 > 0:
+                rev_qoq_now = (q0 - q_1) / q_1 * 100
+                rev_qoq_prev = (q_1 - q_2) / q_2 * 100
+                data["revenue_qoq_now"] = round(rev_qoq_now, 2)
+                data["revenue_qoq_acceleration"] = round(rev_qoq_now - rev_qoq_prev, 2)
+        data["f_score"] = compute_piotroski_f_score(fins)
 
     # Prices — fetch last ~300 calendar days (covers 252 trading days).
     # 50 tickers × 300 days × ~50 bytes ≈ 750KB per batch.

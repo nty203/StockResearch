@@ -23,6 +23,25 @@ def detect(stock_data: dict, filings: list[dict]) -> CategoryMatch | None:
     if op_margin_ttm is None or op_margin_prev is None:
         return None
 
+    # ── FP gate 1: pre-revenue biotech 차단 ───────────────────────────
+    # 영업이익률이 -50% 이하이면 매출 거의 없는 R&D 페이즈 회사 (펩트론 등).
+    # 분모(매출) 변동에 OPM이 폭발적으로 변하므로 수익성_급전환 카테고리 부적합 —
+    # 이런 종목은 clinical_pipe로 가야 함.
+    if op_margin_prev < -50.0 or op_margin_ttm < -50.0:
+        return None
+
+    # ── FP gate 2: 매출 동반 감소 시 신뢰도 감쇠 ──────────────────────
+    # OPM이 올라도 매출이 깊게 빠지면 비용절감/구조조정 결과지 성장 inflection 아님.
+    rev_ttm = stock_data.get("revenue_ttm")
+    rev_prev = stock_data.get("revenue_prev")
+    revenue_dampener = 1.0
+    if rev_ttm and rev_prev and rev_prev > 0:
+        rev_yoy = (rev_ttm - rev_prev) / rev_prev * 100
+        if rev_yoy < -15.0:
+            revenue_dampener = 0.5   # 깊은 매출 감소 — confidence 반감
+        elif rev_yoy < -5.0:
+            revenue_dampener = 0.75
+
     gap = op_margin_ttm - op_margin_prev
     best_confidence = 0.0
     reason_text = ""
@@ -50,6 +69,8 @@ def detect(stock_data: dict, filings: list[dict]) -> CategoryMatch | None:
 
     if best_confidence == 0.0:
         return None
+
+    best_confidence = round(best_confidence * revenue_dampener, 3)
 
     evidence = [
         {

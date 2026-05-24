@@ -82,7 +82,11 @@ def _fetch_financials_around(client, ticker: str, rise_start: str) -> list[dict]
     # fq is text like '2022Q3' — fetch all rows for ticker, filter in Python.
     res = (
         client.table("financials_q")
-        .select("ticker, fq, revenue, op_income, op_margin, roe, roic, fcf, debt_ratio, order_backlog")
+        .select(
+            "ticker, fq, revenue, op_income, op_margin, net_income, "
+            "roe, roic, fcf, debt_ratio, order_backlog, "
+            "gross_profit, cfo, total_assets, total_equity, total_liab, shares_out"
+        )
         .eq("ticker", ticker)
         .order("fq", desc=True)
         .execute()
@@ -219,6 +223,36 @@ def _compute_quant_at_rise(financials: list[dict], rise_start: str) -> dict[str,
     debt_ratio = latest.get("debt_ratio")
     if debt_ratio is not None:
         out["debt_ratio_at_signal"] = round(debt_ratio, 2)
+
+    # ── Revenue QoQ acceleration at signal time (Asness 2013) ─────────────────
+    if len(relevant) >= 3:
+        q0r = relevant[0].get("revenue")
+        q1r = relevant[1].get("revenue")
+        q2r = relevant[2].get("revenue")
+        if q0r and q1r and q2r and q1r > 0 and q2r > 0:
+            rev_qoq_now = (q0r - q1r) / q1r * 100
+            rev_qoq_prev = (q1r - q2r) / q2r * 100
+            out["revenue_qoq_acceleration_at_signal"] = round(rev_qoq_now - rev_qoq_prev, 2)
+
+    # ── Quality metrics (Piotroski/Sloan/Novy-Marx) ───────────────────────────
+    # `relevant` is already sorted desc by fq — same shape compute_* expects.
+    try:
+        from .quality_metrics import (
+            compute_gp_to_assets,
+            compute_accruals_ratio,
+            compute_piotroski_f_score,
+        )
+        gp_a = compute_gp_to_assets(relevant)
+        if gp_a is not None:
+            out["gp_to_assets_at_signal"] = gp_a
+        accr = compute_accruals_ratio(relevant)
+        if accr is not None:
+            out["accruals_ratio_at_signal"] = accr
+        fs = compute_piotroski_f_score(relevant)
+        if fs is not None:
+            out["f_score_at_signal"] = fs
+    except Exception as e:
+        logger.debug("quality_metrics skipped: %s", e)
 
     return out
 

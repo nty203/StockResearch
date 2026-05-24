@@ -68,7 +68,9 @@ def collect_dart_financials(tickers: list[str], years: list[int]) -> list[dict]:
             for reprt_code, quarter_suffix in REPRT_CODES.items():
                 fq = f"{year}{quarter_suffix}"
                 try:
-                    df = dart.finstate(ticker, year, reprt_code=reprt_code)
+                    # finstate_all returns full XBRL statements (CF/IS/BS w/ 매출원가, 매출총이익).
+                    # finstate only returns 단일회사 주요 재무 (limited 6-row IS, no CF).
+                    df = dart.finstate_all(ticker, year, reprt_code=reprt_code)
                     if df is None or df.empty:
                         continue
                     # Parse key metrics from IFRS statements
@@ -152,12 +154,25 @@ def _parse_dart_df(df, ticker: str, fq: str) -> dict | None:
             capex_adj = -capex_raw   # treat positive CapEx as outflow
         fcf = operating_cf + capex_adj
 
-    # ── Debt ratio = 부채총계 / 자산총계 (%) ─────────────────────
-    debt_ratio = None
+    # ── Balance Sheet ─────────────────────────────────────────────
     total_assets      = get_amount(bs_df, "자산총계")
     total_liabilities = get_amount(bs_df, "부채총계")
+    total_equity      = get_amount(bs_df, "자본총계")
+    debt_ratio = None
     if total_assets and total_liabilities and total_assets > 0:
         debt_ratio = round(total_liabilities / total_assets * 100, 2)
+
+    # ── Gross profit (Novy-Marx GP/A) ─────────────────────────────
+    # DART 손익계산서 표기: '매출총이익' 또는 '매출 총이익'.
+    # 없으면 매출원가에서 역산 시도: gross = revenue - cogs
+    gross_profit = get_amount(is_df, "매출총이익") or get_amount(is_df, "매출 총이익")
+    if gross_profit is None and revenue is not None:
+        cogs = get_amount(is_df, "매출원가")
+        if cogs is not None:
+            gross_profit = revenue - cogs
+
+    # ── CFO (Sloan accruals 분모) ─────────────────────────────────
+    cfo = operating_cf  # already extracted above
 
     # 수주잔고: 별도 계정명으로 다수 시도
     order_backlog = _parse_backlog(df)
@@ -175,6 +190,11 @@ def _parse_dart_df(df, ticker: str, fq: str) -> dict | None:
         "fcf": fcf,
         "debt_ratio": debt_ratio,
         "interest_coverage": None,
+        "gross_profit": gross_profit,
+        "cfo": cfo,
+        "total_assets": total_assets,
+        "total_equity": total_equity,
+        "total_liab": total_liabilities,
     }
 
 

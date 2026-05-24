@@ -47,6 +47,38 @@ DETECTORS = [
 ]
 
 
+# ── Convergent boost signals (Seyhun 1988, O'Neil CANSLIM S) ───────────────
+# 임원 매수 + 자사주 매입은 카테고리 무관한 강한 "내부자 확신" 신호.
+# Seyhun 1988: 임원 매수 후 12개월 평균 초과수익률 +8.7%.
+# O'Neil S: 발행주식 감소 = 자사주 매입 = 100배 종목 공통 패턴.
+# 매칭된 카테고리의 confidence에 +0.05 부스트 (최대 0.95 캡).
+_INSIDER_BUY_KEYWORDS = [
+    "임원 ・ 주요주주 특정증권", "임원 주식 취득", "임원이 취득",
+    "최대주주 장내매수", "최대주주 등 소유주식 변동",
+    "대표이사 매수", "대표이사 장내매수",
+    "특수관계인 매수", "특수관계인 장내매수",
+    "임원 ․ 주요주주", "임원·주요주주",
+]
+_BUYBACK_KEYWORDS = [
+    "자기주식 취득", "자사주 취득", "자사주 매입",
+    "자기주식취득", "자기주식 소각", "자사주 소각",
+    "자사주매입", "자기주식취득 신탁계약",
+]
+
+
+def _has_convergent_signal(filings: list[dict]) -> tuple[bool, str | None]:
+    """Returns (True, label) if any filing has insider buy or buyback keywords."""
+    for f in filings:
+        text = ((f.get("raw_text") or "") + " " + (f.get("headline") or "")).lower()
+        for kw in _INSIDER_BUY_KEYWORDS:
+            if kw.lower() in text:
+                return True, "insider_buy"
+        for kw in _BUYBACK_KEYWORDS:
+            if kw.lower() in text:
+                return True, "buyback"
+    return False, None
+
+
 # ── Library pre-fetch ──────────────────────────────────────────────────────────
 
 def _load_library(client) -> dict[str, list[dict]]:
@@ -815,6 +847,19 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                 stock_data["ticker"] = ticker
                 stock_data["sector_tag"] = sector_by_ticker.get(ticker)
                 stock_data["market_cap"] = mktcap_by_ticker.get(ticker)
+
+                # ── Market cap gate (Mayer 100 Baggers, Bessembinder 2018) ────
+                # 100배 종목 통계: KOSDAQ 시총 약 500억원 출발이 중앙값.
+                # 상한선: 이미 너무 큰 종목은 100배 여력이 구조적으로 부족.
+                # 하한선: 너무 작으면 유동성/거래정지 위험.
+                mkt = market_by_ticker.get(ticker)
+                mc = stock_data["market_cap"]
+                if mc is not None and mkt in ("KOSPI", "KOSDAQ"):
+                    max_mc = 2_000_000_000_000 if mkt == "KOSPI" else 500_000_000_000
+                    min_mc = 100_000_000_000 if mkt == "KOSPI" else 15_000_000_000
+                    if mc > max_mc or mc < min_mc:
+                        continue
+
                 filings = filings_90d.get(ticker, [])
                 filings_clinical = filings_2y.get(ticker, [])
 
@@ -837,6 +882,30 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                                     "Library self-match skipped: %s/%s", ticker, category
                                 )
                                 continue
+
+                            # ── Piotroski F-Score 품질 게이트 ────────────────
+                            # 임상_파이프라인은 R&D 적자 페이즈 정상 → 게이트 면제.
+                            # 그 외 카테고리는 F-Score < 4면 confidence ×0.7 (회사 재무 취약 = FP 가능성 ↑),
+                            # F-Score >= 6이면 +0.05 부스트 (강한 재무 펀더멘털).
+                            f_score = stock_data.get("f_score")
+                            if f_score is not None and category != "임상_파이프라인":
+                                if f_score < 4:
+                                    result.confidence = round(result.confidence * 0.7, 3)
+                                    if result.confidence < min_confidence:
+                                        continue  # 게이트 fail
+                                elif f_score >= 6:
+                                    result.confidence = round(min(0.95, result.confidence + 0.05), 3)
+
+                            # ── Convergent insider/buyback boost (Seyhun/O'Neil) ──
+                            conv_hit, conv_label = _has_convergent_signal(f)
+                            if conv_hit:
+                                result.confidence = round(min(0.95, result.confidence + 0.05), 3)
+                                # Tag for downstream UI/analysis
+                                if not hasattr(result, "convergent_signals") or result.convergent_signals is None:
+                                    try:
+                                        result.convergent_signals = [conv_label]
+                                    except Exception:
+                                        pass
 
                             result.ticker = ticker
                             result.category = category

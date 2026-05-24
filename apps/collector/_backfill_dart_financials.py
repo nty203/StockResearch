@@ -114,7 +114,15 @@ def extract_financials(df, corp_code: str) -> dict | None:
         # 부채비율 = 부채총계 / 자산총계 (%)
         total_assets = get_amt(bs_df, '자산총계')
         total_liab   = get_amt(bs_df, '부채총계')
+        total_equity = get_amt(bs_df, '자본총계')
         debt_ratio = round(total_liab / total_assets * 100, 2) if (total_assets and total_liab and total_assets > 0) else None
+
+        # 매출총이익 (Novy-Marx GP/A)
+        gross_profit = get_amt(is_df, '매출총이익') or get_amt(is_df, '매출 총이익')
+        if gross_profit is None and revenue is not None:
+            cogs = get_amt(is_df, '매출원가')
+            if cogs is not None:
+                gross_profit = revenue - cogs
 
         return {
             'revenue': revenue,
@@ -123,6 +131,11 @@ def extract_financials(df, corp_code: str) -> dict | None:
             'op_margin': op_margin,
             'fcf': fcf,
             'debt_ratio': debt_ratio,
+            'gross_profit': gross_profit,
+            'cfo': operating_cf,
+            'total_assets': total_assets,
+            'total_equity': total_equity,
+            'total_liab': total_liab,
             'fs_div': fs_div,
         }
 
@@ -151,10 +164,14 @@ def get_corp_code(ticker: str, name_kr: str) -> str | None:
 
 
 def fetch_quarter(corp_code: str, year: int, quarter: str) -> dict | None:
-    """특정 분기 재무제표 조회. quarter: 'Q1'|'Q2'|'Q3'|'Q4'"""
+    """특정 분기 재무제표 조회. quarter: 'Q1'|'Q2'|'Q3'|'Q4'.
+
+    finstate_all() 사용: 전체 XBRL 재무제표 반환 (CF/매출원가/매출총이익 포함).
+    finstate()는 단일회사 주요 재무 (IS 6행 한정, CF 없음).
+    """
     reprt_code = REPRT_CODES[quarter]
     try:
-        df = dart.finstate(corp_code, year, reprt_code=reprt_code)
+        df = dart.finstate_all(corp_code, year, reprt_code=reprt_code)
         return extract_financials(df, corp_code)
     except Exception as e:
         logger.debug("DART fetch failed %s %dQ%s: %s", corp_code, year, quarter[-1], e)
@@ -178,6 +195,11 @@ def upsert_financials(ticker: str, fq: str, data: dict) -> bool:
         'net_income': data.get('net_income'),
         'fcf': data.get('fcf'),
         'debt_ratio': data.get('debt_ratio'),
+        'gross_profit': data.get('gross_profit'),
+        'cfo': data.get('cfo'),
+        'total_assets': data.get('total_assets'),
+        'total_equity': data.get('total_equity'),
+        'total_liab': data.get('total_liab'),
     }
     # None 값 필드는 제거하지 않음 — 기존 값 덮어쓰기가 필요한 경우 있음
     try:

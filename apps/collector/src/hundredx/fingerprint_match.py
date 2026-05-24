@@ -45,6 +45,12 @@ _QUANT_FIELD_TO_STOCK_KEY = {
     "roic_at_signal":       "roic",                 # Return on Invested Capital
     "fcf_margin_at_signal": "fcf_margin",           # FCF / Revenue TTM (%)
     "debt_ratio_at_signal": "debt_ratio",           # Total Liabilities / Total Assets (%)
+    # Piotroski / Sloan / Novy-Marx quality metrics
+    "gp_to_assets_at_signal":   "gp_to_assets",     # Novy-Marx GP/A
+    "accruals_ratio_at_signal": "accruals_ratio",   # Sloan (NI - CFO) / Avg Assets
+    "f_score_at_signal":        "f_score",          # Piotroski 0-9
+    # Revenue acceleration (Asness 2013, multibagger leading indicator)
+    "revenue_qoq_acceleration_at_signal": "revenue_qoq_acceleration",
 }
 
 
@@ -92,6 +98,21 @@ def _compute_current_quant(stock_data: dict) -> dict[str, float]:
     if debt_ratio is not None:
         out["debt_ratio"] = debt_ratio
 
+    # ── Quality metrics (Piotroski/Sloan/Novy-Marx) ───────────────────────────
+    gp_to_assets = stock_data.get("gp_to_assets")
+    if gp_to_assets is not None:
+        out["gp_to_assets"] = gp_to_assets
+    accruals = stock_data.get("accruals_ratio")
+    if accruals is not None:
+        out["accruals_ratio"] = accruals
+    f_score = stock_data.get("f_score")
+    if f_score is not None:
+        out["f_score"] = f_score
+
+    rev_qoq_acc = stock_data.get("revenue_qoq_acceleration")
+    if rev_qoq_acc is not None:
+        out["revenue_qoq_acceleration"] = rev_qoq_acc
+
     return out
 
 
@@ -117,9 +138,16 @@ def _quant_match(library_quant: dict, current_quant: dict) -> tuple[list[str], l
         if lib_field in ("opm_prev",):
             # low-base requirement: current opm_prev should be <= library_opm_prev * (1 + tolerance)
             ok = current_value <= lib_value * (1 + _QUANT_TOLERANCE)
-        elif lib_field in ("debt_ratio_at_signal",):
-            # lower debt is always good — current <= library * (1 + tolerance) counts as match
-            ok = current_value <= lib_value * (1 + _QUANT_TOLERANCE)
+        elif lib_field in ("debt_ratio_at_signal", "accruals_ratio_at_signal"):
+            # Lower is better. accruals_ratio: negative (CFO>NI) is best;
+            # cap upper bound using absolute tolerance for sign-sensitive metric.
+            if lib_field == "accruals_ratio_at_signal":
+                ok = current_value <= max(lib_value, 0) + _QUANT_TOLERANCE
+            else:
+                ok = current_value <= lib_value * (1 + _QUANT_TOLERANCE)
+        elif lib_field == "f_score_at_signal":
+            # F-Score is discrete 0-9; allow ±2 around library value
+            ok = current_value >= lib_value - 2
         else:
             ok = current_value >= lib_value * (1 - _QUANT_TOLERANCE)
 
