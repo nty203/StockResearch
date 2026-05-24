@@ -81,23 +81,83 @@ def collect_dart_financials(tickers: list[str], years: list[int]) -> list[dict]:
     return rows
 
 
+def _get_stmt_df(df, sj_div: str):
+    """Filter DataFrame by statement division (BS/IS/CIS/CF/SCE).
+
+    DART finstate() returns all financial statements in one DataFrame.
+    sj_div values: 'BS'=재무상태표, 'IS'=손익계산서, 'CIS'=포괄손익, 'CF'=현금흐름표.
+    Falls back to full df if sj_div column is absent (older API responses).
+    """
+    if "sj_div" in df.columns:
+        sub = df[df["sj_div"].str.upper() == sj_div.upper()]
+        return sub if not sub.empty else df
+    # Fallback: filter by statement name keyword
+    _sj_keywords = {"BS": "재무상태표", "CF": "현금흐름"}
+    if "sj_nm" in df.columns and sj_div in _sj_keywords:
+        sub = df[df["sj_nm"].str.contains(_sj_keywords[sj_div], na=False)]
+        return sub if not sub.empty else df
+    return df
+
+
 def _parse_dart_df(df, ticker: str, fq: str) -> dict | None:
-    """Extract key financial metrics from DART IFRS dataframe."""
-    def get_amount(account_nm: str) -> float | None:
-        mask = df["account_nm"].str.contains(account_nm, na=False)
-        rows = df[mask]
+    """Extract key financial metrics from DART IFRS dataframe.
+
+    DART finstate() returns all statements (IS/BS/CF) in one DataFrame.
+    We split by sj_div to avoid account-name collisions across statements.
+    """
+    def get_amount(src_df, account_nm: str) -> float | None:
+        mask = src_df["account_nm"].str.contains(account_nm, na=False)
+        rows = src_df[mask]
         if rows.empty:
             return None
         val = rows.iloc[0].get("thstrm_amount", rows.iloc[0].get("당기"))
         return _safe_float(val)
 
-    revenue = get_amount("매출액") or get_amount("수익(매출액)")
-    op_income = get_amount("영업이익")
-    net_income = get_amount("당기순이익")
+    # Prefer CFS (연결) rows; fall back to OFS (별도)
+    for fs_div in ("CFS", "OFS"):
+        subset = df[df["fs_div"] == fs_div] if "fs_div" in df.columns else df
+        if not subset.empty:
+            df = subset
+            break
+
+    is_df = _get_stmt_df(df, "IS") or _get_stmt_df(df, "CIS")   # Income Statement
+    bs_df = _get_stmt_df(df, "BS")                                # Balance Sheet
+    cf_df = _get_stmt_df(df, "CF")                                # Cash Flow
+
+    revenue   = get_amount(is_df, "매출액") or get_amount(is_df, "수익(매출액)")
+    op_income = get_amount(is_df, "영업이익")
+    net_income = get_amount(is_df, "당기순이익")
     if revenue is None and op_income is None:
         return None
 
     op_margin = (op_income / revenue * 100) if (revenue and op_income) else None
+
+    # ── FCF = 영업활동현금흐름 − 유형자산 취득 ────────────────────
+    # DART cumulates CF ytd: Q1=3mo, Q2=6mo, Q3=9mo, Q4=12mo.
+    # Store as-is; db_fetch uses the latest quarter's FCF as the most recent signal.
+    fcf = None
+    operating_cf = get_amount(cf_df, "영업활동현금흐름") or get_amount(cf_df, "영업활동으로 인한 현금흐름")
+    if operating_cf is not None:
+        capex_raw = (
+            get_amount(cf_df, "유형자산의 취득")
+            or get_amount(cf_df, "유형자산 취득")
+            or get_amount(cf_df, "유형자산취득")
+        )
+        # CapEx in CF statement is usually negative (cash outflow).
+        # FCF = operating_cf + capex_raw  (capex_raw already negative)
+        # If capex_raw is stored as positive absolute: FCF = operating_cf - capex_raw
+        # We use the raw value so both signs are handled: negative → correct; positive → still ok
+        capex_adj = (capex_raw or 0)
+        if capex_raw is not None and capex_raw > 0:
+            capex_adj = -capex_raw   # treat positive CapEx as outflow
+        fcf = operating_cf + capex_adj
+
+    # ── Debt ratio = 부채총계 / 자산총계 (%) ─────────────────────
+    debt_ratio = None
+    total_assets      = get_amount(bs_df, "자산총계")
+    total_liabilities = get_amount(bs_df, "부채총계")
+    if total_assets and total_liabilities and total_assets > 0:
+        debt_ratio = round(total_liabilities / total_assets * 100, 2)
 
     # 수주잔고: 별도 계정명으로 다수 시도
     order_backlog = _parse_backlog(df)
@@ -112,8 +172,8 @@ def _parse_dart_df(df, ticker: str, fq: str) -> dict | None:
         "order_backlog": order_backlog,
         "roe": None,
         "roic": None,
-        "fcf": None,
-        "debt_ratio": None,
+        "fcf": fcf,
+        "debt_ratio": debt_ratio,
         "interest_coverage": None,
     }
 

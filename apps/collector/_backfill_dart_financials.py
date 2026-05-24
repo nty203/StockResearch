@@ -55,10 +55,23 @@ def parse_amount(val: str) -> int | None:
         return None
 
 
+def _get_sj_df(df, sj_div: str):
+    """sj_div(BS/IS/CF) 또는 sj_nm 키워드로 서브 DataFrame 추출."""
+    if 'sj_div' in df.columns:
+        sub = df[df['sj_div'].str.upper() == sj_div.upper()]
+        return sub if not sub.empty else df
+    _kw = {'BS': '재무상태표', 'CF': '현금흐름'}
+    if 'sj_nm' in df.columns and sj_div in _kw:
+        sub = df[df['sj_nm'].str.contains(_kw[sj_div], na=False)]
+        return sub if not sub.empty else df
+    return df
+
+
 def extract_financials(df, corp_code: str) -> dict | None:
     """
-    finstate DataFrame에서 매출액, 영업이익 추출.
+    finstate DataFrame에서 매출액, 영업이익, FCF, 부채비율 추출.
     연결재무제표(CFS) 우선, 없으면 별도(OFS).
+    DART finstate()는 IS/BS/CF 모두 포함한 단일 DataFrame을 반환함.
     """
     if df is None or df.empty:
         return None
@@ -68,28 +81,50 @@ def extract_financials(df, corp_code: str) -> dict | None:
         if subset.empty:
             continue
 
-        revenue = None
-        op_income = None
+        def get_amt(src, nm: str) -> int | None:
+            mask = src['account_nm'].str.contains(nm, na=False)
+            rows = src[mask]
+            if rows.empty:
+                return None
+            return parse_amount(str(rows.iloc[0].get('thstrm_amount', '')))
 
-        for _, row in subset.iterrows():
-            nm = str(row.get('account_nm', ''))
-            amt_str = str(row.get('thstrm_amount', ''))
+        is_df = _get_sj_df(subset, 'IS')
+        bs_df = _get_sj_df(subset, 'BS')
+        cf_df = _get_sj_df(subset, 'CF')
 
-            if nm == '매출액' and revenue is None:
-                revenue = parse_amount(amt_str)
-            elif nm in ('영업이익', '영업손익', '영업이익(손실)') and op_income is None:
-                op_income = parse_amount(amt_str)
+        revenue   = get_amt(is_df, '매출액') or get_amt(is_df, '수익\\(매출액\\)')
+        op_income = get_amt(is_df, '영업이익') or get_amt(is_df, '영업손익') or get_amt(is_df, '영업이익\\(손실\\)')
+        net_income = get_amt(is_df, '당기순이익')
 
-        if revenue is not None or op_income is not None:
-            op_margin = None
-            if revenue and op_income and revenue > 0:
-                op_margin = round(op_income / revenue * 100, 2)
-            return {
-                'revenue': revenue,
-                'op_income': op_income,
-                'op_margin': op_margin,
-                'fs_div': fs_div,
-            }
+        if revenue is None and op_income is None:
+            continue
+
+        op_margin = round(op_income / revenue * 100, 2) if (revenue and op_income and revenue > 0) else None
+
+        # FCF = 영업활동현금흐름 - 유형자산 취득
+        operating_cf = get_amt(cf_df, '영업활동현금흐름') or get_amt(cf_df, '영업활동으로 인한 현금흐름')
+        capex = get_amt(cf_df, '유형자산의 취득') or get_amt(cf_df, '유형자산 취득') or get_amt(cf_df, '유형자산취득')
+        fcf = None
+        if operating_cf is not None:
+            cap = abs(capex) if capex is not None else 0
+            if capex is not None and capex > 0:
+                cap = -capex
+            fcf = operating_cf + cap
+
+        # 부채비율 = 부채총계 / 자산총계 (%)
+        total_assets = get_amt(bs_df, '자산총계')
+        total_liab   = get_amt(bs_df, '부채총계')
+        debt_ratio = round(total_liab / total_assets * 100, 2) if (total_assets and total_liab and total_assets > 0) else None
+
+        return {
+            'revenue': revenue,
+            'op_income': op_income,
+            'net_income': net_income,
+            'op_margin': op_margin,
+            'fcf': fcf,
+            'debt_ratio': debt_ratio,
+            'fs_div': fs_div,
+        }
 
     return None
 
@@ -133,15 +168,18 @@ def get_existing_fqs(ticker: str) -> set:
 
 
 def upsert_financials(ticker: str, fq: str, data: dict) -> bool:
-    """financials_q에 upsert"""
+    """financials_q에 upsert — revenue/op_income/op_margin/net_income/fcf/debt_ratio 포함"""
     row = {
         'ticker': ticker,
         'fq': fq,
         'revenue': data.get('revenue'),
         'op_income': data.get('op_income'),
         'op_margin': data.get('op_margin'),
+        'net_income': data.get('net_income'),
+        'fcf': data.get('fcf'),
+        'debt_ratio': data.get('debt_ratio'),
     }
-    # net_income은 선택적으로 추가 가능
+    # None 값 필드는 제거하지 않음 — 기존 값 덮어쓰기가 필요한 경우 있음
     try:
         client.table('financials_q').upsert(row, on_conflict='ticker,fq').execute()
         return True

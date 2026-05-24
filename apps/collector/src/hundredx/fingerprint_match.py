@@ -41,6 +41,10 @@ _QUANT_FIELD_TO_STOCK_KEY = {
     "opm_prev":             "op_margin_prev",
     "opm_delta_at_signal":  "opm_delta",            # computed = ttm - prev
     "revenue_growth_yoy":   "revenue_growth_yoy",   # computed = (ttm - prev) / prev
+    # Quality/efficiency metrics (Bessembinder 2018, CAFE 2025, Mayer 2015)
+    "roic_at_signal":       "roic",                 # Return on Invested Capital
+    "fcf_margin_at_signal": "fcf_margin",           # FCF / Revenue TTM (%)
+    "debt_ratio_at_signal": "debt_ratio",           # Total Liabilities / Total Assets (%)
 }
 
 
@@ -68,6 +72,26 @@ def _compute_current_quant(stock_data: dict) -> dict[str, float]:
     if revenue_ttm and revenue_prev and revenue_prev > 0:
         out["revenue_growth_yoy"] = (revenue_ttm - revenue_prev) / revenue_prev * 100
 
+    # ── Quality/efficiency metrics (research-backed 100x predictors) ──────────
+    # ROIC (Return on Invested Capital): quality moat indicator.
+    # Phelps "100 to 1": ROIC > 9%; Greenblatt: ROIC > 15%.
+    roic = stock_data.get("roic")
+    if roic is not None:
+        out["roic"] = roic
+
+    # FCF margin = FCF / Revenue (%). CAFE Working Paper 2025: FCF yield is the
+    # strongest single predictor of multibagger status.
+    # We use FCF/Revenue (margin) rather than FCF/MarketCap (yield) because
+    # it normalises across company sizes and doesn't need real-time market cap.
+    fcf = stock_data.get("fcf")
+    if fcf is not None and revenue_ttm and revenue_ttm > 0:
+        out["fcf_margin"] = fcf / revenue_ttm * 100  # in %
+
+    # Debt ratio (%). Low debt = financial runway for growth.
+    debt_ratio = stock_data.get("debt_ratio")
+    if debt_ratio is not None:
+        out["debt_ratio"] = debt_ratio
+
     return out
 
 
@@ -87,11 +111,14 @@ def _quant_match(library_quant: dict, current_quant: dict) -> tuple[list[str], l
             continue
 
         # Direction-aware match:
-        # - For ratios (BCR, OPM, growth) higher than library is GOOD (still match)
+        # - For ratios (BCR, OPM, growth, ROIC, FCF margin) higher than library is GOOD
         # - For prev OPM (low-base inflection) lower or equal is OK
-        # - For deltas/growth percentages, current >= library * (1 - tolerance)
-        if lib_field == "opm_prev":
+        # - For debt_ratio lower is better (less debt = more runway)
+        if lib_field in ("opm_prev",):
             # low-base requirement: current opm_prev should be <= library_opm_prev * (1 + tolerance)
+            ok = current_value <= lib_value * (1 + _QUANT_TOLERANCE)
+        elif lib_field in ("debt_ratio_at_signal",):
+            # lower debt is always good — current <= library * (1 + tolerance) counts as match
             ok = current_value <= lib_value * (1 + _QUANT_TOLERANCE)
         else:
             ok = current_value >= lib_value * (1 - _QUANT_TOLERANCE)

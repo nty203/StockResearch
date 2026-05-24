@@ -1,0 +1,3637 @@
+[
+  {
+    "ticker": "042700",
+    "name": "한미반도체",
+    "category": "플랫폼_독점",
+    "notes": "한미반도체: TC본더 글로벌 유일 공급사 + NVIDIA HBM 라인 수주.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: HBM, AI, 메모리",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2021-01-01",
+          "importance": "medium",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: TC본더, HBM, SK하이닉스",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2021-01-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: NVIDIA, HBM, 공급 계약",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2021-01-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 양산, 수율, 증설",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2021-01-01",
+          "importance": "high",
+          "producer_id": "PR4"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "042700 종목은 어떻게 19.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2021-01-01",
+          "peak_multiplier: 19.0x",
+          "notes: 한미반도체: TC본더 글로벌 유일 공급사 + NVIDIA HBM 라인 수주."
+        ],
+        "objective_problem": "2021-01-01 상승 시작 이후 플랫폼_독점 카테고리에서 19.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -9)",
+          "category": "시장/외부환경",
+          "candidate": "HBM_시장_확대 (T-9)",
+          "likelihood": "medium",
+          "trigger_seq": 0,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "TC본더_수주 (T-3) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 0)",
+          "category": "데이터/재무",
+          "candidate": "NVIDIA_파트너십 (T0)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR4",
+          "reason": "Timeline sequence 3 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "양산_확대 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 3,
+          "related_predicates": [
+            "P1"
+          ]
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: HBM, AI, 메모리",
+          "발화 신호 확인: TC본더, HBM, SK하이닉스",
+          "발화 신호 확인: NVIDIA, HBM, 공급 계약"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 플랫폼_독점 종목 스크리닝"
+        ],
+        "most_likely_cause": "HBM_시장_확대 (T-9)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "섹터 일치 (반도체)",
+          "how_to_check": "stock_data.sector_tag"
+        }
+      ],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "플랫폼_독점 카테고리 19.0x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR2",
+          "detector_rule": {
+            "category": "플랫폼_독점",
+            "conditions": {
+              "sector_required": "반도체"
+            }
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:26.438111+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR4",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 5,
+          "timing": 4,
+          "summary": "배경 요인",
+          "relevance": 3,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "012450",
+    "name": "한화에어로스페이스",
+    "category": "정책_수혜",
+    "notes": "한화에어로스페이스: NATO 재무장 + 폴란드 K-9 9조원 수출. 정책 + 수주 동시.",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "012450 종목은 어떻게 20.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2022-07-01",
+          "peak_multiplier: 20.0x",
+          "notes: 한화에어로스페이스: NATO 재무장 + 폴란드 K-9 9조원 수출. 정책 + 수주 동시."
+        ],
+        "objective_problem": "2022-07-01 상승 시작 이후 정책_수혜 카테고리에서 20.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 정책_수혜 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "섹터 일치 (방산)",
+          "how_to_check": "stock_data.sector_tag"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:56:17.359052+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "267260",
+    "name": "HD현대일렉트릭",
+    "category": "정책_수혜",
+    "notes": "HD현대일렉트릭: IRA 이후 미국 전력망 투자 2배. HVDC 변압기 수주.",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "267260 종목은 어떻게 8.2배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2023-01-01",
+          "peak_multiplier: 8.2x",
+          "notes: HD현대일렉트릭: IRA 이후 미국 전력망 투자 2배. HVDC 변압기 수주."
+        ],
+        "objective_problem": "2023-01-01 상승 시작 이후 정책_수혜 카테고리에서 8.2x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 정책_수혜 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "섹터 일치 (조선/엔진)",
+          "how_to_check": "stock_data.sector_tag"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:56:17.067978+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "103590",
+    "name": "일진전기",
+    "category": "전력_인프라",
+    "notes": "자동 발견: 2021-05-13(3781) → 2026-05-04(144100) 38.1x (4.97년)",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "103590 종목은 어떻게 38.1배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2021-05-13",
+          "peak_multiplier: 38.1x",
+          "notes: 자동 발견: 2021-05-13(3781) → 2026-05-04(144100) 38.1x (4.97년)"
+        ],
+        "objective_problem": "2021-05-13 상승 시작 이후 전력_인프라 카테고리에서 38.1x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 전력_인프라 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "키워드 매칭 >= 1개 (변압기, 초고압, 전력망...)",
+          "how_to_check": "filings raw_text or headline"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:59:29.475137+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "005070",
+    "name": "코스모신소재",
+    "category": "이차전지_소재",
+    "notes": "자동 발견: 2016-06-27(2125) → 2023-06-13(231645) 109.0x (6.96년)",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "005070 종목은 어떻게 109.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2016-06-27",
+          "peak_multiplier: 109.0x",
+          "notes: 자동 발견: 2016-06-27(2125) → 2023-06-13(231645) 109.0x (6.96년)"
+        ],
+        "objective_problem": "2016-06-27 상승 시작 이후 이차전지_소재 카테고리에서 109.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 이차전지_소재 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "키워드 매칭 >= 1개 (양극재, 이차전지...)",
+          "how_to_check": "filings raw_text or headline"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:59:37.823039+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "086520",
+    "name": "에코프로",
+    "category": "공급_병목",
+    "notes": "에코프로: EV 배터리 공급 부족 + 양극재 증설 + IRA 수혜.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: EV, 전기차, 배터리",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2020-01-01",
+          "importance": "medium",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 양극재, EV 배터리, 공급 부족",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2020-01-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 증설, 신공장, CAPEX",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2020-01-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: IRA, 보조금, 리쇼어링",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2020-01-01",
+          "importance": "high",
+          "producer_id": "PR4"
+        },
+        {
+          "found": true,
+          "trace": "정량적 데이터 확인",
+          "where": "Financial statements",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2020-01-01",
+          "importance": "high",
+          "producer_id": "PR5"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "086520 종목은 어떻게 107.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2020-01-01",
+          "peak_multiplier: 107.0x",
+          "notes: 에코프로: EV 배터리 공급 부족 + 양극재 증설 + IRA 수혜."
+        ],
+        "objective_problem": "2020-01-01 상승 시작 이후 공급_병목 카테고리에서 107.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -12)",
+          "category": "시장/외부환경",
+          "candidate": "EV_정책_배경 (T-12)",
+          "likelihood": "medium",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -6)",
+          "category": "데이터/재무",
+          "candidate": "양극재_수요폭발 (T-6) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "CAPEX_증설 (T-3)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        },
+        {
+          "id": "PR4",
+          "reason": "Timeline sequence 3 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "IRA_보조금 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 3,
+          "related_predicates": []
+        },
+        {
+          "id": "PR5",
+          "reason": "Timeline sequence 4 (months_from_rise: 6)",
+          "category": "데이터/재무",
+          "candidate": "매출_급증 (T+6)",
+          "likelihood": "high",
+          "trigger_seq": 4,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: EV, 전기차, 배터리",
+          "발화 신호 확인: 양극재, EV 배터리, 공급 부족",
+          "발화 신호 확인: 증설, 신공장, CAPEX"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 공급_병목 종목 스크리닝"
+        ],
+        "most_likely_cause": "EV_정책_배경 (T-12)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "공급_병목 카테고리 107.0x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR3",
+          "detector_rule": {
+            "category": "공급_병목",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:17.652073+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR4",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR5",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 5,
+          "timing": 4,
+          "summary": "배경 요인",
+          "relevance": 3,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "068270",
+    "name": "셀트리온",
+    "category": "산업_혁신",
+    "notes": "셀트리온: 바이오시밀러 시장 개척 및 글로벌 진출 성공. 10년 이상의 장기 성장을 통해 80배 이상 상승.",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "068270 종목은 어떻게 80.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2008-10-27",
+          "peak_multiplier: 80.0x",
+          "notes: 셀트리온: 바이오시밀러 시장 개척 및 글로벌 진출 성공. 10년 이상의 장기 성장을 통해 80배 이상 상승."
+        ],
+        "objective_problem": "2008-10-27 상승 시작 이후 산업_혁신 카테고리에서 80.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 산업_혁신 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:56:18.817871+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "087010",
+    "name": "펩트론",
+    "category": "임상_파이프라인",
+    "notes": "펩트론: FDA IND 승인 + 신공장 건설 + LG화학 유통 계약 3중 시그널. 선행 18개월.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: FDA IND, 임상시험계획, GLP-1",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: LG화학, CDMO, 공급 계약",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 신공장, CAPEX, 증설",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 임상, 1상, 2상",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR4"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "087010 종목은 어떻게 41.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2023-06-01",
+          "peak_multiplier: 41.0x",
+          "notes: 펩트론: FDA IND 승인 + 신공장 건설 + LG화학 유통 계약 3중 시그널. 선행 18개월."
+        ],
+        "objective_problem": "2023-06-01 상승 시작 이후 임상_파이프라인 카테고리에서 41.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -9)",
+          "category": "데이터/재무",
+          "candidate": "FDA_IND_제출 (T-9)",
+          "likelihood": "high",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "CDMO_파트너 (T-3) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 0)",
+          "category": "데이터/재무",
+          "candidate": "신공장_증설 (T0)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        },
+        {
+          "id": "PR4",
+          "reason": "Timeline sequence 3 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "임상_단계_진전 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 3,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: FDA IND, 임상시험계획, GLP-1",
+          "발화 신호 확인: LG화학, CDMO, 공급 계약",
+          "발화 신호 확인: 신공장, CAPEX, 증설"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 임상_파이프라인 종목 스크리닝"
+        ],
+        "most_likely_cause": "FDA_IND_제출 (T-9)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "임상_파이프라인 카테고리 41.0x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR2",
+          "detector_rule": {
+            "category": "임상_파이프라인",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:19.401458+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR4",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "019170",
+    "name": "신풍제약",
+    "category": "정책_수혜",
+    "notes": "신풍제약: 코로나19 치료제(피라마맥스) 임상 기대감으로 급등. 단기 35배 이상 상승 후 하락. 전형적인 뉴스/임상 기반 폭등 사례.",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "019170 종목은 어떻게 35.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2020-01-20",
+          "peak_multiplier: 35.0x",
+          "notes: 신풍제약: 코로나19 치료제(피라마맥스) 임상 기대감으로 급등. 단기 35배 이상 상승 후 하락. 전형적인 뉴스/임상 기반 폭등 사례."
+        ],
+        "objective_problem": "2020-01-20 상승 시작 이후 정책_수혜 카테고리에서 35.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 정책_수혜 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:56:18.527895+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "402340",
+    "name": "SK스퀘어",
+    "category": "지주사_재평가",
+    "notes": "자동 발견: 2023-01-03(32000) → 2026-05-06(1089000) 34.0x (3.34년)",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "402340 종목은 어떻게 34.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2023-01-03",
+          "peak_multiplier: 34.0x",
+          "notes: 자동 발견: 2023-01-03(32000) → 2026-05-06(1089000) 34.0x (3.34년)"
+        ],
+        "objective_problem": "2023-01-03 상승 시작 이후 지주사_재평가 카테고리에서 34.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 지주사_재평가 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "키워드 매칭 >= 1개 (주주환원, 자사주 소각...)",
+          "how_to_check": "filings raw_text or headline"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:59:48.045841+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "032820",
+    "name": "우리기술",
+    "category": "정책_수혜",
+    "notes": "우리기술: 원안위 인증 갱신 + 탈원전→원전 정책 전환. MMIS 독점 지위 유지. 선행 12개월.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 원전, 탈원전, 정책 전환",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "medium",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 원안위, MMIS, 인증",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 체코, 두코바니, 원전",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        },
+        {
+          "found": true,
+          "trace": "정량적 데이터 확인",
+          "where": "Financial statements",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR4"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "032820 종목은 어떻게 16.2배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2023-06-01",
+          "peak_multiplier: 16.2x",
+          "notes: 우리기술: 원안위 인증 갱신 + 탈원전→원전 정책 전환. MMIS 독점 지위 유지. 선행 12개월."
+        ],
+        "objective_problem": "2023-06-01 상승 시작 이후 정책_수혜 카테고리에서 16.2x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -9)",
+          "category": "시장/외부환경",
+          "candidate": "정책_전환 (T-9)",
+          "likelihood": "medium",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -6)",
+          "category": "데이터/재무",
+          "candidate": "원안위_인증 (T-6) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 0)",
+          "category": "데이터/재무",
+          "candidate": "체코_원전_입찰 (T0)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        },
+        {
+          "id": "PR4",
+          "reason": "Timeline sequence 3 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "BCR_급등 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 3,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: 원전, 탈원전, 정책 전환",
+          "발화 신호 확인: 원안위, MMIS, 인증",
+          "발화 신호 확인: 체코, 두코바니, 원전"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 정책_수혜 종목 스크리닝"
+        ],
+        "most_likely_cause": "정책_전환 (T-9)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "정책_수혜 카테고리 16.2x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR3",
+          "detector_rule": {
+            "category": "정책_수혜",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:19.987916+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR4",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 5,
+          "timing": 4,
+          "summary": "배경 요인",
+          "relevance": 3,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "042700",
+    "name": "한미반도체",
+    "category": "빅테크_파트너",
+    "notes": "한미반도체: NVIDIA HBM 생산 라인 수주 — 빅테크 CAPEX 연동.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: HBM, AI, 메모리",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2021-01-01",
+          "importance": "medium",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: TC본더, HBM, SK하이닉스",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2021-01-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: NVIDIA, HBM, 공급 계약",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2021-01-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 양산, 수율, 증설",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2021-01-01",
+          "importance": "high",
+          "producer_id": "PR4"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "042700 종목은 어떻게 19.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2021-01-01",
+          "peak_multiplier: 19.0x",
+          "notes: 한미반도체: NVIDIA HBM 생산 라인 수주 — 빅테크 CAPEX 연동."
+        ],
+        "objective_problem": "2021-01-01 상승 시작 이후 빅테크_파트너 카테고리에서 19.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -9)",
+          "category": "시장/외부환경",
+          "candidate": "HBM_시장_확대 (T-9)",
+          "likelihood": "medium",
+          "trigger_seq": 0,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "TC본더_수주 (T-3) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 0)",
+          "category": "데이터/재무",
+          "candidate": "NVIDIA_파트너십 (T0)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR4",
+          "reason": "Timeline sequence 3 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "양산_확대 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 3,
+          "related_predicates": [
+            "P1"
+          ]
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: HBM, AI, 메모리",
+          "발화 신호 확인: TC본더, HBM, SK하이닉스",
+          "발화 신호 확인: NVIDIA, HBM, 공급 계약"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 빅테크_파트너 종목 스크리닝"
+        ],
+        "most_likely_cause": "HBM_시장_확대 (T-9)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "섹터 일치 (반도체)",
+          "how_to_check": "stock_data.sector_tag"
+        }
+      ],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "빅테크_파트너 카테고리 19.0x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR2",
+          "detector_rule": {
+            "category": "빅테크_파트너",
+            "conditions": {
+              "sector_required": "반도체"
+            }
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:20.281972+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR4",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 5,
+          "timing": 4,
+          "summary": "배경 요인",
+          "relevance": 3,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "101360",
+    "name": "에코앤드림",
+    "category": "이차전지_소재",
+    "notes": "자동 발견: 2018-12-17(227) → 2024-03-06(66935) 294.9x (5.22년)",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "101360 종목은 어떻게 294.9배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2018-12-17",
+          "peak_multiplier: 294.9x",
+          "notes: 자동 발견: 2018-12-17(227) → 2024-03-06(66935) 294.9x (5.22년)"
+        ],
+        "objective_problem": "2018-12-17 상승 시작 이후 이차전지_소재 카테고리에서 294.9x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 이차전지_소재 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "키워드 매칭 >= 1개 (전구체, 이차전지...)",
+          "how_to_check": "filings raw_text or headline"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:59:32.669525+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "000250",
+    "name": "삼천당제약",
+    "category": "임상_파이프라인",
+    "notes": "삼천당제약: 경구형 GLP-1 일본→유럽→미국 기술이전 순차 계약. 선행 24개월. 오젬픽 대항마.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: GLP-1, S-PASS, 경구형",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2024-01-01",
+          "importance": "medium",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 일본, 기술이전, license out",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2024-01-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 유럽, 라이선스, 기술이전",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2024-01-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 미국, FDA, 기술이전",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2024-01-01",
+          "importance": "high",
+          "producer_id": "PR4"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "000250 종목은 어떻게 4.5배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2024-01-01",
+          "peak_multiplier: 4.5x",
+          "notes: 삼천당제약: 경구형 GLP-1 일본→유럽→미국 기술이전 순차 계약. 선행 24개월. 오젬픽 대항마."
+        ],
+        "objective_problem": "2024-01-01 상승 시작 이후 임상_파이프라인 카테고리에서 4.5x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -12)",
+          "category": "시장/외부환경",
+          "candidate": "GLP-1_플랫폼_확보 (T-12)",
+          "likelihood": "medium",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -9)",
+          "category": "데이터/재무",
+          "candidate": "일본_기술이전 (T-9)",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "유럽_라이선스 (T-3) ★",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        },
+        {
+          "id": "PR4",
+          "reason": "Timeline sequence 3 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "미국_본계약 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 3,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: GLP-1, S-PASS, 경구형",
+          "발화 신호 확인: 일본, 기술이전, license out",
+          "발화 신호 확인: 유럽, 라이선스, 기술이전"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 임상_파이프라인 종목 스크리닝"
+        ],
+        "most_likely_cause": "GLP-1_플랫폼_확보 (T-12)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "임상_파이프라인 카테고리 4.5x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR3",
+          "detector_rule": {
+            "category": "임상_파이프라인",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:20.577182+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR4",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 5,
+          "timing": 4,
+          "summary": "배경 요인",
+          "relevance": 3,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "010170",
+    "name": "대한광통신",
+    "category": "플랫폼_독점",
+    "notes": "대한광통신: 국내 유일 모재→광섬유→광케이블 수직계열화. AI DC 수요 폭발.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 광섬유, 광케이블, 모재",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2024-01-01",
+          "importance": "high",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: AI 데이터센터, 광섬유, 수요",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2024-01-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 공급 부족, 수급 불균형, 납기",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2024-01-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "010170 종목은 어떻게 35.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2024-01-01",
+          "peak_multiplier: 35.0x",
+          "notes: 대한광통신: 국내 유일 모재→광섬유→광케이블 수직계열화. AI DC 수요 폭발."
+        ],
+        "objective_problem": "2024-01-01 상승 시작 이후 플랫폼_독점 카테고리에서 35.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -12)",
+          "category": "데이터/재무",
+          "candidate": "수직계열화_완성 (T-12)",
+          "likelihood": "high",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "AI_DC_수요폭발 (T-3) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "공급_부족_확인 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: 광섬유, 광케이블, 모재",
+          "발화 신호 확인: AI 데이터센터, 광섬유, 수요",
+          "발화 신호 확인: 공급 부족, 수급 불균형, 납기"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 플랫폼_독점 종목 스크리닝"
+        ],
+        "most_likely_cause": "수직계열화_완성 (T-12)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "플랫폼_독점 카테고리 35.0x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR2",
+          "detector_rule": {
+            "category": "플랫폼_독점",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:20.879246+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "071970",
+    "name": "HD현대마린엔진",
+    "category": "조선_슈퍼사이클",
+    "notes": "자동 발견: 2022-09-28(3490) → 2026-04-27(115500) 33.1x (3.58년)",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "071970 종목은 어떻게 33.1배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2022-09-28",
+          "peak_multiplier: 33.1x",
+          "notes: 자동 발견: 2022-09-28(3490) → 2026-04-27(115500) 33.1x (3.58년)"
+        ],
+        "objective_problem": "2022-09-28 상승 시작 이후 조선_슈퍼사이클 카테고리에서 33.1x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 조선_슈퍼사이클 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "키워드 매칭 >= 1개 (친환경 선박, 이중연료...)",
+          "how_to_check": "filings raw_text or headline"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:59:42.804764+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "002070",
+    "name": "비비안",
+    "category": "단기_테마_급등",
+    "notes": "자동 발견: 2026-03-23(348) → 2026-05-06(11850) 34.0x (0.12년)",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "002070 종목은 어떻게 34.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2026-03-23",
+          "peak_multiplier: 34.0x",
+          "notes: 자동 발견: 2026-03-23(348) → 2026-05-06(11850) 34.0x (0.12년)"
+        ],
+        "objective_problem": "2026-03-23 상승 시작 이후 단기_테마_급등 카테고리에서 34.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 단기_테마_급등 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "키워드 매칭 >= 1개 (작전, 테마...)",
+          "how_to_check": "filings raw_text or headline"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:59:50.398931+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "010170",
+    "name": "대한광통신",
+    "category": "공급_병목",
+    "notes": "대한광통신: 수직계열화 완성 + AI 데이터센터 광섬유 공급 부족. 선행 24개월.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 광섬유, 광케이블, 모재",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2024-01-01",
+          "importance": "high",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: AI 데이터센터, 광섬유, 수요",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2024-01-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 공급 부족, 수급 불균형, 납기",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2024-01-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "010170 종목은 어떻게 35.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2024-01-01",
+          "peak_multiplier: 35.0x",
+          "notes: 대한광통신: 수직계열화 완성 + AI 데이터센터 광섬유 공급 부족. 선행 24개월."
+        ],
+        "objective_problem": "2024-01-01 상승 시작 이후 공급_병목 카테고리에서 35.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -12)",
+          "category": "데이터/재무",
+          "candidate": "수직계열화_완성 (T-12)",
+          "likelihood": "high",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "AI_DC_수요폭발 (T-3) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "공급_부족_확인 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: 광섬유, 광케이블, 모재",
+          "발화 신호 확인: AI 데이터센터, 광섬유, 수요",
+          "발화 신호 확인: 공급 부족, 수급 불균형, 납기"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 공급_병목 종목 스크리닝"
+        ],
+        "most_likely_cause": "수직계열화_완성 (T-12)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "공급_병목 카테고리 35.0x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR2",
+          "detector_rule": {
+            "category": "공급_병목",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:21.466307+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "277810",
+    "name": "레인보우로보틱스",
+    "category": "빅테크_파트너",
+    "notes": "레인보우로보틱스: 삼성전자 유상증자+콜옵션 공시 당일 급등. 콜옵션 = 지배구조 변화 예고. 선행기간 0일 (공시 즉시).",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 삼성전자, 유상증자 참여, 전략적 투자",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-01-26",
+          "importance": "high",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 콜옵션, call option, 최대주주",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-01-26",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 휴머노이드, humanoid, 협동로봇",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-01-26",
+          "importance": "high",
+          "producer_id": "PR3"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "277810 종목은 어떻게 20.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2023-01-26",
+          "peak_multiplier: 20.0x",
+          "notes: 레인보우로보틱스: 삼성전자 유상증자+콜옵션 공시 당일 급등. 콜옵션 = 지배구조 변화 예고. 선행기간 0일 (공시 즉시)."
+        ],
+        "objective_problem": "2023-01-26 상승 시작 이후 빅테크_파트너 카테고리에서 20.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: 0)",
+          "category": "데이터/재무",
+          "candidate": "삼성_지분취득 (T0) ★",
+          "likelihood": "high",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: 0)",
+          "category": "데이터/재무",
+          "candidate": "콜옵션_조항 (T0)",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "휴머노이드_관심 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: 삼성전자, 유상증자 참여, 전략적 투자",
+          "발화 신호 확인: 콜옵션, call option, 최대주주",
+          "발화 신호 확인: 휴머노이드, humanoid, 협동로봇"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 빅테크_파트너 종목 스크리닝"
+        ],
+        "most_likely_cause": "삼성_지분취득 (T0) ★",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "빅테크_파트너 카테고리 20.0x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR1",
+          "detector_rule": {
+            "category": "빅테크_파트너",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:21.756928+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "108490",
+    "name": "로보티즈",
+    "category": "빅테크_파트너",
+    "notes": "로보티즈: LG전자 90억 전략 지분투자. 휴머노이드 Dynamixel 채택과 결합.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: LG전자, 지분 취득, 전략적 투자",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: Dynamixel, 휴머노이드, humanoid",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: Dynamixel, 액추에이터, 학술",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "108490 종목은 어떻게 13.1배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2023-06-01",
+          "peak_multiplier: 13.1x",
+          "notes: 로보티즈: LG전자 90억 전략 지분투자. 휴머노이드 Dynamixel 채택과 결합."
+        ],
+        "objective_problem": "2023-06-01 상승 시작 이후 빅테크_파트너 카테고리에서 13.1x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -9)",
+          "category": "데이터/재무",
+          "candidate": "LG_지분투자 (T-9) ★",
+          "likelihood": "high",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "휴머노이드_채택 (T-3)",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "학술_채택 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: LG전자, 지분 취득, 전략적 투자",
+          "발화 신호 확인: Dynamixel, 휴머노이드, humanoid",
+          "발화 신호 확인: Dynamixel, 액추에이터, 학술"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 빅테크_파트너 종목 스크리닝"
+        ],
+        "most_likely_cause": "LG_지분투자 (T-9) ★",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "빅테크_파트너 카테고리 13.1x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR1",
+          "detector_rule": {
+            "category": "빅테크_파트너",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:22.338307+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "007660",
+    "name": "이수페타시스",
+    "category": "빅테크_파트너",
+    "notes": "자동 발견: 2021-05-28(2962) → 2026-04-22(161400) 54.5x (4.9년)",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "007660 종목은 어떻게 54.5배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2021-05-28",
+          "peak_multiplier: 54.5x",
+          "notes: 자동 발견: 2021-05-28(2962) → 2026-04-22(161400) 54.5x (4.9년)"
+        ],
+        "objective_problem": "2021-05-28 상승 시작 이후 빅테크_파트너 카테고리에서 54.5x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 빅테크_파트너 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "키워드 매칭 >= 1개 (엔비디아, MLB, AI 반도체...)",
+          "how_to_check": "filings raw_text or headline"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:59:45.574903+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "108490",
+    "name": "로보티즈",
+    "category": "플랫폼_독점",
+    "notes": "로보티즈: LG전자 전략적 지분투자 + Dynamixel 학술 논문 채택률 급증. 매출 발생 18~36개월 선행.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: LG전자, 지분 취득, 전략적 투자",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: Dynamixel, 휴머노이드, humanoid",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: Dynamixel, 액추에이터, 학술",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "108490 종목은 어떻게 13.1배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2023-06-01",
+          "peak_multiplier: 13.1x",
+          "notes: 로보티즈: LG전자 전략적 지분투자 + Dynamixel 학술 논문 채택률 급증. 매출 발생 18~36개월 선행."
+        ],
+        "objective_problem": "2023-06-01 상승 시작 이후 플랫폼_독점 카테고리에서 13.1x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -9)",
+          "category": "데이터/재무",
+          "candidate": "LG_지분투자 (T-9) ★",
+          "likelihood": "high",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "휴머노이드_채택 (T-3)",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "학술_채택 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: LG전자, 지분 취득, 전략적 투자",
+          "발화 신호 확인: Dynamixel, 휴머노이드, humanoid",
+          "발화 신호 확인: Dynamixel, 액추에이터, 학술"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 플랫폼_독점 종목 스크리닝"
+        ],
+        "most_likely_cause": "LG_지분투자 (T-9) ★",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "플랫폼_독점 카테고리 13.1x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR1",
+          "detector_rule": {
+            "category": "플랫폼_독점",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:23.225855+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "298040",
+    "name": "효성중공업",
+    "category": "수익성_급전환",
+    "notes": "효성중공업: OPM 2%→8% 급반등. 수주잔고와 수익성 동시 신호.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: IRA, 전력망, 미국",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-10-01",
+          "importance": "medium",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: HVDC, GIS, 변압기",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-10-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "정량적 데이터 확인",
+          "where": "Financial statements",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-10-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        },
+        {
+          "found": true,
+          "trace": "정량적 데이터 확인",
+          "where": "Financial statements",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-10-01",
+          "importance": "high",
+          "producer_id": "PR4"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "298040 종목은 어떻게 18.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2022-10-01",
+          "peak_multiplier: 18.0x",
+          "notes: 효성중공업: OPM 2%→8% 급반등. 수주잔고와 수익성 동시 신호."
+        ],
+        "objective_problem": "2022-10-01 상승 시작 이후 수익성_급전환 카테고리에서 18.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -6)",
+          "category": "시장/외부환경",
+          "candidate": "정책_트리거 (T-6)",
+          "likelihood": "medium",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "수출_확대공시 (T-3) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "BCR_전환점 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        },
+        {
+          "id": "PR4",
+          "reason": "Timeline sequence 3 (months_from_rise: 6)",
+          "category": "데이터/재무",
+          "candidate": "OPM_급반등 (T+6)",
+          "likelihood": "high",
+          "trigger_seq": 3,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: IRA, 전력망, 미국",
+          "발화 신호 확인: HVDC, GIS, 변압기",
+          "정량적 데이터 확인"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 수익성_급전환 종목 스크리닝"
+        ],
+        "most_likely_cause": "정책_트리거 (T-6)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "수익성_급전환 카테고리 18.0x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR4",
+          "detector_rule": {
+            "category": "수익성_급전환",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:22.631345+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR4",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 5,
+          "timing": 4,
+          "summary": "배경 요인",
+          "relevance": 3,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "012450",
+    "name": "한화에어로스페이스",
+    "category": "수주잔고_선행",
+    "notes": "한화에어로스페이스: 폴란드 K-9/K-2/FA-50 수주. BCR 2.8x, 수주잔고 YoY +115%. 주가 약 9개월 선행.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: NATO, 재무장, 방산예산",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-07-01",
+          "importance": "medium",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 수출, 수주, 방산",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-07-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 폴란드, K-9, K-2",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-07-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        },
+        {
+          "found": true,
+          "trace": "정량적 데이터 확인",
+          "where": "Financial statements",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-07-01",
+          "importance": "high",
+          "producer_id": "PR4"
+        },
+        {
+          "found": true,
+          "trace": "정량적 데이터 확인",
+          "where": "Financial statements",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-07-01",
+          "importance": "high",
+          "producer_id": "PR5"
+        },
+        {
+          "found": true,
+          "trace": "정량적 데이터 확인",
+          "where": "Financial statements",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-07-01",
+          "importance": "high",
+          "producer_id": "PR6"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "012450 종목은 어떻게 20.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2022-07-01",
+          "peak_multiplier: 20.0x",
+          "notes: 한화에어로스페이스: 폴란드 K-9/K-2/FA-50 수주. BCR 2.8x, 수주잔고 YoY +115%. 주가 약 9개월 선행."
+        ],
+        "objective_problem": "2022-07-01 상승 시작 이후 수주잔고_선행 카테고리에서 20.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -12)",
+          "category": "시장/외부환경",
+          "candidate": "지정학적_배경 (T-12)",
+          "likelihood": "medium",
+          "trigger_seq": 0,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -9)",
+          "category": "데이터/재무",
+          "candidate": "초기_수주공시 (T-9) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "메가계약_체결 (T-3)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR4",
+          "reason": "Timeline sequence 3 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "BCR_급등 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 3,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR5",
+          "reason": "Timeline sequence 4 (months_from_rise: 6)",
+          "category": "데이터/재무",
+          "candidate": "수주잔고_YoY_도약 (T+6)",
+          "likelihood": "high",
+          "trigger_seq": 4,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR6",
+          "reason": "Timeline sequence 5 (months_from_rise: 9)",
+          "category": "데이터/재무",
+          "candidate": "OPM_전환 (T+9)",
+          "likelihood": "high",
+          "trigger_seq": 5,
+          "related_predicates": [
+            "P1"
+          ]
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: NATO, 재무장, 방산예산",
+          "발화 신호 확인: 수출, 수주, 방산",
+          "발화 신호 확인: 폴란드, K-9, K-2"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 수주잔고_선행 종목 스크리닝"
+        ],
+        "most_likely_cause": "지정학적_배경 (T-12)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "섹터 일치 (방산)",
+          "how_to_check": "stock_data.sector_tag"
+        }
+      ],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "수주잔고_선행 카테고리 20.0x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR3",
+          "detector_rule": {
+            "category": "수주잔고_선행",
+            "conditions": {
+              "sector_required": "방산"
+            }
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:22.928728+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR4",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR5",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR6",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 5,
+          "timing": 4,
+          "summary": "배경 요인",
+          "relevance": 3,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "010120",
+    "name": "LS ELECTRIC",
+    "category": "전력_인프라",
+    "notes": "자동 발견: 2022-02-22(8050) → 2026-04-28(262500) 32.6x (4.18년)",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "010120 종목은 어떻게 32.6배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2022-02-22",
+          "peak_multiplier: 32.6x",
+          "notes: 자동 발견: 2022-02-22(8050) → 2026-04-28(262500) 32.6x (4.18년)"
+        ],
+        "objective_problem": "2022-02-22 상승 시작 이후 전력_인프라 카테고리에서 32.6x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 전력_인프라 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "키워드 매칭 >= 1개 (변압기, 초고압, 전력기기...)",
+          "how_to_check": "filings raw_text or headline"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:59:26.140213+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "042700",
+    "name": "한미반도체",
+    "category": "공급_병목",
+    "notes": "한미반도체: HBM 제조 필수 장비인 TC 본더 글로벌 독점 공급. AI 반도체 붐의 직접 수혜. 15배 이상 상승 중이며 장기 100배 가능성 높음.",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "042700 종목은 어떻게 15.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2022-09-30",
+          "peak_multiplier: 15.0x",
+          "notes: 한미반도체: HBM 제조 필수 장비인 TC 본더 글로벌 독점 공급. AI 반도체 붐의 직접 수혜. 15배 이상 상승 중이며 장기 100배 가능성 높음."
+        ],
+        "objective_problem": "2022-09-30 상승 시작 이후 공급_병목 카테고리에서 15.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 공급_병목 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "섹터 일치 (반도체)",
+          "how_to_check": "stock_data.sector_tag"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:56:24.101142+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "032820",
+    "name": "우리기술",
+    "category": "수주잔고_선행",
+    "notes": "우리기술: 체코 두코바니 원전 입찰 + MMIS 수주잔고/매출 3배.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 원전, 탈원전, 정책 전환",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "medium",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 원안위, MMIS, 인증",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 체코, 두코바니, 원전",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        },
+        {
+          "found": true,
+          "trace": "정량적 데이터 확인",
+          "where": "Financial statements",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-06-01",
+          "importance": "high",
+          "producer_id": "PR4"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "032820 종목은 어떻게 16.2배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2023-06-01",
+          "peak_multiplier: 16.2x",
+          "notes: 우리기술: 체코 두코바니 원전 입찰 + MMIS 수주잔고/매출 3배."
+        ],
+        "objective_problem": "2023-06-01 상승 시작 이후 수주잔고_선행 카테고리에서 16.2x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -9)",
+          "category": "시장/외부환경",
+          "candidate": "정책_전환 (T-9)",
+          "likelihood": "medium",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -6)",
+          "category": "데이터/재무",
+          "candidate": "원안위_인증 (T-6) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 0)",
+          "category": "데이터/재무",
+          "candidate": "체코_원전_입찰 (T0)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        },
+        {
+          "id": "PR4",
+          "reason": "Timeline sequence 3 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "BCR_급등 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 3,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: 원전, 탈원전, 정책 전환",
+          "발화 신호 확인: 원안위, MMIS, 인증",
+          "발화 신호 확인: 체코, 두코바니, 원전"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 수주잔고_선행 종목 스크리닝"
+        ],
+        "most_likely_cause": "정책_전환 (T-9)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "수주잔고_선행 카테고리 16.2x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR3",
+          "detector_rule": {
+            "category": "수주잔고_선행",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:24.389563+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR4",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 5,
+          "timing": 4,
+          "summary": "배경 요인",
+          "relevance": 3,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "196170",
+    "name": "알테오젠",
+    "category": "임상_파이프라인",
+    "notes": "알테오젠: SC 플랫폼(Hybrozyme) 글로벌 빅파마 기술이전 + FDA IND.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: FDA IND, 임상, Hybrozyme",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2020-01-01",
+          "importance": "high",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 기술이전, license out, 빅파마",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2020-01-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 기술이전, 빅파마, 마일스톤",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2020-01-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 임상, Phase, 1상",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2020-01-01",
+          "importance": "high",
+          "producer_id": "PR4"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "196170 종목은 어떻게 50.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2020-01-01",
+          "peak_multiplier: 50.0x",
+          "notes: 알테오젠: SC 플랫폼(Hybrozyme) 글로벌 빅파마 기술이전 + FDA IND."
+        ],
+        "objective_problem": "2020-01-01 상승 시작 이후 임상_파이프라인 카테고리에서 50.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -9)",
+          "category": "데이터/재무",
+          "candidate": "FDA_IND_획득 (T-9)",
+          "likelihood": "high",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "기술이전_계약 (T-3) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "추가_파트너십 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        },
+        {
+          "id": "PR4",
+          "reason": "Timeline sequence 3 (months_from_rise: 6)",
+          "category": "데이터/재무",
+          "candidate": "임상_진전 (T+6)",
+          "likelihood": "high",
+          "trigger_seq": 3,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: FDA IND, 임상, Hybrozyme",
+          "발화 신호 확인: 기술이전, license out, 빅파마",
+          "발화 신호 확인: 기술이전, 빅파마, 마일스톤"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 임상_파이프라인 종목 스크리닝"
+        ],
+        "most_likely_cause": "FDA_IND_획득 (T-9)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "임상_파이프라인 카테고리 50.0x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR2",
+          "detector_rule": {
+            "category": "임상_파이프라인",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:25.266189+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR4",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "267260",
+    "name": "HD현대일렉트릭",
+    "category": "수주잔고_선행",
+    "notes": "HD현대일렉트릭: 미국 변압기 리드타임 36개월. BCR 1.4x, 수주잔고 YoY +100%. 공급_병목과 교차 확인.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: IRA, 리쇼어링, 미국",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-01-01",
+          "importance": "medium",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: 변압기, 공급 부족, 리드타임",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-01-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: HVDC, 변압기, 미국",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-01-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        },
+        {
+          "found": true,
+          "trace": "정량적 데이터 확인",
+          "where": "Financial statements",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-01-01",
+          "importance": "high",
+          "producer_id": "PR4"
+        },
+        {
+          "found": true,
+          "trace": "정량적 데이터 확인",
+          "where": "Financial statements",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2023-01-01",
+          "importance": "high",
+          "producer_id": "PR5"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "267260 종목은 어떻게 8.2배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2023-01-01",
+          "peak_multiplier: 8.2x",
+          "notes: HD현대일렉트릭: 미국 변압기 리드타임 36개월. BCR 1.4x, 수주잔고 YoY +100%. 공급_병목과 교차 확인."
+        ],
+        "objective_problem": "2023-01-01 상승 시작 이후 수주잔고_선행 카테고리에서 8.2x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -9)",
+          "category": "시장/외부환경",
+          "candidate": "정책_트리거 (T-9)",
+          "likelihood": "medium",
+          "trigger_seq": 0,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -6)",
+          "category": "데이터/재무",
+          "candidate": "공급병목_뉴스 (T-6) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "미국_수주공시 (T-3)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR4",
+          "reason": "Timeline sequence 3 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "BCR_도약 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 3,
+          "related_predicates": [
+            "P1"
+          ]
+        },
+        {
+          "id": "PR5",
+          "reason": "Timeline sequence 4 (months_from_rise: 6)",
+          "category": "데이터/재무",
+          "candidate": "OPM_급반등 (T+6)",
+          "likelihood": "high",
+          "trigger_seq": 4,
+          "related_predicates": [
+            "P1"
+          ]
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: IRA, 리쇼어링, 미국",
+          "발화 신호 확인: 변압기, 공급 부족, 리드타임",
+          "발화 신호 확인: HVDC, 변압기, 미국"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 수주잔고_선행 종목 스크리닝"
+        ],
+        "most_likely_cause": "정책_트리거 (T-9)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "섹터 일치 (조선/엔진)",
+          "how_to_check": "stock_data.sector_tag"
+        }
+      ],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "수주잔고_선행 카테고리 8.2x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR3",
+          "detector_rule": {
+            "category": "수주잔고_선행",
+            "conditions": {
+              "sector_required": "조선/엔진"
+            }
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:25.562115+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR4",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR5",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 5,
+          "timing": 4,
+          "summary": "배경 요인",
+          "relevance": 3,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "298040",
+    "name": "효성중공업",
+    "category": "수주잔고_선행",
+    "notes": "효성중공업: HVDC·GIS 미국 전력망 수주. BCR 1.0x→1.5x. 중공업 mix 60% 전환점.",
+    "pptr": {
+      "traces": [
+        {
+          "found": true,
+          "trace": "발화 신호 확인: IRA, 전력망, 미국",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-10-01",
+          "importance": "medium",
+          "producer_id": "PR1"
+        },
+        {
+          "found": true,
+          "trace": "발화 신호 확인: HVDC, GIS, 변압기",
+          "where": "DART filings",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-10-01",
+          "importance": "high",
+          "producer_id": "PR2"
+        },
+        {
+          "found": true,
+          "trace": "정량적 데이터 확인",
+          "where": "Financial statements",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-10-01",
+          "importance": "high",
+          "producer_id": "PR3"
+        },
+        {
+          "found": true,
+          "trace": "정량적 데이터 확인",
+          "where": "Financial statements",
+          "judgment": "트리거 조건 부합 → 확정",
+          "found_date": "2022-10-01",
+          "importance": "high",
+          "producer_id": "PR4"
+        }
+      ],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "298040 종목은 어떻게 18.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2022-10-01",
+          "peak_multiplier: 18.0x",
+          "notes: 효성중공업: HVDC·GIS 미국 전력망 수주. BCR 1.0x→1.5x. 중공업 mix 60% 전환점."
+        ],
+        "objective_problem": "2022-10-01 상승 시작 이후 수주잔고_선행 카테고리에서 18.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [
+        {
+          "id": "PR1",
+          "reason": "Timeline sequence 0 (months_from_rise: -6)",
+          "category": "시장/외부환경",
+          "candidate": "정책_트리거 (T-6)",
+          "likelihood": "medium",
+          "trigger_seq": 0,
+          "related_predicates": []
+        },
+        {
+          "id": "PR2",
+          "reason": "Timeline sequence 1 (months_from_rise: -3)",
+          "category": "데이터/재무",
+          "candidate": "수출_확대공시 (T-3) ★",
+          "likelihood": "high",
+          "trigger_seq": 1,
+          "related_predicates": []
+        },
+        {
+          "id": "PR3",
+          "reason": "Timeline sequence 2 (months_from_rise: 3)",
+          "category": "데이터/재무",
+          "candidate": "BCR_전환점 (T+3)",
+          "likelihood": "high",
+          "trigger_seq": 2,
+          "related_predicates": []
+        },
+        {
+          "id": "PR4",
+          "reason": "Timeline sequence 3 (months_from_rise: 6)",
+          "category": "데이터/재무",
+          "candidate": "OPM_급반등 (T+6)",
+          "likelihood": "high",
+          "trigger_seq": 3,
+          "related_predicates": []
+        }
+      ],
+      "conclusion": {
+        "top3_traces": [
+          "발화 신호 확인: IRA, 전력망, 미국",
+          "발화 신호 확인: HVDC, GIS, 변압기",
+          "정량적 데이터 확인"
+        ],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 수주잔고_선행 종목 스크리닝"
+        ],
+        "most_likely_cause": "정책_트리거 (T-6)",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [
+        {
+          "risk": "거시 경제 및 개별 악재 존재 시 무효화",
+          "action": "수주잔고_선행 카테고리 18.0x 상승 패턴 감지 시 매수 검토",
+          "priority": 1,
+          "difficulty": "낮음 (자동 탐지됨)",
+          "producer_id": "PR4",
+          "detector_rule": {
+            "category": "수주잔고_선행",
+            "conditions": {}
+          },
+          "expected_effect": "상승 초기 포착 가능성"
+        }
+      ],
+      "generated_at": "2026-05-23T01:56:24.683681+00:00",
+      "priority_scores": [
+        {
+          "total": 15,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 5,
+          "repetition": 3,
+          "producer_id": "PR4",
+          "refutation_risk": 2,
+          "evidence_strength": 4
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR2",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 10,
+          "timing": 4,
+          "summary": "주요 트리거",
+          "relevance": 4,
+          "repetition": 3,
+          "producer_id": "PR3",
+          "refutation_risk": 2,
+          "evidence_strength": 3
+        },
+        {
+          "total": 5,
+          "timing": 4,
+          "summary": "배경 요인",
+          "relevance": 3,
+          "repetition": 3,
+          "producer_id": "PR1",
+          "refutation_risk": 2,
+          "evidence_strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "ticker": "107640",
+    "name": "한중엔시에스",
+    "category": "이차전지_소재",
+    "notes": "자동 발견: 2017-09-27(676) → 2026-04-21(72500) 107.2x (8.56년)",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "107640 종목은 어떻게 107.2배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2017-09-27",
+          "peak_multiplier: 107.2x",
+          "notes: 자동 발견: 2017-09-27(676) → 2026-04-21(72500) 107.2x (8.56년)"
+        ],
+        "objective_problem": "2017-09-27 상승 시작 이후 이차전지_소재 카테고리에서 107.2x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 이차전지_소재 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "키워드 매칭 >= 1개 (ESS, 이차전지...)",
+          "how_to_check": "filings raw_text or headline"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:59:40.258081+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "196170",
+    "name": "알테오젠",
+    "category": "기술_독점",
+    "notes": "알테오젠: 정맥주사를 피하주사로 바꾸는 SC 제형 변경 플랫폼 기술 보유. 글로벌 빅테크(머크 등)와의 대규모 라이선스 딜로 가치 재평가.",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "196170 종목은 어떻게 45.0배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2019-01-02",
+          "peak_multiplier: 45.0x",
+          "notes: 알테오젠: 정맥주사를 피하주사로 바꾸는 SC 제형 변경 플랫폼 기술 보유. 글로벌 빅테크(머크 등)와의 대규모 라이선스 딜로 가치 재평가."
+        ],
+        "objective_problem": "2019-01-02 상승 시작 이후 기술_독점 카테고리에서 45.0x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 기술_독점 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:56:25.856417+00:00",
+      "priority_scores": []
+    }
+  },
+  {
+    "ticker": "001570",
+    "name": "금양",
+    "category": "이차전지_소재",
+    "notes": "자동 발견: 2022-02-15(4310) → 2023-07-31(159100) 36.9x (1.45년)",
+    "pptr": {
+      "traces": [],
+      "version": "1.0",
+      "redefine": {
+        "user_problem": "001570 종목은 어떻게 36.9배 상승했는가?",
+        "confirmed_facts": [
+          "rise_start_date: 2022-02-15",
+          "peak_multiplier: 36.9x",
+          "notes: 자동 발견: 2022-02-15(4310) → 2023-07-31(159100) 36.9x (1.45년)"
+        ],
+        "objective_problem": "2022-02-15 상승 시작 이후 이차전지_소재 카테고리에서 36.9x 상승",
+        "unconfirmed_assumptions": [
+          "과거 유사한 상승 패턴이 현재 종목에도 유효할 것인가"
+        ]
+      },
+      "producers": [],
+      "conclusion": {
+        "top3_traces": [],
+        "actions_to_avoid": [
+          "단일 트리거만 보고 성급히 판단"
+        ],
+        "immediate_actions": [
+          "PPTR 디텍터를 이용해 이차전지_소재 종목 스크리닝"
+        ],
+        "most_likely_cause": "정보 부족",
+        "why_not_confirmed_as_single": "여러 복합적 요인(정량+정성)의 결합"
+      },
+      "predicates": [
+        {
+          "id": "P1",
+          "status": "confirmed",
+          "condition": "키워드 매칭 >= 1개 (수산화리튬, 배터리...)",
+          "how_to_check": "filings raw_text or headline"
+        }
+      ],
+      "resolutions": [],
+      "generated_at": "2026-05-23T01:59:35.284321+00:00",
+      "priority_scores": []
+    }
+  }
+]

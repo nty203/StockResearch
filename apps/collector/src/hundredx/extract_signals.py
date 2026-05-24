@@ -200,6 +200,26 @@ def _compute_quant_at_rise(financials: list[dict], rise_start: str) -> dict[str,
         if revenue_ttm and rev_prev_ttm and rev_prev_ttm > 0:
             out["revenue_growth_yoy"] = round((revenue_ttm - rev_prev_ttm) / rev_prev_ttm * 100, 1)
 
+    # ── Quality/efficiency metrics (research-backed 100x predictors) ──────────
+    # ROIC at signal time.
+    # Note: DART backfill only provides revenue/op_income; ROIC requires balance sheet.
+    # Populate when available (yfinance-sourced records); skip gracefully if absent.
+    roic = latest.get("roic")
+    if roic is not None:
+        out["roic_at_signal"] = round(roic, 4)
+
+    # FCF margin = FCF / Revenue TTM (%).
+    # DART cumulative CF is in the latest record (Q3→9mo, Q4→12mo).
+    # Using Q4 (annual) gives the cleanest TTM comparison.
+    fcf = latest.get("fcf")
+    if fcf is not None and revenue_ttm and revenue_ttm > 0:
+        out["fcf_margin_at_signal"] = round(fcf / revenue_ttm * 100, 2)
+
+    # Debt ratio at signal time (lower = more financial runway).
+    debt_ratio = latest.get("debt_ratio")
+    if debt_ratio is not None:
+        out["debt_ratio_at_signal"] = round(debt_ratio, 2)
+
     return out
 
 

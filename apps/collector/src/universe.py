@@ -31,6 +31,12 @@ def collect_kr_universe() -> list[dict]:
             ticker = str(r.get("Code", r.get("Symbol", ""))).strip()
             if not ticker:
                 continue
+            # 시가총액: Marcap 컬럼 (원 단위). 0 또는 NaN이면 None으로 저장
+            marcap_raw = r.get(marcap_col) if marcap_col else None
+            try:
+                market_cap_val = int(marcap_raw) if marcap_raw and float(marcap_raw) > 0 else None
+            except (TypeError, ValueError):
+                market_cap_val = None
             rows.append({
                 "ticker": ticker,
                 "market": market,
@@ -39,6 +45,7 @@ def collect_kr_universe() -> list[dict]:
                 "sector_wics": str(r.get("Sector", r.get("Industry", ""))),
                 "industry": str(r.get("Industry", "")),
                 "is_active": True if limit is None else (idx < limit),
+                "market_cap": market_cap_val,
             })
     return rows
 

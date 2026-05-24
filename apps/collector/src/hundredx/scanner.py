@@ -766,7 +766,7 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
         while True:
             res = (
                 client.table("stocks")
-                .select("ticker, market, sector_tag")
+                .select("ticker, market, sector_tag, market_cap")
                 .eq("is_active", True)
                 .in_("market", ["KOSPI", "KOSDAQ", "NYSE", "NASDAQ"])
                 .range(offset, offset + page_size - 1)
@@ -781,6 +781,7 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
         tickers = [s["ticker"] for s in stocks]
         sector_by_ticker = {s["ticker"]: s.get("sector_tag") for s in stocks}
         market_by_ticker = {s["ticker"]: s.get("market") for s in stocks}
+        mktcap_by_ticker = {s["ticker"]: s.get("market_cap") for s in stocks}
         kr_count = sum(1 for s in stocks if s["market"] in ("KOSPI", "KOSDAQ"))
         us_count = len(stocks) - kr_count
         logger.info("Scanning %d active stocks (KR: %d, US: %d)", len(tickers), kr_count, us_count)
@@ -813,6 +814,7 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                 stock_data = fin_data.get(ticker, {"ticker": ticker})
                 stock_data["ticker"] = ticker
                 stock_data["sector_tag"] = sector_by_ticker.get(ticker)
+                stock_data["market_cap"] = mktcap_by_ticker.get(ticker)
                 filings = filings_90d.get(ticker, [])
                 filings_clinical = filings_2y.get(ticker, [])
 
