@@ -12,13 +12,13 @@ logger = logging.getLogger(__name__)
 _MAX_STALE_MONTHS = 18
 
 
-def _current_min_fq() -> str:
-    """Return the oldest fq string acceptable as 'current' data.
+def _current_min_fq(ref_date: date | None = None) -> str:
+    """Return the oldest fq string acceptable as 'current' data relative to ref_date.
 
-    With _MAX_STALE_MONTHS=18 and today=2026-05, returns '2024Q4' — anything
+    With _MAX_STALE_MONTHS=18 and ref_date=2026-05, returns '2024Q4' — anything
     older than that is considered historical, not current.
     """
-    today = date.today()
+    today = ref_date or date.today()
     # Subtract months safely
     total_months = today.year * 12 + today.month - _MAX_STALE_MONTHS
     year = total_months // 12
@@ -30,7 +30,27 @@ def _current_min_fq() -> str:
     return f"{year}Q{q}"
 
 
-def bulk_fetch_financials(client, tickers: list[str]) -> dict[str, dict]:
+def _max_fq_for_as_of(as_of: date) -> str:
+    """as_of 시점에 알 수 있는 가장 최근 분기 fq.
+
+    분기 종료 후 ~45일 보고 지연 가정 (DART/SEC 분기보고서 일반 마감).
+    예: as_of=2026-05-24 -> 2026-03-31 종료 분기는 5/15까지 마감 -> 2026Q1 사용 가능.
+    """
+    # 가장 보수적으로 45일 lag
+    eff_date = as_of - timedelta(days=45)
+    year = eff_date.year
+    q = (eff_date.month - 1) // 3 + 1
+    if q < 1:
+        q = 4
+        year -= 1
+    return f"{year}Q{q}"
+
+
+def bulk_fetch_financials(
+    client,
+    tickers: list[str],
+    as_of_date: date | None = None,
+) -> dict[str, dict]:
     """Batch-fetch financials and prices for up to 50 tickers (one query per table).
 
     Returns dict keyed by ticker. Each value contains:
@@ -50,7 +70,9 @@ def bulk_fetch_financials(client, tickers: list[str]) -> dict[str, dict]:
     """
     result: dict[str, dict] = {t: {"ticker": t} for t in tickers}
 
-    min_fq = _current_min_fq()  # e.g. '2024Q4' when today=2026-05
+    ref_date = as_of_date or date.today()
+    min_fq = _current_min_fq(ref_date)  # e.g. '2024Q4' when ref=2026-05
+    max_fq = _max_fq_for_as_of(ref_date) if as_of_date else None  # 시점 여행 시에만 future 차단
 
     # Financials — quarterly only (fq matches 'YYYYQN' pattern, excludes 'YYYYY').
     # Fetch ~3 years of data per ticker, then filter in Python.
@@ -68,6 +90,9 @@ def bulk_fetch_financials(client, tickers: list[str]) -> dict[str, dict]:
     )
     fins_by_ticker: dict[str, list] = {}
     for row in (fin_res.data or []):
+        # Point-in-time guard: as_of_date 모드에선 미래 데이터 차단 (lookahead bias 방지)
+        if max_fq is not None and row["fq"] > max_fq:
+            continue
         fins_by_ticker.setdefault(row["ticker"], []).append(row)
 
     for ticker, fins in fins_by_ticker.items():
@@ -144,14 +169,19 @@ def bulk_fetch_financials(client, tickers: list[str]) -> dict[str, dict]:
                     data["revenue_qoq_acceleration"] = round(rev_yoy_now - rev_yoy_prev, 2)
         data["f_score"] = compute_piotroski_f_score(fins)
 
-    # Prices — fetch last ~300 calendar days (covers 252 trading days).
+    # Prices — fetch last ~300 calendar days (covers 252 trading days) up to ref_date.
     # 50 tickers × 300 days × ~50 bytes ≈ 750KB per batch.
-    price_cutoff = (date.today() - timedelta(days=300)).isoformat()
-    price_res = (
+    price_cutoff = (ref_date - timedelta(days=300)).isoformat()
+    price_query = (
         client.table("prices_daily")
         .select("ticker, date, close, volume")
         .in_("ticker", tickers)
         .gte("date", price_cutoff)
+    )
+    if as_of_date is not None:
+        price_query = price_query.lte("date", ref_date.isoformat())
+    price_res = (
+        price_query
         .order("date", desc=True)
         .execute()
     )

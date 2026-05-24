@@ -1,0 +1,95 @@
+name: HundredX Daily Evaluation
+
+# 평가 파이프라인 (diagnostics + forward_returns + calibration + library_recall)
+# 매일 1회 자동 실행 → hundredx_evaluation_runs 테이블에 누적
+# Scanner detector 변경 전후의 정확도/recall 변화를 자동 추적
+
+on:
+  schedule:
+    - cron: '30 22 * * *'      # 매일 07:30 KST (UTC 22:30) — collect-hundredx(06:00 KST) 후 90분 뒤
+  workflow_dispatch:           # 수동 실행 (detector 변경 후 즉시 측정 등)
+    inputs:
+      kind:
+        description: 'Evaluation kind'
+        required: false
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - diagnostics
+          - calibration
+          - forward_returns
+          - recall
+      recall_max_stocks:
+        description: 'Library recall: max stocks (empty=all)'
+        required: false
+        default: ''
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: apps/collector
+    env:
+      SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+      SUPABASE_DB_URL:      ${{ secrets.SUPABASE_DB_URL }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Run evaluation
+        run: |
+          KIND="${{ github.event.inputs.kind || 'full' }}"
+          MAX_STOCKS="${{ github.event.inputs.recall_max_stocks }}"
+          ARGS="--kind $KIND --window-days 90 --notes daily-cron-$(date -u +%Y%m%d)"
+          if [ -n "$MAX_STOCKS" ]; then
+            ARGS="$ARGS --recall-max-stocks $MAX_STOCKS"
+          fi
+          echo "Running: python -m src.hundredx.evaluation.orchestrator $ARGS"
+          uv run python -m src.hundredx.evaluation.orchestrator $ARGS
+
+      - name: Report summary
+        if: always()
+        run: |
+          uv run python - <<'EOF'
+          import os, json
+          from supabase import create_client
+          c = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
+          res = (
+              c.table("hundredx_evaluation_runs")
+              .select("id, run_at, run_kind, summary, library_recall")
+              .order("run_at", desc=True)
+              .limit(1)
+              .execute()
+          )
+          if not res.data:
+              print("No eval runs found")
+              exit(0)
+          r = res.data[0]
+          summary = r.get("summary") or {}
+          lr = r.get("library_recall") or {}
+          print("─" * 60)
+          print(f"Run {str(r['id'])[:8]} ({r['run_kind']})")
+          print(f"  health: {summary.get('overall_health')}")
+          for k, v in (summary.get('key_metrics') or {}).items():
+              print(f"  {k}: {v}")
+          for b in (lr.get("by_lookback") or []):
+              recall = b.get('recall')
+              if recall is not None:
+                  print(f"  recall_{b['lookback_days']}d: {recall*100:.1f}% ({b['n_hit']}/{b['n_tested']})")
+          if summary.get('issues'):
+              print("  Issues:")
+              for issue in summary['issues'][:5]:
+                  print(f"    - {issue}")
+          print("─" * 60)
+          EOF
