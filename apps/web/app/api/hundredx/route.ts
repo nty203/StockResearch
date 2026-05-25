@@ -49,21 +49,32 @@ type Match = {
   price_peak_multiplier: number | null
   price_peak_change_pct: number | null
   price_performance_updated_at: string | null
+  llm_verdict: 'confirm' | 'reject' | 'uncertain' | null
+  llm_verdict_at: string | null
 }
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const minConfidence = Math.max(0, Math.min(1, Number(searchParams.get('min_confidence') ?? 0.5)))
+  // stage=scanned (default): all active matches (LLM 미검증 + confirm + uncertain). reject는 exited_at으로 이미 제외됨.
+  // stage=verified: LLM이 confirm한 매치만.
+  const stage = searchParams.get('stage') === 'verified' ? 'verified' : 'scanned'
 
   const supabase = createServerClient()
 
   // Active matches only (exited_at IS NULL), above confidence threshold
-  const { data: matches, error } = await supabase
+  let query = supabase
     .from('hundredx_category_matches')
     .select('*')
     .is('exited_at', null)
     .gte('confidence', minConfidence)
     .order('confidence', { ascending: false })
+
+  if (stage === 'verified') {
+    query = query.eq('llm_verdict', 'confirm')
+  }
+
+  const { data: matches, error } = await query
 
   if (error) return Response.json({ error: error.message }, { status: 500 })
 
@@ -147,11 +158,21 @@ export async function GET(req: Request) {
 
     const priceRow = cats.find(c => c.price_current_multiplier != null || c.price_change_pct != null) ?? null
 
+    // Stock-level verdict: confirm > uncertain > reject > null (best across categories)
+    const verdictOrder: Record<string, number> = { confirm: 0, uncertain: 1, reject: 2 }
+    const stockVerdict: 'confirm' | 'uncertain' | 'reject' | null = cats.reduce<'confirm' | 'uncertain' | 'reject' | null>((best, c) => {
+      const v = c.llm_verdict
+      if (!v) return best
+      if (best === null) return v
+      return verdictOrder[v] < verdictOrder[best] ? v : best
+    }, null)
+
     return {
       ticker,
       stock: stockMap[ticker] ?? null,
       conviction: Math.round(conviction * 10) / 10,
       grade,
+      llm_verdict: stockVerdict,
       // has_pattern_data: true = fingerprint score ≥0.10 (library pattern confirmed)
       // false = keyword-only detection, awaiting pattern similarity confirmation
       has_pattern_data: bestFP >= 0.10,
@@ -189,6 +210,8 @@ export async function GET(req: Request) {
           evidence: c.evidence ?? [],
           first_detected_at: c.first_detected_at,
           detected_at: c.detected_at,
+          llm_verdict: c.llm_verdict ?? null,
+          llm_verdict_at: c.llm_verdict_at ?? null,
           analog: c.analog_ticker ? {
             ticker: c.analog_ticker,
             name: libNameMap[c.analog_ticker] ?? c.analog_ticker,
@@ -219,11 +242,17 @@ export async function GET(req: Request) {
   return Response.json({
     results: result,
     count: result.length,
+    stage,
     grade_counts: {
       S: result.filter(r => r.grade === 'S').length,
       A: result.filter(r => r.grade === 'A').length,
       B: result.filter(r => r.grade === 'B').length,
       C: result.filter(r => r.grade === 'C').length,
+    },
+    verdict_counts: {
+      confirm: result.filter(r => r.llm_verdict === 'confirm').length,
+      uncertain: result.filter(r => r.llm_verdict === 'uncertain').length,
+      pending: result.filter(r => r.llm_verdict === null).length,
     },
   })
 }

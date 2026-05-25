@@ -145,6 +145,8 @@ export type HundredxCategoryMatch = {
   price_peak_multiplier: number | null
   price_peak_change_pct: number | null
   price_performance_updated_at: string | null
+  llm_verdict: 'confirm' | 'reject' | 'uncertain' | null
+  llm_verdict_at: string | null
   fingerprint_score: number | null    // 0-1, similarity to library precedent
   fingerprint_dims: {                  // matched/missing dimensions detail
     matched: string[]

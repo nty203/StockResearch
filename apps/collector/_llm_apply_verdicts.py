@@ -78,6 +78,8 @@ def main():
                 client.table("hundredx_category_matches").update({
                     "exited_at": now,
                     "evidence": evidence + [llm_ev],
+                    "llm_verdict": "reject",
+                    "llm_verdict_at": now,
                 }).eq("id", match_id).execute()
                 print(f"  [REJECT] {r['ticker']} {r['category']} — {reason[:60]}")
                 rejected += 1
@@ -87,6 +89,8 @@ def main():
                 client.table("hundredx_category_matches").update({
                     "confidence": new_conf,
                     "evidence": evidence + [llm_ev],
+                    "llm_verdict": "confirm",
+                    "llm_verdict_at": now,
                 }).eq("id", match_id).execute()
                 print(f"  [CONFIRM] {r['ticker']} {r['category']} conf {current_conf:.3f}→{new_conf:.3f}")
                 confirmed += 1
@@ -96,6 +100,8 @@ def main():
                 client.table("hundredx_category_matches").update({
                     "confidence": new_conf,
                     "evidence": evidence + [llm_ev],
+                    "llm_verdict": "uncertain",
+                    "llm_verdict_at": now,
                 }).eq("id", match_id).execute()
                 print(f"  [UNCERTAIN] {r['ticker']} {r['category']} conf {current_conf:.3f}→{new_conf:.3f}")
                 uncertain += 1

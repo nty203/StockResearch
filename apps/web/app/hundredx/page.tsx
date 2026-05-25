@@ -97,12 +97,15 @@ interface StockResult {
     updated_at: string | null
   } | null
   categories: CategoryEntry[]
+  llm_verdict: 'confirm' | 'uncertain' | 'reject' | null
 }
 
 interface ApiResponse {
   results: StockResult[]
   count: number
+  stage?: 'scanned' | 'verified'
   grade_counts?: { S: number; A: number; B: number; C: number }
+  verdict_counts?: { confirm: number; uncertain: number; pending: number }
 }
 
 const CONFIDENCE_PRESETS = [0.5, 0.7, 0.9] as const
@@ -116,12 +119,13 @@ const GRADE_META = {
 export default function HundredxPage() {
   const [minConfidence, setMinConfidence] = useState<number>(0.5)
   const [gradeFilter, setGradeFilter] = useState<'ALL' | 'S' | 'A' | 'B' | 'C'>('ALL')
+  const [stage, setStage] = useState<'scanned' | 'verified'>('scanned')
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
 
   const { data, isLoading, error } = useQuery<ApiResponse>({
-    queryKey: ['hundredx', minConfidence],
+    queryKey: ['hundredx', minConfidence, stage],
     queryFn: async () => {
-      const res = await fetch(`/api/hundredx?min_confidence=${minConfidence}`)
+      const res = await fetch(`/api/hundredx?min_confidence=${minConfidence}&stage=${stage}`)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       return res.json()
     },
@@ -129,6 +133,10 @@ export default function HundredxPage() {
     refetchInterval: 60_000,
     retry: false,
   })
+
+  // 탭 카운트는 scanned 데이터에서 가져옴 (verified 카운트는 verdict_counts.confirm)
+  const scannedCount = stage === 'scanned' ? (data?.count ?? 0) : null
+  const verifiedCount = stage === 'verified' ? (data?.count ?? 0) : (data?.verdict_counts?.confirm ?? null)
 
   const toggle = (ticker: string) => {
     setExpanded(prev => {
@@ -145,7 +153,9 @@ export default function HundredxPage() {
         <div>
           <h1 className="text-xl font-semibold text-[var(--color-text-1)]">100배 시그널</h1>
           <p className="text-sm text-[var(--color-text-2)] mt-1">
-            7개 카테고리 동시 탐지 — 과거 100배 종목 패턴과 정량 비교
+            {stage === 'scanned'
+              ? '스캐너가 키워드로 찾아낸 전체 후보 (LLM 검증 전)'
+              : 'LLM이 공시 원문을 읽고 confirm 판정한 최종 선정 종목'}
           </p>
         </div>
 
@@ -169,6 +179,45 @@ export default function HundredxPage() {
           </div>
         </div>
       </div>
+
+      {/* 스캔 / 검증 탭 */}
+      <div className="flex border-b border-[var(--color-border)]">
+        <button
+          onClick={() => setStage('scanned')}
+          className={`px-4 py-2 text-sm font-medium -mb-px border-b-2 transition-colors ${
+            stage === 'scanned'
+              ? 'border-[var(--color-accent)] text-[var(--color-accent)]'
+              : 'border-transparent text-[var(--color-text-2)] hover:text-[var(--color-text-1)]'
+          }`}
+        >
+          🔍 스캔 후보{scannedCount != null && stage === 'scanned' ? ` (${scannedCount})` : ''}
+        </button>
+        <button
+          onClick={() => setStage('verified')}
+          className={`px-4 py-2 text-sm font-medium -mb-px border-b-2 transition-colors ${
+            stage === 'verified'
+              ? 'border-[var(--color-success)] text-[var(--color-success)]'
+              : 'border-transparent text-[var(--color-text-2)] hover:text-[var(--color-text-1)]'
+          }`}
+        >
+          ✅ 최종 선정{verifiedCount != null ? ` (${verifiedCount})` : ''}
+        </button>
+      </div>
+
+      {/* verdict 분포 요약 (scanned 탭에서만) */}
+      {stage === 'scanned' && data?.verdict_counts && (
+        <div className="flex flex-wrap gap-2 text-xs">
+          <span className="px-2 py-0.5 rounded bg-[var(--color-success)]/15 text-[var(--color-success)]">
+            ✓ confirm {data.verdict_counts.confirm}
+          </span>
+          <span className="px-2 py-0.5 rounded bg-[var(--color-warning)]/15 text-[var(--color-warning)]">
+            ? uncertain {data.verdict_counts.uncertain}
+          </span>
+          <span className="px-2 py-0.5 rounded bg-[var(--color-card)] text-[var(--color-text-2)]">
+            ⏳ pending {data.verdict_counts.pending}
+          </span>
+        </div>
+      )}
 
       {isLoading && (
         <div className="space-y-3">
@@ -299,6 +348,19 @@ function StockCard({
               title={gradeMeta.desc}>
               {grade}
             </span>
+            {/* LLM verdict badge */}
+            {result.llm_verdict === 'confirm' && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--color-success)]/15 text-[var(--color-success)] border border-[var(--color-success)]/40"
+                title="LLM 검증 confirm">✓ 검증</span>
+            )}
+            {result.llm_verdict === 'uncertain' && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--color-warning)]/15 text-[var(--color-warning)] border border-[var(--color-warning)]/40"
+                title="LLM 검증 uncertain — 애매한 신호">? 애매</span>
+            )}
+            {result.llm_verdict === null && (
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--color-card)] text-[var(--color-text-2)] border border-[var(--color-border)]"
+                title="LLM 검증 대기 — verify-stocks 실행 필요">⏳ 미검증</span>
+            )}
             <span className="text-base font-semibold text-[var(--color-text-1)]">
               {name}
             </span>
