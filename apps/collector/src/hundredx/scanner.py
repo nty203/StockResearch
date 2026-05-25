@@ -918,15 +918,18 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                 stock_data["sector_tag"] = sector_by_ticker.get(ticker)
                 stock_data["market_cap"] = mktcap_by_ticker.get(ticker)
 
-                # ── Market cap gate (Mayer 100 Baggers, Bessembinder 2018) ────
-                # 100배 종목 통계: KOSDAQ 시총 약 500억원 출발이 중앙값.
-                # 상한선: 이미 너무 큰 종목은 100배 여력이 구조적으로 부족.
-                # 하한선: 너무 작으면 유동성/거래정지 위험.
+                # ── Market cap gate (data-driven from library distribution) ────
+                # 자체 라이브러리(reliable post-2015, n=63) market_cap_at_signal 분포 기반:
+                #   KOSPI  p10=527억  p25=2,174억  median=8,697억  p90=10조
+                #   KOSDAQ p10=185억  p25=480억   median=2,643억  p90=10,914억
+                # Mayer(2015) median $500M ≈ 7,000억 KRW, Bessembinder(2018) small-but-not-micro.
+                # 라이브러리 capture:  KOSPI 82% / KOSDAQ 96%. (이전 게이트: 62% / 71%)
+                # 차단 사례(차단되면 안 되는 진짜 100배): 101360(40억→295×), 005070(706억→109×) 등.
                 mkt = market_by_ticker.get(ticker)
                 mc = stock_data["market_cap"]
                 if mc is not None and mkt in ("KOSPI", "KOSDAQ"):
-                    max_mc = 2_000_000_000_000 if mkt == "KOSPI" else 500_000_000_000
-                    min_mc = 100_000_000_000 if mkt == "KOSPI" else 15_000_000_000
+                    max_mc = 5_000_000_000_000 if mkt == "KOSPI" else 2_000_000_000_000
+                    min_mc =    50_000_000_000 if mkt == "KOSPI" else     5_000_000_000
                     if mc > max_mc or mc < min_mc:
                         continue
 
