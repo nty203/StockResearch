@@ -63,6 +63,8 @@ interface CategoryEntry {
   evidence: Evidence[]
   first_detected_at: string | null
   detected_at: string
+  llm_verdict?: 'confirm' | 'uncertain' | 'reject' | null
+  llm_verdict_at?: string | null
   analog: AnalogRef | null
   fingerprint: FingerprintInfo | null
   timeline: TimelineProgress | null
@@ -428,6 +430,11 @@ function StockCard({
         </div>
       </button>
 
+      {/* Always-visible selection reason for verified stocks */}
+      {(result.llm_verdict === 'confirm' || result.llm_verdict === 'uncertain') && (
+        <SelectionReason result={result} />
+      )}
+
       {/* Expanded category details */}
       {expanded && (
         <div className="border-t border-[var(--color-border)] p-4 space-y-3">
@@ -436,6 +443,79 @@ function StockCard({
           ))}
         </div>
       )}
+    </div>
+  )
+}
+
+function SelectionReason({ result }: { result: StockResult }) {
+  // LLM verdict text — search for evidence with source_type === 'llm_verdict' across categories
+  const llmText = (() => {
+    for (const cat of result.categories) {
+      for (const ev of cat.evidence) {
+        if (ev.source_type === 'llm_verdict' && ev.text_excerpt) {
+          // 'LLM confirm: <reason>' → strip prefix
+          return ev.text_excerpt
+            .replace(/^LLM\s+(confirm|uncertain|reject):\s*/i, '')
+            .trim()
+        }
+      }
+    }
+    return null
+  })()
+
+  // Core filing — pick the highest-confidence category's first filing evidence
+  const coreFiling = (() => {
+    const sorted = [...result.categories].sort((a, b) => b.confidence - a.confidence)
+    for (const cat of sorted) {
+      const f = cat.evidence.find(e => e.source_type === 'filing' && e.text_excerpt)
+      if (f) return { headline: f.text_excerpt, date: f.date, category: cat.category }
+    }
+    return null
+  })()
+
+  const sector = result.stock?.sector_tag
+  const isConfirm = result.llm_verdict === 'confirm'
+
+  return (
+    <div className={`border-t px-4 py-3 ${
+      isConfirm
+        ? 'border-[var(--color-success)]/30 bg-[var(--color-success)]/5'
+        : 'border-[var(--color-warning)]/30 bg-[var(--color-warning)]/5'
+    }`}>
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+            isConfirm
+              ? 'bg-[var(--color-success)]/20 text-[var(--color-success)]'
+              : 'bg-[var(--color-warning)]/20 text-[var(--color-warning)]'
+          }`}>
+            {isConfirm ? '✓ 선정 이유' : '? 검토 사유'}
+          </span>
+          {sector && (
+            <span className="text-[10px] text-[var(--color-text-2)]">
+              사업: <span className="text-[var(--color-text-1)]">{sector}</span>
+            </span>
+          )}
+        </div>
+
+        {llmText && (
+          <p className="text-[13px] leading-relaxed text-[var(--color-text-1)]">
+            {llmText}
+          </p>
+        )}
+
+        {coreFiling && (
+          <div className="text-[11px] text-[var(--color-text-2)] leading-relaxed">
+            <span className="text-[var(--color-text-1)] font-medium">핵심 공시</span>
+            {coreFiling.date && (
+              <span className="ml-1 text-[var(--color-text-2)]/70">
+                ({coreFiling.date.slice(0, 10)})
+              </span>
+            )}
+            <span className="ml-1">— {coreFiling.headline}</span>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
