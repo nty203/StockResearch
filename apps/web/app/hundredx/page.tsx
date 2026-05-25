@@ -119,7 +119,7 @@ const GRADE_META = {
 export default function HundredxPage() {
   const [minConfidence, setMinConfidence] = useState<number>(0.5)
   const [gradeFilter, setGradeFilter] = useState<'ALL' | 'S' | 'A' | 'B' | 'C'>('ALL')
-  const [stage, setStage] = useState<'scanned' | 'verified'>('scanned')
+  const [stage, setStage] = useState<'scanned' | 'verified'>('verified')
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
 
   const { data, isLoading, error } = useQuery<ApiResponse>({
@@ -183,16 +183,6 @@ export default function HundredxPage() {
       {/* 스캔 / 검증 탭 */}
       <div className="flex border-b border-[var(--color-border)]">
         <button
-          onClick={() => setStage('scanned')}
-          className={`px-4 py-2 text-sm font-medium -mb-px border-b-2 transition-colors ${
-            stage === 'scanned'
-              ? 'border-[var(--color-accent)] text-[var(--color-accent)]'
-              : 'border-transparent text-[var(--color-text-2)] hover:text-[var(--color-text-1)]'
-          }`}
-        >
-          🔍 스캔 후보{scannedCount != null && stage === 'scanned' ? ` (${scannedCount})` : ''}
-        </button>
-        <button
           onClick={() => setStage('verified')}
           className={`px-4 py-2 text-sm font-medium -mb-px border-b-2 transition-colors ${
             stage === 'verified'
@@ -201,6 +191,16 @@ export default function HundredxPage() {
           }`}
         >
           ✅ 최종 선정{verifiedCount != null ? ` (${verifiedCount})` : ''}
+        </button>
+        <button
+          onClick={() => setStage('scanned')}
+          className={`px-4 py-2 text-sm font-medium -mb-px border-b-2 transition-colors ${
+            stage === 'scanned'
+              ? 'border-[var(--color-accent)] text-[var(--color-accent)]'
+              : 'border-transparent text-[var(--color-text-2)] hover:text-[var(--color-text-1)]'
+          }`}
+        >
+          🔍 스캔 후보{scannedCount != null && stage === 'scanned' ? ` (${scannedCount})` : ''}
         </button>
       </div>
 
