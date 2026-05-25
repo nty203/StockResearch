@@ -121,6 +121,24 @@ export type HundredxEvidence = {
   amount: number | null
 }
 
+export type HundredxEvaluationRun = {
+  id: string
+  run_at: string
+  run_kind: string
+  git_commit: string | null
+  params: Record<string, unknown> | null
+  n_matches_total: number | null
+  n_matches_window: number | null
+  window_days: number | null
+  n_library_stocks: number | null
+  diagnostics: Record<string, unknown> | null
+  forward_returns: Record<string, unknown> | null
+  calibration: Record<string, unknown> | null
+  library_recall: Record<string, unknown> | null
+  summary: Record<string, unknown> | null
+  notes: string | null
+}
+
 export type HundredxCategoryMatch = {
   id: string
   ticker: string
@@ -186,6 +204,7 @@ export type Database = {
       settings:         { Row: Setting;        Insert: Setting;                                    Update: Partial<Setting>;                    Relationships: never[] }
       hundredx_library_stocks:    { Row: HundredxLibraryStock;    Insert: Omit<HundredxLibraryStock, 'id' | 'created_at'>;    Update: Partial<Omit<HundredxLibraryStock, 'id'>>;    Relationships: never[] }
       hundredx_category_matches:  { Row: HundredxCategoryMatch;   Insert: Omit<HundredxCategoryMatch, 'id'>;                  Update: Partial<Omit<HundredxCategoryMatch, 'id'>>;  Relationships: never[] }
+      hundredx_evaluation_runs:   { Row: HundredxEvaluationRun;   Insert: Omit<HundredxEvaluationRun, 'id' | 'run_at'>;       Update: Partial<Omit<HundredxEvaluationRun, 'id'>>;  Relationships: never[] }
     }
     Views: { [_ in never]: never }
     Functions: { [_ in never]: never }
