@@ -1116,21 +1116,55 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
         if exits:
             logger.info("Marked %d exits", exits)
 
-        # Library self-match cleanup: exit any active matches that are in the library
-        # (These can persist from before the self-match guard was added, or from edge cases)
+        # ── Structural disqualification cleanup ───────────────────────────────
+        # LLM confirm guard는 "스캐너가 키워드를 못 잡았다"는 시그널 일시 누락만 보호한다.
+        # 아래 구조적 부적격은 confirm 여부와 무관하게 100배 후보가 될 수 없으므로 강제 exit.
+        #
+        # 1) Library self-match: 라이브러리에 (ticker, category)로 등재 = 이미 100배 완료된 historical case
+        # 2) 시총 게이트 위반: 현재 시총이 게이트 상·하한 밖 = 100배 여력 구조적 부재
+        #
+        # `existing`을 순회 (active_after 아님) — 오늘 재탐지 안 됐어도 부적격이면 정리한다.
         self_match_exits = 0
-        for (ticker, category) in list(active_after):
+        mcap_violation_exits = 0
+        for (ticker, category), row in existing.items():
+            if row.get("exited_at") is not None:
+                continue
+
+            should_exit = False
+            reason = ""
+
             if (ticker, category) in lib_match_set:
-                try:
-                    client.table("hundredx_category_matches").update(
-                        {"exited_at": now}
-                    ).eq("ticker", ticker).eq("category", category).is_("exited_at", None).execute()
+                should_exit = True
+                reason = "library self-match"
+            else:
+                mkt = market_by_ticker.get(ticker)
+                mc = mktcap_by_ticker.get(ticker)
+                if mc is not None and mkt in ("KOSPI", "KOSDAQ"):
+                    max_mc = 5_000_000_000_000 if mkt == "KOSPI" else 2_000_000_000_000
+                    min_mc =    50_000_000_000 if mkt == "KOSPI" else     5_000_000_000
+                    if mc > max_mc or mc < min_mc:
+                        should_exit = True
+                        reason = f"mcap out of gate ({mc/1e12:.1f}조 vs {min_mc/1e12:.2f}~{max_mc/1e12:.1f}조)"
+
+            if not should_exit:
+                continue
+
+            try:
+                client.table("hundredx_category_matches").update(
+                    {"exited_at": now.isoformat()}
+                ).eq("ticker", ticker).eq("category", category).is_("exited_at", "null").execute()
+                if reason == "library self-match":
                     self_match_exits += 1
-                    logger.debug("Self-match cleanup: exited %s/%s", ticker, category)
-                except Exception as e:
-                    logger.warning("Self-match cleanup error %s/%s: %s", ticker, category, e)
+                else:
+                    mcap_violation_exits += 1
+                logger.debug("Structural exit: %s/%s — %s", ticker, category, reason)
+            except Exception as e:
+                logger.warning("Structural exit error %s/%s: %s", ticker, category, e)
+
         if self_match_exits:
             logger.info("Library self-match cleanup: exited %d stale entries", self_match_exits)
+        if mcap_violation_exits:
+            logger.info("Market cap gate cleanup: exited %d violators", mcap_violation_exits)
 
         # Send alerts for new entries (not yet alerted)
         new_entries: list[tuple[str, str, float, str | None]] = []
