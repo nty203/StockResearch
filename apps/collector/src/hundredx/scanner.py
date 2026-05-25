@@ -342,8 +342,43 @@ def _merge_llm_evidence(existing_evidence: list, new_evidence: list) -> list:
 
 # ── Filings batch fetch ───────────────────────────────────────────────────────
 
+# 자본조달/지배구조 공시는 사업 시그널이 아니다.
+# 본문에 사업/빅테크/임상 키워드가 등장하더라도 그건 회사 소개·자금 사용처 설명일 뿐
+# detector를 트리거해선 안 된다 (LLM 검증 단계에서 일관되게 reject되는 패턴).
+# 2026-05-25 LLM 검증으로 식별된 4건 모두 이 패턴:
+#   017860 DS단석, 059270 해성에어로 (전환사채 → 빅테크_파트너 오탐)
+#   139480 이마트, 005440 현대지에프홀딩스 (주식교환 → 임상_파이프라인 오탐)
+_CORPORATE_FINANCE_HEADLINE_PATTERNS = (
+    "전환사채권발행결정",
+    "신주인수권부사채권발행결정",
+    "교환사채권발행결정",
+    "유상증자결정",
+    "무상증자결정",
+    "주식교환",
+    "주식이전",
+    "주식분할",
+    "주식병합",
+    "대량보유상황보고서",
+    "임원ㆍ주요주주특정증권",
+    "임원·주요주주특정증권",
+    "최대주주변경",
+    "자기주식취득",
+    "자기주식처분",
+)
+
+
+def _is_corporate_finance_filing(headline: str | None) -> bool:
+    if not headline:
+        return False
+    return any(pat in headline for pat in _CORPORATE_FINANCE_HEADLINE_PATTERNS)
+
+
 def _fetch_filings_90d(client, tickers: list[str]) -> dict[str, list[dict]]:
-    """Bulk-fetch filings from last 90 days for a batch of tickers."""
+    """Bulk-fetch filings from last 90 days for a batch of tickers.
+
+    자본조달/지배구조 공시(CB·유증·주식교환·대량보유 등)는 사업 시그널이 아니므로
+    detector 입력에서 제외한다.
+    """
     from datetime import timedelta, date
     cutoff = (date.today() - timedelta(days=90)).isoformat()
     res = (
@@ -357,12 +392,14 @@ def _fetch_filings_90d(client, tickers: list[str]) -> dict[str, list[dict]]:
     )
     result: dict[str, list[dict]] = {}
     for row in (res.data or []):
+        if _is_corporate_finance_filing(row.get("headline")):
+            continue
         result.setdefault(row["ticker"], []).append(row)
     return result
 
 
 def _fetch_filings_2y(client, tickers: list[str]) -> dict[str, list[dict]]:
-    """Bulk-fetch last 2 filings per ticker for clinical_pipe (2-year window)."""
+    """Bulk-fetch last 2 business-signal filings per ticker for clinical_pipe."""
     from datetime import timedelta, date
     cutoff = (date.today() - timedelta(days=730)).isoformat()
     res = (
@@ -376,6 +413,8 @@ def _fetch_filings_2y(client, tickers: list[str]) -> dict[str, list[dict]]:
     )
     result: dict[str, list[dict]] = {}
     for row in (res.data or []):
+        if _is_corporate_finance_filing(row.get("headline")):
+            continue
         ticker_filings = result.setdefault(row["ticker"], [])
         if len(ticker_filings) < 2:
             ticker_filings.append(row)
