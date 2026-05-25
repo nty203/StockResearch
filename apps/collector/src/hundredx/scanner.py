@@ -1118,18 +1118,43 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
 
         # ── Structural disqualification cleanup ───────────────────────────────
         # LLM confirm guard는 "스캐너가 키워드를 못 잡았다"는 시그널 일시 누락만 보호한다.
-        # 아래 구조적 부적격은 confirm 여부와 무관하게 100배 후보가 될 수 없으므로 강제 exit.
+        # 아래 구조적 부적격은 confirm 여부와 무관하게 100배 후보가 될 수 없으므로 강제 exit:
         #
         # 1) Library self-match: 라이브러리에 (ticker, category)로 등재 = 이미 100배 완료된 historical case
         # 2) 시총 게이트 위반: 현재 시총이 게이트 상·하한 밖 = 100배 여력 구조적 부재
         #
-        # `existing`을 순회 (active_after 아님) — 오늘 재탐지 안 됐어도 부적격이면 정리한다.
+        # DB를 직접 조회 — `existing` 기반 cleanup은 chunked fetch silent-fail로
+        # 누락이 발생할 수 있어 매번 전체 sweep을 수행한다.
+        try:
+            active_matches_res = (
+                client.table("hundredx_category_matches")
+                .select("ticker, category")
+                .is_("exited_at", "null")
+                .execute()
+            )
+            active_matches = active_matches_res.data or []
+        except Exception as e:
+            logger.warning("structural cleanup: failed to fetch active matches: %s", e)
+            active_matches = []
+
+        # Build stocks map covering all active match tickers (separate from scanner's `stocks`
+        # which is filtered to is_active=True — exited stocks might still have active matches).
+        match_tickers = list({m["ticker"] for m in active_matches})
+        cleanup_stock_map: dict[str, dict] = {}
+        for i in range(0, len(match_tickers), 500):
+            chunk = match_tickers[i : i + 500]
+            try:
+                rs = client.table("stocks").select("ticker, market, market_cap").in_("ticker", chunk).execute().data or []
+                for s in rs:
+                    cleanup_stock_map[s["ticker"]] = s
+            except Exception as e:
+                logger.warning("structural cleanup: stocks chunk fetch failed: %s", e)
+
         self_match_exits = 0
         mcap_violation_exits = 0
-        for (ticker, category), row in existing.items():
-            if row.get("exited_at") is not None:
-                continue
-
+        for m in active_matches:
+            ticker = m["ticker"]
+            category = m["category"]
             should_exit = False
             reason = ""
 
@@ -1137,14 +1162,15 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
                 should_exit = True
                 reason = "library self-match"
             else:
-                mkt = market_by_ticker.get(ticker)
-                mc = mktcap_by_ticker.get(ticker)
+                s = cleanup_stock_map.get(ticker) or {}
+                mc = s.get("market_cap")
+                mkt = s.get("market")
                 if mc is not None and mkt in ("KOSPI", "KOSDAQ"):
                     max_mc = 5_000_000_000_000 if mkt == "KOSPI" else 2_000_000_000_000
                     min_mc =    50_000_000_000 if mkt == "KOSPI" else     5_000_000_000
                     if mc > max_mc or mc < min_mc:
                         should_exit = True
-                        reason = f"mcap out of gate ({mc/1e12:.1f}조 vs {min_mc/1e12:.2f}~{max_mc/1e12:.1f}조)"
+                        reason = f"mcap out of gate ({mc/1e12:.2f}조)"
 
             if not should_exit:
                 continue
