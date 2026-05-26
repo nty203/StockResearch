@@ -28,8 +28,8 @@ logger = logging.getLogger(__name__)
 if __package__ is None:
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 
-import psycopg
-from psycopg.types.json import Jsonb
+import psycopg2
+from psycopg2.extras import Json
 from dotenv import load_dotenv
 
 
@@ -62,7 +62,7 @@ def detect_and_prune(window_days: int = 21, min_days: int = 7, dry_run: bool = F
     db_url = os.environ["SUPABASE_DB_URL"]
     now = datetime.now(timezone.utc)
 
-    with psycopg.connect(db_url) as conn:
+    with psycopg2.connect(db_url) as conn:
         with conn.cursor() as cur:
             cur.execute(SUSPECT_SQL, (window_days, min_days))
             suspects = cur.fetchall()
@@ -105,7 +105,7 @@ def detect_and_prune(window_days: int = 21, min_days: int = 7, dry_run: bool = F
                     evidence = COALESCE(evidence, '[]'::jsonb) || %s
                 WHERE ticker = ANY(%s) AND exited_at IS NULL
                 """,
-                (now.isoformat(), Jsonb([exit_reason]), tickers),
+                (now.isoformat(), Json([exit_reason]), tickers),
             )
             exited = cur.rowcount
 
