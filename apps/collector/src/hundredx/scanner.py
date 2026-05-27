@@ -945,6 +945,29 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
         logger.info("Scanning %d active stocks (KR: %d, US: %d)", len(tickers), kr_count, us_count)
         # Pre-fetch all existing matches (for first_detected_at management)
         existing = _fetch_existing(client, tickers)
+        # LLM reject set: 전체 DB 조회(페이지네이션)로 신뢰성 확보.
+        # `existing`(chunked fetch)는 silent-fail로 누락될 수 있어 reject guard가 새기 때문에,
+        # reject 판정은 별도 full sweep으로 확정해 detector 결과에서 강제 배제한다.
+        reject_set: set[tuple[str, str]] = set()
+        _roff = 0
+        while True:
+            try:
+                _rres = (
+                    client.table("hundredx_category_matches")
+                    .select("ticker, category")
+                    .eq("llm_verdict", "reject")
+                    .range(_roff, _roff + 999)
+                    .execute()
+                )
+            except Exception as e:
+                logger.warning("reject_set fetch error: %s", e)
+                break
+            _rdata = _rres.data or []
+            reject_set.update((r["ticker"], r["category"]) for r in _rdata)
+            if len(_rdata) < 1000:
+                break
+            _roff += 1000
+        logger.info("LLM reject set: %d (ticker, category) pairs", len(reject_set))
         active_before: set[tuple[str, str]] = {
             (r["ticker"], r["category"])
             for r in (existing.values())
@@ -1106,6 +1129,15 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
             all_matches = _deduplicate_categories(all_matches)
             active_after = {(m.ticker, m.category) for m in all_matches}
 
+        # LLM reject 강제 배제: reject된 (ticker, category)는 재탐지돼도 upsert/alert에서 제거.
+        if reject_set and all_matches:
+            before_n = len(all_matches)
+            all_matches = [m for m in all_matches if (m.ticker, m.category) not in reject_set]
+            active_after = {(m.ticker, m.category) for m in all_matches}
+            dropped = before_n - len(all_matches)
+            if dropped:
+                logger.info("LLM reject filter: dropped %d re-detected matches", dropped)
+
         # Upsert all matches
         if all_matches:
             price_performances = _fetch_price_performances(all_matches, market_by_ticker)
@@ -1208,6 +1240,24 @@ def run(min_confidence: float = MIN_CONFIDENCE) -> int:
             logger.info("Library self-match cleanup: exited %d stale entries", self_match_exits)
         if mcap_violation_exits:
             logger.info("Market cap gate cleanup: exited %d violators", mcap_violation_exits)
+
+        # ── LLM reject 전체 sweep ─────────────────────────────────────────────
+        # _upsert_matches_with_analogs의 reject guard는 `existing`(chunked fetch) 기반이라
+        # silent-fail로 누락되면 reject 행이 재진입(exited_at=NULL)될 수 있다.
+        # 구조적 cleanup과 동일하게 DB 직접 조회로 매번 전체 sweep — reject인데 살아있으면 강제 종료.
+        try:
+            reopened = (
+                client.table("hundredx_category_matches")
+                .update({"exited_at": now.isoformat()})
+                .eq("llm_verdict", "reject")
+                .is_("exited_at", "null")
+                .execute()
+            )
+            n_reject_swept = len(reopened.data or [])
+            if n_reject_swept:
+                logger.info("LLM reject sweep: re-closed %d reopened rows", n_reject_swept)
+        except Exception as e:
+            logger.warning("LLM reject sweep error: %s", e)
 
         # Send alerts for new entries (not yet alerted)
         new_entries: list[tuple[str, str, float, str | None]] = []
