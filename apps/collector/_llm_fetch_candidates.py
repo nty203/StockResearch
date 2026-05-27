@@ -52,9 +52,15 @@ from supabase import create_client
 client = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
 
 
-def _get_llm_verdict_from_evidence(ev_list: list) -> str | None:
-    """evidence 목록에서 llm_verdict 판정 추출."""
-    for ev in (ev_list or []):
+def _get_llm_verdict(row: dict) -> str | None:
+    """LLM 검증 결과 추출. llm_verdict 컬럼 우선, evidence 폴백.
+
+    재스캔 upsert가 evidence를 덮어써도 컬럼은 보존되므로 컬럼이 진실의 원천.
+    """
+    col = (row or {}).get("llm_verdict")
+    if col in ("confirm", "reject", "uncertain"):
+        return col
+    for ev in (row.get("evidence") or []):
         if isinstance(ev, dict) and ev.get("source_type") == "llm_verdict":
             text = ev.get("text_excerpt", "")
             if "LLM confirm" in text:
@@ -134,16 +140,19 @@ def main():
         lib_by_ticker.setdefault(row["ticker"], []).append(row["category"])
 
     # 후보 조회 (verified 제외를 위해 evidence 포함)
+    # cutoff은 detected_at(최근 재탐지) 기준 — first_detected_at으로 필터링하면
+    # 오래 전부터 active 상태로 지속되는 미검증 매치가 영구히 노출되지 않음.
+    # already_verified=true면 어차피 skip되므로 매일 재노출되어도 부담 없음.
     q = (
         client.table("hundredx_category_matches")
         .select(
-            "id, ticker, category, confidence, evidence, first_detected_at, "
+            "id, ticker, category, confidence, evidence, llm_verdict, first_detected_at, detected_at, "
             "fingerprint_score, fingerprint_library_ticker, fingerprint_dims, "
             "convergent_signals"
         )
         .is_("exited_at", "null")
-        .gte("first_detected_at", cutoff)
-        .order("first_detected_at", desc=True)
+        .gte("detected_at", cutoff)
+        .order("detected_at", desc=True)
         .limit(args.limit * 3)  # 검증된 종목 제외 후에도 충분하도록 여유 있게 조회
     )
     if args.category:
@@ -162,7 +171,7 @@ def main():
 
         ticker = m["ticker"]
         ev_list = m.get("evidence") or []
-        llm_verdict = _get_llm_verdict_from_evidence(ev_list)
+        llm_verdict = _get_llm_verdict(m)
         already_verified = llm_verdict is not None
 
         # 이미 검증된 종목은 --include-verified 없으면 스킵
@@ -218,7 +227,8 @@ def main():
             "sector": sector,
             "category": m["category"],
             "confidence": round(m.get("confidence") or 0, 3),
-            "detected_at": str(m.get("first_detected_at", ""))[:19],
+            "detected_at": str(m.get("detected_at") or m.get("first_detected_at") or "")[:19],
+            "first_detected_at": str(m.get("first_detected_at") or "")[:19],
             "already_verified": already_verified,
             "llm_verdict": llm_verdict,
             "is_library_stock": bool(lib_cats),

@@ -287,7 +287,7 @@ def _fetch_existing(client, tickers: list[str]) -> dict[tuple[str, str], dict]:
                     "price_latest_close, price_peak_date, price_peak_close, "
                     "price_current_multiplier, price_change_pct, "
                     "price_peak_multiplier, price_peak_change_pct, "
-                    "price_performance_updated_at, evidence"
+                    "price_performance_updated_at, evidence, llm_verdict"
                 )
                 .in_("ticker", chunk)
                 .execute()
@@ -303,12 +303,18 @@ def _fetch_existing(client, tickers: list[str]) -> dict[tuple[str, str], dict]:
 # ── LLM verdict helpers ───────────────────────────────────────────────────────
 
 def _get_llm_verdict(row: dict | None) -> str | None:
-    """evidence JSONB에서 LLM 검증 결과 추출.
+    """LLM 검증 결과 추출.
+
+    llm_verdict 컬럼이 single source of truth. 재스캔 upsert가 evidence를
+    덮어써도 컬럼은 보존되므로 컬럼을 우선 읽고, 구버전 호환용으로 evidence를 폴백한다.
 
     Returns: "confirm" | "reject" | "uncertain" | None (미검증)
     """
     if not row:
         return None
+    col = row.get("llm_verdict")
+    if col in ("confirm", "reject", "uncertain"):
+        return col
     for ev in (row.get("evidence") or []):
         if isinstance(ev, dict) and ev.get("source_type") == "llm_verdict":
             text = ev.get("text_excerpt", "")
@@ -573,6 +579,7 @@ def _upsert_matches_with_analogs(
         return
     rows = []
     pptr_rows = []
+    reject_repairs = []  # exited_at이 풀린 reject 행 복구용
     price_performances = price_performances or {}
     for m in matches:
         existing_row = existing.get((m.ticker, m.category))
@@ -582,6 +589,9 @@ def _upsert_matches_with_analogs(
         # (재진입하려면 verify-stocks로 override 필요)
         if llm_verdict == "reject":
             logger.debug("LLM reject guard: skipping %s/%s", m.ticker, m.category)
+            # 과거 버그로 exited_at이 풀렸으면 다시 닫는다.
+            if existing_row and existing_row.get("exited_at") is None:
+                reject_repairs.append((m.ticker, m.category))
             continue
 
         fda = _resolve_first_detected(m, existing, now)
@@ -644,6 +654,13 @@ def _upsert_matches_with_analogs(
         ).execute()
     except Exception as e:
         logger.warning("upsert_matches error: %s", e)
+    for tkr, cat in reject_repairs:
+        try:
+            client.table("hundredx_category_matches").update(
+                {"exited_at": now.isoformat()}
+            ).eq("ticker", tkr).eq("category", cat).is_("exited_at", "null").execute()
+        except Exception as e:
+            logger.warning("reject_repair error %s/%s: %s", tkr, cat, e)
     if pptr_rows:
         try:
             client.table("pptr_rule_matches").insert(pptr_rows).execute()
