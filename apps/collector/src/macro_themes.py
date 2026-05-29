@@ -258,7 +258,13 @@ def rank_themes(window_days: int = 14) -> list[dict]:
         qp_s     = min(1.0, qp_net / 5)
 
         funds = [fund_cache[t] for t in d["basket"] if fund_cache.get(t) is not None]
-        fund  = sum(funds) / len(funds) if funds else 0.5
+        # financials_q 데이터 없는 테마는 가격 모멘텀으로 실적 대리 추정
+        # (시장이 이미 실적을 선행 반영 — 3M 양수 + 신고가 조합)
+        if funds:
+            fund = sum(funds) / len(funds)
+        else:
+            price_confirmed = sum(1 for m in bm if m["n52"] >= 80 and m["r3"] > 5)
+            fund = min(0.85, 0.5 + price_confirmed * 0.1)  # 최대 0.85(중립 이상)
 
         # v9: 순환매 초기 가점 (바스켓 50%+ 가속 양수)
         accel_cnt = sum(1 for m in bm if m.get("accel", 0) > 0)
