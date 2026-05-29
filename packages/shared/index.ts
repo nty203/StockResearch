@@ -8,6 +8,7 @@ export type {
   FinancialQ,
   Filing,
   News,
+  MacroNews,
   PipelineRun,
   Setting,
   HundredxLibraryStock,

@@ -72,6 +72,18 @@ export type News = {
   lang: 'ko' | 'en'
 }
 
+export type MacroNews = {
+  id: string
+  source: string
+  published_at: string
+  url: string
+  title: string
+  summary: string | null
+  category: string | null   // 정책/금리환율/소비/산업/원자재/실적/기타
+  lang: 'ko' | 'en'
+  created_at: string
+}
+
 export type RiseCategory =
   | '수주잔고_선행'
   | '빅테크_파트너'
@@ -228,6 +240,7 @@ export type Database = {
       hundredx_category_matches:  { Row: HundredxCategoryMatch;   Insert: Omit<HundredxCategoryMatch, 'id'>;                  Update: Partial<Omit<HundredxCategoryMatch, 'id'>>;  Relationships: never[] }
       hundredx_evaluation_runs:   { Row: HundredxEvaluationRun;   Insert: Omit<HundredxEvaluationRun, 'id' | 'run_at'>;       Update: Partial<Omit<HundredxEvaluationRun, 'id'>>;  Relationships: never[] }
       macro_ideas:                { Row: MacroIdea;               Insert: Omit<MacroIdea, 'id' | 'created_at'>;               Update: Partial<Omit<MacroIdea, 'id'>>;               Relationships: never[] }
+      macro_news:                 { Row: MacroNews;               Insert: Omit<MacroNews, 'id' | 'created_at'>;               Update: Partial<Omit<MacroNews, 'id'>>;               Relationships: never[] }
     }
     Views: { [_ in never]: never }
     Functions: { [_ in never]: never }

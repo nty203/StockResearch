@@ -22,17 +22,30 @@
 
 가장 먼저 정성 데이터를 읽어 시장의 지배적 서사(narrative)를 파악한다. 환경변수 `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` 사용.
 
+**주 입력 = `macro_news` 테이블** (GitHub Actions `collect-hourly.yml`가 매시간 누적. 종목 태그 없이 경제·정책·산업 전반 뉴스를 담음 — 탑다운 가설 도출의 핵심 코퍼스):
+
 ```bash
-# 최근 10일 국내 증권/경제 뉴스 (lang=ko)
 SINCE=$(date -d '10 days ago' +%Y-%m-%d 2>/dev/null || date -v-10d +%Y-%m-%d)
-curl -s "$SUPABASE_URL/rest/v1/news?select=ticker,title,summary,published_at,source&lang=eq.ko&published_at=gte.${SINCE}T00:00:00Z&order=published_at.desc&limit=120" \
-  -H "apikey: $SUPABASE_SERVICE_KEY" \
-  -H "Authorization: Bearer $SUPABASE_SERVICE_KEY"
+# 카테고리 분포부터 확인 (정책/금리환율/소비/산업/원자재/실적/기타)
+curl -s "$SUPABASE_URL/rest/v1/macro_news?select=category&published_at=gte.${SINCE}T00:00:00Z" \
+  -H "apikey: $SUPABASE_SERVICE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_KEY"
+# 본문 수집
+curl -s "$SUPABASE_URL/rest/v1/macro_news?select=title,summary,category,published_at,source&published_at=gte.${SINCE}T00:00:00Z&order=published_at.desc&limit=200" \
+  -H "apikey: $SUPABASE_SERVICE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_KEY"
 ```
 
-증권사 리포트 보강이 필요하면 WebFetch로 직접 읽어온다:
+**보조 입력 = `news` 테이블** (종목 태그된 증권사 리포트/종목 뉴스 — 테마를 뒷받침하는 개별주 근거로만 참고):
+
+```bash
+curl -s "$SUPABASE_URL/rest/v1/news?select=ticker,title,summary,published_at,source&lang=eq.ko&published_at=gte.${SINCE}T00:00:00Z&order=published_at.desc&limit=120" \
+  -H "apikey: $SUPABASE_SERVICE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_KEY"
+```
+
+라이브 보강이 필요하면 WebFetch로 직접 읽어온다 (선택):
 - `https://www.hankyung.com/feed/finance` (한경 증권 RSS — 검증됨)
 - `https://finance.naver.com/research/` (네이버 금융 리서치)
+
+> `macro_news`가 비어 있으면(아직 Actions 미수집) `news` 테이블 + WebFetch로 폴백하되, 데이터 폭이 좁음을 결과에 명시한다.
 
 ### Step 2 — 투자 가설(테마) 도출 — 종목 무관
 

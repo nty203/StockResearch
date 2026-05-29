@@ -39,3 +39,7 @@ jobs:
       - name: Run news RSS
         continue-on-error: true
         run: uv run python -m src.news_rss
+
+      - name: Run macro news (종목 비특정 매크로 피드)
+        continue-on-error: true
+        run: uv run python -m src.macro_news
