@@ -17,12 +17,16 @@ logger = logging.getLogger(__name__)
 
 # 종목 비특정 매크로 소스 — 경제 전반/정책/산업/시장
 MACRO_FEEDS = [
-    ("https://www.hankyung.com/feed/economy", "ko"),
-    ("https://www.hankyung.com/feed/finance", "ko"),
-    ("https://www.hankyung.com/feed/industry", "ko"),
-    ("https://biz.chosun.com/rcms/rss/3/1.xml", "ko"),
-    ("https://www.yna.co.kr/rss/economy.xml", "ko"),
-    ("https://news.naver.com/rss/main/NEWS_OFFICIAL_GROUP_003.xml", "ko"),
+    # 한국경제신문
+    ("https://www.hankyung.com/feed/economy", "ko"),   # 경제 (동작 확인)
+    ("https://www.hankyung.com/feed/finance", "ko"),   # 증권 (동작 확인)
+    # 연합뉴스
+    ("https://www.yna.co.kr/rss/economy.xml", "ko"),   # 경제 (동작 확인)
+    # 매일경제 — 조선비즈 대체 (50건 동작 확인)
+    ("https://www.mk.co.kr/rss/40300001/", "ko"),
+    # 전자신문 — 한경산업 대체 (30건, IT·반도체 강점)
+    ("https://rss.etnews.com/Section901.xml", "ko"),
+    # Yahoo Finance (글로벌 매크로)
     ("https://finance.yahoo.com/news/rssindex", "en"),
 ]
 
