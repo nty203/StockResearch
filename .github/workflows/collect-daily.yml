@@ -38,3 +38,11 @@ jobs:
       # 상폐/거래정지 종목 자동 감지 — prices 직후 실행해야 최신 가격으로 판정 가능
       - name: Prune delisted/halted stocks
         run: uv run python -m src.utils.prune_delisted
+
+      # 매크로 테마 랭킹 — 가격 업데이트 후 실행, 변화 감지 시 텔레그램 알람
+      - name: Run macro theme ranking & alerts
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: uv run python -m src.macro_themes
