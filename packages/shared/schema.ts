@@ -222,7 +222,19 @@ export type MacroIdea = {
   market_timing: string | null
   critical_risk: string | null
   raw_json: Record<string, unknown>
+  candidates: MacroIdeaCandidate[]
   created_at: string
+}
+
+export type MacroIdeaCandidate = {
+  ticker: string
+  name: string | null
+  role: string | null          // 밸류체인 내 역할 (예: MLCC, 기판, 대장주)
+  near_52w_high: number | null // 0-100, 52주 신고가 대비 %
+  ret_1m: number | null        // 최근 1개월 수익률 %
+  ret_3m: number | null        // 최근 3개월 수익률 %
+  momentum: number | null      // 0-100 모멘텀 스코어
+  hundredx_match: string | null // hundredx 활성 매칭 카테고리 (수급 코로보레이션)
 }
 
 // Supabase Database type for createClient<Database>

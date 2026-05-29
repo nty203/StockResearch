@@ -15,4 +15,5 @@ export type {
   HundredxEvidence,
   HundredxCategoryMatch,
   MacroIdea,
+  MacroIdeaCandidate,
 } from './schema'

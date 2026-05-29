@@ -93,6 +93,25 @@ curl -s "$SUPABASE_URL/rest/v1/hundredx_category_matches?select=ticker,category,
   -H "apikey: $SUPABASE_SERVICE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_KEY"
 ```
 
+### Step 3.5 — 후보주 바스켓 구성·모멘텀 랭킹 (candidates 영속화)
+
+가설의 밸류체인 수혜주 **6~9개**를 떠올려(대장주+후행주+소재/장비 등 역할별로) 모멘텀 스코어로 랭킹한다. 이 결과가 대시보드 카드에 "어떤 종목이 오를까" 답으로 표시된다.
+
+```bash
+# 후보 티커 나열 → 각각 신고가 근접도 + 1/3개월 모멘텀 계산
+TICKERS="009150 011070 000660 036930 007660 042700"   # 가설 밸류체인 후보
+for t in $TICKERS; do
+  curl -s "$SUPABASE_URL/rest/v1/prices_daily?select=date,close&ticker=eq.$t&order=date.desc&limit=250" \
+    -H "apikey: $SUPABASE_SERVICE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
+  | python -c "import sys,json; d=json.load(sys.stdin); c=[r['close'] for r in d];
+n52=c[0]/max(c)*100; r1=(c[0]/c[20]-1)*100 if len(c)>20 else 0; r3=(c[0]/c[60]-1)*100 if len(c)>60 else 0;
+mom=c[0]/max(c)*50 + max(0,min(25,r1)) + max(0,min(25,r3/2));
+print('$t', round(n52,1), round(r1,1), round(r3,1), round(mom,1)) if c else print('$t nodata')"
+done
+```
+
+**모멘텀 스코어**(0~100) = 신고가근접(0~50) + 1M수익률(0~25 clamp) + 3M수익률/2(0~25 clamp). 각 후보를 모멘텀 내림차순 정렬하고, hundredx 활성 매칭이 있으면 수급 코로보레이션 플래그를 단다. 결과를 `candidates` JSONB 배열로 만든다(아래 Step 5 스키마 참조).
+
 ### Step 4 — 스코어링
 
 Step 2의 가설을 아래 4축으로 채점한다. Technical Alignment는 Step 3에서 직접 검증한 신고가 비율을 근거로 사용한다.
@@ -179,7 +198,15 @@ curl -s -X POST "$SUPABASE_URL/rest/v1/macro_ideas" \
   "technical_alignment_reason": "...",
   "market_timing": "...",
   "critical_risk": "...",
-  "raw_json": { /* 전체 JSON 객체 */ }
+  "raw_json": { /* 전체 JSON 객체 */ },
+  "candidates": [
+    {
+      "ticker": "009150", "name": "삼성전기", "role": "MLCC 대장주",
+      "near_52w_high": 100.0, "ret_1m": 132.9, "ret_3m": 312.3,
+      "momentum": 100.0, "hundredx_match": null
+    }
+    /* Step 3.5 랭킹 결과를 모멘텀 내림차순으로, 최대 8개 */
+  ]
 }
 ```
 
@@ -190,6 +217,7 @@ curl -s -X POST "$SUPABASE_URL/rest/v1/macro_ideas" \
 - **가설을 촉발한 뉴스 트리거** (어떤 헤드라인/리포트에서 출발했는지 — 뉴스 우선 도출임을 증명)
 - 4축 점수 breakdown
 - Step 3 신고가 검증 결과 (대표주가 실제 정렬됐는지)
+- **Top 후보주 3~5개** (모멘텀 순, 어떤 종목이 오를지)
 - market_timing + critical_risk 한 줄 요약
 - "웹 대시보드 `/macro-ideas`에서 확인 가능"
 

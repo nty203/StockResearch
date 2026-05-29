@@ -3,12 +3,71 @@ export const runtime = 'edge'
 
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import type { MacroIdea } from '@stock/shared'
-import { Globe, Home, ChevronDown, ChevronUp, AlertTriangle, Clock } from 'lucide-react'
+import type { MacroIdea, MacroIdeaCandidate } from '@stock/shared'
+import { Globe, Home, ChevronDown, ChevronUp, AlertTriangle, Clock, TrendingUp } from 'lucide-react'
 
 interface MacroIdeasResponse {
   ideas: MacroIdea[]
   count: number
+}
+
+function pctColor(v: number | null) {
+  if (v == null) return 'text-zinc-500'
+  if (v > 0) return 'text-emerald-400'
+  if (v < 0) return 'text-red-400'
+  return 'text-zinc-400'
+}
+
+function CandidateTable({ candidates }: { candidates: MacroIdeaCandidate[] }) {
+  if (!candidates?.length) return null
+  return (
+    <div>
+      <div className="flex items-center gap-1 text-xs font-medium text-emerald-400 mb-1.5">
+        <TrendingUp size={11} /> 후보주 (모멘텀 순)
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="text-zinc-500 border-b border-zinc-800">
+              <th className="text-left font-normal py-1 pr-2">종목</th>
+              <th className="text-right font-normal py-1 px-2">52주高</th>
+              <th className="text-right font-normal py-1 px-2">1M</th>
+              <th className="text-right font-normal py-1 px-2">3M</th>
+              <th className="text-right font-normal py-1 pl-2">모멘텀</th>
+            </tr>
+          </thead>
+          <tbody>
+            {candidates.map((c) => (
+              <tr key={c.ticker} className="border-b border-zinc-800/50">
+                <td className="py-1.5 pr-2">
+                  <span className="text-zinc-200">{c.name ?? c.ticker}</span>
+                  <span className="text-zinc-600 ml-1">{c.ticker}</span>
+                  {c.role && <span className="text-zinc-500 ml-1.5">· {c.role}</span>}
+                  {c.hundredx_match && (
+                    <span className="ml-1.5 px-1 py-0.5 rounded bg-violet-900/50 text-violet-300 text-[10px]">
+                      수급 {c.hundredx_match}
+                    </span>
+                  )}
+                </td>
+                <td className="text-right py-1.5 px-2 tabular-nums text-zinc-300">
+                  {c.near_52w_high != null ? `${c.near_52w_high.toFixed(0)}%` : '—'}
+                </td>
+                <td className={`text-right py-1.5 px-2 tabular-nums ${pctColor(c.ret_1m)}`}>
+                  {c.ret_1m != null ? `${c.ret_1m > 0 ? '+' : ''}${c.ret_1m.toFixed(0)}%` : '—'}
+                </td>
+                <td className={`text-right py-1.5 px-2 tabular-nums ${pctColor(c.ret_3m)}`}>
+                  {c.ret_3m != null ? `${c.ret_3m > 0 ? '+' : ''}${c.ret_3m.toFixed(0)}%` : '—'}
+                </td>
+                <td className="text-right py-1.5 pl-2 tabular-nums font-medium text-zinc-100">
+                  {c.momentum != null ? c.momentum.toFixed(0) : '—'}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
 }
 
 function ScoreBar({ label, score, max }: { label: string; score: number; max: number }) {
@@ -121,6 +180,9 @@ function IdeaCard({ idea }: { idea: MacroIdea }) {
               )}
             </div>
           )}
+          {/* Candidate stocks */}
+          <CandidateTable candidates={idea.candidates ?? []} />
+
           {/* Strategic action */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {idea.market_timing && (
