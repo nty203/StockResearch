@@ -14,6 +14,8 @@ RSS_FEEDS = [
     # Korean financial news
     ("https://www.hankyung.com/feed/finance", "ko"),
     ("https://biz.chosun.com/rcms/rss/3/1.xml", "ko"),
+    # Naver News — economy/finance section (증권·금융 뉴스 포함)
+    ("https://news.naver.com/rss/main/NEWS_OFFICIAL_GROUP_003.xml", "ko"),
     # Yahoo Finance (market news)
     ("https://finance.yahoo.com/news/rssindex", "en"),
 ]

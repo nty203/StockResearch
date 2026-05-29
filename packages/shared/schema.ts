@@ -191,6 +191,28 @@ export type HundredxCategoryMatch = {
   } | null
 }
 
+export type MacroIdea = {
+  id: string
+  date: string
+  title: string
+  background: string | null
+  causal_chain: string | null
+  play_mode: 'Global_Re_rating_Play' | 'Domestic_Alternative_Play'
+  total_score: number
+  directness: number
+  leverage: number
+  scalability_or_rotation: number
+  technical_alignment: number
+  directness_reason: string | null
+  leverage_reason: string | null
+  scalability_or_rotation_reason: string | null
+  technical_alignment_reason: string | null
+  market_timing: string | null
+  critical_risk: string | null
+  raw_json: Record<string, unknown>
+  created_at: string
+}
+
 // Supabase Database type for createClient<Database>
 export type Database = {
   public: {
@@ -205,6 +227,7 @@ export type Database = {
       hundredx_library_stocks:    { Row: HundredxLibraryStock;    Insert: Omit<HundredxLibraryStock, 'id' | 'created_at'>;    Update: Partial<Omit<HundredxLibraryStock, 'id'>>;    Relationships: never[] }
       hundredx_category_matches:  { Row: HundredxCategoryMatch;   Insert: Omit<HundredxCategoryMatch, 'id'>;                  Update: Partial<Omit<HundredxCategoryMatch, 'id'>>;  Relationships: never[] }
       hundredx_evaluation_runs:   { Row: HundredxEvaluationRun;   Insert: Omit<HundredxEvaluationRun, 'id' | 'run_at'>;       Update: Partial<Omit<HundredxEvaluationRun, 'id'>>;  Relationships: never[] }
+      macro_ideas:                { Row: MacroIdea;               Insert: Omit<MacroIdea, 'id' | 'created_at'>;               Update: Partial<Omit<MacroIdea, 'id'>>;               Relationships: never[] }
     }
     Views: { [_ in never]: never }
     Functions: { [_ in never]: never }

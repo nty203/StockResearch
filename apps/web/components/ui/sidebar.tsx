@@ -2,10 +2,11 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Target, BookOpen, BarChart2, PlusCircle, Activity, GaugeCircle } from 'lucide-react'
+import { Target, BookOpen, BarChart2, PlusCircle, Activity, GaugeCircle, Lightbulb } from 'lucide-react'
 
 const nav = [
   { href: '/',               label: '100배 시그널', icon: Target },
+  { href: '/macro-ideas',    label: '매크로 아이디어', icon: Lightbulb },
   { href: '/library',        label: '라이브러리',   icon: BookOpen },
   { href: '/library/stats',  label: '카테고리 통계', icon: BarChart2 },
   { href: '/library/add',    label: '종목 추가',    icon: PlusCircle },

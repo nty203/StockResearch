@@ -13,4 +13,5 @@ export type {
   HundredxLibraryStock,
   HundredxEvidence,
   HundredxCategoryMatch,
+  MacroIdea,
 } from './schema'
