@@ -1,0 +1,41 @@
+name: Daily Macro Idea Agent
+
+on:
+  schedule:
+    - cron: '0 22 * * *'   # 매일 오전 7시 KST (22:00 UTC)
+  workflow_dispatch:        # 수동 실행 버튼
+
+jobs:
+  macro-idea:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: apps/collector
+    env:
+      SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+      SUPABASE_DB_URL:      ${{ secrets.SUPABASE_DB_URL }}
+      ANTHROPIC_API_KEY:    ${{ secrets.ANTHROPIC_API_KEY }}
+      DART_API_KEY:         ${{ secrets.DART_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Collect fresh macro news
+        continue-on-error: true
+        run: uv run python -m src.macro_news
+
+      - name: Run macro themes ranking
+        continue-on-error: true
+        run: uv run python -m src.macro_themes
+
+      - name: Run macro idea agent (Claude API)
+        run: uv run python -m src.macro_idea_agent

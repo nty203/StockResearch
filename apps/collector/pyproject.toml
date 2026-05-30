@@ -16,6 +16,7 @@ dependencies = [
     "httpx>=0.27",
     "python-dotenv>=1.0",
     "psycopg2-binary>=2.9",
+    "anthropic>=0.40",
     # ML (Phase 1) — Phase 0 데이터 충분 시 활성화
     "lightgbm>=4.0",
     "scikit-learn>=1.4",
