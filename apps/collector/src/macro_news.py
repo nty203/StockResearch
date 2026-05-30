@@ -21,10 +21,10 @@ logger = logging.getLogger(__name__)
 MACRO_FEEDS = [
     # ── 범용 와이어 / 경제 일간지 (각 1채널, 중복 최소화) ──
     ("https://www.yna.co.kr/rss/economy.xml", "ko"),   # 연합뉴스 경제 (와이어 대표 1채널)
-    ("https://www.yna.co.kr/rss/industry.xml", "ko"),  # 연합뉴스 산업 — 유통·소비재·K뷰티 해외진출
+    ("https://www.yna.co.kr/rss/industry.xml", "ko"),  # 연합뉴스 산업
     ("https://www.hankyung.com/feed/finance", "ko"),   # 한경 증권 (종목·시황 특화)
     ("https://www.mk.co.kr/rss/40300001/", "ko"),      # 매경 (한경과 다른 논조)
-    ("https://newsis.com/RSS/economy.xml", "ko"),      # 뉴시스 경제 — 유통·소비·기업 뉴스
+    ("https://newsis.com/RSS/economy.xml", "ko"),      # 뉴시스 경제
     # ── 전문 미디어 (범용지가 다루지 않는 심층 분석) ──
     ("https://www.thelec.kr/rss/allArticle.xml", "ko"),        # 더일렉 — 반도체/배터리/디스플레이 전문
     ("https://rss.etnews.com/Section901.xml", "ko"),           # 전자신문 — IT·AI 제조
@@ -33,8 +33,6 @@ MACRO_FEEDS = [
     ("https://finance.yahoo.com/news/rssindex", "en"),         # Yahoo Finance
     ("https://feeds.bloomberg.com/markets/news.rss", "en"),    # Bloomberg Markets
     ("https://www.kedglobal.com/rss/rssNews", "en"),           # KED Global (영문 한국경제)
-    ("https://wwd.com/beauty-industry-news/feed/", "en"),      # WWD Beauty — 글로벌 뷰티·K뷰티 리테일
-    ("https://wwd.com/business-news/feed/", "en"),             # WWD Business — 글로벌 패션·리테일 전략
 ]
 
 # 거친 카테고리 태깅 — macro-idea가 테마별로 필터링할 수 있도록.
