@@ -5,17 +5,24 @@ import type { MacroIdea } from '@stock/shared'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
-  const limit = Math.min(parseInt(searchParams.get('limit') ?? '20'), 50)
+  const limit = Math.min(parseInt(searchParams.get('limit') ?? '50'), 100)
   const offset = parseInt(searchParams.get('offset') ?? '0')
+  const date = searchParams.get('date')
 
   const supabase = createServerClient()
 
-  const { data, error, count } = await supabase
+  let query = supabase
     .from('macro_ideas')
     .select('*', { count: 'exact' })
-    .order('date', { ascending: false })
     .order('total_score', { ascending: false })
-    .range(offset, offset + limit - 1)
+
+  if (date) {
+    query = query.eq('date', date)
+  } else {
+    query = query.order('date', { ascending: false })
+  }
+
+  const { data, error, count } = await query.range(offset, offset + limit - 1)
 
   if (error) {
     return Response.json({ error: error.message }, { status: 500 })

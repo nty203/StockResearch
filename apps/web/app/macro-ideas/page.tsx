@@ -11,11 +11,22 @@ interface MacroIdeasResponse {
   count: number
 }
 
+interface DatesResponse {
+  dates: { date: string; count: number }[]
+}
+
 function pctColor(v: number | null) {
   if (v == null) return 'text-zinc-500'
   if (v > 0) return 'text-emerald-400'
   if (v < 0) return 'text-red-400'
   return 'text-zinc-400'
+}
+
+function formatDateTab(dateStr: string) {
+  const d = new Date(dateStr)
+  const month = d.getUTCMonth() + 1
+  const day = d.getUTCDate()
+  return `${month}/${day}`
 }
 
 function CandidateTable({ candidates }: { candidates: MacroIdeaCandidate[] }) {
@@ -123,7 +134,6 @@ function IdeaCard({ idea }: { idea: MacroIdea }) {
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1.5 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs text-zinc-500 font-mono">{idea.date}</span>
             <PlayModeBadge mode={idea.play_mode} />
           </div>
           <h2 className="text-base font-semibold text-zinc-100 leading-snug">{idea.title}</h2>
@@ -209,9 +219,26 @@ function IdeaCard({ idea }: { idea: MacroIdea }) {
 }
 
 export default function MacroIdeasPage() {
+  const [selectedDate, setSelectedDate] = useState<string | null>(null)
+
+  const { data: datesData, isLoading: datesLoading } = useQuery<DatesResponse>({
+    queryKey: ['macro-ideas-dates'],
+    queryFn: () => fetch('/api/macro-ideas/dates').then(r => r.json()),
+  })
+
+  // Auto-select latest date once dates load
+  const dates = datesData?.dates ?? []
+  const activeDate = selectedDate ?? dates[0]?.date ?? null
+
   const { data, isLoading, error } = useQuery<MacroIdeasResponse>({
-    queryKey: ['macro-ideas'],
-    queryFn: () => fetch('/api/macro-ideas?limit=20').then(r => r.json()),
+    queryKey: ['macro-ideas', activeDate],
+    queryFn: () => {
+      const url = activeDate
+        ? `/api/macro-ideas?date=${activeDate}&limit=50`
+        : '/api/macro-ideas?limit=50'
+      return fetch(url).then(r => r.json())
+    },
+    enabled: !datesLoading,
   })
 
   return (
@@ -223,7 +250,39 @@ export default function MacroIdeasPage() {
         </p>
       </div>
 
-      {isLoading && (
+      {/* Date tabs — horizontal scroll, single row */}
+      {dates.length > 0 && (
+        <div className="relative">
+          <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+            {dates.map(({ date, count }) => {
+              const isActive = date === activeDate
+              return (
+                <button
+                  key={date}
+                  onClick={() => setSelectedDate(date)}
+                  title={date}
+                  className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                    isActive
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200'
+                  }`}
+                >
+                  {formatDateTab(date)}
+                  <span className={`ml-1.5 tabular-nums ${isActive ? 'text-blue-200' : 'text-zinc-600'}`}>
+                    {count}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+          {/* Fade-out hint on right edge when there are many dates */}
+          {dates.length > 10 && (
+            <div className="pointer-events-none absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-zinc-950 to-transparent" />
+          )}
+        </div>
+      )}
+
+      {(isLoading || datesLoading) && (
         <div className="text-sm text-zinc-500">로딩 중...</div>
       )}
 
@@ -231,7 +290,7 @@ export default function MacroIdeasPage() {
         <div className="text-sm text-red-400">데이터를 불러올 수 없습니다.</div>
       )}
 
-      {data && data.ideas.length === 0 && (
+      {!isLoading && !datesLoading && data && data.ideas.length === 0 && (
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-8 text-center">
           <p className="text-zinc-500 text-sm">아직 생성된 아이디어가 없습니다.</p>
           <p className="text-zinc-600 text-xs mt-1">Claude Code에서 <code className="text-zinc-400">/macro-idea</code>를 실행하여 첫 번째 가설을 생성하세요.</p>
@@ -240,7 +299,7 @@ export default function MacroIdeasPage() {
 
       {data && data.ideas.length > 0 && (
         <div className="space-y-4">
-          <p className="text-xs text-zinc-600">총 {data.count}개 가설</p>
+          <p className="text-xs text-zinc-600">{activeDate} · {data.count}개 가설</p>
           {data.ideas.map(idea => (
             <IdeaCard key={idea.id} idea={idea} />
           ))}
