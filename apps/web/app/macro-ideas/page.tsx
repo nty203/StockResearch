@@ -135,9 +135,9 @@ function CandidateTable({ candidates, withLinks }: { candidates: MacroIdeaCandid
           <thead>
             <tr className="text-zinc-500 border-b border-zinc-800 bg-zinc-950/40">
               <th className="text-left font-semibold py-2 px-4">종목</th>
-              <th className="text-right font-semibold py-2 px-3">52주高 대비</th>
+              <th className="text-right font-semibold py-2 px-3 hidden sm:table-cell">52주高 대비</th>
               <th className="text-right font-semibold py-2 px-3">1M 수익률</th>
-              <th className="text-right font-semibold py-2 px-3">3M 수익률</th>
+              <th className="text-right font-semibold py-2 px-3 hidden sm:table-cell">3M 수익률</th>
               <th className="text-right font-semibold py-2 px-4">종합 모멘텀</th>
             </tr>
           </thead>
@@ -165,13 +165,13 @@ function CandidateTable({ candidates, withLinks }: { candidates: MacroIdeaCandid
                     )}
                   </div>
                 </td>
-                <td className="text-right py-2.5 px-3 font-mono text-zinc-300">
+                <td className="text-right py-2.5 px-3 font-mono text-zinc-300 hidden sm:table-cell">
                   {c.near_52w_high != null ? `${c.near_52w_high.toFixed(1)}%` : '—'}
                 </td>
                 <td className={`text-right py-2.5 px-3 font-mono font-medium ${pctColor(c.ret_1m)}`}>
                   {c.ret_1m != null ? `${c.ret_1m > 0 ? '+' : ''}${c.ret_1m.toFixed(1)}%` : '—'}
                 </td>
-                <td className={`text-right py-2.5 px-3 font-mono font-medium ${pctColor(c.ret_3m)}`}>
+                <td className={`text-right py-2.5 px-3 font-mono font-medium hidden sm:table-cell ${pctColor(c.ret_3m)}`}>
                   {c.ret_3m != null ? `${c.ret_3m > 0 ? '+' : ''}${c.ret_3m.toFixed(1)}%` : '—'}
                 </td>
                 <td className="text-right py-2.5 px-4 font-mono font-bold text-zinc-100">
@@ -526,7 +526,7 @@ function MacroIdeasContent() {
         <div className="flex flex-1 min-h-0">
 
           {/* LEFT: list panel */}
-          <div className="w-64 md:w-72 xl:w-80 shrink-0 border-r border-zinc-800 flex flex-col min-h-0">
+          <div className="w-full md:w-72 xl:w-80 shrink-0 md:border-r border-zinc-800 flex flex-col min-h-0">
 
             {/* Filters */}
             <div className="px-3 py-3 border-b border-zinc-800 space-y-2 shrink-0">
