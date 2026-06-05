@@ -16,9 +16,26 @@ RSS_FEEDS = [
     ("https://biz.chosun.com/rcms/rss/3/1.xml", "ko"),
     # Naver News — economy/finance section (증권·금융 뉴스 포함)
     ("https://news.naver.com/rss/main/NEWS_OFFICIAL_GROUP_003.xml", "ko"),
+    # Maeil Business (매일경제)
+    ("https://www.mk.co.kr/rss/30100041/", "ko"),      # 매경 증권
+    ("https://www.mk.co.kr/rss/50300009/", "ko"),      # 매경 기업/경영
     # Yahoo Finance (market news)
     ("https://finance.yahoo.com/news/rssindex", "en"),
 ]
+
+
+def normalize_title(title: str) -> str:
+    """Normalize news title to strip spaces, special characters, and bracket contents."""
+    if not title:
+        return ""
+    # Remove contents inside bracket-like characters, e.g. [단독], (종합), [특징주]
+    t = re.sub(r"\[[^\]]*\]", "", title)
+    t = re.sub(r"\([^)]*\)", "", t)
+    # Remove special characters
+    t = re.sub(r"[^\w\s]", "", t)
+    # Strip spaces and lowercase
+    t = "".join(t.split()).lower()
+    return t
 
 
 def _parse_date(entry) -> str:
@@ -98,11 +115,19 @@ def _parse_feed_with_retry(feed_url: str, max_retries: int = 3) -> object:
 
 def collect_rss_news(ticker_set: set[str], mention_map: dict[str, str] | None = None) -> list[dict]:
     rows = []
+    seen_normalized_titles = set()
     for feed_url, lang in RSS_FEEDS:
         try:
             feed = _parse_feed_with_retry(feed_url)
             for entry in feed.entries:
                 title = entry.get("title", "")
+                norm_title = normalize_title(title)
+                if norm_title:
+                    if norm_title in seen_normalized_titles:
+                        logger.info("Skipped duplicate RSS news title: %s", title)
+                        continue
+                    seen_normalized_titles.add(norm_title)
+
                 summary = entry.get("summary", entry.get("description", ""))
                 full_text = f"{title} {summary}"
                 tickers = _find_ticker_mentions(full_text, ticker_set, mention_map)
@@ -151,5 +176,7 @@ def run() -> int:
 
 
 if __name__ == "__main__":
+    from dotenv import load_dotenv
+    load_dotenv()
     logging.basicConfig(level=logging.INFO)
     run()

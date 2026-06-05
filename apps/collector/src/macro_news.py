@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 import feedparser
 
 from .upsert import get_client, upsert_batch, pipeline_run
-from .news_rss import _parse_date, _parse_feed_with_retry
+from .news_rss import _parse_date, _parse_feed_with_retry, normalize_title
 
 logger = logging.getLogger(__name__)
 
@@ -23,12 +23,15 @@ MACRO_FEEDS = [
     ("https://www.yna.co.kr/rss/economy.xml", "ko"),   # 연합뉴스 경제 (와이어 대표 1채널)
     ("https://www.yna.co.kr/rss/industry.xml", "ko"),  # 연합뉴스 산업
     ("https://www.hankyung.com/feed/finance", "ko"),   # 한경 증권 (종목·시황 특화)
+    ("https://www.hankyung.com/feed/international", "ko"), # 한경 글로벌
     ("https://www.mk.co.kr/rss/40300001/", "ko"),      # 매경 (한경과 다른 논조)
     ("https://newsis.com/RSS/economy.xml", "ko"),      # 뉴시스 경제
+    ("https://biz.chosun.com/rcms/rss/4/1.xml", "ko"),  # 조선비즈 산업
     # ── 전문 미디어 (범용지가 다루지 않는 심층 분석) ──
     ("https://www.thelec.kr/rss/allArticle.xml", "ko"),        # 더일렉 — 반도체/배터리/디스플레이 전문
     ("https://rss.etnews.com/Section901.xml", "ko"),           # 전자신문 — IT·AI 제조
     ("https://www.aitimes.kr/rss/allArticle.xml", "ko"),        # AI타임스 한국어 — AI·로봇·피지컬AI 전문
+    ("https://feeds.feedburner.com/zdkorea", "ko"),            # ZDNet Korea — IT/테크/빅테크
     # ── 글로벌 (한국 미디어가 놓치는 글로벌 공급망·매크로) ──
     ("https://finance.yahoo.com/news/rssindex", "en"),         # Yahoo Finance
     ("https://feeds.bloomberg.com/markets/news.rss", "en"),    # Bloomberg Markets
@@ -54,7 +57,7 @@ _CATEGORY_KEYWORDS: list[tuple[str, tuple[str, ...]]] = [
              "명품", "관광", "외국인 관광", "한류", "뷰티", "화장품", "외식", "방한",
              "ODM", "K뷰티", "K-뷰티", "이커머스", "직구")),
     ("원자재", ("유가", "구리", "금속", "원자재", "곡물", "리튬", "니켈", "천연가스",
-              "LNG", "석유", "정유", "유황", "알루미늄", "철광석")),
+               "LNG", "석유", "정유", "유황", "알루미늄", "철광석")),
     ("실적", ("실적", "영업이익", "어닝", "가이던스", "목표가", "컨센서스",
              "역대", "사상 최대", "호실적", "깜짝 실적", "수주", "수주잔고", "흑자전환")),
     ("산업", ("반도체", "자동차", "조선", "방산", "2차전지", "배터리", "AI", "바이오", "로봇", "원전", "풍력",
@@ -75,6 +78,7 @@ def _categorize(text: str) -> str:
 def collect_macro_news() -> list[dict]:
     rows: list[dict] = []
     seen_urls: set[str] = set()
+    seen_normalized_titles: set[str] = set()
     for feed_url, lang in MACRO_FEEDS:
         try:
             feed = _parse_feed_with_retry(feed_url)
@@ -82,8 +86,16 @@ def collect_macro_news() -> list[dict]:
                 url = entry.get("link", "")
                 if not url or url in seen_urls:
                     continue
-                seen_urls.add(url)
+
                 title = entry.get("title", "")
+                norm_title = normalize_title(title)
+                if norm_title:
+                    if norm_title in seen_normalized_titles:
+                        logger.info("Skipped duplicate macro news title: %s", title)
+                        continue
+                    seen_normalized_titles.add(norm_title)
+
+                seen_urls.add(url)
                 summary = entry.get("summary", entry.get("description", ""))
                 rows.append({
                     "source": feed.feed.get("title", feed_url)[:50],
@@ -111,5 +123,7 @@ def run() -> int:
 
 
 if __name__ == "__main__":
+    from dotenv import load_dotenv
+    load_dotenv()
     logging.basicConfig(level=logging.INFO)
     run()
