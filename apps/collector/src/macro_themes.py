@@ -287,16 +287,57 @@ def rank_themes(window_days: int = 14) -> list[dict]:
             [{"ticker": t, "name": name_map.get(t), "mom": mom_cache[t]} for t in d["basket"] if mom_cache.get(t)],
             key=lambda x: x["mom"]["mom"], reverse=True,
         )
+
+        def _early_signal(mom: dict) -> tuple[float, str]:
+            """조기 신호 스코어 + signal_flag — macro-idea.md Step 3.5 공식과 동일."""
+            n52, r1, r3 = mom["n52"], mom["r1"], mom["r3"]
+            if 88 <= n52 <= 99:
+                early, flag = 50, "🔺임박"
+            elif 99 < n52 <= 112:
+                early, flag = 40, "✅돌파직후"
+            elif n52 > 112:
+                early, flag = 30, "⚠️과열"
+            elif 80 <= n52 < 88:
+                early, flag = 30, "📌중기후보"
+            else:
+                early, flag = 20, "🔵하단"
+            penalty = min(30, max(0, r3 - 60) / 2)
+            sc = round(early - penalty + max(0, min(15, r1)), 1)
+            return sc, flag
+
+        def _role(idx: int, total: int) -> str:
+            if idx == 0:
+                return "대장주"
+            if idx == 1:
+                return "2차 수혜"
+            if idx == total - 1 and total >= 4:
+                return "후행주"
+            return "밸류체인"
+
+        cand_list = []
+        for i, c in enumerate(cand):
+            es, sf = _early_signal(c["mom"])
+            cand_list.append({
+                "ticker": c["ticker"],
+                "name": c["name"],
+                "role": _role(i, len(cand)),
+                "near_52w_high": c["mom"]["n52"],
+                "ret_1m": c["mom"]["r1"],
+                "ret_3m": c["mom"]["r3"],
+                "early_signal_score": es,
+                "signal_flag": sf,
+                "hundredx_match": match_map.get(c["ticker"]),
+            })
+        # early_signal_score 내림차순 재정렬
+        cand_list.sort(key=lambda x: x["early_signal_score"], reverse=True)
+
         rows.append({
             "theme": name, "score": round(score, 1),
             "evidence_wvol": round(wvol, 1),
             "qp_pos": round(qp_pos, 1), "qp_neg": round(qp_neg, 1), "qp_net": round(qp_net, 1),
             "tech": round(tech_med * 100, 1), "aligned": aligned,
             "fund": round(fund, 2), "bigtech": bigtech, "accel": round(accel_s, 2),
-            "candidates": [{
-                "ticker": c["ticker"], "name": c["name"],
-                **c["mom"], "hundredx_match": match_map.get(c["ticker"]),
-            } for c in cand],
+            "candidates": cand_list,
         })
 
     rows.sort(key=lambda x: x["score"], reverse=True)

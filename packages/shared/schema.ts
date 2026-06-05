@@ -203,6 +203,29 @@ export type HundredxCategoryMatch = {
   } | null
 }
 
+export type MacroTheme =
+  | 'AI반도체/HBM'
+  | '전자부품/AI기판'
+  | '내수소비/유통/명품'
+  | '조선/방산'
+  | '바이오/제약'
+  | '2차전지/ESS'
+  | '금융/밸류업'
+  | '로봇/피지컬AI'
+  | '원전/전력'
+
+export const MACRO_THEMES: MacroTheme[] = [
+  'AI반도체/HBM',
+  '전자부품/AI기판',
+  '내수소비/유통/명품',
+  '조선/방산',
+  '바이오/제약',
+  '2차전지/ESS',
+  '금융/밸류업',
+  '로봇/피지컬AI',
+  '원전/전력',
+]
+
 export type MacroIdea = {
   id: string
   date: string
@@ -210,6 +233,7 @@ export type MacroIdea = {
   background: string | null
   causal_chain: string | null
   play_mode: 'Global_Re_rating_Play' | 'Domestic_Alternative_Play'
+  theme: MacroTheme | null
   total_score: number
   directness: number
   leverage: number

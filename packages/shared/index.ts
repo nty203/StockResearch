@@ -16,4 +16,7 @@ export type {
   HundredxCategoryMatch,
   MacroIdea,
   MacroIdeaCandidate,
+  MacroTheme,
 } from './schema'
+
+export { MACRO_THEMES } from './schema'

@@ -6,7 +6,8 @@ export async function GET() {
   const supabase = createServerClient()
 
   // Use DB-side GROUP BY via RPC — avoids fetching all rows just to deduplicate
-  const { data, error } = await supabase.rpc('get_macro_idea_dates')
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data, error } = await (supabase as any).rpc('get_macro_idea_dates')
 
   if (error) {
     // Fallback: fetch date column with a cap and deduplicate in JS
@@ -24,7 +25,9 @@ export async function GET() {
     for (const row of rows ?? []) {
       countByDate.set(row.date, (countByDate.get(row.date) ?? 0) + 1)
     }
-    const dates = Array.from(countByDate.entries()).map(([date, count]) => ({ date, count }))
+    const dates = Array.from(countByDate.entries())
+      .map(([date, count]) => ({ date, count }))
+      .sort((a, b) => b.date.localeCompare(a.date))
     return Response.json({ dates })
   }
 
