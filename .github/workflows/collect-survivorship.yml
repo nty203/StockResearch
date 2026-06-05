@@ -64,16 +64,17 @@ jobs:
           client = create_client(url, key)
 
           print("Starting survivorship-free universe build...")
-          result = build_survivorship_free_universe(
+          stats = build_survivorship_free_universe(
               client=client,
-              markets=["KOSPI", "KOSDAQ"],
               max_tickers=500,          # 월 1회 500종목씩 누적
-              include_delisted=True,    # 상장폐지 종목 필수 포함
           )
-          print(f"Processed: {result.get('n_processed', 0):,} tickers")
-          print(f"New samples inserted: {result.get('n_inserted', 0):,}")
-          print(f"Skipped (already exists): {result.get('n_skipped', 0):,}")
-          print(f"Errors: {result.get('n_errors', 0):,}")
+          print(f"Processed: {stats.total_tickers:,} tickers")
+          print(f"Active: {stats.active_tickers:,} tickers")
+          print(f"Delisted: {stats.delisted_tickers:,} tickers")
+          print(f"Winners (10x+): {stats.winners_10x:,}")
+          print(f"Losers: {stats.losers:,}")
+          print(f"Samples generated: {stats.samples_generated:,}")
+          print(f"Errors: {stats.errors:,}")
           EOF
 
       # Step 3: 현재 학습 샘플 통계 출력
@@ -86,11 +87,17 @@ jobs:
           key = os.environ["SUPABASE_SERVICE_KEY"]
           client = create_client(url, key)
           try:
-              # Split별 분포
-              for split in ("train", "val", "test"):
+              # Split별 분포 (date ranges)
+              SPLITS = {
+                  "train": ("2000-01-01", "2018-12-31"),
+                  "val":   ("2019-07-01", "2022-12-31"),
+                  "test":  ("2023-07-01", "2099-12-31"),
+              }
+              for split, (start, end) in SPLITS.items():
                   r = (client.table("pptr_training_samples")
                        .select("id", count="exact")
-                       .eq("split", split)
+                       .gte("snapshot_date", start)
+                       .lte("snapshot_date", end)
                        .execute())
                   print(f"  {split:12s}: {r.count or 0:>6,} samples")
 
