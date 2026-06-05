@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import type { MacroIdea, MacroIdeaCandidate, MacroTheme } from '@stock/shared'
 import { MACRO_THEMES } from '@stock/shared'
-import { Globe, Home, AlertTriangle, Clock, TrendingUp, Search, X, BarChart2 } from 'lucide-react'
+import { Globe, Home, AlertTriangle, Clock, TrendingUp, Search, X, BarChart2, SlidersHorizontal } from 'lucide-react'
 
 type PlayFilter = 'all' | 'Global_Re_rating_Play' | 'Domestic_Alternative_Play'
 type ScoreFilter = 0 | 60 | 70 | 80
@@ -421,6 +421,7 @@ function MacroIdeasContent() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedId, setSelectedId] = useState<string | null>(searchParams.get('id'))
   const [mobileShowDetail, setMobileShowDetail] = useState(false)
+  const [showFilters, setShowFilters] = useState(false)
 
   const { data: datesData, isLoading: datesLoading } = useQuery<DatesResponse>({
     queryKey: ['macro-ideas-dates'],
@@ -529,106 +530,135 @@ function MacroIdeasContent() {
           <div className="w-full md:w-72 xl:w-80 shrink-0 md:border-r border-zinc-800 flex flex-col min-h-0">
 
             {/* Filters */}
-            <div className="px-3 py-3 border-b border-zinc-800 space-y-2 shrink-0">
-
-              {/* Date selector + search row */}
-              <div className="flex items-center gap-2">
+            <div className="px-3 py-2.5 border-b border-zinc-800 space-y-2 shrink-0">
+              {/* Top row: Date selector, search bar, filter toggle */}
+              <div className="flex items-center gap-1.5">
+                {/* Date Dropdown */}
                 <select
                   value={activeDate ?? ''}
                   onChange={e => { setSelectedDate(e.target.value); setSelectedId(null) }}
-                  className="flex-1 bg-zinc-800 border border-zinc-700 rounded-md px-2 py-1.5 text-xs text-zinc-200 focus:outline-none focus:border-zinc-500 min-w-0"
+                  className="w-20 bg-zinc-800 border border-zinc-700 rounded-md px-1 py-1.5 text-[11px] text-zinc-200 focus:outline-none focus:border-zinc-500 min-w-0"
                 >
                   {dates.map(({ date, count }) => (
                     <option key={date} value={date}>
-                      {formatDateTab(date)} ({count})
+                      {formatDateTab(date)}
                     </option>
                   ))}
                 </select>
-              </div>
 
-              {/* Search */}
-              <div className="relative">
-                <Search size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
-                <input
-                  type="text"
-                  placeholder="제목·배경 검색..."
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-zinc-800 border border-zinc-700 rounded-md pl-7 pr-7 py-1.5 text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-500"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
-                  >
-                    <X size={12} />
-                  </button>
-                )}
-              </div>
+                {/* Search Bar */}
+                <div className="relative flex-1">
+                  <Search size={11} className="absolute left-2 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+                  <input
+                    type="text"
+                    placeholder="검색..."
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    className="w-full bg-zinc-800 border border-zinc-700 rounded-md pl-6 pr-6 py-1.5 text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-500"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
+                    >
+                      <X size={11} />
+                    </button>
+                  )}
+                </div>
 
-              {/* Play mode filter */}
-              <div className="flex items-center gap-1">
-                {(['all', 'Global_Re_rating_Play', 'Domestic_Alternative_Play'] as PlayFilter[]).map(mode => (
-                  <button
-                    key={mode}
-                    onClick={() => setPlayFilter(mode)}
-                    className={`flex-1 px-1 py-1 rounded text-[10px] font-medium transition-colors ${
-                      playFilter === mode
-                        ? mode === 'all' ? 'bg-zinc-600 text-zinc-100'
-                          : mode === 'Global_Re_rating_Play' ? 'bg-blue-800 text-blue-100'
-                          : 'bg-amber-800 text-amber-100'
-                        : 'bg-zinc-800 text-zinc-500 hover:text-zinc-300'
-                    }`}
-                  >
-                    {mode === 'all' ? '전체' : mode === 'Global_Re_rating_Play' ? '글로벌' : '내수'}
-                  </button>
-                ))}
-              </div>
-
-              {/* Score + theme row */}
-              <div className="flex items-center gap-1 flex-wrap">
-                {SCORE_OPTIONS.map(({ label, value }) => (
-                  <button
-                    key={value}
-                    onClick={() => setMinScore(value)}
-                    className={`px-2 py-0.5 rounded text-[10px] font-medium transition-colors ${
-                      minScore === value
-                        ? 'bg-zinc-600 text-zinc-100'
-                        : 'bg-zinc-800 border border-zinc-700 text-zinc-500 hover:text-zinc-300'
-                    }`}
-                  >
-                    {label}
-                  </button>
-                ))}
-                <span className="ml-auto text-[10px] text-zinc-600 tabular-nums">
-                  {filteredIdeas.length}/{allIdeas.length}
-                </span>
-              </div>
-
-              {/* Theme pills */}
-              <div className="flex flex-wrap gap-1">
+                {/* Filter toggle button */}
                 <button
-                  onClick={() => setThemeFilter('all')}
-                  className={`px-2 py-0.5 rounded-full text-[10px] font-medium transition-colors ${
-                    themeFilter === 'all' ? 'bg-zinc-600 text-zinc-100' : 'bg-zinc-800 border border-zinc-700 text-zinc-500 hover:text-zinc-300'
+                  onClick={() => setShowFilters(!showFilters)}
+                  className={`p-1.5 border rounded-md transition-colors shrink-0 ${
+                    showFilters || playFilter !== 'all' || minScore > 0 || themeFilter !== 'all'
+                      ? 'bg-blue-950/80 text-blue-400 border-blue-800/80'
+                      : 'bg-zinc-800 border-zinc-700 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700'
                   }`}
+                  title="상세 필터"
                 >
-                  전체
+                  <SlidersHorizontal size={13} fill={showFilters ? "currentColor" : "none"} />
                 </button>
-                {MACRO_THEMES.filter(t => allIdeas.some(i => i.theme === t)).map((theme: MacroTheme) => (
-                  <button
-                    key={theme}
-                    onClick={() => setThemeFilter(themeFilter === theme ? 'all' : theme)}
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-medium transition-colors ${
-                      themeFilter === theme
-                        ? 'bg-violet-800 text-violet-100 border border-violet-600'
-                        : 'bg-zinc-800 border border-zinc-700 text-zinc-500 hover:text-zinc-300'
-                    }`}
-                  >
-                    {theme}
-                  </button>
-                ))}
               </div>
+
+              {/* Expandable filters panel */}
+              {showFilters && (
+                <div className="pt-2 border-t border-zinc-800/60 space-y-2.5 animate-fadeIn">
+                  {/* Play mode filter */}
+                  <div>
+                    <p className="text-[10px] text-zinc-500 font-medium mb-1">플레이 모드</p>
+                    <div className="flex items-center gap-1">
+                      {(['all', 'Global_Re_rating_Play', 'Domestic_Alternative_Play'] as PlayFilter[]).map(mode => (
+                        <button
+                          key={mode}
+                          onClick={() => setPlayFilter(mode)}
+                          className={`flex-1 px-1 py-1 rounded text-[10px] font-medium transition-colors ${
+                            playFilter === mode
+                              ? mode === 'all' ? 'bg-zinc-600 text-zinc-100'
+                                : mode === 'Global_Re_rating_Play' ? 'bg-blue-800 text-blue-100'
+                                : 'bg-amber-800 text-amber-100'
+                              : 'bg-zinc-800 text-zinc-500 hover:text-zinc-300'
+                          }`}
+                        >
+                          {mode === 'all' ? '전체' : mode === 'Global_Re_rating_Play' ? '글로벌' : '내수'}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Score filter */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-[10px] text-zinc-500 font-medium">최소 스코어</p>
+                      <span className="text-[9px] text-zinc-600 font-mono">
+                        {filteredIdeas.length}/{allIdeas.length}개 매칭
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      {SCORE_OPTIONS.map(({ label, value }) => (
+                        <button
+                          key={value}
+                          onClick={() => setMinScore(value)}
+                          className={`flex-1 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                            minScore === value
+                              ? 'bg-zinc-600 text-zinc-100'
+                              : 'bg-zinc-800 border border-zinc-700 text-zinc-500 hover:text-zinc-300'
+                          }`}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Theme pills */}
+                  <div>
+                    <p className="text-[10px] text-zinc-500 font-medium mb-1">테마</p>
+                    <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto pr-1">
+                      <button
+                        onClick={() => setThemeFilter('all')}
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-medium transition-colors ${
+                          themeFilter === 'all' ? 'bg-zinc-600 text-zinc-100' : 'bg-zinc-800 border border-zinc-700 text-zinc-500 hover:text-zinc-300'
+                        }`}
+                      >
+                        전체
+                      </button>
+                      {MACRO_THEMES.filter(t => allIdeas.some(i => i.theme === t)).map((theme: MacroTheme) => (
+                        <button
+                          key={theme}
+                          onClick={() => setThemeFilter(themeFilter === theme ? 'all' : theme)}
+                          className={`px-2 py-0.5 rounded-full text-[10px] font-medium transition-colors ${
+                            themeFilter === theme
+                              ? 'bg-violet-800 text-violet-100 border border-violet-600'
+                              : 'bg-zinc-800 border border-zinc-700 text-zinc-500 hover:text-zinc-300'
+                          }`}
+                        >
+                          {theme}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Card list */}
