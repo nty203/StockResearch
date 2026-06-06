@@ -19,25 +19,40 @@ KOSDAQ_ACTIVE_LIMIT = None  # None = 전체 활성
 def collect_kr_universe() -> list[dict]:
     """Fetch KOSPI + KOSDAQ tickers from KRX. All stocks are active by default."""
     rows = []
+    
+    # Attempt to fetch KOSPI and KOSDAQ from KRX-DESC as fallback if primary fails
+    try:
+        # Check if primary KRX works (often blocked by WAF for foreign IPs)
+        fdr.StockListing("KOSPI")
+        use_desc = False
+    except Exception as e:
+        logger.warning("Primary KRX fetch failed, falling back to KRX-DESC: %s", e)
+        use_desc = True
+
+    if use_desc:
+        df_desc = fdr.StockListing("KRX-DESC")
+    
     for market in ("KOSPI", "KOSDAQ"):
-        df = fdr.StockListing(market)
-        # Sort by market cap descending (Marcap column, may be 0 if unavailable)
-        marcap_col = next((c for c in df.columns if c.lower() in ("marcap", "mktcap", "market_cap", "시가총액")), None)
-        if marcap_col:
-            df = df.sort_values(marcap_col, ascending=False).reset_index(drop=True)
+        if use_desc:
+            # Map market strings: KOSDAQ GLOBAL is also KOSDAQ
+            mask = df_desc["Market"].str.contains(market, na=False, case=False)
+            df = df_desc[mask].copy()
+            marcap_col = None
+        else:
+            df = fdr.StockListing(market)
+            # Sort by market cap descending (Marcap column, may be 0 if unavailable)
+            marcap_col = next((c for c in df.columns if c.lower() in ("marcap", "mktcap", "market_cap", "시가총액")), None)
+            if marcap_col:
+                df = df.sort_values(marcap_col, ascending=False).reset_index(drop=True)
+                
         limit = KOSPI_ACTIVE_LIMIT if market == "KOSPI" else KOSDAQ_ACTIVE_LIMIT
 
         for idx, r in df.iterrows():
             ticker = str(r.get("Code", r.get("Symbol", ""))).strip()
             if not ticker:
                 continue
-            # 시가총액: Marcap 컬럼 (원 단위). 0 또는 NaN이면 None으로 저장
-            marcap_raw = r.get(marcap_col) if marcap_col else None
-            try:
-                market_cap_val = int(marcap_raw) if marcap_raw and float(marcap_raw) > 0 else None
-            except (TypeError, ValueError):
-                market_cap_val = None
-            rows.append({
+            
+            row_dict = {
                 "ticker": ticker,
                 "market": market,
                 "name_kr": str(r.get("Name", r.get("Sector", ""))),
@@ -45,8 +60,18 @@ def collect_kr_universe() -> list[dict]:
                 "sector_wics": str(r.get("Sector", r.get("Industry", ""))),
                 "industry": str(r.get("Industry", "")),
                 "is_active": True if limit is None else (idx < limit),
-                "market_cap": market_cap_val,
-            })
+            }
+            
+            # Only include market_cap if it exists; otherwise Supabase upsert ignores it
+            if marcap_col:
+                marcap_raw = r.get(marcap_col)
+                try:
+                    market_cap_val = int(marcap_raw) if marcap_raw and float(marcap_raw) > 0 else None
+                except (TypeError, ValueError):
+                    market_cap_val = None
+                row_dict["market_cap"] = market_cap_val
+                
+            rows.append(row_dict)
     return rows
 
 
