@@ -293,5 +293,6 @@ Gemini에서 아래 슬래시 커맨드를 입력하면, 사전에 정의된 프
 
 - `/macro-idea`: `.gemini/skills/macro-idea.md` (거시적 투자 가설 도출 및 스코어링)
 - `/verify-stocks`: `.gemini/skills/verify-stocks.md` (PPTR 퀄리티 게이트 및 데이터 커버리지 검증)
+- `/naver-blog`: `.gemini/skills/naver-blog.md` (매크로 아이디어 기반 네이버 블로그 포스팅 초안 작성)
 
 Gemini 에이전트는 사용자가 위 커맨드를 입력할 시, 반드시 해당 파일의 내용을 완전히 숙지하고 그 지침에 따라 행동해야 합니다.

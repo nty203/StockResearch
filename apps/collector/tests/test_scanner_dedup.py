@@ -28,15 +28,15 @@ class TestDeduplicateCategories:
         assert result[0].confidence == 0.85
 
     def test_single_ticker_six_categories_deduped(self):
-        """The 373220-style false positive: 6 non-clinical categories → 2 kept.
+        """The 373220-style false positive: 6 non-clinical categories → 1 kept.
 
-        수익성_급전환 is always-keep, so it survives.
-        빅테크_파트너 has highest category priority among the rest → also kept.
-        Total: 2 instead of 6.
+        Since 수익성_급전환 is no longer always-keep, only the highest priority/confidence survives.
+        빅테크_파트너 has highest category priority among the rest → kept.
+        Total: 1 instead of 6.
         """
         categories = [
             ("수주잔고_선행", 0.750),
-            ("수익성_급전환", 0.750),  # always-keep
+            ("수익성_급전환", 0.750),
             ("빅테크_파트너", 0.750),
             ("플랫폼_독점", 0.750),
             ("정책_수혜", 0.750),
@@ -45,15 +45,14 @@ class TestDeduplicateCategories:
         matches = [_match("373220", cat, conf) for cat, conf in categories]
         result = _deduplicate_categories(matches)
         cats = {m.category for m in result}
-        # 수익성_급전환 (always-keep) + 빅테크_파트너 (best by priority)
-        assert "수익성_급전환" in cats
         assert "빅테크_파트너" in cats
-        # The other 4 categories should be removed
-        assert "수주잔고_선행" not in cats
+        # The other 5 categories should be removed
+        assert "수수잔고_선행" not in cats
+        assert "수익성_급전환" not in cats
         assert "플랫폼_독점" not in cats
         assert "정책_수혜" not in cats
         assert "공급_병목" not in cats
-        assert len(result) == 2
+        assert len(result) == 1
 
     def test_clinical_deduped_when_lower_confidence(self):
         """임상_파이프라인은 더 이상 always-keep이 아님.
@@ -66,7 +65,7 @@ class TestDeduplicateCategories:
         m_backlog = _match("B", "수주잔고_선행", 0.90)
         m_supply = _match("B", "공급_병목", 0.85)
         result = _deduplicate_categories([m_clinical, m_backlog, m_supply])
-        # 수주잔고_선행(0.90)이 최고 confidence → 수익성_급전환 always-keep 없으므로 1개만
+        # 수주잔고_선행(0.90)이 최고 confidence → 1개만
         cats = {m.category for m in result}
         assert "수주잔고_선행" in cats
         assert "공급_병목" not in cats
@@ -88,14 +87,14 @@ class TestDeduplicateCategories:
         assert len(result) == 1
 
     def test_always_keep_profit_preserved(self):
-        """수익성_급전환 is always-keep."""
+        """Since 수익성_급전환 is no longer always-keep, only the highest confidence survives."""
         m_profit = _match("C", "수익성_급전환", 0.75)
         m_supply = _match("C", "공급_병목", 0.80)
         result = _deduplicate_categories([m_profit, m_supply])
         cats = {m.category for m in result}
-        assert "수익성_급전환" in cats
-        assert "공급_병목" in cats  # best non-always-keep
-        assert len(result) == 2
+        assert "공급_병목" in cats
+        assert "수익성_급전환" not in cats
+        assert len(result) == 1
 
     def test_multiple_tickers_independent(self):
         """Dedup is per-ticker; different tickers are independent."""
@@ -119,17 +118,11 @@ class TestDeduplicateCategories:
         assert result[0].category == "빅테크_파트너"
 
     def test_profit_always_keep_with_clinical(self):
-        """수익성_급전환(always-keep) + 임상_파이프라인: profit은 보존, clinical은 dedup 대상.
-
-        임상(0.72) < 수익성(0.80) → to_dedup에서 수익성_급전환이 always-keep이므로
-        always_keep=[수익성_급전환], to_dedup=[임상_파이프라인] → best to_dedup = 임상
-        결과: 수익성_급전환(always-keep) + 임상_파이프라인(to_dedup 유일)
-        """
+        """수익성_급전환 is no longer always-keep, so higher confidence wins (수익성_급전환 0.80)."""
         m1 = _match("E", "임상_파이프라인", 0.72)
         m2 = _match("E", "수익성_급전환", 0.80)
         result = _deduplicate_categories([m1, m2])
         cats = {m.category for m in result}
-        # 수익성_급전환은 always-keep, 임상은 to_dedup 유일 → 둘 다 보존
         assert "수익성_급전환" in cats
-        assert "임상_파이프라인" in cats
-        assert len(result) == 2
+        assert "임상_파이프라인" not in cats
+        assert len(result) == 1
