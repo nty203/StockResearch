@@ -7,6 +7,9 @@ from __future__ import annotations
 
 import json
 from datetime import date, timedelta
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from ..upsert import get_client
 

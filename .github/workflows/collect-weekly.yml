@@ -46,3 +46,10 @@ jobs:
         env:
           PRICE_PRUNE_WINDOW_DAYS: "1"  # 하루 단위 삭제 (REST timeout 방지)
         run: uv run python -m src.utils.prune_prices
+
+      - name: Backfill filing bodies (raw_text 미수집 공시 본문 보충)
+        continue-on-error: true
+        timeout-minutes: 20
+        env:
+          DART_API_KEY: ${{ secrets.DART_API_KEY }}
+        run: uv run python -m src.hundredx.backfill_filing_bodies --max 300

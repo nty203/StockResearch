@@ -213,9 +213,16 @@ def _upsert_pptr_rules(client, rules: list[dict]) -> None:
 
 
 def _insert_pptr_near_misses(client, near_misses: list[dict], now: datetime) -> None:
-    """Persist partial PPTR firings as learning data; never block scanner."""
+    """Persist partial PPTR firings as learning data; never block scanner.
+
+    날짜 단위 dedup: (rule_id, ticker, date) 조합당 1건만 저장.
+    DB UNIQUE(rule_id, ticker, detected_at)에 매 스캔 타임스탬프가 달라 누적되는 문제를
+    detected_at을 당일 자정(UTC)으로 truncate해서 해결.
+    """
     if not near_misses:
         return
+    # detected_at을 날짜(00:00 UTC) 단위로 truncate → 당일 한 번만 저장
+    today_midnight = now.replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
     rows = []
     seen = set()
     for near in near_misses:
@@ -227,7 +234,7 @@ def _insert_pptr_near_misses(client, near_misses: list[dict], now: datetime) -> 
             "rule_id": near.get("rule_id"),
             "ticker": near.get("ticker"),
             "category": near.get("category"),
-            "detected_at": now.isoformat(),
+            "detected_at": today_midnight,
             "near_miss_score": near.get("near_miss_score"),
             "matched_conditions": near.get("matched_conditions") or [],
             "missing_conditions": near.get("missing_conditions") or [],
@@ -236,7 +243,10 @@ def _insert_pptr_near_misses(client, near_misses: list[dict], now: datetime) -> 
     if not rows:
         return
     try:
-        client.table("pptr_rule_near_misses").insert(rows).execute()
+        # on_conflict: UNIQUE(rule_id, ticker, detected_at) — 당일 재스캔 시 UPDATE
+        client.table("pptr_rule_near_misses").upsert(
+            rows, on_conflict="rule_id,ticker,detected_at"
+        ).execute()
     except Exception as e:
         logger.warning("insert_pptr_near_misses error: %s", e)
 
@@ -637,11 +647,14 @@ def _upsert_matches_with_analogs(
         row.update(_price_performance_payload(perf, existing_row, now))
         rows.append(row)
         if pptr_rule_id:
+            # matched_at을 당일 자정으로 truncate → UNIQUE(rule_id, ticker, matched_at) 활용
+            # 매 스캔마다 타임스탬프가 달라 중복 축적되는 문제 방지
+            today_midnight = now.replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
             pptr_rows.append({
                 "rule_id": pptr_rule_id,
                 "ticker": m.ticker,
                 "category": m.category,
-                "matched_at": now.isoformat(),
+                "matched_at": today_midnight,
                 "confidence": round(m.confidence, 3),
                 "confidence_breakdown": pptr_breakdown or {},
                 "matched_conditions": pptr_match.get("matched_conditions", []),
@@ -663,9 +676,12 @@ def _upsert_matches_with_analogs(
             logger.warning("reject_repair error %s/%s: %s", tkr, cat, e)
     if pptr_rows:
         try:
-            client.table("pptr_rule_matches").insert(pptr_rows).execute()
+            # on_conflict: UNIQUE(rule_id, ticker, matched_at) — 당일 재스캔 시 UPDATE
+            client.table("pptr_rule_matches").upsert(
+                pptr_rows, on_conflict="rule_id,ticker,matched_at"
+            ).execute()
         except Exception as e:
-            logger.warning("insert_pptr_rule_matches error: %s", e)
+            logger.warning("upsert_pptr_rule_matches error: %s", e)
 
 
 def _find_lib_entry(lib: dict, ticker: str, category: str) -> dict | None:
