@@ -21,25 +21,70 @@ def collect_kr_universe() -> list[dict]:
     rows = []
     
     # Attempt to fetch KOSPI and KOSDAQ from KRX-DESC as fallback if primary fails
+    df_desc = None
+    use_desc = False
     try:
-        # Check if primary KRX works (often blocked by WAF for foreign IPs)
+        # Check if primary KRX works (often blocked by WAF for foreign IPs or KRX down)
         fdr.StockListing("KOSPI")
-        use_desc = False
     except Exception as e:
         logger.warning("Primary KRX fetch failed, falling back to KRX-DESC: %s", e)
         use_desc = True
 
     if use_desc:
-        df_desc = fdr.StockListing("KRX-DESC")
+        try:
+            df_desc = fdr.StockListing("KRX-DESC")
+        except Exception as e2:
+            logger.warning("FDR KRX-DESC fallback failed: %s. Fetching cache from GitHub directly...", e2)
+            try:
+                import urllib.request
+                import json
+                # Get the latest cache file from the GitHub repository metadata
+                api_url = "https://api.github.com/repos/FinanceData/fdr_krx_data_cache/contents/data/listing/desc"
+                req = urllib.request.Request(api_url, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req) as response:
+                    files = json.loads(response.read().decode("utf-8"))
+                csv_files = [f for f in files if f["name"].endswith(".csv")]
+                if csv_files:
+                    csv_files.sort(key=lambda x: x["name"])
+                    latest_csv_url = csv_files[-1]["download_url"]
+                    logger.info("Loading latest desc file directly: %s", latest_csv_url)
+                    df_desc = pd.read_csv(latest_csv_url, dtype={"Code": str})
+            except Exception as github_err:
+                logger.error("Failed to fetch directly from GitHub cache: %s", github_err)
+                df_desc = None
     
     for market in ("KOSPI", "KOSDAQ"):
-        if use_desc:
+        if use_desc and df_desc is not None:
             # Map market strings: KOSDAQ GLOBAL is also KOSDAQ
             mask = df_desc["Market"].str.contains(market, na=False, case=False)
             df = df_desc[mask].copy()
             marcap_col = None
         else:
-            df = fdr.StockListing(market)
+            try:
+                df = fdr.StockListing(market)
+            except Exception as e3:
+                logger.warning("Failed to fetch %s listing: %s. Trying hardcoded GitHub cache direct fetch...", market, e3)
+                try:
+                    import urllib.request
+                    import json
+                    api_url = "https://api.github.com/repos/FinanceData/fdr_krx_data_cache/contents/data/listing/krx"
+                    req = urllib.request.Request(api_url, headers={"User-Agent": "Mozilla/5.0"})
+                    with urllib.request.urlopen(req) as response:
+                        files = json.loads(response.read().decode("utf-8"))
+                    csv_files = [f for f in files if f["name"].endswith(".csv")]
+                    if csv_files:
+                        csv_files.sort(key=lambda x: x["name"])
+                        latest_csv_url = csv_files[-1]["download_url"]
+                        logger.info("Loading latest krx file directly: %s", latest_csv_url)
+                        df_full = pd.read_csv(latest_csv_url, dtype={'Code': str, 'Dept': str, 'ChangeCode': str, 'MarketId': str})
+                        mkt_map = {'KOSPI': 'STK', 'KOSDAQ': 'KSQ'}
+                        df = df_full[df_full['MarketId'] == mkt_map[market]].reset_index(drop=True)
+                    else:
+                        raise ValueError("No files found")
+                except Exception as e4:
+                    logger.error("All listing fallback systems failed for %s: %s", market, e4)
+                    continue
+            
             # Sort by market cap descending (Marcap column, may be 0 if unavailable)
             marcap_col = next((c for c in df.columns if c.lower() in ("marcap", "mktcap", "market_cap", "시가총액")), None)
             if marcap_col:
