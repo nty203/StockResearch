@@ -78,6 +78,9 @@ class TrainingResult:
     feature_importances: dict[str, float] = field(default_factory=dict)
     calibration_slope: float = 1.0
     trained_at: str = ""
+    version_tag: str = ""
+    model_path: str = ""
+    is_production: bool = False
 
 
 class PPTRConfidenceModel:
@@ -423,10 +426,18 @@ def train_and_save(client, model_path: str | None = None) -> TrainingResult:
     path = model.save(model_path)
     logger.info("Model saved: %s", path)
 
+    version_tag = f"lgbm_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M')}"
+    result.version_tag = version_tag
+    result.model_path = path
+
+    # Governance gate: Brier ≤ 0.22 → promote to production
+    is_production = result.brier_val <= 0.22
+    result.is_production = is_production
+
     # Persist version to DB
     try:
         client.table("pptr_model_versions").insert({
-            "version_tag": f"lgbm_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M')}",
+            "version_tag": version_tag,
             "model_path": path,
             "n_train": result.n_train,
             "n_val": result.n_val,
@@ -435,6 +446,7 @@ def train_and_save(client, model_path: str | None = None) -> TrainingResult:
             "best_iteration": result.best_iteration,
             "feature_importances": result.feature_importances,
             "trained_at": result.trained_at,
+            "is_production": is_production,
         }).execute()
     except Exception as e:
         logger.warning("DB version save failed: %s", e)

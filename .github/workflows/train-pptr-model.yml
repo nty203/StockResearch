@@ -84,21 +84,19 @@ jobs:
           try:
               result = train_and_save(client=client)
               print(f"\n=== Training Complete ===")
-              print(f"Version tag:     {result.get('version_tag', 'unknown')}")
-              print(f"Train samples:   {result.get('n_train', 0):,}")
-              print(f"Val samples:     {result.get('n_val', 0):,}")
-              print(f"Brier (val):     {result.get('brier_val', 'N/A')}")
-              print(f"AUC (val):       {result.get('auc_val', 'N/A')}")
-              print(f"Best iteration:  {result.get('best_iteration', 'N/A')}")
-              print(f"Model path:      {result.get('model_path', 'N/A')}")
-              print(f"Production:      {result.get('is_production', False)}")
+              print(f"Version tag:     {result.version_tag}")
+              print(f"Train samples:   {result.n_train:,}")
+              print(f"Val samples:     {result.n_val:,}")
+              print(f"Brier (val):     {result.brier_val:.4f}")
+              print(f"AUC (val):       {result.auc_val:.4f}")
+              print(f"Best iteration:  {result.best_iteration}")
+              print(f"Model path:      {result.model_path}")
+              print(f"Production:      {result.is_production}")
 
-              # Governance gate: Brier ≤ 0.22 → promote to production
-              brier = result.get("brier_val")
-              if brier and float(brier) <= 0.22:
-                  print(f"\n✅ Brier {float(brier):.4f} ≤ 0.22 → Model promoted to production")
-              elif brier:
-                  print(f"\n⚠️  Brier {float(brier):.4f} > 0.22 → Not promoted to production")
+              if result.is_production:
+                  print(f"\n✅ Brier {result.brier_val:.4f} ≤ 0.22 → Model promoted to production")
+              else:
+                  print(f"\n⚠️  Brier {result.brier_val:.4f} > 0.22 → Not promoted to production")
                   print("   Run more data collection cycles before retraining.")
           except Exception as e:
               print(f"ERROR during training: {e}")
