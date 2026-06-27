@@ -51,19 +51,25 @@ def _extract_llm_verdict(evidence: list) -> str | None:
     return None
 
 
-def _fetch_prices_for_match(client, ticker: str, baseline_date: date, max_horizon_days: int) -> dict[date, float]:
-    """baseline ~ baseline+max_horizon 구간 일일 종가 로드."""
-    end_date = baseline_date + timedelta(days=max_horizon_days + 30)
-    res = (
+def _fetch_prices_for_tickers(client, tickers: list[str], start_date: date, end_date: date) -> dict[str, dict[date, float]]:
+    """여러 ticker들에 대해 start_date ~ end_date 구간 일일 종가를 벌크 로드."""
+    res = fetch_all(lambda s, e: (
         client.table("prices_daily")
-        .select("date, close")
-        .eq("ticker", ticker)
-        .gte("date", baseline_date.isoformat())
+        .select("ticker, date, close")
+        .in_("ticker", tickers)
+        .gte("date", start_date.isoformat())
         .lte("date", end_date.isoformat())
-        .order("date", desc=False)
-        .execute()
-    )
-    return {date.fromisoformat(r["date"]): float(r["close"]) for r in (res.data or []) if r.get("close")}
+        .range(s, e)
+    ))
+    
+    out = defaultdict(dict)
+    for r in res:
+        ticker = r.get("ticker")
+        dt_str = r.get("date")
+        close_val = r.get("close")
+        if ticker and dt_str and close_val is not None:
+            out[ticker][date.fromisoformat(dt_str)] = float(close_val)
+    return out
 
 
 def _nearest_price(prices: dict[date, float], target: date, tolerance_days: int = 7) -> float | None:
@@ -148,12 +154,25 @@ def compute_forward_returns(
     n_with_baseline = 0
     n_skipped_no_price = 0
 
+    # Tickers to query in batches
+    unique_tickers = list({m["ticker"] for m in matches if m.get("ticker")})
+    
+    # Load prices sequentially in batches of 50 tickers
+    prices_by_ticker = {}
+    batch_size = 50
+    start_date = date.fromisoformat(earliest_cutoff)
+    batches = [unique_tickers[i : i + batch_size] for i in range(0, len(unique_tickers), batch_size)]
+
+    for batch in batches:
+        batch_prices = _fetch_prices_for_tickers(client, batch, start_date, now_d)
+        prices_by_ticker.update(batch_prices)
+
     for m in matches:
         baseline = _safe_date(m.get("first_detected_at"))
         if not baseline:
             continue
         ticker = m["ticker"]
-        prices = _fetch_prices_for_match(client, ticker, baseline, max(HORIZONS_DAYS))
+        prices = prices_by_ticker.get(ticker, {})
         baseline_price = _nearest_price(prices, baseline, tolerance_days=10)
         if baseline_price is None or baseline_price <= 0:
             n_skipped_no_price += 1
