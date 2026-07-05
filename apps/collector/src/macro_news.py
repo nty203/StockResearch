@@ -7,6 +7,9 @@ news_rss.py(ticker NOT NULL, hundredx 종목별 시그널용)와 달리, 종목�
 import logging
 import time
 from datetime import datetime, timezone
+import re
+import requests
+from bs4 import BeautifulSoup
 
 import feedparser
 
@@ -26,7 +29,8 @@ MACRO_FEEDS = [
     ("https://www.hankyung.com/feed/international", "ko"), # 한경 글로벌
     ("https://www.mk.co.kr/rss/40300001/", "ko"),      # 매경 (한경과 다른 논조)
     ("https://newsis.com/RSS/economy.xml", "ko"),      # 뉴시스 경제
-    ("https://biz.chosun.com/rcms/rss/4/1.xml", "ko"),  # 조선비즈 산업
+    ("https://www.chosun.com/arc/outboundfeeds/rss/category/economy/?outputType=xml", "ko"),  # 조선일보 경제
+    ("http://rss.edaily.co.kr/economy_news.xml", "ko"),  # 이데일리 경제
     # ── 전문 미디어 (범용지가 다루지 않는 심층 분석) ──
     ("https://www.thelec.kr/rss/allArticle.xml", "ko"),        # 더일렉 — 반도체/배터리/디스플레이 전문
     ("https://rss.etnews.com/Section901.xml", "ko"),           # 전자신문 — IT·AI 제조
@@ -55,15 +59,16 @@ _CATEGORY_KEYWORDS: list[tuple[str, tuple[str, ...]]] = [
                "인플레이션", "물가", "CPI", "긴축", "피벗")),
     ("소비", ("소비", "내수", "유통", "백화점", "카드", "가계", "지출", "면세",
              "명품", "관광", "외국인 관광", "한류", "뷰티", "화장품", "외식", "방한",
-             "ODM", "K뷰티", "K-뷰티", "이커머스", "직구")),
+             "ODM", "K뷰티", "K-뷰티", "이커머스", "직구", "삼양식품", "농심", "오리온", "신세계", "올리브영")),
     ("원자재", ("유가", "구리", "금속", "원자재", "곡물", "리튬", "니켈", "천연가스",
-               "LNG", "석유", "정유", "유황", "알루미늄", "철광석")),
+               "LNG", "석유", "정유", "유황", "알루미늄", "철광석", "고려아연", "포스코홀딩스")),
     ("실적", ("실적", "영업이익", "어닝", "가이던스", "목표가", "컨센서스",
              "역대", "사상 최대", "호실적", "깜짝 실적", "수주", "수주잔고", "흑자전환")),
     ("산업", ("반도체", "자동차", "조선", "방산", "2차전지", "배터리", "AI", "바이오", "로봇", "원전", "풍력",
              "변압기", "전기기기", "차단기", "케이블", "배전", "송전", "전력망", "그리드",
              "ESS", "에너지저장", "MLCC", "PCB", "기판", "HBM", "메모리", "파운드리",
-             "방위", "무기", "항공우주", "위성", "드론", "K방산")),
+             "방위", "무기", "항공우주", "위성", "드론", "K방산",
+             "삼성전자", "sk하이닉스", "lg엔솔", "에코프로", "현대차", "기아", "삼성바이오", "셀트리온", "대한항공")),
 ]
 
 
@@ -112,9 +117,90 @@ def collect_macro_news() -> list[dict]:
     return rows
 
 
+def collect_nate_news(date_str: str = None) -> list[dict]:
+    """Crawl Nate News Economy daily interest rank page for a given date_str (YYYYMMDD)."""
+    if not date_str:
+        from datetime import timedelta
+        # KST is UTC+9
+        kst_now = datetime.now(timezone.utc) + timedelta(hours=9)
+        date_str = kst_now.strftime("%Y%m%d")
+
+    url = f"https://news.nate.com/rank/interest?sc=eco&p=day&date={date_str}"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    }
+    
+    rows = []
+    try:
+        resp = requests.get(url, headers=headers, timeout=15)
+        if resp.status_code != 200:
+            logger.warning("Nate rank page returned status %d for date %s", resp.status_code, date_str)
+            return rows
+            
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        seen_urls = set()
+        
+        anchors = soup.find_all('a', href=True)
+        for a in anchors:
+            href = a['href']
+            if '/view/' in href:
+                clean_url = href.split('?')[0]
+                if not clean_url.startswith('http'):
+                    clean_url = 'https:' + clean_url if clean_url.startswith('//') else 'https://news.nate.com' + clean_url
+                
+                if clean_url in seen_urls:
+                    continue
+                seen_urls.add(clean_url)
+                
+                title = a.get_text(strip=True)
+                if len(title) < 10:
+                    continue
+                    
+                match = re.search(r'/view/(\d{8})', clean_url)
+                if match:
+                    dt_str = match.group(1)
+                    published_at = f"{dt_str[:4]}-{dt_str[4:6]}-{dt_str[6:8]}T00:00:00Z"
+                else:
+                    published_at = f"{date_str[:4]}-{date_str[4:6]}-{date_str[6:8]}T00:00:00Z"
+                    
+                rows.append({
+                    "source": "Nate News Economy Rank",
+                    "published_at": published_at,
+                    "url": clean_url,
+                    "title": title[:500],
+                    "summary": None,
+                    "category": _categorize(title),
+                    "lang": "ko"
+                })
+    except Exception as e:
+        logger.error("Nate news rank crawl failed for date %s: %s", date_str, e)
+    return rows
+
+
 def run() -> int:
     client = get_client()
     rows = collect_macro_news()
+    
+    # Also collect Nate News Rank for today and yesterday
+    from datetime import timedelta
+    kst_now = datetime.now(timezone.utc) + timedelta(hours=9)
+    today_str = kst_now.strftime("%Y%m%d")
+    yesterday_str = (kst_now - timedelta(days=1)).strftime("%Y%m%d")
+    
+    logger.info("Collecting Nate News Rank for %s and %s", today_str, yesterday_str)
+    rows.extend(collect_nate_news(today_str))
+    rows.extend(collect_nate_news(yesterday_str))
+    
+    # Deduplicate rows by 'url' to prevent ON CONFLICT DO UPDATE command cannot affect row a second time
+    seen_urls = set()
+    unique_rows = []
+    for r in rows:
+        url = r.get("url")
+        if url and url not in seen_urls:
+            seen_urls.add(url)
+            unique_rows.append(r)
+    rows = unique_rows
+    
     with pipeline_run(client, "macro_news") as (rows_out, _):
         count = upsert_batch(client, "macro_news", rows, on_conflict="url")
         rows_out[0] = count
