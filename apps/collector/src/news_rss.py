@@ -11,16 +11,25 @@ from .upsert import get_client, upsert_batch, pipeline_run, retry_execute
 logger = logging.getLogger(__name__)
 
 RSS_FEEDS = [
-    # Korean financial news
+    # ── 한국경제 (한경)
     ("https://www.hankyung.com/feed/finance", "ko"),
-    ("https://biz.chosun.com/rcms/rss/3/1.xml", "ko"),
-    # Naver News — economy/finance section (증권·금융 뉴스 포함)
-    ("https://news.naver.com/rss/main/NEWS_OFFICIAL_GROUP_003.xml", "ko"),
-    # Maeil Business (매일경제)
+    # ── 조선비즈
+    ("https://www.chosun.com/arc/outboundfeeds/rss/category/economy/?outputType=xml", "ko"),
+    # ── 이데일리
+    ("http://rss.edaily.co.kr/stock_news.xml", "ko"),
+    ("http://rss.edaily.co.kr/economy_news.xml", "ko"),
+    # ── 매일경제
     ("https://www.mk.co.kr/rss/30100041/", "ko"),      # 매경 증권
     ("https://www.mk.co.kr/rss/50300009/", "ko"),      # 매경 기업/경영
-    # Yahoo Finance (market news)
+    # ── 연합뉴스 (2026-07 검증: 각 120건)
+    ("https://www.yna.co.kr/rss/economy.xml", "ko"),   # 연합 경제
+    ("https://www.yna.co.kr/rss/market.xml", "ko"),    # 연합 증권/시장
+    # ── 비즈니스워치 (2026-07 검증: 445건)
+    ("https://news.bizwatch.co.kr/rss", "ko"),
+    # ── Yahoo Finance (미국 주식 커버리지)
     ("https://finance.yahoo.com/news/rssindex", "en"),
+    # ── Investing.com 글로벌 시황 (영문)
+    ("https://kr.investing.com/rss/market_overview.rss", "en"),
 ]
 
 
@@ -151,16 +160,32 @@ def collect_rss_news(ticker_set: set[str], mention_map: dict[str, str] | None = 
     return rows
 
 
-def run() -> int:
-    client = get_client()
-    try:
+def _fetch_all_active_stocks(client) -> list[dict]:
+    """Supabase 기본 1000행 제한을 우회해 활성 종목 전체를 페이지네이션으로 조회."""
+    stocks: list[dict] = []
+    page_size = 1000
+    offset = 0
+    while True:
         res = retry_execute(
             lambda: client.table("stocks")
             .select("ticker, name_kr, name_en")
             .eq("is_active", True)
+            .range(offset, offset + page_size - 1)
             .execute()
         )
-        stocks = res.data or []
+        batch = res.data or []
+        stocks.extend(batch)
+        if len(batch) < page_size:
+            break
+        offset += page_size
+    logger.info("Fetched %d active stocks", len(stocks))
+    return stocks
+
+
+def run() -> int:
+    client = get_client()
+    try:
+        stocks = _fetch_all_active_stocks(client)
         ticker_set = {r["ticker"] for r in stocks}
         mention_map = _build_mention_map(stocks)
     except Exception as e:
