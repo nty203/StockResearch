@@ -1,3 +1,8 @@
+---
+name: verify-stocks
+description: PPTR 퀄리티 게이트 및 데이터 커버리지 검증
+---
+
 # /verify-stocks — PPTR Quality Gate & Coverage Verification
 
 당신은 지금부터 대한민국 주식시장 100배 상승주 발굴 시스템의 PPTR(Category Match) 퀄리티 게이트 및 데이터 커버리지를 검증하는 역할을 수행한다.
