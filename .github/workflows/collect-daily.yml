@@ -46,3 +46,8 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
         run: uv run python -m src.macro_themes
+
+      # 증권사 리포트 수집 (매일)
+      - name: Collect broker reports
+        run: uv run python -m src.broker_reports --pages 5
+

@@ -15,7 +15,7 @@ from ..upsert import get_client
 
 
 def _count(client, table: str, query_fn=None) -> int:
-    query = client.table(table).select("*", count="exact")
+    query = client.table(table).select("*", count="estimated")
     if query_fn:
         query = query_fn(query)
     res = query.limit(1).execute()

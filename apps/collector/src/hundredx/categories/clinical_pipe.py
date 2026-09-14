@@ -161,6 +161,10 @@ def detect(stock_data: dict, filings: list[dict]) -> CategoryMatch | None:
     if sector_tag and any(s in sector_tag for s in _NON_BIOTECH_SECTORS):
         return None
 
+    is_bio_sector = False
+    if sector_tag and any(s in sector_tag for s in ["제약", "바이오", "생명", "의료", "헬스케어", "약", "신약"]):
+        is_bio_sector = True
+
     # filings is already pre-limited to 2 most recent by scanner._fetch_filings_2y
     filings_with_hits: list[tuple[dict, list[str], list[str], int | None, float | None]] = []
     for filing in filings[:2]:
@@ -199,6 +203,10 @@ def detect(stock_data: dict, filings: list[dict]) -> CategoryMatch | None:
     # - 일반 키워드 2개 공시 모두 → 0.72
     # - 일반 키워드 1개 공시 → 0.70 (기존 0.5에서 상향)
     all_have_hits = all(gen_h for _, gen_h, _, _, _ in filings_with_hits)
+
+    # 비바이오(또는 섹터 미상)인 경우, 강력 키워드가 최소 1개 이상 있어야만 통과
+    if not is_bio_sector and not all_strong:
+        return None
 
     if len(all_strong) >= 2:
         base_confidence = 0.75

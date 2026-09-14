@@ -1,0 +1,67 @@
+[
+  {
+    "id": "c3d4edc7-71a5-4821-a3b5-fe5c92aa51b8",
+    "date": "2026-07-23",
+    "title": "미국-사우디 원자력 협정 체결로 사우디 수십조원 원전 입찰 개막 및 SMR·초고압 전력망 수주 가속화",
+    "background": "[뉴스] 미 국무부, 미국-사우디아라비아 간 평화적 원자력 협력 협정(123 Agreement) 공식 체결 발표. 국토부 성과공유회에서 미국 SMR·송전망 및 동유럽 원전 프로젝트 수주 전략 공개. LS마린솔루션, 7,000톤급 HVDC 해저케이블 포설선 개소 완료.\nProxy: 미 국채 금리 및 글로벌 에너지 안보 자산 가격 상승, 글로벌 원전 건설사 수주 잔고(Backlog) 증가율, 사우디 메가 프로젝트 발주 재개.\n미국과 사우디의 원자력 협정 체결은 그동안 우라늄 농축 권한 문제로 지연되던 사우디 첫 상업용 원전(2기, 수십조 원 규모) 발주의 법적/지정학적 걸림돌을 제거함. 한국 원전 밸류체인(한미 원전 동맹 기반 EPC/기자재)의 실질 수주로 직결.",
+    "causal_chain": "미-사우디 123 협정 공식 체결 → 사우디 대형 원전 및 SMR 프로젝트 경쟁 입찰 본격 착수 → 한미 원전 동맹 체제 하 한국 주력 원전 EPC 및 첨단 주기기/변압기/HVDC 포설 벤더 수주 물량(Backlog) 폭발적 증가 → 원전/전력 인프라 기업 이익 전망치(EPS Revision) 상향 및 멀티플 리레이팅.",
+    "play_mode": "Global_Re_rating_Play",
+    "total_score": 94,
+    "directness": 24,
+    "leverage": 24,
+    "scalability_or_rotation": 23,
+    "technical_alignment": 23,
+    "directness_reason": "정부 간 공식 협정 체결로 사우디 메가 원전 프로젝트 입찰이 확정되어 관련 기업 수주잔고로 직결됨.",
+    "leverage_reason": "원전 주기기 및 초고압 전력망은 높은 진입장벽과 진품귀(Scarcity) 현상으로 공급자 우위 지속.",
+    "scalability_or_rotation_reason": "원전 건설(EPC)에서 주기기, 초고압 변압기, HVDC 해저케이블까지 전력 밸류체인 전반 확장.",
+    "technical_alignment_reason": "지정학 리스크 속에서 확실한 정책/실적 모멘텀으로 전고점 돌파 모멘텀 시현.",
+    "market_timing": "사우디 입찰 공고 및 수주 계약 체결 국면 (0-6개월).",
+    "critical_risk": "미국 내 원전 관련 법안 이의 제기나 중동 정세 극단화에 따른 일시적 공사 지연.",
+    "raw_json": {
+      "root_driver": "US-Saudi Strategic Realignment & AI/Industrial Power Demand Crisis",
+      "evidence_score": 20,
+      "surprise_level": "High",
+      "bottleneck_rank": [
+        "Nuclear EPC",
+        "SMR Reactor Module",
+        "EHV Transformers",
+        "HVDC Subsea Cable"
+      ],
+      "transmission_confidence": "High"
+    },
+    "created_at": "2026-07-22T23:11:25.653874+00:00",
+    "candidates": [
+      {
+        "name": "두산에너빌리티",
+        "role": "원전 주기기/SMR대장",
+        "ret_1m": 12.0,
+        "ret_3m": 28.0,
+        "ticker": "034020",
+        "signal_flag": "📌중기후보",
+        "near_52w_high": 88.0,
+        "early_signal_score": 86.0
+      },
+      {
+        "name": "한전기술",
+        "role": "원전 설계대장",
+        "ret_1m": 8.0,
+        "ret_3m": 22.0,
+        "ticker": "052690",
+        "signal_flag": "📌중기후보",
+        "near_52w_high": 85.0,
+        "early_signal_score": 83.0
+      },
+      {
+        "name": "HD현대일렉트릭",
+        "role": "초고압 전력기기",
+        "ret_1m": 10.0,
+        "ret_3m": 38.0,
+        "ticker": "267260",
+        "signal_flag": "🔺임박",
+        "near_52w_high": 94.0,
+        "early_signal_score": 87.0
+      }
+    ],
+    "theme": "미-사우디 평화적 원자력 협정(123 Agreement) 타결 및 글로벌 SMR·전력망 리레이팅"
+  }
+]

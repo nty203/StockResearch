@@ -36,10 +36,6 @@ MACRO_FEEDS = [
     ("https://rss.etnews.com/Section901.xml", "ko"),           # 전자신문 — IT·AI 제조
     ("https://www.aitimes.kr/rss/allArticle.xml", "ko"),        # AI타임스 한국어 — AI·로봇·피지컬AI 전문
     ("https://feeds.feedburner.com/zdkorea", "ko"),            # ZDNet Korea — IT/테크/빅테크
-    # ── 글로벌 (한국 미디어가 놓치는 글로벌 공급망·매크로) ──
-    ("https://finance.yahoo.com/news/rssindex", "en"),         # Yahoo Finance
-    ("https://feeds.bloomberg.com/markets/news.rss", "en"),    # Bloomberg Markets
-    ("https://www.kedglobal.com/rss/rssNews", "en"),           # KED Global (영문 한국경제)
 ]
 
 # 거친 카테고리 태깅 — macro-idea가 테마별로 필터링할 수 있도록.

@@ -1,0 +1,818 @@
+=== MACRO NEWS TITLES (500) ===
+001. [2026-07-26T00:00:00+00:00] [빅테크발언] [Nate News Economy Rank] '코스피 회복' 전망 젠슨황, 삼전닉스 띄...
+002. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] 초대박 이적설! 英 'BBC급' 보도, 아스널...
+003. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] 박나래 전 매니저 왜 구속됐나…"5억 요...
+004. [2026-07-26T00:00:00+00:00] [산업] [Nate News Economy Rank] 한국선 191만원, 미국에서는 290만원…똑같은 하이닉스인데 가격 차이 ...빅데이터로 본 재테크SK하이닉스 종목 검색 1위리포트도 상위 1~4위 차지 삼성전자와 SK하이닉스 등 그동안 국내 증시를 이끌어왔던 반도체주가 이달 급락한 ...
+005. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] "3배 식초 사려면 통장잔고 3000만원 있어야 하나"…개미들의 웃픈 자조 [...
+006. [2026-07-26T00:00:00+00:00] [산업] [Nate News Economy Rank] SK하이닉스, 2분기 영업익 64조원 전망…이익률 75% 넘을 수도
+007. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] 최태원 회장 '9440억' 어떻게 마련하나…SK실트론 매각 딜레마
+008. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] 로또 1234회 당첨번호 15억, '1등만 터지고 2등은 없다니'
+009. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] '똘똘 1채' 종부세 강화 가닥…공제·중부담·초고가 3그룹 설계
+010. [2026-07-26T00:00:00+00:00] [정책] [Nate News Economy Rank] '1억 내고 5억 전세' 막히나…李 지목 '전세대출 규제' 방향은
+011. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] 李 "우리는 식구다" 외친 한미 빅테크 만...
+012. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] 한국, 월드컵 개최 영영 못하나…프랑스-...
+013. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] '박지성이 뭘 아냐'던 서강일 이번엔 "나...
+014. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] 와~ 대박! 이정후, 스리런 폭발 이어 2루...
+015. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] '韓 축구 에이스' 이강인, 등번호 하나에...
+016. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] '충격' 고우석 이물질 퇴장, 왜 "그럴 리...
+017. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] 오현규 6개월 만에 충격 방출? 베식타스,...
+018. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] KIA맨 하주석 매끄러운 2루수비에 장타까...
+019. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] '김부장' 대한민국 절반이 봤다…2563만...
+020. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] 폴킴, 몰라보게 달라진 비주얼…"쌍꺼풀 ...
+021. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] 김연아♥고우림, 결혼 4년 차 맞아?…"단...
+022. [2026-07-26T00:00:00+00:00] [기타] [Nate News Economy Rank] '1억 성형수술' 조두팔, 눈에 또 손댔다...
+023. [2026-07-25T23:07:25.886658+00:00] [정책] [The Korea Economic Daily Global] South Korea to import 6 million barrels of UAE crude to curb fuel price surge
+     Summary: South Korea will import more than 6 million barrels of crude oil from the United Arab Emirates as part of an emergency effort to stabilize domestic fu
+024. [2026-07-25T23:07:25.886635+00:00] [산업] [The Korea Economic Daily Global] EuBiologics partners with Korea's health agency to develop Nipah virus vaccine candidate
+     Summary: EuBiologics Co., South Korea's vaccine-focused biotechnology company, is developing a vaccine candidate against the Nipah virus, an infectious disease
+025. [2026-07-25T23:07:25.886611+00:00] [산업] [The Korea Economic Daily Global] No career ambition, no ego: AI plays devil's advocate at Audax Private Equity
+     Summary: Generative AI is challenging traditional investment theses, acting as a devil's advocate to sharpen decision-making, particularly when it comes to ass
+026. [2026-07-25T23:07:25.886596+00:00] [정책] [The Korea Economic Daily Global] Iran names S.Korea-built UAE nuclear plant among potential targets
+     Summary: Iran has included the Barakah nuclear power plant in Abu Dhabi, South Korea&rsquo;s first overseas nuclear project, in a list of potential targets fol
+027. [2026-07-25T23:07:25.886572+00:00] [산업] [The Korea Economic Daily Global] Asset-heavy, cash-flow-backed investments gain appeal in lower-return world, Principal Asset Management CEO says
+     Summary: Investors should shift toward asset-heavy investments backed by contractual cash flow as years of strong gains in global equities give way to a lower-
+028. [2026-07-25T23:07:25.886533+00:00] [기타] [The Korea Economic Daily Global] European structured credit beckons Korean investors with potential for higher returns, defense: M&G Investments
+     Summary: Nearly two decades after the global financial crisis saddled structured finance with a reputation for opacity and risk, the asset class is drawing a f
+029. [2026-07-25T23:07:25.886512+00:00] [정책] [The Korea Economic Daily Global] BOK holds fire amid Iran war uncertainty; outgoing Gov. Rhee expects won’s swift relief
+     Summary: Bank of Korea Gov. Rhee Chang-yong on Friday struck a cautiously optimistic tone on the currency market as he chaired his final rate-setting meeting.H
+030. [2026-07-25T23:07:25.886484+00:00] [기타] [The Korea Economic Daily Global] South Korean ETF issuers in space race to ride SpaceX IPO buzz
+     Summary: South Korean asset managers are rushing to launch new exchange-traded funds tied to both established and emerging space technology companies, seeking
+031. [2026-07-25T23:07:25.886457+00:00] [기타] [The Korea Economic Daily Global] New BOK chief maps out cautious policy stance, wider financial stability role
+     Summary: South Korea&rsquo;s new central bank governor, Shin Hyun-song, struck a cautious tone on monetary policy Tuesday as rising oil prices and the broader
+032. [2026-07-25T23:07:25.886431+00:00] [기타] [The Korea Economic Daily Global] Reactor refurbishments to drive near-term nuclear growth: Candu Energy
+     Summary: Refurbishment of aging nuclear reactors is expected to drive growth in the industry over the next five to 10 years as more countries seek to extend th
+033. [2026-07-25T23:07:25.886416+00:00] [정책] [The Korea Economic Daily Global] Hyundai Motor profit falls 30% as Middle East disruption, US tariffs bite
+     Summary: Hyundai Motor Co. said on Thursday its first-quarter operating profit fell sharply despite record revenue, as disruptions tied to the US-Iran conflict
+034. [2026-07-25T23:07:25.886392+00:00] [산업] [The Korea Economic Daily Global] South Korean stock market value tops $4.1 trillion, nearly tripling in a year
+     Summary: South Korea&rsquo;s stock market crossed a milestone Monday, with the combined value of its two main bourses topping 6,000 trillion won ($4.1 trillion
+035. [2026-07-25T23:07:25.886365+00:00] [산업] [The Korea Economic Daily Global] Partners Group eyes special opportunities, royalties to outplay market swings
+     Summary: Partners Group is positioning itself to benefit from market disruptions stemming from Middle East conflicts, liquidity pressures at rival private cred
+036. [2026-07-25T23:07:25.886344+00:00] [원자재] [The Korea Economic Daily Global] Korean shipbuilders sweep up LNG, ammonia orders as energy demand holds firm
+     Summary: South Korea&rsquo;s top shipbuilders are capitalizing on resilient demand for energy infrastructure, landing a string of liquefied natural gas (LNG) a
+037. [2026-07-25T23:07:25.886319+00:00] [산업] [The Korea Economic Daily Global] Chungho Nais sale faces fresh questions amid Carlyle talks
+     Summary: The planned sale of Chungho Nais Co. is facing fresh uncertainty after the South Korean water purifier maker reported a sharp decline in profit, raisi
+038. [2026-07-25T23:07:25.886282+00:00] [산업] [The Korea Economic Daily Global] AI trade isn’t just about tech stocks but also power, TCW says
+     Summary: The artificial intelligence boom has sent investors racing into chipmakers, cloud providers and megacap technology stocks, but a more durable opportun
+039. [2026-07-25T23:07:25.886254+00:00] [산업] [The Korea Economic Daily Global] For global property investors, real test comes after acquisition: executing business plan
+     Summary: Cross-border real estate is often won or lost after the deal closes.A transaction may be approved in Seoul, London or Singapore, but performance is sh
+040. [2026-07-25T23:07:25.886222+00:00] [기타] [The Korea Economic Daily Global] Kayne Anderson expects capital inflows to US alternative real estate sectors to accelerate
+     Summary: Kayne Anderson Real Estate, the real estate investment arm of Kayne Anderson, expects significant capital rotation into US alternative real estate sec
+041. [2026-07-25T23:07:25.886179+00:00] [산업] [The Korea Economic Daily Global] Top Go player to take on KataGo in biggest human‑AI showdown since AlphaGo
+     Summary: Shin Jin-seo, the world's top-ranked Go player, will take on KataGo in a three-game match beginning Friday, in one of the most closely anticipated hum
+042. [2026-07-25T23:07:25.886121+00:00] [산업] [The Korea Economic Daily Global] Go master Shin cracks AI barrier with win over KataGo, sets up series decider
+     Summary: Shin Jin-seo finally broke through against artificial intelligence on Sunday, defeating KataGo by four and a half points to become the first professio
+043. [2026-07-25T23:03:02+00:00] [정책] [이데일리 - 경제/정책뉴스] 클래리티법 이번주 분수령…“트럼프가 최대 걸림돌”
+     Summary: 미국의 디지털자산 시장구조 법안인 클래리티법(CLARITY Act) 수정안이 공개된 가운데, 이번 주가 의회 협상의 최대 분수령이 될 전망이다. 민주당은 윤리조항 규제가 대폭 강화돼야 한다는 입장이어서 향배가 주목된다. 25일(현지시간) 블룸버그는 “여야 상원의원들은 이번 주 이어질 협상이 올해 안에 법안이 트럼프 대통령의 서명 단계까지 갈 수 있을지를 ...
+044. [2026-07-25T23:00:26+00:00] [산업] [연합뉴스 산업 최신기사] [테크톡노트] "AI 글래스도 결국 안경"…삼성이 찾은 해답
+     Summary: (서울=연합뉴스) 박형빈 기자 = 인공지능(AI) 스마트글래스 경쟁이 본격화하는 가운데 삼성전자[005930]가 첫 AI 글래스의 핵심 가치로 ...
+045. [2026-07-25T23:00:08+00:00] [산업] [연합뉴스 경제 최신기사] 탄자니아 신임대사 "포스코 참여 흑연광산, 글로벌 배터리 공급망 핵심"
+     Summary: (서울=연합뉴스) 김성진 박성진 기자 = &quot;문화와 교육, 개발 원조뿐 아니라 핵심광물 투자가 앞으로 양국 관계의 주요 기둥이 될 것으로 믿습니다...
+046. [2026-07-25T23:00:05+00:00] [기타] [이데일리 - 경제/정책뉴스] 고액체납자 집 턴 국세청…부서진 문고리·어지러진 집안 뒷처리는?[세금GO]
+     Summary: “국세청에서 나왔습니다. 문 좀 열어주세요.”현관문 너머에는 분명 사람이 있었다. 하지만 집안에서는 아무런 응답이 없었다. 잠복과 미행으로 고액체납자의 실거주지를 확인한 국세청 수색팀이 문을 두드린 지 어느덧 2시간. 체납자의 모친이 끝까지 문을 열어주지 않고 버티자 결국 경찰이 출동했다. 경찰의 문 두드림에도 반응이 없자, 수색팀은 “강제 개문합니다” ...
+047. [2026-07-25T23:00:01+00:00] [기타] [연합뉴스 경제 최신기사] 병무청 '해직 요구'에 병역거부자 300여명 실업…치킨집도 닫아
+     Summary: (서울=연합뉴스) 조현영 기자 = 병무청의 &apos;해고 요구&apos; 공문으로 최근 9년간 병역거부자 300여명이 일자리를 잃은 것으로 확인됐다. 영업소 폐...
+048. [2026-07-25T23:00:00+00:00] [기타] [연합뉴스 경제 최신기사] [샷!] "돈을 빌리고 안 갚아도 된다?"
+     Summary: (서울=연합뉴스) 강민지 인턴기자 = &quot;가출하시거나 주기적인 용돈 필요하신 분들 도와드립니다.&quot;
+049. [2026-07-25T23:00:00+00:00] [정책] [경제] 1분기 어닝서프라이즈 가스공사 2분기에도 이어질 듯
+     Summary: <p><img src="https://image.newsis.com/2023/11/27/NISI20231127_0001422452_web.jpg?rnd=20231127154117" /></p><br />[세종=뉴시스]김동현 기자 = 4개 분기 연속 영업이익 감소를 끊고 올해 1분기(1~3월) 어닝 서프라이즈를 기록한 한국가스공사가 2분기에도 해외사업에서의 영업이익 증가세를 바탕으로 나쁘지 않은 실적을 기록할 수 있다는 전망이 제기된다. <br /><br />지난 3월 중동전쟁으로 인한 연료비 도입 가격 증가는 2분기 실적엔 큰 영향을 주지 못할 것으로 예상된다. 통상적으로 두바이 유가가 5~6개월의 시차를 두고 국내 액화천연가스(LNG) 가격에 영향을 미치기 때문이다. <br /><br />미수금 회수는 여전히 가스공사의 고민거리다. 가스공사는 올 1분기 9100억원의 영업이익을 기록했지만 민수용 도시가스 미수금이 13조원에 달하면서 높은 재무 위험은 2분기에도 지속될 수 있다는 예상이다. <br /><br />26일 에프앤가이드에 따르면 컨센서스 추정 기관 수 3곳 이상이 예상한 가스공사의 연결기준 2분기 실적은 매출액 6조9865억원, 영업이익 4204억원으로 집계됐다. 매출은 전년대비 8.44% 감소하고 영업이익은 3.9% 증가한 수치다. <br /><br />당기순이익은 1110억원으로 전년동기대비 30.36% 증가할 수 있다는 예상이다. 1분기 5483억원 대비 큰 폭의 하락세를 보였지만 글로벌 에너지 가격 상승에 따른 해외 사업부 실적이 늘어나면서 2분기에도 플러스를 유지할 것으로 봤다. <br /><br />해외 사업부는 1분기에 1303억원의 영업이익을 올렸는데 2분기에는 900억~930억원의 영업이익을 올릴 수 있다는 예상이 나온다. 분기 풀가동을 비롯한 캐나다 LNG, 호주, 미안마 A-1, A-3 법인 등에서 양호한 실적이 기대된다는 전망이다. <br /><br />중동 전쟁 여파로 인한 원료비 상승은 2분기에 큰 영향을 주지 않을 것으로 
+050. [2026-07-25T23:00:00+00:00] [산업] [조선일보] 삼성은 왜 ‘안경’을 만들었나… 스마트 글라스 뒤에 숨은 ‘로봇 시장’ 전략
+051. [2026-07-25T22:59:44+00:00] [기타] [연합뉴스 경제 최신기사] 李대통령, 실리콘밸리 VC 만나 "'다음세대 삼성' 함께 만들어야"
+     Summary: (샌프란시스코=연합뉴스) 임형섭 황윤기 기자 = 미국을 방문한 이재명 대통령은 25일(현지시간) 샌프란시스코 시내에서 실리콘밸리를 무대로 활동 ...
+052. [2026-07-25T22:40:00+00:00] [정책] [매일경제 : 전체뉴스] “민주당, 달라진 게 없다”…청년 국회의원이 바라본 ‘2030이 떠난 이유’ [요즘여의섬]
+     Summary: 모경종 더불어민주당 의원 인터뷰 6·3 지선 이후 청년층 민심 이탈에 “기존 정치에서 벗어나지 못한 탓” 청년 정책 시스템 ‘통합 구축’ 제안“청년들이 민주당에 마음을 돌린 것은 ..
+053. [2026-07-25T22:39:09+00:00] [기타] [매일경제 : 전체뉴스] 암흑 속 관객의 몸에 빛이 닿을 때마다 오르골 소리나는 공연의 정체
+     Summary: 문화 문턱 낮추는 서울 배리어프리 전시 개최 장애예술 전문 전시 공간인 ‘모두미술공간’ 미디어 전시 ‘미디어술래전’…8월 21일까지 장애예술·융복합 매체 결합…한계없는 실험서울 한..
+054. [2026-07-25T22:38:25+00:00] [소비] [매일경제 : 전체뉴스] 두 어깨에 앉은 곰 한 마리 싹 날려버릴 ‘스트레스 제로’ 여행지
+     Summary: 호주 뉴사우스웨일즈관광청, 힐링 여행지 추천 시드니 도심 속 세계 최고 수준의 럭셔리 호텔 헌터밸리·블루마운틴 등 다채로운 웰니스 경험정신없는 하루를 보내다 보면 금세 일주일이 지..
+055. [2026-07-25T22:35:01+00:00] [기타] [Yahoo Finance] Figma vs. IBM: What Revenue Growth Trends Tell Investors About the Young Software Design Company and the Veteran Artificial Intelligence Tech Giant
+056. [2026-07-25T22:35:00+00:00] [빅테크발언] [Yahoo Finance] Elon Musk Is Quietly Turning to This Fossil Fuel to Power His AI Ambitions.
+057. [2026-07-25T22:33:01+00:00] [실적] [연합뉴스 산업 최신기사] 이통3사 2분기 희비…SKT 회복·LGU+ 성장, KT 주춤
+     Summary: (서울=연합뉴스) 박형빈 기자 = 국내 이동통신 3사의 올해 2분기 실적은 SK텔레콤이 지난해 해킹 사태의 기저효과를 딛고 정상화 흐름을 이어가...
+058. [2026-07-25T22:33:00+00:00] [산업] [연합뉴스 산업 최신기사] [AI프리즘] 샌프란 AI 선언, 한국 AI 위상 확인했다
+     Summary: (서울=연합뉴스) 권하영 기자 = 이재명 대통령의 24일(현지시간) &apos;샌프란 AI 선언&apos;과 함께 발표된 약 1천400조원 규모의 한미 AI 협력...
+059. [2026-07-25T22:30:01+00:00] [정책] [연합뉴스 경제 최신기사] 주택공급·세운4구역·야간경제…오세훈 표 정책들 '풍전등화'
+     Summary: (서울=연합뉴스) 황재하 기자 = 오세훈 서울시장이 &apos;명태균 여론조사비 대납 의혹&apos; 사건으로 1심에서 시장직 상실형에 해당하는 벌금 1천만원을 ...
+060. [2026-07-25T22:28:29+00:00] [기타] [Yahoo Finance] Retirement Is 10,000 Days With No Paycheck. These 4 ETFs Deposit One Every Month
+061. [2026-07-25T22:24:27+00:00] [산업] [인공지능신문 - 전체기사] 알리바바, 차세대 이미지 생성 AI '큐웬 이미지 3.0' 공개… "보기 좋은 이미지 넘어 실용적 생산성 도구로"
+     Summary: 알리바바가 차세대 이미지 생성 인공지능(AI) 모델 '큐웬 이미지 3.0(Qwen-Image 3.0)​'을 지난 22일(현지시간) 공개하고 생성형 AI의 활용 범위를 디자인을 넘어 교육, 콘텐츠 제작, 전자상거래 등 생산성 중심 영역으로 확대하겠다는 청사진을 제시했다.알리바바 클라우드는 이번 모델의 핵심 키워드를 '리얼(Real)'로 제시하며, 단순히 보기 좋은 이미지를 생성하는 수준을 넘어 실제 업무에 투입 가능한 이미지 생성 AI를 목표로 개발했다고 밝혔다.큐웬 이미지 1.0이 '정밀성(Precision)', 큐웬 이미지 2.0
+062. [2026-07-25T22:23:18+00:00] [기타] [한국경제 | 뉴스 | 국제] 미군 "대이란 해상 봉쇄 유지…상선 12척 항로 변경·2척 무력화"
+063. [2026-07-25T22:18:59+00:00] [기타] [연합뉴스 산업 최신기사] 폭염 속 부산 해운대구 아파트 정전…4명 승강기 갇혀
+     Summary: (부산=연합뉴스) 차근호 기자 = 폭염특보가 내려진 부산의 한 아파트에서 정전이 발생해 주민들이 불편을 겪었다.
+064. [2026-07-25T22:17:01+00:00] [소비] [연합뉴스 산업 최신기사] LG전자, 미국 컨슈머리포트 선정 '신뢰할 수 있는 주방가전' 1위
+     Summary: (서울=연합뉴스) 김민지 기자 = LG전자는 미국 유력 소비자 매체 컨슈머리포트가 발표한 &apos;가장 신뢰할 수 있는 주방가전 브랜드&apos; 평가에서 종합...
+065. [2026-07-25T22:15:00+00:00] [기타] [연합뉴스 산업 최신기사] 게임 승패 좌우하는 모니터…삼성·LG 게이밍모니터 경쟁 치열
+     Summary: (서울=연합뉴스) 임성호 기자 = 게이밍(게임용) 모니터가 단순한 화면 출력 장치를 넘어 0.001초 사이에 게임의 승패를 가르는 &apos;핵심 장비&apos;...
+066. [2026-07-25T22:13:00+00:00] [기타] [연합뉴스 산업 최신기사] 일반약도 안심 못한다…부작용 1위는 발진
+     Summary: (서울=연합뉴스) 박상현 기자 = 최근 10여년간 일반의약품 복용 이후 발생한 부작용은 발진, 소화불량 등이 많았던 것으로 나타났다.
+067. [2026-07-25T22:12:52+00:00] [기타] [매일경제 : 전체뉴스] “건강이 부의 상징, 마라톤에 100만명 몰려”…룰루레몬·온이 중국서 웃는 이유
+     Summary: 마라톤 참가자 100만명 넘고 피트니스 대회 인원도 7배 늘어 아웃도어 용품 중국내 판매 ‘껑충’ 전통 강자 나이키, 후발 주자에 밀려중국에서 등산과 러닝, 암벽등반 등 야외 스포..
+068. [2026-07-25T22:09:46+00:00] [기타] [조선일보] “집 줄이면 방 뺄 줄 알았는데”... 37세, 33세 두 딸의 뜻밖의 대답
+069. [2026-07-25T22:02:53+00:00] [정책] [Yahoo Finance] Dow Jones Futures: Market Triggers Sell Signal; Apple Earnings, Iran News, Fed Meeting In Focus
+070. [2026-07-25T22:01:01+00:00] [기타] [연합뉴스 경제 최신기사] 한국서 최초 출시 스타벅스 '에어로카노', 5개월새 550만잔 판매
+     Summary: (서울=연합뉴스) 홍국기 기자 = 스타벅스코리아가 지난 2월 26일 세계 최초로 한국에서 선보인 &apos;에어로카노&apos;가 출시 5개월 만에 누적 판매량 ...
+071. [2026-07-25T22:00:08+00:00] [산업] [연합뉴스 경제 최신기사] '고의 교통사고' 보험사기 혐의 현장출동 기사 항소심도 무죄
+     Summary: (부산=연합뉴스) 박성제 기자 = 교통사고를 고의로 내 보험금을 타낸 혐의로 재판에 넘겨진 자동차보험 현장출동 요원이 항소심에서도 무죄를 선고받...
+072. [2026-07-25T22:00:02+00:00] [기타] [연합뉴스 산업 최신기사] 스프링클러 없는 노후 아파트…불나면 최전선엔 '고령의 경비원'
+     Summary: (서울=연합뉴스) 이의진 기자 = &quot;우리도 무섭지. 연기가 펄펄 나는데.&quot;
+073. [2026-07-25T22:00:00+00:00] [정책] [경제] 길 건너면 이케아…59㎡ 6.2억 '고양창릉' 내일부터 일반 청약[르포]
+     Summary: <br />[서울=뉴시스] 강세훈 기자, 이우경인턴기자 = 3기 신도시 최대 관심 지역 중 하나인 &#039;고양창릉&#039; S3블록·S4블록이 내일부터 일반 청약 일정에 돌입한다. 두개 블록 총 2306가구의 물량 중 사천청약이 1659가구, 일반청약이 647가구로 배정됐다. 주변 시세 대비 가격 경쟁력을 갖춘 데다 일반청약 물량이 적지 않아 수요자들의 관심이 쏠릴 전망이다.<br /><br />26일 한국토지주택공사에 따르면 두개 블록은 지난 20~21일 사전청약 당첨자 접수가 이뤄졌으며 오는 27일부터 29일까지 신규 일반 청약 접수가 진행된다.<br /><br />당첨자 발표일은 S3블록이 8월18일, S4블록이 8월19일로 서로 달라 두 단지 모두 중복 청약이 가능하다. 최종 계약 체결은 오는 11월에 진행될 예정이다.<br /><br />고양창릉 신도시는 서울 은평·마포구와 맞닿아 있는 3기 신도시로 우수한 입지와 교통여건을 갖췄다.<br /><br />특히 수도권 우수 입지에서 공급되는 분양가상한제 적용 단지인 만큼 무주택 실수요자의 관심이 높을 것으로 예상된다.<br /><br />실제로 지난해 첫마을(A4블록·S5블록·S6블록) 본청약 시 일부 단지는 최고 410대 1의 경쟁률을 보이는 등 높은 청약 수요를 입증한 바 있다.<br /><br />또한 GTX-A 노선 창릉역(가칭)이 신설되면 서울역 등 주요 도심까지 10분대로 이동할 수 있을 전망이다.<br /><br />여기에 고양시청과 서울지하철 6호선 새절역을 잇는 고양은평선도 2031년 개통을 목표로 추진되고 있어 서울 서북부 접근성이 한층 개선될 것으로 기대된다.<br /><br /><p><img src="https://image.newsis.com/2026/07/24/NISI20260724_0002195418_web.jpg?rnd=20260724172945" /></p><br />S3블록(1282가구), S4블록(1024가구)은 교통뿐만 아니라 고양원흥지구와 인접해 기존 생활 인프
+074. [2026-07-25T22:00:00+00:00] [소비] [연합뉴스 경제 최신기사] "베테랑 MD 감각 대신 AI"…유통가, 상품기획·발주까지
+     Summary: (서울=연합뉴스) 조민정 기자 = 국내 유통업계가 인공지능(AI)을 핵심 업무 영역으로 빠르게 끌어들이고 있다.
+075. [2026-07-25T22:00:00+00:00] [정책] [경제] 반도체 호황에 성장률 껑충…청년 고용엔 온기 안 닿아[세쓸통]
+     Summary: <p><img src="https://image.newsis.com/2026/07/15/NISI20260715_0021365020_web.jpg?rnd=20260715124125" /></p>[세종=뉴시스]박광온 기자 = 우리 경제가 반도체 호황 흐름을 타고 빠르게 성장하면서 국내외 눈높이 또한 높아지고 있습니다. 올해 우리 경제성장률이 3~4%에 달할 것이라는 전망도 나오고 있습니다.<br /><br />하지만 경기 회복의 온기가 청년 고용시장까지 고르게 퍼지지는 않는 모습입니다. 최종학교를 졸업하고도 일자리를 구하지 못한 청년은 오히려 늘었고, 미취업 청년의 절반가량은 1년 이상 취업하지 못했습니다. <br /><br />경제 전체의 성장 속도는 빨라지고 있지만 청년들이 노동시장에 진입하는 속도는 오히려 늦어지고 있는 셈입니다.<br /><br />먼저 우리 경제의 성장 속도부터 살펴봅시다. 한국은행이 지난 23일 발표한 &#039;올해 2분기 실질 국내총생산(GDP) 속보치&#039;에 따르면 실질 GDP는 전기 대비 0.6% 성장했습니다. <br /><br />한은이 지난 5월 내놓은 전망치인 0.2%의 3배에 달하는 수치입니다. 전년 동기 대비로는 3.7%입니다. 앞서 올해 1분기 경제 성장률은 1.8%로, 2020년 3분기(2.2%) 이후 5년 6개월 만의 최고치를 기록하기도 했습니다.<br /><br />올해 우리 경제가 예상보다 빠르게 성장하면서 연간 성장률 전망도 잇따라 상향 조정되고 있습니다.<br /><br />정부는 지난 14일 발표한 &#039;2026년 하반기 경제성장전략&#039;에서 올해 실질 GDP 성장률 전망치를 기존 2.0%에서 3.0%로 1.0%p 상향했습니다.<br /><br /><p><img src="https://image.newsis.com/2026/07/23/NISI20260723_0002193342_web.jpg?rnd=20260723090604" /></p><br />국제통화기금(IMF)도 지난 8일 올해 한국 
+076. [2026-07-25T21:45:29+00:00] [기타] [Yahoo Finance] How a 67-Year-Old Built a $4,800 Monthly Paycheck Around SCHD, JEPQ, and O
+077. [2026-07-25T21:45:01+00:00] [실적] [연합뉴스 산업 최신기사] 네이버 치지직, 월드컵 흥행 타고 이용자·신규 설치 역대 최고
+     Summary: (서울=연합뉴스) 한상용 기자 = 네이버 스트리밍 플랫폼 치지직이 2026 국제축구연맹(FIFA) 북중미 월드컵 중계 효과에 힘입어 월간 이용자...
+078. [2026-07-25T21:41:35+00:00] [기타] [Yahoo Finance] Here’s What a $300,000 Budget Actually Buys You in The Villages, Florida
+079. [2026-07-25T21:41:17+00:00] [기타] [Yahoo Finance] Top 3 US Stock Market Stories From This Week
+080. [2026-07-25T21:37:00+00:00] [산업] [연합뉴스 산업 최신기사] 유럽 자동차 시장 전동화 가속도…독일선 전기차가 1등
+     Summary: (서울=연합뉴스) 김윤구 기자 = 유럽 최대 자동차 시장인 독일에서 순수 전기차(BEV)가 사상 처음으로 월간 신차 등록 기준 가장 많이 팔린 ...
+081. [2026-07-25T21:35:01+00:00] [금리환율] [연합뉴스 경제 최신기사] SK하이닉스 업은 크레딧물…높아진 캐리 매력에 투심 살아날까
+     Summary: (서울=연합뉴스) 강수지 기자 = 국고채 금리가 전고점까지 오른 가운데 캐리(이자 수익)와 스프레드(국고채와 금리 차) 측면에서 금융채 및 회사...
+082. [2026-07-25T21:35:00+00:00] [소비] [연합뉴스 경제 최신기사] 자동차 내수 3년만에 170만대 회복한다…친환경차 비중 60% 육박
+     Summary: (서울=연합뉴스) 홍규빈 기자 = 자동차 내수 호조가 올 하반기에도 이어져 연간 판매량이 3년 만에 170만대를 넘어설 것이라는 전망이 나왔다.
+083. [2026-07-25T21:34:34+00:00] [정책] [인공지능신문 - 전체기사] 英 국방부, 우크라이나가 검증한 AI 정찰드론 'AR5' 도입… 4억 파운드 투입해 전장 감시체계 고도화
+     Summary: 영국 정부가 최대 4억 파운드(약 7,700억 원)를 투자해 차세대 정찰 드론을 육군에 배치한다. 우크라이나 전장에서 성능이 입증된 드론을 도입해 정보·감시·정찰(ISR) 능력을 강화하는 동시에, 영국 내 방위산업 제조 기반을 확대하고 첨단 국방기술 생태계 육성에도 속도를 낸다는 전략이다.영국 국방부는 25일(현지시각) 방산기업 테케버(TEKEVER) 영국법인의 AR5 무인정찰기를 차세대 육군 감시 드론으로 선정했다고 발표했다. 이번 사업 규모는 향후 10년간 최대 4억 파운드에 달하며, 초기 계약으로 AR5 6대를 도입한 뒤 20
+084. [2026-07-25T21:34:01+00:00] [기타] [Yahoo Finance] Nebius vs. Strategy: Comparing Revenue Trends Between an Artificial Intelligence Company and a Bitcoin Giant
+085. [2026-07-25T21:33:00+00:00] [정책] [연합뉴스 산업 최신기사] 청소년 SNS 규제 어디까지…추천 알고리즘도 손본다
+     Summary: (서울=연합뉴스) 유현민 기자 = 정부가 만 14세 미만의 사회관계망서비스(SNS) 가입 제한과 청소년 대상 맞춤형 추천 알고리즘 및 무한 스크...
+086. [2026-07-25T21:33:00+00:00] [기타] [Yahoo Finance] Peter Schiff says SpaceX is a warning for hyped stocks
+087. [2026-07-25T21:31:01+00:00] [실적] [연합뉴스 산업 최신기사] 하반기 실적 반등 시동 거는 K배터리…조기 흑자전환 기대↑
+     Summary: (서울=연합뉴스) 김민지 기자 = 국내 배터리 업계가 이번 주 올해 2분기 실적을 발표하는 가운데 전기차 수요 증가와 에너지저장장치(ESS) 수...
+088. [2026-07-25T21:31:00+00:00] [소비] [연합뉴스 산업 최신기사] '세계 3위' 브라질 화장품 시장…K-뷰티, 남미 공략 '교두보'로
+     Summary: (서울=연합뉴스) 구정모 기자 = 세계 3위 화장품 시장 브라질을 선점하기 위한 K-뷰티 기업들의 발걸음이 빨라지고 있다.
+089. [2026-07-25T21:30:15+00:00] [기타] [Yahoo Finance] Trump Says 'We're Leading China' in Crypto, But Beijing Would 'Love to Take That Over'
+090. [2026-07-25T21:30:10+00:00] [원자재] [연합뉴스 경제 최신기사] 중동 긴장고조에 국내유가 반등 조짐…최고가격제로 '시간벌기'
+     Summary: (서울=연합뉴스) 조성흠 임성호 기자 = 미국과 이란의 충돌로 중동 지역 긴장이 고조되고 국제유가가 급등하면서 최근 다소 완화하던 국내 유가 불...
+091. [2026-07-25T21:30:02+00:00] [기타] [연합뉴스 경제 최신기사] '리밸런싱 재개' 연기금, 이달 순매수…하이닉스 사고 삼전 팔아
+     Summary: (서울=연합뉴스) 김유아 기자 = 국내 주식시장 &apos;큰 손&apos; 국민연금이 이달부터 리밸런싱(자산비중 재조정)을 재개하면서 &apos;매도 폭탄&apos;에 대한 투자...
+092. [2026-07-25T21:30:01+00:00] [금리환율] [연합뉴스 경제 최신기사] 뛰는 유가에 물가 불안 우려…금리·관세·환율도 '경고등'
+     Summary: (세종=연합뉴스) 안채원 기자 = 중동 정세 불안으로 국제유가가 다시 치솟으면서 하반기 국내 물가에 관한 우려가 커지고 있다.
+093. [2026-07-25T21:30:00+00:00] [정책] [경제] 李 지시에 '공직 감사' 대폭 강화…28개 부처 63명 증원
+     Summary: <p><img src="https://image.newsis.com/2026/07/21/NISI20260721_0021371685_web.jpg?rnd=20260721101810" /></p>[서울=뉴시스] 강지은 기자 = 정부가 공직 사회의 감사 기능을 강화하기 위해 28개 부처에 감사 인력 총 63명을 증원한다. <br /><br />이재명 대통령이 일 잘하는 공무원에 대해서는 파격적으로 포상하되, 공직 내 부정 부패나 부적격 행위에 대해서는 감시와 징계를 강화하라고 지시한 데 따른 조치다.<br /><br />26일 관계 부처에 따르면 정부는 지난 14일 국무회의에서 심의·의결된 부처의 감사 인력 증원 관련 직제 개정안을 21일 공포·시행했다.<br /><br />구체적으로 행정안전부 등 24개 부처의 감사 인력을 51명 늘리는 &#039;행정안전부와 그 소속기관 직제&#039; 등 24개 법령의 일부 개정에 관한 대통령령이다. 교육부와 보건복지부도 별도 직제 개정을 통해 감사 인력을 각각 3명, 4명 늘렸다.<br /><br />이보다 앞서 외교부는 감사 인력 4명을 증원하는 직제 개정안을 지난 14일부터 시행 중이며, 국방부는 감사 인력 1명을 늘리는 개정 절차를 진행해 8월 중순께 시행할 예정이다.<br /><br />이에 따라 감사 인력이 증원되는 부처는 모두 28곳, 증원 규모는 총 63명이다.<br /><br />정부 조직과 정원을 관리하는 행안부는 &quot;공직 사회의 청렴도 및 책임성 요구가 커지고, 행정 환경도 갈수록 복잡해짐에 따라 감사 사각지대를 해소하고 급증하는 감사 수요에 능동적으로 대응하기 위해 전담 인력을 증원했다&quot;고 설명했다.<br /><br />부처별 증원 규모를 보면 행안부와 고용노동부가 각각 5명으로 가장 많다.<br /><br />이어 문화체육관광부·산림청·보건복지부·외교부·해양수산부 4명, 농림축산식품부·교육부 3명, 과학기술정보통신부·법무부·인사혁신처·식품의약품안전처·국가데이터처·지식재산처·국가유산청·금융
+094. [2026-07-25T21:30:00+00:00] [정책] [경제] '밑 빠진' 자원公에 정부출자…5년간 1.3조 감액손실 처리
+     Summary: <p><img src="https://image.newsis.com/2025/03/24/NISI20250324_0001798938_web.jpg?rnd=20250324112403" /></p>[세종=뉴시스]손차민 기자 = 산업통상부가 자본잠식 상태인 산하 자원공기업들에 정부 출자를 이어가는 가운데 최근 5년간 출자금 1조3000억원이 감액손실로 처리된 것으로 나타났다.<br /><br />26일 국회예산정책처의 &#039;2025회계연도 결산 국가재무제표 분석&#039;에 따르면 산업부는 지난해 말 기준 한국석유공사, 한국광해광업공단, 대한석탄공사 등 3곳에 총 13조7443억6600만원을 출자했다.<br /><br />기관별로 석유공사에 10조9486억원, 광해광업공단에 2조6089억원, 석탄공사에 1869억원을 각각 투입했다.<br /><br />정부지분율은 석탄공사와 석유공사는 각각 100%, 광해광업공단은 99.9%다.<br /><br />문제는 최근 5년간 해당 기관에 대한 출자금 감액손실 규모가 1조3250억에 달한다는 점이다.<br /><br />지난 2021년 975억원이던 감액손실은 2022년 광해광업공단 출범 후 1522억원으로 늘었다. 이후 2024년 4131억원으로 급증했고 지난해엔 5132억원으로 증가 폭을 더욱 키웠다.<br /><br />이는 해당 기관들이 모두 완전자본잠식 상태에 놓여 있기 때문에 가능했다.<br /><br />국가회계기준에 따르면 완전자본잠식 등으로 출자금의 회수가능가액이 장부가액보다 낮아질 경우 해당 출자금은 감액손실로 회계 처리할 수 있다.<br /><br />정부가 자본잠식 상태의 자원공기업에 지속적으로 출자하고도 상당 부분을 감액손실로 처리하면서 &#039;밑 빠진 독에 물 붓기&#039;라는 지적도 나온다. <br /><br /><p><img src="https://image.newsis.com/2026/07/24/NISI20260724_0002195309_web.jpg?rnd=20260724162701"
+095. [2026-07-25T21:27:00+00:00] [기타] [Yahoo Finance] CoreWeave Stock Fell 11.4% on Friday. The Sell-Off Is About What It's Spending, Not What It's Selling.
+096. [2026-07-25T21:25:00+00:00] [원자재] [연합뉴스 경제 최신기사] 치솟는 유가에 관련 ETN, 이달 수익률 상위권 싹쓸이
+     Summary: (서울=연합뉴스) 이민영 기자 = 최근 중동의 지정학적 긴장 고조로 국제유가가 급등하면서 관련 ETN(상장지수증권) 수익률이 고공행진 중이다.
+097. [2026-07-25T21:25:00+00:00] [기타] [Yahoo Finance] NuScale Power Is Down 38% This Year: Here's What the Next 5 Years Could Look Like
+098. [2026-07-25T21:23:00+00:00] [정책] [연합뉴스 산업 최신기사] 유튜브, AI 저품질 영상 돈줄 끊는다…의료·금융 아바타 제한
+     Summary: (서울=연합뉴스) 오지은 기자 = 유튜브가 생성형 인공지능(AI)으로 대량 생산한 저품질 콘텐츠 확산을 막기 위해 수익 창출 정책을 한층 강화했...
+099. [2026-07-25T21:20:01+00:00] [정책] [연합뉴스 경제 최신기사] '레버리지 규제' 본격시행 앞둔 국내증시, 변동성 완화될까
+     Summary: (서울=연합뉴스) 김유향 기자 = 단일종목 레버리지·인버스 상장지수상품(ETP)에 대한 금융당국의 규제 본격 시행을 앞두고 국내 증시는 여전히 ...
+100. [2026-07-25T21:12:05+00:00] [산업] [매일경제 : 전체뉴스] 한국선 191만원, 미국에서는 290만원…똑같은 하이닉스인데 가격 차이 왜?
+     Summary: 빅데이터로 본 재테크 SK하이닉스 종목 검색 1위 리포트도 상위 1~4위 차지삼성전자와 SK하이닉스 등 그동안 국내 증시를 이끌어왔던 반도체주가 이달 급락한 가운데 지난 한 주 동..
+101. [2026-07-25T21:11:11+00:00] [소비] [연합뉴스 산업 최신기사] 관광수지 3개월 연속 흑자 행진…방한객 1인당 193만원 지출
+     Summary: (서울=연합뉴스) 이상서 기자 = 장기간 적자를 이어가던 월간 관광수지가 올해 들어 반등하며 3개월 연속 흑자 행진을 기록한 것으로 집계됐다.
+102. [2026-07-25T21:11:01+00:00] [정책] [연합뉴스 경제 최신기사] 초고소득자 건보료 최대 612만원…26년 묵은 하한선도 현실화
+     Summary: (서울=연합뉴스) 서한기 기자 = 정부가 건강보험료의 상한선과 하한선을 동시에 높이는 부과 체계 개편을 추진한다. 소득이 아무리 높아도 일정 금...
+103. [2026-07-25T21:09:00+00:00] [기타] [연합뉴스 산업 최신기사] 개인정보 유출 조사 평균 8개월…"우선순위 체계 필요"
+     Summary: (서울=연합뉴스) 차민지 기자 = 개인정보 유출·침해 사건 조사에 평균 8개월이 걸리는 것으로 나타났다.
+104. [2026-07-25T21:05:02+00:00] [기타] [연합뉴스 산업 최신기사] '모범사용자라더니' 작년 공공기관 산재 승인 971건…5년새 최다
+     Summary: (서울=연합뉴스) 옥성구 기자 = 지난해 공공기관에서만 산업재해로 승인된 건수가 971건으로 최근 5년새 가장 많은 것으로 집계됐다.
+105. [2026-07-25T21:05:01+00:00] [기타] [연합뉴스 경제 최신기사] 빚 있는 청년, 불안정 일자리 빨리 내몰려…심리적 경로 첫 확인
+     Summary: (서울=연합뉴스) 한혜원 기자 = 청년층의 부채가 첫 취업 시기를 앞당기지만, 그 과정에서 구직 실패 경험이 구직 동기를 떨어뜨려 안정적인 일자...
+106. [2026-07-25T21:05:01+00:00] [기타] [연합뉴스 경제 최신기사] 단일종목 레버리지 '물타기'? 개미, 사흘 줄매도 후 폭풍매수
+     Summary: (서울=연합뉴스) 고은지 기자 = 개인 투자자들이 단일종목 레버리지 14종을 사흘(21∼23일) 연속 총 5천억원가량 순매도한 뒤 24일 하루에...
+107. [2026-07-25T21:03:21+00:00] [기타] [Yahoo Finance] He Retired to a Small Town to Stretch His Social Security. Then the Only Hospital Closed, and His Cheap Retirement Turned Expensive.
+108. [2026-07-25T21:03:00+00:00] [정책] [경제] '교육교부금 개편안' 내달 말 윤곽…내국세 연동 손질[재정개혁 골든타임②]
+     Summary: <p><img src="https://image.newsis.com/2026/07/22/NISI20260722_0021373450_web.jpg?rnd=20260722131934" /></p><br />[세종=뉴시스]임하은 기자 = 내년도 국세수입이 역대 최대인 500조원을 넘어설 것으로 전망되면서 지방교육재정교부금도 사상 처음으로 100조원 안팎에 이를 것으로 예상된다. 정부는 이처럼 급증하는 교육교부금의 산정 방식을 손질하는 개편안을 다음달 말 내년도 예산안과 함께 내놓기 위해 막판 협의에 속도를 내고 있다.<br /><br />26일 정부에 따르면 기획예산처는 다음달 말 내년도 예산안 발표와 함께 지방교육재정교부금 개편 방안을 공개하는 것을 목표로 교육부 등 관계부처와 최종 조율을 진행 중이다. 최종 정부안을 확정해 지방교육재정교부금법 개정안과 함께 국회에 제출하는 것이 목표다.<br /><br />현재 검토되는 개편안의 핵심은 내국세 규모에 자동 연동되는 현행 방식을 성장률과 학령인구 변화 등을 반영하는 것이다. <br /><br />기획처가 교육부에 제시한 안 가운데는 직전 연도 교부금을 기준으로 최근 3개 연도 평균 경상성장률과 평균 학령인구 변화율의 일부(40%)를 적용해 교부금 총액을 산정하는 방안 등이 포함된 것으로 전해졌다.<br /><br />물가상승률이 포함된 경상성장률의 평균치를 최근 3년으로 할지 5년으로 할지 등 세부 산식은 협의가 진행 중인 것으로 알려졌다.<br /><br />정부가 제도 손질에 나선 것은 반도체 호황 등에 따른 세수 증가로 교육교부금 규모가 빠르게 불어나고 있기 때문이다. <br /><br /><p><img src="https://image.newsis.com/2026/07/24/NISI20260724_0002195329_web.jpg?rnd=20260724163748" /></p><br />현행 교부금은 내국세의 20.79%가 자동 배분되는 구조다. 내년도 국세수입이 500조원, 내국세 비중(관세 제외)을 약 
+109. [2026-07-25T21:03:00+00:00] [기타] [연합뉴스 경제 최신기사] 美무역법 301조 절반은 관세 안물었다…'과잉생산' 협상력 관건
+     Summary: (서울=연합뉴스) 신창용 기자 = 지난 10년간 미국의 무역법 301조 조사 사례를 분석한 결과 현재 진행 중인 사안을 제외하면 절반이 협상을 ...
+110. [2026-07-25T21:03:00+00:00] [산업] [Yahoo Finance] Award-winning dairy company closes two facilities
+111. [2026-07-25T21:01:01+00:00] [산업] [연합뉴스 경제 최신기사] 해외 코인거래소 새 먹거리 '토큰 닉스'…하루 수백억원 거래
+     Summary: (서울=연합뉴스) 박수현 유동현 기자 = 바이낸스를 비롯한 해외 가상자산 거래소에서 SK하이닉스[000660]에 수십배 레버리지를 걸 수 있는 ...
+112. [2026-07-25T21:01:01+00:00] [기타] [연합뉴스 산업 최신기사] [율곡로] 구멍 뚫린 외교·안보 보안망
+     Summary: (서울=연합뉴스) 이승우 선임기자 = 외교부 산하 국립외교원 해킹으로 외교·안보 분야 요원 약 1만명의 신상 정보가 유출된 것으로 추정된 데 이...
+113. [2026-07-25T21:00:37+00:00] [기타] [연합뉴스 경제 최신기사] [마켓인사이트] 반등 시도하다 또 출렁…코스피 변동성 이어지나
+     Summary: (서울=연합뉴스) 황철환 기자 = 지난주 한국 증시는 5거래일 내내 양방향 사이드카가 발동되며 변동성 장세를 이어갔다.
+114. [2026-07-25T21:00:02+00:00] [기타] [연합뉴스 산업 최신기사] 롯데하이마트, '셀프개통' 부담 없앤 알뜰폰 요금제 출시
+     Summary: (서울=연합뉴스) 조민정 기자 = 롯데하이마트[071840]는 전국 매장에서 직원이 알뜰폰 개통과 휴대전화 설정을 지원하는 자체 모바일 요금제 ...
+115. [2026-07-25T21:00:01+00:00] [소비] [연합뉴스 산업 최신기사] 신세계百, 여름철 언더웨어 수요 겨냥 강남점서 '젤리샵' 팝업
+     Summary: (서울=연합뉴스) 정수연 기자 = 신세계백화점은 속옷을 찾는 고객들이 늘어나는 장마철을 맞아 강남점과 센텀시티점에서 속옷 팝업 스토어를 운영한다...
+116. [2026-07-25T21:00:01+00:00] [기타] [조선일보] “하락장에 물려주자”…경동제약 오너 2세, 10대 자녀에 30만株 증여
+     Summary: 51년 전통의 경동제약 류기성 대표(부회장)가 최근 보유 중인 회사 지분을 두 자녀에게 증여한 것으로 나타났다. 주가 하락 국면에서 3세 승계 작업을 일찌감치 시작했다는 평가가 나온다. 26일 금융감독원 전자공시시스템에 따르면 류 대표의 경동제약 지분은 지난 7일 17.51%에서 16.53%로 0.98%포인트 감소했다. 두 자녀 A(17)씨와 B(14)씨에
+117. [2026-07-25T21:00:00+00:00] [기타] [오늘의뉴스 - 이티뉴스] 롯데하이마트, 자체 알뜰폰 'Hi-mart 요금제' 출시…매장서 개통까지
+     Summary: 롯데하이마트는 가전 매장에서 가입부터 개통까지 지원하는 자체 알뜰폰(MVNO) 서비스 'Hi-mart 요금제'를 출시한다고 26일 밝혔다. 이번 요금제는 KT 통신망을 사용하는 MVNO 전용이다. 데이터 사용량에 따라 5GB, 30GB, 50GB, 100GB 등 4종으로 구성됐다. 5GB 요금제는 월 4900원, 30GB는 월 1만5900원(1년 후 2만5900원), 50GB는 월 1만8900원(1년 후 3만3900원), 100GB는 월 3만7
+118. [2026-07-25T21:00:00+00:00] [산업] [조선일보] '리모델링 호재' 송파 문정시영 아파트 6억대…동남권 경매 투자 포인트
+     Summary: 인공지능(AI) 기반 경매정보 플랫폼 땅집고옥션(▶바로가기)이 개발한 ‘만능검색’ 시스템을 통해 전국 법원에서 입찰하는 경매 물건 중 알짜 정보만 골라 여러분에게 매일 배달합니다. 만능검색은 클릭 몇 번으로 전국 모든 경매 물건 가운데 내가 원하는 시점, 지역만 선택하면 수익성과 안정성이 높은 물건을 자동 추천하는 국내 최초의 서비스입니다. [땅집고] 땅집
+119. [2026-07-25T21:00:00+00:00] [기타] [오늘의뉴스 - 이티뉴스] 임신 중 흡연·음주보다 毒했다…아이 건강 위협하는 가정의 '이 조건'
+     Summary: 임신 기간 부모의 생활습관보다 가정의 경제적·사회적 여건이 자녀의 장기적인 건강에 더 큰 영향을 줄 수 있다는 분석이 나왔다. 24일(현지시간) 영국 엑서터대 젬마 샤프 박사 연구진은 의학 저널 PLOS 메디신(PLOS Medicine)에서 영국과 노르웨이에서 태어난 부모와 자녀 약 23만명을 대상으로 한 자료를 분석한 결과, 부모의 흡연·음주·카페인 섭취보다 가족의 사회경제적 지위(SEP)가 자녀의 건강 상태와 더욱 뚜렷하고 지속적인 관련성을
+120. [2026-07-25T21:00:00+00:00] [산업] [오늘의뉴스 - 이티뉴스] 배민, 새 로봇 인증 취득해 다음달 출격…자율주행 배달 성능도 UP
+     Summary: 원격 관세사의 도움 없이 더 먼 거리를 자율 주행할 수 있는 배달의민족(배민) 새 배달로봇이 운행 안전 인증을 획득했다. 배민은 이 로봇을 다음 달 현장에 투입할 예정으로, 인증 과정에서 외관과 기본 사양 등이 공개돼 이목을 끌었다.  26일 업계에 따르면 배민 운영사 우아한형제들이 개발한 '딜리 X3-R 1.4'는 한국로봇산업진흥원이 주관하는 실외이동로봇 운행 안전 인증을 취득했다. 이 인증은 로봇의 보도 통행 시 반드시 갖춰야 하는 법정 의
+121. [2026-07-25T21:00:00+00:00] [정책] [경제] 영등포·구로 '준공업지역' 해법 될까…"규제·이주대책 관건"[공급, 어디서 어떻게②]
+     Summary: <p><img src="https://image.newsis.com/2026/07/24/NISI20260724_0021376243_web.jpg?rnd=20260724150503" /></p><br />[서울=뉴시스]정유선 기자 = 정부가 도심 내 주택 공급을 확대하기 위한 카드로 &#039;준공업지역&#039;에 주목하고 있다. 수도권 신규 택지 확보가 한계에 다다른 상황에서 입지 여건이 우수한 서울 서남권 부지를 타깃으로 삼은 모습이다. <br /><br />전문가들은 사업 촉진을 위해선 용적률 인센티브 외에도 추가적인 규제 완화와 원주민·공장주·상인을 위한 세심한 보상·이주 대책 마련이 필수적이라고 조언한다. <br /><br />지난 23일 열린 부동산 대국민 토론회에선 공급 확대를 위한 주요 방안으로 도심 내 기능이 쇠퇴한 준공업지역 등 유휴부지를 주거 용도로 활용하자는 의견이 제시됐다. <br /><br />진미윤 명지대 부동산대학원 교수는 &quot;산업 구조와 소비 형태의 변화에 따라 제대로 이용되지 못하고 있는 공업지역과 상업지역을 규제 완화와 같은 유연화된 방법으로 주거로 전환해야 한다&quot;고 제언했다. 진 교수는 &quot;다만 가격 상승 압력과 기반시설 부족 우려가 있는 만큼 선별적이고 복합적인 계획 수립이 필요하다&quot;고 덧붙였다.<br /><br />온라인 댓글로도 유휴부지 활용에 대한 요구가 나오자 이재명 대통령은 &quot;과거엔 도시에 일자리를 위한 공장이 필요했지만 지금은 첨단 연구개발 쪽이 중심이 되고 있어서 토지 배치를 바꿔야 한다는 점을 각별히 유념하겠다&quot;고 밝혔다. 이어 &quot;용도변경을 하되 필요하면 그로 인해 생기는 과도한 이익은 일부 공공기여로 환수하는 방안을 잘 검토해보겠다&quot;고 말했다. <br /><br />앞서 김용범 청와대 정책실장 역시 주택 공급 대책의 일환으로 준공업지역을 지목한 바 있다. 김 실장은 지난 19일 영등포구·구로구 준공업지역 주택 공급과 관련해 &quot;(서울
+122. [2026-07-25T21:00:00+00:00] [기타] [조선일보] "목에 칼 들어와도 주식 투자 안된다" 다주택자 개그맨의 경고장
+     Summary: [땅집고] 개그맨 출신 투자자 황현희가 최근 변동성이 커진 주식시장을 두고 개인 투자자들에게 신중한 접근을 당부했다. 현재 시장은 단기 매매에 능한 투자자들에게 유리한 환경인 만큼, 일반 투자자는 섣불리 뛰어들기보다 기다리는 것이 낫다는 조언이다.
+ 
+황현희는 지난 21일 공개된 유튜브 채널 '이홍렬TV'에서 투자 계획을 묻는 질문에 “지금 주식시장에 들어
+123. [2026-07-25T21:00:00+00:00] [기타] [조선일보] 강동 천호서 '5억 로또 줍줍' 뜬다, 27일 청약
+     Summary: [땅집고] 서울 강동구 천호동에서 당첨만 되면 4억~5억원의 시세차익을 기대할 수 있는 ‘줍줍’(무순위 청약) 물량이 나온다. 계약이 취소된 1가구를 대상으로 하는 무순위 청약이어서 높은 경쟁률이 예상된다.
+ 
+22일 한국부동산원 청약홈에 따르면 서울 강동구 천호동 ‘e편한세상 강동 프레스티지원’은 오는 27일 전용면적 84㎡A 1가구에 대한 무순위 청약을
+124. [2026-07-25T21:00:00+00:00] [실적] [조선일보] "병원 지을테니 세금 내놓으라고?" '20년 희망고문' 인천 주민들 분노
+     Summary: [땅집고] 인천 송도국제도시 내 약 2만 6000평에 달하는 광활한 부지가 십수 년째 방치되고 있다. 당초 800병상 규모의 송도 세브란스병원이 들어서기로 했던 곳이지만,  지자체가 제공할 수 있는 파격적인 혜택은 모두 누린 채 20년 가까이 본공사 착공조차 하지 못했다.
+ 
+◇ 평당 50만원 헐값 매입… 2010년 완공 목표가 2028년으로
+ 
+인천시와
+125. [2026-07-25T21:00:00+00:00] [소비] [조선일보] [비즈톡톡] ‘집에서 공항까지 모십니다’… 매장 밖으로 확장하는 백화점·면세업계 VIP 서비스
+     Summary: 백화점과 면세업계의 주요 고객(VIP) 서비스 경쟁이 공항과 해외로 확장되고 있습니다. 과거에는 전용 라운지와 발레파킹 등 쇼핑 편의 제공에 집중했다면, 최근에는 공항 이동부터 해외 쇼핑, 귀국 이후까지 고객의 여행 경험 전반을 관리하는 방향으로 진화하는 모습입니다. 내수 부진 속 구매력이 높은 VIP 고객의 중요성이 커지면서 단순 할인보다 차별화된 경험을
+126. [2026-07-25T20:59:00+00:00] [정책] [연합뉴스 경제 최신기사] 대부업 새도약기금 교착…정부, 가입·매각 독려 '투트랙'
+     Summary: (서울=연합뉴스) 김지연 강류나 기자 = 정부의 연체채권 정리 프로그램인 새도약기금에 참여를 망설이는 대부업체와 금융당국간 협상이 교착 상태를 ...
+127. [2026-07-25T20:57:01+00:00] [산업] [연합뉴스 경제 최신기사] 상반기 車보험 적자 1천890억원…6년 만에 적자 전환
+     Summary: (서울=연합뉴스) 강수련 기자 = 올해 상반기 손해보험사들의 자동차보험이 2천억원 넘게 손익이 악화하며 약 6년 만에 적자 전환했다.
+128. [2026-07-25T20:56:50+00:00] [기타] [Yahoo Finance] The Nuclear Trade Is Entering Phase 2 and These 3 ETFs Own Everything From Uranium Miners to Reactor Restarts
+129. [2026-07-25T20:55:11+00:00] [기타] [Yahoo Finance] Warner Bros. lawsuit accuses Amazon of illegally poaching executives
+130. [2026-07-25T20:55:01+00:00] [실적] [연합뉴스 경제 최신기사] 6월 원화 실질가치 금융위기 이후 가장 낮아…엔화는 역대 최저
+     Summary: (서울=연합뉴스) 임지우 기자 = 지난 달 원화 실질 가치가 7개월 만에 최대폭으로 떨어지면서 글로벌 금융위기 이후 최저를 기록했다.
+131. [2026-07-25T20:55:00+00:00] [실적] [연합뉴스 산업 최신기사] SK하이닉스, 2분기 영업익 64조원 전망…이익률 75% 넘을 수도
+     Summary: (서울=연합뉴스) 강태우 기자 = 삼성전자[005930]에 이어 SK하이닉스[000660]도 올해 2분기 사상 최대 실적을 거둘 것으로 예상되면...
+132. [2026-07-25T20:53:01+00:00] [기타] [연합뉴스 경제 최신기사] '생산적 금융'이라더니…중소기업 대출 80%에 담보·보증 요구
+     Summary: (서울=연합뉴스) 한지훈 임지우 이도흔 기자 = 주요 시중은행이 중소기업에 &apos;생산적 금융&apos; 명목으로 내준 대출 80%가량이 담보나 보증을 기반으...
+133. [2026-07-25T20:51:12+00:00] [금리환율] [매일경제 : 전체뉴스] “원자재 투자, 아무나 하면 큰일나요”...가격 보다 중요한 한 가지 [Book]
+     Summary: 시장 이해해야 방향성 보여세계 경제가 균열을 일으킬 때 가장 먼저 신호를 보내는 곳은 원자재 시장이다. 지정학적 충돌, 글로벌 공급망의 병목, 인플레이션 압력 속에서 원자재는 포트..
+134. [2026-07-25T20:51:02+00:00] [기타] [매일경제 : 전체뉴스] “사람 좋다고? 술 마셔봤어?”...인간 본성·내면 들추는 ‘양날의 검’ [Book]
+     Summary: 인간의 본성과 내면 들추는 술 관습·형식 파괴 명작 만들지만 폭력 등 욕망 배설에 그치기도  술 기피 문화가 퍼지는 오늘날 더이상 창작의 번뜩임 주지못해‘술과 축제의 신’ 디오니소..
+135. [2026-07-25T20:51:00+00:00] [금리환율] [연합뉴스 경제 최신기사] 고금리에 2분기 은행 가계대출 연체율 10년 만에 최고
+     Summary: (서울=연합뉴스) 임지우 이도흔 기자 = 금리 상승으로 가계의 대출 상환 부담이 커지면서 올해 2분기 말 주요 시중은행 가계대출 연체율이 10년...
+136. [2026-07-25T20:50:31+00:00] [기타] [매일경제 : 전체뉴스] 인간도 공룡도 조연에 불과하다…‘이들’에게 생명을 빚지고 있기에 [Book]
+     Summary: 신간 ‘식물이 바꾼 지구의 역사’우리는 지구의 역사를 잘못 배웠는지도 모른다. 초식공룡을 물어뜯어 입 언저리가 피로 흥건해진 티라노사우르스 렉스, 숲에서 먹잇감을 노리며 숨죽여 기..
+137. [2026-07-25T20:49:00+00:00] [소비] [연합뉴스 경제 최신기사] 금융위, 청년·서민 실수요자 대출총량 관리대상 제외 검토
+     Summary: (서울=연합뉴스) 배영경 강수련 기자 = 청년·서민 실수요자용 대출은 가계대출 총량 관리 대상에서 제외해 금융 공급이 원활하게 하는 방안이 검토...
+138. [2026-07-25T20:47:01+00:00] [정책] [연합뉴스 경제 최신기사] 결혼세액공제 대신 보조금 준다…30년 된 가업상속공제 재설계
+     Summary: (세종=연합뉴스) 이세원 이대희 송정은 기자 = 결혼을 촉진하기 위해 신혼부부에게 주던 세제혜택이 폐지되는 대신 보조금이 직접 지급될 것으로 전...
+139. [2026-07-25T20:45:04+00:00] [정책] [연합뉴스 경제 최신기사] 주택시장 진입 '바늘구멍'…2030 세대 보유율 30% 밑으로
+     Summary: (세종=연합뉴스) 김수현 기자 = 부동산 가격이 뛰고 대출 규제는 강화되면서 20·30세대의 내 집 마련이 더욱 어려워진 것으로 나타났다.
+140. [2026-07-25T20:45:02+00:00] [기타] [연합뉴스 경제 최신기사] 과표 20억 넘는 초고가 1주택 작년 종부세 461억원 공제…153%↑
+     Summary: (세종=연합뉴스) 이세원 기자 = 과세표준 20억원이 넘는 초고가 1주택에 적용한 종합부동산세 세액 공제가 4년 만에 최대 규모를 기록한 것으로...
+141. [2026-07-25T20:45:01+00:00] [정책] [연합뉴스 경제 최신기사] '똘똘 1채' 종부세 강화 가닥…공제·중부담·초고가 3그룹 설계
+     Summary: (세종=연합뉴스) 이세원 이대희 송정은 기자 = 정부는 올해 종합부동산세 개편 과정에서 기본공제선과 초고가 기준선을 중심으로 세 부담을 차등화하...
+142. [2026-07-25T20:44:50+00:00] [기타] [Yahoo Finance] XRP Price Prediction: Analyst Says XRP Could Hit $15
+143. [2026-07-25T20:35:00+00:00] [기타] [Yahoo Finance] Nuclear Energy Is Winning Repeated Government Backing and Investors Should Take Notice
+144. [2026-07-25T20:34:15+00:00] [기타] [Yahoo Finance] VEA vs. SPGM: Which Global Stock ETF Is the Better Buy?
+145. [2026-07-25T20:30:14+00:00] [기타] [Yahoo Finance] Cardano Founder Slams Ethereum's Governance, Says Crypto Needs 'Insurance' To Grow Up
+146. [2026-07-25T20:30:00+00:00] [기타] [조선일보] 치매 예방을 위한 가장 간편한 습관 “매일 이것 해서 집중력 복원”
+147. [2026-07-25T20:30:00+00:00] [기타] [조선일보] 구멍 맞출 필요 없이 그때 그때 허리 사이즈 딱 맞춰, 자동 벨트 1+1 2만원대
+148. [2026-07-25T20:25:00+00:00] [기타] [조선일보] 생선 중의 생선, 귀한 ‘제주 옥돔’ 2마리 1만7000원 초특가
+149. [2026-07-25T20:19:00+00:00] [기타] [조선일보] 장수 위해 매일 먹어야 하는 토마토, 양구에서 수확 즉시 가장 신선할 때 산지 직송
+150. [2026-07-25T20:15:00+00:00] [기타] [조선일보] 비싸서 먹기 어려웠던 민어회 한 접시, 부레 포함 3만원대 초특가 공동구매
+151. [2026-07-25T20:10:00+00:00] [기타] [조선일보] 주름 수 347개→54개 임상, 서울대 보톡스 세럼을 기자가 직접 바른 후 느낀 변화
+152. [2026-07-25T20:05:00+00:00] [기타] [조선일보] 귀에 꽂으면 상대 말소리와 TV 소리가 또렷하게 들리는 신기한 이어폰
+153. [2026-07-25T20:03:45+00:00] [산업] [인공지능신문 - 전체기사] 엔비디아, 네이버에 1.4조원 투자… 세종에 200MW 소버린 AI 팩토리 구축
+     Summary: 엔비디아(NVIDIA)가 네이버(NAVER)와 함께 한국의 소버린 AI 팩토리 인프라 확대 투자 계획을 24일(현지시각) 발표했다. 이를 통해 초기 엔비디아 DSX™ AI 팩토리 구축 규모는 지난달 발표한 55메가와트(MW)보다 3배 이상 확대된 200메가와트(MW)로 늘어날 예정이다. 네이버는 향후 엔비디아 AI 인프라 구축 규모를 1기가와트(GW)까지 확대할 계획이다.이재명 대통령의 샌프란시스코 AI 서밋 방문을 계기로 발표된 이번 200메가와트 규모 확장 계획은 한국의 국가 AI 전략 추진을 크게 가속할 것으로 기대된다. 확대
+154. [2026-07-25T20:03:00+00:00] [산업] [Yahoo Finance] The Simplest Way to Invest in the AI Revolution Is Hiding in Plain Sight
+155. [2026-07-25T20:00:00+00:00] [기타] [조선일보] 나만 모르는 여름 땀 냄새, 샤워 한 번으로 없애고 기분 좋은 체취만 남기는 바디워시
+156. [2026-07-25T19:53:29+00:00] [기타] [Yahoo Finance] Forget Gold: For Retirees, This TIPS ETF Fights Inflation Better
+157. [2026-07-25T19:50:00+00:00] [기타] [Yahoo Finance] Ranking the Best "Magnificent Seven" Stocks to Buy Right Now
+158. [2026-07-25T19:48:04+00:00] [기타] [Yahoo Finance] UCOP: A 2X Bet on the Metal the World Can’t Electrify Without
+159. [2026-07-25T19:43:00+00:00] [기타] [Yahoo Finance] PayPal's Board Reportedly Called $60.50 a Share Inadequate. The Stock Trades at $56.
+160. [2026-07-25T19:42:00+00:00] [기타] [Yahoo Finance] Should You Buy Chipotle Stock Before July 29?
+161. [2026-07-25T19:37:00+00:00] [기타] [Yahoo Finance] Goldman delivers a candid response after Intel's stunning quarter
+162. [2026-07-25T19:34:14+00:00] [산업] [Yahoo Finance] After Comparing Every Covered Call Nasdaq-100 ETF These 3 Pay Up to 14 Percent Without Capping Your AI Upside
+163. [2026-07-25T19:30:41+00:00] [산업] [Yahoo Finance] IYRI’s 10.9% Yield Is Shrinking, But Price Gains Are Making Up the Difference
+164. [2026-07-25T19:30:13+00:00] [기타] [Yahoo Finance] How To Earn $500 A Month From Nucor Stock Ahead Of Q2 Earnings
+165. [2026-07-25T19:26:02+00:00] [기타] [Yahoo Finance] Nvidia vs. Planet Labs: Comparing Revenue Trends Between an Artificial Intelligence Giant and a Rising Star of the Space-Based Economy
+166. [2026-07-25T19:13:01+00:00] [산업] [Yahoo Finance] Archer Aviation vs. Intuitive Machines: Is an Air or Space Pioneer the BetterBuy in 2026?
+167. [2026-07-25T19:13:00+00:00] [기타] [Yahoo Finance] Global apparel company sells lingerie brand after sales declines
+168. [2026-07-25T19:12:00+00:00] [기타] [Yahoo Finance] The Bond Rout Is Bruising Would-Be Home Buyers—and Challenging the Fed
+169. [2026-07-25T19:10:01+00:00] [기타] [Yahoo Finance] Global Markets (SPGM) or Emerging Growth (IEMG)? Which Fund is the Right Choice?
+170. [2026-07-25T19:05:00+00:00] [기타] [매일경제 : 전체뉴스] 수도원을 닮은 이곳 … 목돈 없다면 더 매력적인 노후공동체
+     Summary: ⑥ 김천 월명성모의집어떤 곳은 호텔을 닮았고, 어떤 곳은 리조트를 닮았다. 최고급 레스토랑과 수영장, 문화시설을 앞세우며 ‘럭셔리한 노후’를 이야기한다. 그런데 경북 김천 영암산 ..
+171. [2026-07-25T19:04:42+00:00] [기타] [Yahoo Finance] Is NVIDIA Corporation (NVDA) A Good Stock To Buy Now?
+172. [2026-07-25T19:02:50+00:00] [기타] [Yahoo Finance] Medicare Will Split Your $2,100 Drug Bill Into Monthly Installments. You Have to Ask First.
+173. [2026-07-25T19:00:25+00:00] [기타] [Yahoo Finance] Investors Are Debating Which Stocks They'd Never Buy, No Matter How Bullish Everyone Else Is. 'Money Is Money, But…'
+174. [2026-07-25T18:56:02+00:00] [기타] [한국경제 | 뉴스 | 국제] 25연패에도 포기 안했다…전쟁터에 희망 쏜 농구팀의 기적
+175. [2026-07-25T18:00:00+00:00] [기타] [조선일보] “빙하 녹기 전 남극서 인생샷”… 오지 크루즈 여행 뜬다
+176. [2026-07-25T16:50:01+00:00] [기타] [Yahoo Finance] For Energy Investors, Is a Traditional Energy ETF a Better Bet Than Clean Energy?
+177. [2026-07-25T16:50:00+00:00] [기타] [Yahoo Finance] Where Is the Floor for SpaceX Stock Right Now?
+178. [2026-07-25T16:44:58+00:00] [기타] [Yahoo Finance] The Annuity Pitch Skips One Number: What a $250,000 Policy Costs Your Heirs
+179. [2026-07-25T16:41:03+00:00] [기타] [Yahoo Finance] 3 Major Reasons to Buy Microsoft Before July 29 Q4 Earnings
+180. [2026-07-25T16:35:49+00:00] [기타] [Yahoo Finance] Meta Stock Is Down Nearly 10% in 2026. Should You Buy Before July 29 Q2 Earnings?
+181. [2026-07-25T16:35:00+00:00] [기타] [Yahoo Finance] Energy Transfer vs. Occidental Petroleum: The Better Energy Buy for the Second Half of 2026
+182. [2026-07-25T16:33:00+00:00] [기타] [Yahoo Finance] Mid-term stock market curse and what comes next
+183. [2026-07-25T16:24:59+00:00] [기타] [Yahoo Finance] 3 Major Reasons to Buy Vertiv Before July 29 Q2 Earnings
+184. [2026-07-25T16:24:38+00:00] [기타] [Yahoo Finance] The 3.4% Income Play That Beats the Dogs of the Dow Strategy
+185. [2026-07-25T16:24:14+00:00] [기타] [Yahoo Finance] The Widow’s Penalty: Same House, Same Savings, One Check Gone, and a Higher Tax Bracket
+186. [2026-07-25T16:08:13+00:00] [빅테크발언] [인공지능신문 - 전체기사] 이 대통령, "대한민국 AI 대전환 함께하자"..아모데이·올트먼·젠슨 황·혹 탄 연쇄 회동
+     Summary: 이재명 대통령이 24일(현지시간) 미국 샌프란시스코에서 세계 인공지능(AI) 산업을 이끄는 글로벌 빅테크 최고경영자(CEO)들과 연쇄 회동을 갖고 대한민국의 AI 국가 전략과 협력 확대 방안을 논의했다.이날 이 대통령은 다리오 아모데이(Dario Amodei) 앤트로픽(Anthropic) CEO를 시작으로 이어 샘 올트먼(Sam Altman) 오픈AI CEO, 젠슨 황(Jensen Huang) 엔비디아 CEO, 혹 탄(Hock Tan) 브로드컴(Broadcom) CEO를 차례로 만나 AI 협력과 국가 AI 경쟁력 강화 방안을 논의했
+187. [2026-07-25T15:30:02+00:00] [기타] [Yahoo Finance] Cathie Wood Just Poured $18 Million Into Meta Stock. Here’s Why.
+188. [2026-07-25T15:27:46+00:00] [소비] [매일경제 : 전체뉴스] 이강인, 3년 만에 스페인 복귀… 아틀레티코 마드리드에 새 둥지
+     Summary: 2031년까지 계약, 이적료 최고 약 680억원 구단 에이스 상징 등번호 7번 배번받아  내달 초 구단 방한 경기 통해 첫인사 가능성 한국 축구 간판 공격수 이강인이 3년 만에 스..
+189. [2026-07-25T15:02:31+00:00] [정책] [Yahoo Finance] The IRA Donation Trick That Lowers Your Tax Bill and Never Touches Your Medicare Premium
+190. [2026-07-25T14:52:18+00:00] [기타] [Yahoo Finance] Wall Street Has Never Seen Stock Buying Like This. History Says It Won’t End Quietly
+191. [2026-07-25T14:50:00+00:00] [산업] [Yahoo Finance] Thinking About Buying Canopy Growth? You May Want to Wait for This 1 Thing to Happen First.
+192. [2026-07-25T14:46:39+00:00] [산업] [Yahoo Finance] Workers remain confident in their skills despite economic jitters: Study
+193. [2026-07-25T14:46:36+00:00] [산업] [인공지능신문 - 전체기사] "오픈웨이트 AI가 미국 AI 패권 지킨다"...메타·오픈AI·MS·엔비디아·IBM 등 美 AI 업계 공동성명
+     Summary: 미국의 주요 인공지능(AI) 기업과 투자사, 오픈소스 커뮤니티가 한목소리로 오픈웨이트(Open-weight) AI 모델 확대를 미국 AI 리더십의 핵심 전략으로 제시했다.메타, 마이크로소프트, 엔비디아, IBM, 허깅페이스, 미스트랄 AI, 팔란티어, 퍼플렉시티, 리플릿, 서비스나우, 코히어 등 24개 기업과 투자사, 오픈소스 커뮤니티, 연구기관 등 총 35개 기관 및 기업은 24일(현지시간) 공동 성명서 '오픈웨이트와 미국 AI 리더십(Open Weights and American AI Leadership)'을 발표하고, 미국이
+194. [2026-07-25T14:43:56+00:00] [기타] [Yahoo Finance] Tesla's Revenue Beat Hid The Number That Actually Sank The Stock
+195. [2026-07-25T14:37:00+00:00] [산업] [Yahoo Finance] AT&T quietly raises prices again as customer behavior shifts
+196. [2026-07-25T14:37:00+00:00] [기타] [Yahoo Finance] Two Wall Street Analysts Just Set Price Targets on Sandisk $1,430 Apart. One of Them Is Going to Be Very Wrong.
+197. [2026-07-25T14:36:46+00:00] [기타] [Yahoo Finance] United Rentals CFO Sells Shares After Earnings Pop. Should Investors Follow?
+198. [2026-07-25T14:35:00+00:00] [기타] [Yahoo Finance] Why Wall Street Can't Get Enough of This Dividend King
+199. [2026-07-25T14:32:29+00:00] [빅테크발언] [디일렉(THE ELEC) - 전체기사] 젠슨 황 "SK그룹과 5000억달러 규모 협력 발표할 것"
+     Summary: 젠슨 황 엔비디아 최고경영자(CEO)가 SK그룹과 5000억달러(약 731조5500억원) 규모 협력을 예고했다. 젠슨 황 CEO는 24일(현지시간) 미국 샌프란시스코 한 호텔에서 이재명 대통령과 회담을 갖고 "우리는 이날 SK그룹과 비즈니스 파트너십을 발표할 예정"이라며 "규모는 5000억달러에 달한다"고 했다. 이어 "SK하이닉스, 삼성전자와 칩 디자인과 메모리 디자인에 대한 파트너십을 맺을 것"이라고 부연했다.네이버에 투자도 단행한다. 젠슨 황 CEO는 "네이버는 한국 선두 클라우드 회사"라며 "이번 파트너십으로 한국에서 사업
+200. [2026-07-25T14:30:00+00:00] [산업] [Yahoo Finance] You can ‘ease off the gas’ once you hit $100,000, said Charlie Munger. Here’s how to get there as fast as possible
+201. [2026-07-25T14:28:43+00:00] [정책] [디일렉(THE ELEC) - 전체기사] 삼성·SK 등 美빅테크와 1391조 협력 발표...삼성, 브로드컴 칩 생산
+     Summary: 삼성전자와 SK하이닉스를 포함한 국내 기업들이 미국 빅테크 기업들과 총 9500억달러(약 1391조2750억원) 규모의 협력을 추진한다.25일 김용범 청와대 정책실장은 '샌프란시스코 인공지능(AI) 서밋'에서 이 같은 사실을 알렸다. 이날 행사에는 이재명 대통령과 삼성전자, SK하이닉스, 네이버 등 국내 기업과 엔비디아 포함한 글로벌 기업이 참여했다.우선 삼성전자와 브로드컴은 향후 5년간 2000억달러(약 292조8600억원) 규모의 업무협약(MOU)을 체결했다. 첨단 메모리 반도체 공급과 AI 칩 생산 목적의 파운드리 협력 등의
+202. [2026-07-25T14:10:00+00:00] [기타] [Yahoo Finance] Federal debt interest hits $857B in 9 months — that's $737/month for every U.S. household
+203. [2026-07-25T14:08:24+00:00] [기타] [매일경제 : 전체뉴스] “손 하나 안 대고 터치”…입안에 끼우는 ‘구강 마우스’ 화제
+     Summary: 혀와 머리의 미세한 움직임만으로 스마트폰과 컴퓨터를 자유롭게 조작할 수 있는 웨어러블(착용형) 기기가 등장해 화제다. 미국 테크 스타트업 ‘어그멘탈(Augmental)’은 최근 사..
+204. [2026-07-25T13:43:44+00:00] [산업] [인공지능신문 - 전체기사] 인공지능 경쟁의 새 공식… '최고 성능' 보다 '최고 ROI' 가 승부 가른다
+     Summary: 앤트로픽(Anthropic)이 24일(현지시간) 차세대 플래그십 대형언어모델 '클로드 오푸스 5(Claude Opus 5)'를 공개했다. 회사는 이번 모델을 "최고 수준의 추론 성능과 뛰어난 비용 효율성을 동시에 갖춘 가장 실용적인 범용 AI"라고 소개했다. 실제로 오푸스 5는 자사의 최상위 모델인 '클로드 페이블 5(Claude Fable 5)'에 근접한 성능을 제공하면서도 비용은 절반 수준으로 낮춘 것이 가장 큰 특징이다.그러나 이번 발표의 의미는 단순히 또 하나의 고성능 모델이 등장했다는 데 있지 않다. 오히려 오푸스 5는 지
+205. [2026-07-25T13:39:27+00:00] [금리환율] [오늘의뉴스 - 이티뉴스] 트럼프 글 먼저 본다? “대통령이 종목 찍어주는 셈”…월가 뒤흔든 '月 1.5억 리딩방'
+     Summary: 도널드 트럼프 미국 대통령의 소셜미디어 플랫폼을 운영하는 트럼프미디어앤드테크놀로지그룹(TMTG)이 트럼프 대통령의 게시물을 일반 이용자보다 먼저 받아볼 수 있는 유료 서비스를 출시하면서 시장 공정성 논란이 커지고 있다. 월스트리트저널(WSJ)과 파이낸셜타임스(FT)에 따르면 TMTG는 다음 달 1일 트루스소셜 게시물을 실시간 데이터 형태로 제공하는 '트루스 API'를 출시한다. 이용료는 월 10만달러(약 1억5000만원)이며, 장기 계약 시 월
+206. [2026-07-25T13:35:27+00:00] [소비] [매일경제 : 전체뉴스] “신혼집, 손님 모시기가 무섭다”…집들이 한 번에 평균 26만원 ‘훌쩍’
+     Summary: 신혼집을 공개하는 첫 손님맞이도 경제적 부담이 상당한 것으로 조사됐다. 신혼부부들은 집들이 한 번에 평균 26만 원을 지출했고, 3명 중 1명은 관례나 주변의 기대 때문에 집들이를..
+207. [2026-07-25T13:30:00+00:00] [기타] [오늘의뉴스 - 이티뉴스] “계세요?”…스스로 문열고 美 수도국 사무실 찾은 '흑곰' 손님
+     Summary: 미국 캘리포니아주의 한 공공기관 사무실에 야생 흑곰 한 마리가 스스로 문을 열고 들어오는 이색적인 사건이 발생했다. 23일(현지시간) 폭스 뉴스 등에 따르면, 전날 오후 캘리포니아주 샌버나디노 산맥에 위치한 크레스틀라인 빌리지 수도국 사무실에 어린 흑곰 한 마리가 정문 문고리를 밀고 들어와 사무실 직원을 깜짝 놀라게 했다. 당시 현장에 있던 직원들은 예상치 못한 불청객의 등장에 놀라 숨을 죽였으나, 곰은 당황하지 않고 냄새를 맡으며 사무실 내부
+208. [2026-07-25T13:22:28+00:00] [정책] [매일경제 : 전체뉴스] “공제 줄이고 특례 없애야”…부동산 토론회 전날 나온 국회 ‘보유세 보고서’
+     Summary: 최근 이재명 대통령 주재로 열린 부동산 대토론회에서 보유세와 조세체계 개편이 핵심 화두로 떠오른 가운데, 토론회 전날인 지난 22일 국회미래연구원이 보유세 한시특례와 세액공제를 정..
+209. [2026-07-25T13:20:48+00:00] [기타] [매일경제 : 전체뉴스] 사람 죽인 공무원에 벌금 600만원 선고…“피해자 과실도 봤다”[어쩌다 세상이]
+     Summary: 법원, 사망 결과보다 사고 원인 주목교통사고로 사람이 숨지면 가해 운전자는 실형이나 집행유예를 걱정하게 됩니다. 특히, 공무원은 직무와 무관한 교통사고라도 금고 이상의 형이 확정되..
+210. [2026-07-25T13:15:00+00:00] [기타] [Yahoo Finance] Apple warns scammers are using FaceTime to steal bank account passwords — here's what to watch for
+211. [2026-07-25T13:08:09+00:00] [산업] [한국경제 | 뉴스 | 증권] 메모리 부족은 시작일 뿐…AI 시대 돈이 향하는 곳은 [빈난새의 빈틈없이월가]
+212. [2026-07-25T13:02:00+00:00] [기타] [Yahoo Finance] Investors: July 29 Will Be a Critical Day for the Stock Market. Here's Why.
+213. [2026-07-25T13:00:23+00:00] [기타] [Yahoo Finance] Wedding Budget Mistakes Financial Advisors See Most Often
+214. [2026-07-25T13:00:19+00:00] [기타] [Yahoo Finance] Reasons People Switch Banks
+215. [2026-07-25T13:00:01+00:00] [산업] [Bloomberg Markets] The ‘Trump Trade’ Is Turning Into a Loser in the Stock Market
+     Summary: When Donald Trump was elected to a second term as president, amateur and professional traders alike rushed to identify which stocks would benefit from his aggressive economic policies.
+216. [2026-07-25T12:55:00+00:00] [산업] [Yahoo Finance] If you always say ‘yes’ to these 5 crucial things, you're probably broke (regardless of how much money you make)
+217. [2026-07-25T12:54:35+00:00] [기타] [한국경제 | 뉴스 | 국제] 이강인, 3년 만에 스페인으로…AT마드리드 이적료 '671억'
+218. [2026-07-25T12:54:00+00:00] [기타] [Yahoo Finance] Alphabet vs. Apple: Which Warren Buffett Favorite Is the Better Buy Right Now?
+219. [2026-07-25T12:52:43+00:00] [기타] [매일경제 : 전체뉴스] “공짜 와이파이 눌렀을 뿐인데 다 털렸다”…휴가지서 순식간에 털린 내 정보
+     Summary: 유명 예약 플랫폼이나 숙박업체를 사칭한 피싱 피해가 속출하고 있다. 특히 공항과 기차역 등에서 제공하는 무료 와이파이가 개인정보 유출 공격에 악용되고 있어 각별한 주의가 요구된다...
+220. [2026-07-25T12:50:00+00:00] [산업] [Yahoo Finance] 2 Advantages and 2 Drawbacks of Working While Claiming Social Security
+221. [2026-07-25T12:47:01+00:00] [기타] [Yahoo Finance] What Does the Dropbox CTO's Sale of Nearly 13,000 Company Shares Mean for Investors?
+222. [2026-07-25T12:44:00+00:00] [기타] [Yahoo Finance] Should You Buy Wingstop Stock Before July 29?
+223. [2026-07-25T12:38:16+00:00] [기타] [Yahoo Finance] Alphabet flops, Intel shocks, and Tesla tanks: AlphaSpace weekly recap
+224. [2026-07-25T12:36:52+00:00] [실적] [매일경제 : 전체뉴스] “60만전자·420만닉스 시대 온다”… 전문가들이 꼽은 역대급 매수 기회 ‘이것’
+     Summary: 최근 국내 반도체 주력사인 삼성전자와 SK하이닉스 주가가 급락하고 있다. 하지만 증권가에서는 “지나치게 과도한 조정이며, 지금이 강력한 저점 매수 기회”라고 입을 모은다. 시장을 ..
+225. [2026-07-25T12:35:00+00:00] [기타] [Yahoo Finance] Pfizer's Dividend Yield Looks Almost Too Good. Here's Why Management Isn't Worried.
+226. [2026-07-25T12:32:19+00:00] [산업] [인공지능신문 - 전체기사] 앤트로픽, '클로드 오푸스 5' 전격 출시… "최고 수준 추론 성능, 절반 비용으로 구현"
+     Summary: 앤트로픽(Anthropic)이 차세대 플래그십 대형언어모델 '클로드 오푸스 5(Claude Opus 5)'를 24일(현지시간) 출시하면서 인공지능(AI) 모델 경쟁에 다시 한번 불을 지폈다. 회사는 이번 모델을 "최고 수준의 추론 성능과 뛰어난 비용 효율성을 동시에 실현한 가장 실용적인 범용 AI"라고 규정했다.오푸스 5는 기존 최고 성능 모델인 '클로드 페이블 5(Claude Fable 5)'에 근접한 지능을 제공하면서도 사용 비용은 절반 수준으로 낮춘 것이 가장 큰 특징이다. 이전 세대인 오푸스 4.8과 동일한 가격을 유지하면서
+227. [2026-07-25T12:30:00+00:00] [기타] [Yahoo Finance] Shippers face tighter capacity as trucking rates hold near record highs
+228. [2026-07-25T12:30:00+00:00] [기타] [Yahoo Finance] UFC star Sean Strickland's brutally blunt money advice hits 5.2M views — and it's just 2 simple steps
+229. [2026-07-25T12:28:27+00:00] [원자재] [조선일보] 李, EU ‘러시아산 LNG 한국 수출 제재 면제’에 “경제 큰 도움”
+     Summary: 이재명 대통령은 25일 유럽연합(EU)이 러시아 사할린Ⅱ 프로젝트 액화천연가스(LNG)의 한국 수출에 대해 제재 예외를 인정한 것과 관련해 “반가운 소식”이라며 환영의 뜻을 밝혔다. 미국·남미를 순방 중인 이 대통령은 이날 엑스(X·옛 트위터)에 “EU의 러시아 LNG 제재와 관련해 우리 기업이 제재 대상에서 예외로 인정됐다는 반가운 소식을 접했다”며 “에
+230. [2026-07-25T12:14:03+00:00] [기타] [Yahoo Finance] Google and Tesla lost half a trillion dollars this week as their suppliers cashed in: Chart of the Day
+231. [2026-07-25T12:05:00+00:00] [기타] [Yahoo Finance] You’ve got a leg up on about 50% of Americans if you check off any of these three boxes — how do you stack up?
+232. [2026-07-25T12:04:43+00:00] [기타] [매일경제 : 전체뉴스] ‘15.9억 대박’ 로또 1등 18명 나와…71명 당첨 2등은 6740만원씩
+     Summary: 동행복권은 제1234회 로또복권 추첨에서 ‘1, 15, 19, 31, 35, 43’이 1등 당첨번호로 뽑혔다고 25일 밝혔다. 2등 보너스 번호는 ‘27’이다. 당첨번호 6개를 모..
+233. [2026-07-25T12:00:28+00:00] [기타] [Yahoo Finance] Eli Lilly, Dell Among Stocks To Watch As Market Leadership Shifts
+234. [2026-07-25T12:00:01+00:00] [기타] [Bloomberg Markets] Austin’s Mayor Tackles Housing Affordability, and Canada Faces New Tariffs
+     Summary: Former trade negotiator says don’t underestimate Canada’s ire
+235. [2026-07-25T11:56:17+00:00] [기타] [매일경제 : 전체뉴스] 달콤 향긋한 복숭아를 무한 리필 시식할 수 있는 축제 [제철축제]
+     Summary: 118년 전통 복숭아 재배 조치원 복숭아축제 개막 복숭아 1만7000상자 준비 블랙호크 타고 하늘 여행118년 재배 역사를 가진 조치원 복숭아가 축제로 돌아왔다. 세종시 대표 여름..
+236. [2026-07-25T11:55:36+00:00] [기타] [매일경제 : 전체뉴스] “뉴욕 옆 숨은 보물”…올해 필라델피아로 떠나야 하는 이유
+     Summary: 뉴욕·워싱턴 D.C. 사이 황금 입지 미국 건국 250주년·월드컵 개최까지 대형 이벤트 맞춰 한국 홍보 본격화미국의 역사적 유산과 현대적인 도시 에너지가 공존하는 도시, 펜실베이니..
+237. [2026-07-25T11:55:14+00:00] [소비] [매일경제 : 전체뉴스] “박보검이 들려주는데, 안올수 있겠어?”…더 뜨겁게 진화하는 ‘한국의 핫플’
+     Summary: 한국관광공사 vs 서울관광재단 스타 홍보영상 내세워 관광맞짱 공사는 박보검 오프라인 행사도 박보검과 사운드 토크도 기획해‘박보검이냐, 석매튜냐.’ 강렬한 ‘맞짱’이다. 관광 사령탑..
+238. [2026-07-25T11:49:01+00:00] [빅테크발언] [인공지능신문 - 전체기사] [포토] 이재용 회장·정의선 회장·이해진 의장, 젠슨 황 CEO와 엔비디아 본사 방문
+     Summary: 엔비디아(NVIDIA)가 삼성전자 이재용 회장, 현대자동차그룹 정의선 회장, 이해진 네이버 창업자 겸 의장이 24일(현지시간) 엔비디아 창립자 겸 CEO 젠슨 황(Jensen Huang)과 함께 미국 실리콘밸리에 위치한 엔비디아 본사를 둘러봤다.,한국 기업 리더들은 엔비디아의 엔데버(Endeavor) 빌딩 로비에서 젠슨 황 CEO와 기념사진을 촬영했다. 엔데버 빌딩의 각진 디자인은 현대 컴퓨터 그래픽의 기본 요소인 삼각형에서 영감을 받았다. 사진 촬영 당시 주변에서는 엔비디아 직원들이 평소와 같이 업무를 이어가고 있었다.
+239. [2026-07-25T11:48:45+00:00] [기타] [매일경제 : 전체뉴스] [속보] 1234회 로또 1등 ‘1, 15, 19, 31, 35, 43’
+240. [2026-07-25T11:43:56+00:00] [기타] [매일경제 : 전체뉴스] “손흥민 34세, 이젠 이강인 중심”…FIFA, 한국 축구에 던진 직설 “재건 필요”
+     Summary: 국제축구연맹(FIFA)이 2026 북중미 월드컵에 출전한 아시아 국가들의 성적과 과제를 분석하며 “한국 축구는 재건이 필요하다”는 진단을 내렸다. 24일(한국시간) FIFA는 북중..
+241. [2026-07-25T11:41:36+00:00] [산업] [Yahoo Finance] Micron’s AI Repricing Is Real — But the Market Still Isn’t Sure It Can Last
+242. [2026-07-25T11:41:32+00:00] [산업] [Bloomberg Markets] Heat Bakes Central US, Raising Energy Demand as East Stays Cool
+     Summary: Baking temperatures will sear the central US from the Rocky Mountains to the Mississippi River and eventually push down into the Gulf Coast for the rest of the month, putting regional power grids to the test.
+243. [2026-07-25T11:40:00+00:00] [기타] [Yahoo Finance] Social Security's 4.7% 'Trump Bump' for 2027 sounds great — until you see what's fueling it
+244. [2026-07-25T11:31:33+00:00] [기타] [매일경제 : 전체뉴스] 2주 내리 퍼붓던 미군, 공습 멈췄다…트럼프 “이란, 협상 테이블 원해”
+     Summary: 2주 내리 이란에 폭격을 가했던 미국 중부사령부가 24일(현지 시간) 공습을 일시 중단했다. 미 동부시간 25일 오전 중부사령부는 X(옛 트위터)를 통해 추가 작전 계획을 밝히지 ..
+245. [2026-07-25T11:29:46+00:00] [산업] [Yahoo Finance] GE Aerospace (GE) Just Beat and Dropped Again — Is the Third Straight Selloff Any Different This Time?
+246. [2026-07-25T11:22:29+00:00] [기타] [매일경제 : 전체뉴스] “화합은 없다” 기자들 모인 자리서 독설 퍼부은 트럼프, 왜?
+     Summary: 기자단 앞에 두고 독설 쏟아낸 트럼프도널드 트럼프 대통령이 24일(현지 시간) 밤 백악관 출입기자단 만찬 무대에 올라 한 시간 넘게 연설하며, 기자들과 정치인들을 향해 강도 높은 ..
+247. [2026-07-25T11:20:39+00:00] [빅테크발언] [Yahoo Finance] Elon Musk Warns Short Sellers as $25 Billion Bet Builds Against SpaceX Ahead of Earnings
+248. [2026-07-25T11:15:55+00:00] [기타] [오늘의뉴스 - 이티뉴스] “가짜뉴스” 독설 날리더니…트럼프 “특종, 대통령 4번째 출마” 기자단 농락?
+     Summary: 도널드 트럼프 미국 대통령이 백악관출입기자협회(WHCA) 연례 만찬에서 “미국 대통령에 네 번째로 출마할 생각”이라고 농담한 뒤 언론을 '가짜뉴스'라고 몰아세우고 정적들을 실명 비난했다. 표현의 자유와 언론 자유를 상징하는 행사였지만, 이날 만찬은 언론과 정적을 겨냥한 트럼프식 정치 연설에 가까운 분위기로 흘렀다. 트럼프 대통령은 24일(현지시간) 워싱턴DC 월도프 아스토리아 호텔에서 열린 WHCA 연례 만찬에서 “나는 대선을 세 번 이겼다.
+249. [2026-07-25T11:11:56+00:00] [원자재] [연합뉴스 산업 최신기사] 李대통령, EU '러 LNG 韓수출 제재 면제'에 "경제에 큰 도움"
+     Summary: (서울=연합뉴스) 설승은 기자 = 이재명 대통령은 25일 유럽연합(EU)이 한국에서 러시아 사할린Ⅱ 프로젝트 액화천연가스(LNG)를 수입할 수 ...
+250. [2026-07-25T11:11:28+00:00] [정책] [매일경제 : 전체뉴스] “진짜 이렇게 번다고?”…요즘 미 부자들만 몰래 하는 ‘이 재테크’
+     Summary: 美 ‘슈퍼 연금계좌’ 활용 자산 급증미국 일반 근로자들의 노후 자금 마련을 위해 도입된 개인퇴직계좌(IRA)가 초부유층의 세금 도피처이자 자산 증식 수단으로 변질되고 있다는 지적이..
+251. [2026-07-25T11:00:29+00:00] [산업] [Yahoo Finance] AT&T’s Q2 Beat Suggests the Wireless Giants Still Have Room to Run
+252. [2026-07-25T11:00:00+00:00] [기타] [Yahoo Finance] Over 70% of Gen Z investors hold a third of their portfolio in crypto — and only 13% of day traders make money
+253. [2026-07-25T11:00:00+00:00] [산업] [Bloomberg Markets] Big Tech Debt Flood Is Taking Over Risk In Market: Credit Weekly
+     Summary: Big Tech’s insatiable appetite for AI investment is unleashing a relentless wave of bond sales — and having a bigger impact on the US corporate bond market than might be obvious.
+254. [2026-07-25T10:50:17+00:00] [기타] [매일경제 : 전체뉴스] 고양 마두동 아파트서 화재…주민 10명 부상
+     Summary: 경기도 고양시 마두동 아파트에서 화재가 발생해 주민 10명이 부상 당했다. 25일 소방당국에 따르면 이날 오후 2시 35분께 경기 고양시 일산동구 마두동에 있는 아파트 4층 집안에..
+255. [2026-07-25T10:45:00+00:00] [기타] [Yahoo Finance] I thought I could afford my dream truck. Now I’m stuck paying $900 a month and can’t escape the payment
+256. [2026-07-25T10:10:00+00:00] [기타] [오늘의뉴스 - 이티뉴스] “156세까지만, 더 살고 싶어도 못살아”…과학자들이 밝힌 인간 '최대 수명'의 비밀
+     Summary: 인간의 이론상 최대 수명이 156세에 이를 수 있다는 연구 결과가 공개됐다. 22일(현지시간) 미국 온라인 매체 업워디는 러시아 스콜코보과학기술연구소 연구진이 국제학술지 'npj 에이징(npj Aging)'에 발표한 논문을 인용해 이 같은 내용을 전했다. 연구진은 나이가 들면서 체내에 축적되는 '체세포 돌연변이'가 수명에 미치는 영향을 수학적 모델을 활용해 분석했다. 체세포 돌연변이는 환경의 영향이나 DNA 복제 과정에서 발생한 오류로 인해 신
+257. [2026-07-25T10:00:00+00:00] [기타] [Yahoo Finance] Mortgage and refinance interest rates today, Saturday, July 25, 2026: Highest rates this year
+258. [2026-07-25T10:00:00+00:00] [기타] [Yahoo Finance] Best CD rates today, Saturday, July 25, 2026: Best account provides 4.20% APY
+259. [2026-07-25T09:52:37+00:00] [기타] [한국경제 | 뉴스 | 증권] '전쟁통에 남몰래 웃었다'…주식 계좌 수익률 40%에 '화들짝' [분석+]
+260. [2026-07-25T09:47:03+00:00] [빅테크발언] [오늘의뉴스 - 이티뉴스] 李 대통령 “요즘 韓 주가 조정 중” 말하자…젠슨 황 “곧 다시 오를 것”
+     Summary: 젠슨 황 엔비디아 최고경영자(CEO)가 최근 조정 국면에 들어선 한국 증시에 대해 “다시 오를 것”이라며 낙관적인 전망을 내놨다. 미국 샌프란시스코를 방문 중인 이재명 대통령은 24일(현지시간) '샌프란시스코 AI 서밋' 참석을 마친 뒤 젠슨 황 CEO를 비롯해 혹 탄 브로드컴 CEO, 라니 보르카르 마이크로소프트(MS) 애저 하드웨어 사장, 이재용 삼성전자 회장, 최태원 SK그룹 회장, 정의선 현대차그룹 회장, 이해진 네이버 이사회 의장 등과
+261. [2026-07-25T09:45:38+00:00] [정책] [매일경제 : 전체뉴스] 0% vs 76%…ESG 공시 사각지대는 ‘오래된 제조기업’ [여의도란도란]
+     Summary: 김윤희 국회예산정책처 분석관 자산크고 젊을수록 ESG공시 적극 하위기업 공시율 0%…양극화 심화 국민연금·탄소규제 공시이행 견인 탄소리스크 고려한 맞춤지원 필요국내 상장사 간 ES..
+262. [2026-07-25T09:44:58+00:00] [소비] [매일경제 : 전체뉴스] “10만원 기부했더니 세금 돌려받고 워터파크 공짜”…휴가철 뜨는 ‘고향기부’
+     Summary: 지자체, 여름휴가철 맞아 고향사랑기부 답례품으로 지역별 관광상품 대거 확대지난 2023년 시행된 고향사랑기부제는 지난해 총 모금액이 1515억원으로 1000억원을 훌쩍 뛰어넘었다...
+263. [2026-07-25T09:31:24+00:00] [기타] [매일경제 : 전체뉴스] “돈 관리 몰라, 남편만 믿었는데”…600억 날리고 빚더미 앉은 테니스 여제
+     Summary: 한때 여자프로테니스(WTA) 세계 랭킹 1위에 올랐던 스페인의 테니스 전설 아란차 산체스 비카리오가 전 남편에게 재산 관리를 맡겼다가 현역 시절 모은 거액의 자산을 모두 잃었다고 ..
+264. [2026-07-25T09:14:59+00:00] [산업] [매일경제 : 전체뉴스] 정의선 “AI팩토리·도시 통합...엔비디아와 로봇 플랫폼 구축”
+     Summary: ‘샌프란시스코 AI서밋’서 그룹 피지컬AI 비전 선포 “국내 로봇 생태계도 조성”정의선 현대자동차그룹 회장이 자동차 기업을 넘어 피지컬 인공지능(AI) 솔루션 기업으로 변신하기 위..
+265. [2026-07-25T09:07:34+00:00] [원자재] [Bloomberg Markets] Ukraine Seeks 30-Year Energy Pact With Canada, Minister Says
+     Summary: Ukraine is looking to sign a 30-year strategic energy agreement with Canada and proposing an “energy security bridge” focused on the supply of Canadian LNG, Energy Minister Denys Shmyhal said.
+266. [2026-07-25T09:06:49+00:00] [기타] [매일경제 : 전체뉴스] “강남서 광교까지 번진다”…국힘, 李 대통령 ‘17억 매도인 근저당’ 집중 포화
+     Summary: 국민의힘이 이재명 대통령의 분당 아파트 매각 과정에서 활용된 ‘매도인 금융(매도인 근저당)’ 방식이 강남에서 수도권으로 확산하고 있다며 “대통령의 거래가 새로운 부동산 거래 관행이..
+267. [2026-07-25T09:03:56+00:00] [정책] [오늘의뉴스 - 이티뉴스] 울산 글로벌 산업AX 선도도시 추진…'피지컬AI'와 'AIDC' 양축
+     Summary: 울산시가 피지컬인공지능(AI)과 AI데이터센터(AIDC)를 양 축으로 글로벌 산업인공지능전환(AX) 선도도시로 도약한다. 울산시는 24일 김상욱 시장 주재로 '정부 3대 메가 프로젝트 대응 방안 보고회'를 열고 글로벌 산업AX 중심도시 대전환을 목표로 '피지컬AI'와 'AIDC' 분야에 역량을 집중하기로 했다. 지난달 정부가 발표한 3대 메가 프로젝트와 관련해 울산 산업생태계, 민선 9기 시정 방향, 민간 투자 계획 등을 종합 검토한 결과다.
+268. [2026-07-25T09:00:32+00:00] [기타] [연합뉴스 산업 최신기사] [세계유산위] "갯벌 지키는 건 우리 모두의 일"…국제사회 손 잡는다
+     Summary: (부산=연합뉴스) 김예나 기자 = 한반도 서남해안의 갯벌이 유네스코 세계유산 범위를 넓힌 가운데 국제사회가 갯벌의 가치를 지키기 위해 힘을 모으...
+269. [2026-07-25T09:00:05+00:00] [기타] [한국경제 | 뉴스 | 증권] 바닥까지 내려간 5개 주요 종목…저점 매수 해볼까
+270. [2026-07-25T09:00:00+00:00] [산업] [Bloomberg Markets] Charting the Global Economy: Growth Picks Up, AI Boom Continues
+     Summary: Applications for US unemployment benefits fell last week to an almost 60-year low, adding to signs of a stable labor market that will allow the Federal Reserve to focus on inflation.
+271. [2026-07-25T09:00:00+00:00] [산업] [오늘의뉴스 - 이티뉴스] 스리랑카, 군용 드론 동원해 모기 '소탕'…올해만 뎅기열 56명 사망·7만명 감염
+     Summary: 최근 10년들어 가장 심각한 뎅기열 확산을 겪고 있는 스리랑카가 군용 드론까지 동원해 모기 서식지 소탕에 나섰다. 22일(현지시간) 영국 BBC 방송 등에 따르면 스리랑카 공군 및 보건 당국은 건물 옥상이나 건설 현장 등에 방치된 고인 물 같은 모기 번식 위험 구역을 탐지하기 위해 드론을 투입하고 있다. 올해 들어 스리랑카 내 뎅기열 감염자는 7만7000명을 넘어섰으며, 이 중 56명이 목숨을 잃었다. 특히 전체 감염 사례의 4분의 1 이상이
+272. [2026-07-25T09:00:00+00:00] [기타] [오늘의뉴스 - 이티뉴스] 유인원도 긴장하면 서로 끌어안아…“사람처럼 신체접촉 통해 연대감 형성”
+     Summary: 인간과 가장 가까운 영장류인 침팬지와 보노보가 스트레스 상황 직전에 신체 접촉을 통해 서로를 달래고 평화를 유지한다는 연구 결과가 나왔다. 스포츠 경기를 앞두고 선수들이 격려의 다짐을 나누듯, 신체 접촉을 통한 연대감 형성은 수백만 년 전부터 이어져 온 사회적 행위일 가능성이 제기된다. 21일(현지시간) 영국 BBC 방송에 따르면 더럼대학교 연구진은 식량 경쟁 직전 유인원들의 행동 변화를 관찰한 연구 결과를 학술지 '영국왕립학회보 B(Proce
+273. [2026-07-25T08:53:45+00:00] [기타] [Bloomberg Markets] Saudi Arabia-Bound Supertanker U-Turns Before Houthi Chokepoint
+     Summary: A Hong Kong-flagged supertanker bound for Saudi Arabia’s Red Sea port of Yanbu has U-turned just before reaching the Bab el-Mandeb chokepoint, where recent attacks were launched by the Houthis as part of a blockade on ships linked to the kingdom.
+274. [2026-07-25T08:49:50+00:00] [산업] [Bloomberg Markets] Over 250,000 People Flee Wildfires Ravaging France and Spain
+     Summary: More than 250,000 people fled towns and villages in Spain and France as uncontrolled wildfires moved ever closer to Madrid and Bordeaux, metropolitan areas that are home to more than 8 million people combined.
+275. [2026-07-25T08:43:32+00:00] [정책] [매일경제 : 전체뉴스] “왜 우리 축제는 다 비슷할까?”라고 전문가에게 묻자 돌아온 답 [지방소멸의 와일드카드, 축제④]
+     Summary: 적은 예산으로 수십만명, 효율 정책 관 주도·위탁 운영의 복제 축제들 축제 소비가 지역 매출로 이어져야한쪽에서는 축제가 지역을 살린다고 말한다. 다른 한쪽에서는 혈세만 쏟아붓는 일..
+276. [2026-07-25T08:31:43+00:00] [기타] [매일경제 : 전체뉴스] “의대 합격선 2만 계단 추락”…중국서는 수의대가 더 인기라는데
+     Summary: 의사 보수 줄고 의료보험 개혁 긴 수련기간에 일반 의대 기피 ‘취업 보장’ 수의학과 수험생 몰려중국에서 ‘의대 열풍’이 빠르게 식고 있다. 한때 사회적 명성과 고소득을 보장하는 선..
+277. [2026-07-25T08:31:22+00:00] [금리환율] [매일경제 : 전체뉴스] 2억6400억달러 벌었는데 6000달러 안줬나…‘오디세이’ 바이킹선 수리비 논란
+     Summary: 바이킹선 소품 대여 후 상당한 손상 “수리·장비 교체 등 6000달러 청구”  제작사 “지급 완료”, 양측 입장 팽팽크리스토퍼 놀란 감독의 대작 영화 ‘오디세이’ 촬영에 사용된 전..
+278. [2026-07-25T08:27:19+00:00] [빅테크발언] [오늘의뉴스 - 이티뉴스] 정의선·젠슨 황, 한달만에 재회…“자율주행·로봇 협력 구체화”
+     Summary: 정의선 현대차그룹 회장이 젠슨 황 엔비디아 최고경영자(CEO)와 미국 엔비디아 본사에서 자율주행과 로봇 전략적 파트너십을 강화했다. 엔비디아는 24일(현지시간) 공식 엑스(X·옛 트위터) 계정을 통해 정 회장이 미국 캘리포니아주 산타클라라에 있는 엔비디아 본사를 방문했다고 밝혔다. 정 회장의 방문은 황 CEO가 지난 달 8일 현대차그룹 서울 양재동 본사를 방문한 지 한 달 만에 이뤄졌다. 엔비디아는 구체적 면담 내용이나 참석자간 논의 의제는 공
+279. [2026-07-25T08:23:25+00:00] [산업] [조선일보] 삼성전자, 브로드컴과 AI반도체 손 잡아...5년 간 290조원 규모 협력
+280. [2026-07-25T08:20:42+00:00] [기타] [매일경제 : 전체뉴스] 20년 유럽통이 16일간 프랑스에서 오스트리아 여행하고 깨달은 점 [장주영 기자의 여책저책]
+     Summary: 사람마다 여행을 통해 얻는 것은 각기 다를 겁니다. 굳이 한 가지 공통점을 찾는다면 ‘삶의 새로운 의미를 발견하는 것’이 아닐까 싶은데요. 류학용 작가의 ‘아인슈페너 향을 따라 걷..
+281. [2026-07-25T08:20:31+00:00] [기타] [매일경제 : 전체뉴스] 의사 생활 잠시 접고 와인공부하러 프랑스로 떠난 50대 아저씨 [장주영 기자의 여책저책]
+     Summary: 사람마다 여행을 통해 얻는 것은 각기 다를 겁니다. 굳이 한 가지 공통점을 찾는다면 ‘삶의 새로운 의미를 발견하는 것’이 아닐까 싶은데요. 신경한 작가의 ‘50대 중반, 파리 와인..
+282. [2026-07-25T08:19:08+00:00] [기타] [매일경제 : 전체뉴스] “개발부터 엑싯까지 원스톱”…신영에셋, 상업용 부동산 확장 본격화
+     Summary: [인터뷰] 이윤영 신영에셋 투자자문본부 본부장(상무)외국계 업체가 장악한 상업용부동산 컨설팅·디벨롭 시장에서 국내 토종 신영에셋이 ‘원스톱 밸류체인’을 앞세워 사업 확장에 속도를 ..
+283. [2026-07-25T08:18:58+00:00] [정책] [매일경제 : 전체뉴스] “보험금 청구 간편해졌네”…지급 속도 빨라지고 서류 절차도 축소
+     Summary: 협회·신용정보원, 마이데이터 활용 정부, 실손24 병원 연계율 높이기로 손해보험사 보험금 신속 지급도↑최근 보험금 청구 절차를 줄이고 가입자에게 보험금을 신속하게 지급하는 등 소비..
+284. [2026-07-25T08:16:11+00:00] [기타] [매일경제 : 전체뉴스] [속보] 조국혁신당 새 대표에 신장식
+     Summary: [속보] 조국혁신당 새 대표에 신장식
+285. [2026-07-25T08:15:28+00:00] [정책] [오늘의뉴스 - 이티뉴스] 李대통령, 방미 성과 9500억달러…빅테크 AI R&D 거점도 한국에
+     Summary: 국내 기업들과 글로벌 빅테크가 이재명 대통령의 실리콘밸리 방문을 계기로 총 9500억달러(약 1375조원) 규모의 반도체 분야 협력을 추진한다. 삼성전자와 SK는 글로벌 빅테크와 향후 5년간 첨단 메모리 반도체 장기 공급 협력에 나선다. 또 글로벌 기업의 연구개발(R&amp;D) 거점 유치와 5GW 규모의 AI 데이터센터 구축, 피지컬 AI 분야 협력도 본격화한다. 김용범 청와대 정책실장은 24일(현지시간) 미국 샌프란시스코 현자에 마련된 프레스센터에
+286. [2026-07-25T08:10:52+00:00] [산업] [연합뉴스 산업 최신기사] 엔비디아, 서울대와 AI 공동 연구기관 설립 추진
+     Summary: (서울=연합뉴스) 한상용 기자 = 엔비디아가 서울대와 인공지능(AI) 공동 연구와 인재 양성을 위한 연구기관 설립을 추진한다.
+287. [2026-07-25T08:08:25+00:00] [산업] [연합뉴스 산업 최신기사] 한미 빅테크 1천400조원 AI 동맹…반도체·AI공급망 구축 본격화(종합)
+     Summary: (서울=연합뉴스) 한상용 기자 = 한국과 미국의 주요 기업들이 반도체와 인공지능(AI) 데이터센터, AI 팩토리, 로봇, 자율주행을 아우르는 약...
+288. [2026-07-25T08:00:32+00:00] [기타] [매일경제 : 전체뉴스] “李대통령, ‘검찰 수사권 폐지’ 거부하면 정치적 기회”… 조갑제의 제언
+     Summary: 조갑제닷컴을 운영하는 보수논객 조갑제 대표가 더불어민주당이 추진하는 ‘검찰 보완수사권 폐지’와 관련해 이재명 대통령이 거부권을 행사해야 한다는 의견을 내놨다. 조 대표는 25일 유..
+289. [2026-07-25T08:00:00+00:00] [산업] [매일경제 : 전체뉴스] “결혼하고 주식 받아가세요”...카카오페이증권, 신혼부부 축의금 선봬
+     Summary: 올해 혼인신고 부부에 1인당 5만원 상당 지급 삼성전자·SK하이닉스 등 국내 주식 무작위 배정결혼 축의금으로 현금 대신 주식을 받을 수 있는 이색 행사가 등장했다. 카카오페이증권이..
+290. [2026-07-25T07:58:37+00:00] [산업] [연합뉴스 산업 최신기사] AI로 게임 만들고 드론 조종…경남 첫 청소년 콘텐츠 경진대회
+     Summary: (창원=연합뉴스) 박영민 기자 = 경남도는 25일 마산로봇랜드 컨벤션센터에서 &apos;2026 글로벌 청소년 콘텐츠 경진대회&apos;를 열었다고 밝혔다.
+291. [2026-07-25T07:53:04+00:00] [기타] [매일경제 : 전체뉴스] ‘명태균 여론조사’ 무상 수수’ 尹 항소심, 다음 달 21일 시작
+     Summary: 정치 브로커 명태균씨로부터 무상으로 여론조사를 받은 혐의로 1심에서 징역 2년을 선고받은 윤석열 전 대통령의 항소심이 다음 달 시작된다. 25일 법조계에 따르면 서울고법 형사7부(..
+292. [2026-07-25T07:51:58+00:00] [기타] [조선일보] 왜 이제 알았나, 매일 아침 공복에 올리브유를 먹은 후 몸에 온 변화
+293. [2026-07-25T07:51:56+00:00] [기타] [조선일보] 단백질 달걀의 3배·밀가루 제로, 노화를 늦추는 가장 간편한 아침 습관
+294. [2026-07-25T07:50:03+00:00] [기타] [매일경제 : 전체뉴스] “전염병도 아닌데, 배우자가 치매 걸리면”…나도 걸릴 위험 74% 급증, 왜?
+     Summary: ‘배우자 치매, 남 일 아니었다.’  배우자가 치매를 진단받으면 함께 사는 남편이나 아내의 치매 발병 위험도 최대 74%까지 높아진다는 연구결과가 나왔다. 최근 미국 뉴욕포스트는 ..
+295. [2026-07-25T07:50:00+00:00] [소비] [오늘의뉴스 - 이티뉴스] 이란 전쟁에 관광 타격입은 두바이… “해외 지인 초대하면 '120만원' 혜택”
+     Summary: 미국과 이스라엘의 이란 전쟁 여파로 관광객이 급감한 아랍에미리트(UAE) 두바이가 도시 활력을 되찾기 위해 파격적인 인센티브 제도를 도입했다. 23일(현지시간) 영국 가디언 등 외신에 따르면 두바이 경제관광부는 현지 거주자가 해외에 있는 가족이나 지인을 초청할 경우 현금 가치 약 3000디르함(한화 약 119만원) 상당의 혜택을 제공하는 '두바이 초대 보상제'를 시행한다고 밝혔다. 두바이 관광청에 따르면 초청을 진행한 거주민에게는 호텔 숙박권,
+296. [2026-07-25T07:50:00+00:00] [기타] [오늘의뉴스 - 이티뉴스] “우울증 아내에 100명과 성관계 강요” 18개월간 학대한 남편…경찰은 기소 포기?
+     Summary: 영국에서 한 여성이 남편의 강압적인 통제로 18개월 동안 100명이 넘는 낯선 남성들과 성관계를 강요당했다고 폭로해 충격을 주고 있다. 영국 더선과 BBC 등에 따르면 루스 오그레이디는 남편 크리스가 데이팅 플랫폼을 이용해 낯선 남성들과의 만남을 주선했고, 자신은 웨일스 북부를 돌며 차량 뒷좌석에서 이들을 상대해야 했다고 밝혔다. 루스는 병으로 직장을 잃고 우울증을 겪던 시기 남편의 요구를 거부하기 어려웠다고 말했다. 두 사람은 2008년 만나
+297. [2026-07-25T07:47:06+00:00] [산업] [조선일보] 연간 300만봉 팔리는 ‘남가네 설악추어탕’, 한 그릇 3125원 조선몰 단독 특가
+298. [2026-07-25T07:47:02+00:00] [산업] [조선일보] 제주도가 인증한 흑돼지 뒷고기, 1kg 1만4900원 조선몰 단독 최저가
+299. [2026-07-25T07:43:31+00:00] [기타] [매일경제 : 전체뉴스] [속보] 정청래 “이재명 대통령 끝까지 지킬 사람은 정청래”
+     Summary: [속보] 정청래 “이재명 대통령 끝까지 지킬 사람은 정청래”
+300. [2026-07-25T07:38:26+00:00] [빅테크발언] [ZDNet Korea] 정의선 회장 "현대차그룹, 자동차 넘어 피지컬 AI 기업으로"
+     Summary: [지디넷코리아]현대자동차그룹이 자동차 제조기업을 넘어 인공지능(AI)이 실제 자율주행과 로보틱스, 공장에 작동하는 '피지컬 AI' 솔루션 기업으로 전환한다. 엔비디아와 웨이모, 구글 딥마인드 등 글로벌 빅테크와 협력해 자동차와 로봇의 지능화를 넘어 공장과 도시 인프라까지 연결하는 AI 생태계를 구축한다는 전략이다.정의선 현대차그룹 회장은 24일(현지시간) 미국 샌프란시스코에서 열린 '샌프란시스코 AI 서밋'에서 "현대차그룹은 전통적인 자동차 제조의 경계를 넘어 현재 자율주행과 로보틱스, AI 팩토리 등의 피지컬 AI 솔루션 기업으로 전환을 추진하고 있다"고 밝혔다.이날 행사에는 이재명 대통령과 배경훈 부총리 겸 과학기술정보통신부 장관, 김용범 대통령실 정책실장을 비롯해 이재용 삼성전자 회장, 최태원 SK그룹 회장, 이해진 네이버 이사회 의장, 젠슨 황 엔비디아 CEO, 샘 올트먼 오픈AI CEO 등 국내외 주요 기업인이 참석했다. 참석자는 약 150명이다.현대차그룹이 구상하는 피지컬 AI는 자동차나 로봇처럼 현실 세계에서 움직이는 개별 기기에 AI를 적용하는 데 그치지 않는다. 생산과 물류, 품질 관리 등 공장 전체를 AI로 연결한 뒤 에너지와 모빌리티, 로봇 등 도시의 주요 인프라까지 실시간으로 연계·최적화하는 것이 최종 목표다.정 회장은 "자동차와 로봇 같은 개별 디바이스의 지능화를 시작으로 AI 팩토리 같은 특정 공간의 지능화를 거쳐 궁극적으로 전체 도시 인프라가 유기적으로 연결·운영되는 도시 레벨의 통합 지능화를 실현하는 것"이라고 설명했다.현대차그룹은 피지컬 AI 경쟁력을 뒷받침할 강점으로 제조 역량과 로보틱스 기술, 데이터를 꼽았다. 세계 각지의 생산시설을 운영하며 축적한 제조·품질·공급망 노하우를 AI 기술의 실증과 확산에 활용하고, 보스턴다이내믹스와 현대차그룹 로보틱스랩의 로봇 기술을 실제 생산 현장에 접목한다는 구상이다.이를 위해 제조 현장과 차량, 물류, 로봇에서 생성되는 데이터를 AI 학습에 활용하고, 고도화된 AI를 다시 현장에 적용하는 
+301. [2026-07-25T07:37:52+00:00] [정책] [조선일보] 조국혁신당 대표에 신장식… “개혁·자강의 길”
+     Summary: 조국혁신당 새 대표로 신장식 의원이 25일 선출됐다. 신 대표는 이날 경기 수원컨벤션센터에서 진행된 전국당원대회 찬반 투표에서 96.7%의 찬성률로 당선됐다.  신 대표는 개혁과 자강을 강조했다. 신 대표는 “중도·실용과 개혁의 두 기둥이 제대로 설 때 국민주권 정부도 성공할 수 있다”고 했다. 또 “자강해야 연대도 제대로 할 수 있다”고 했다. 최고위원으
+302. [2026-07-25T07:33:10+00:00] [산업] [조선일보] 정의선 “현대차, 자동차 넘어 피지컬 AI 기업으로”
+     Summary: 정의선 현대자동차그룹 회장이 자동차 제조 기업에서 피지컬 인공지능(AI) 설루션 기업으로 전환하겠다는 청사진을 제시했다. 정 회장은 24일(현지 시각) 미국 샌프란시스코에서 열린 ‘샌프란시스코 AI 서밋’에서 “현대차그룹은 전통적인 자동차 제조의 경계를 넘어 자율주행과 로보틱스, AI 팩토리 등을 아우르는 피지컬 AI 설루션 기업으로 전환을 추진하고 있다”
+303. [2026-07-25T07:29:45+00:00] [기타] [매일경제 : 전체뉴스] 40도 육박 ‘생명을 위협 극단적 더위’ 덮쳤다…전국 곳곳 ‘폭염중대경보’
+     Summary: 대구·경북·경남·전남·광주에…“발령 지역 야외 활동 중단”중복(中伏)인 25일 대구와 경북, 경남, 광주, 전남 지역에 폭염 최상위 경고 단계인 ‘폭염중대경보’가 내려졌다. 기상청..
+304. [2026-07-25T07:28:24+00:00] [빅테크발언] [이데일리 - 경제/정책뉴스] 이재용·올트먼, 오픈AI 본사서 만난다…HBM·파운드리 협력 논의
+     Summary: 이재용 삼성전자(005930) 회장과 샘 올트먼 오픈AI 최고경영자(CEO)가 미국 샌프란시스코 오픈AI 본사에서 만나 인공지능(AI) 인프라와 삼성전자의 AI 전환을 위한 협력 방안을 논의한다.(사진 왼쪽부터) 젠슨 황 엔비디아 최고경영자(CEO), 이해진 네이버 이사회 의장, 이재용 삼성전자 회장, 샘 올트컴 오픈AI CEO 등이 24일(현지시간) 미...
+305. [2026-07-25T07:28:08+00:00] [산업] [오늘의뉴스 - 이티뉴스] 李대통령, SF AI 선언…“韓, 신뢰할 수 있는 AI 공급망 파트너로”
+     Summary: 실리콘밸리와 남미 등을 순방 중인 이재명 대통령이 '샌프란시스코(SF) AI(인공지능) 선언을 발표하고 글로벌 AI 공급망의 핵심 국가로 도약하겠다는 비전을 제시했다. 특히 세계 최고 수준의 메모리반도체 경쟁력을 바탕으로 3대 메가 프로젝트 등을 통해 한국을 글로벌 AI 허브이자 플랫폼으로 성장시키겠다는 포부를 드러냈다. 이 대통령은 24일(현지시간) 미국 샌프란시스코에서 열린 '샌프란시스코 AI 서밋'에서 “대한민국은 대체 불가한 글로벌 AI
+306. [2026-07-25T07:23:55+00:00] [산업] [오늘의뉴스 - 이티뉴스] 정의선 “한국을 피지컬 AI 중심지로”…글로벌 빅테크와 협력
+     Summary: 정의선 현대차그룹 회장이 글로벌 빅테크와 협력해 한국을 미래 피지컬 인공지능(AI) 산업 중심지로 만들겠다고 밝혔다. 정 회장은 24일(현지시간) 미국 샌프란시스코에서 열린 '샌프란시스코 AI 서밋'에서 “자율주행·로보틱스·AI 팩토리 등을 아우르는 피지컬 AI 솔루션 기업 전환을 추진하고 있다”며 이같이 말했다. 대표적인 사례는 현대차그룹이 새만금에 9조원을 투자해 건립하는 첨단 AI 밸리다. 현대차그룹은 로봇 제조 클러스터, AI 데이터 센
+307. [2026-07-25T07:20:19+00:00] [기타] [한국경제 | 뉴스 | 국제] [속보] 예멘 후티 "오늘 대규모 군사 작전 발표 예정"
+308. [2026-07-25T07:17:10+00:00] [기타] [매일경제 : 전체뉴스] 후임 알몸으로 기게 하고 신체 접촉 요구…계룡대서 무슨 일이
+     Summary: 계룡대 근무지원단 군사경찰대대에서 복무 중인 해병대 병사들이 선임들로부터 폭행과 욕설, 음식 고문 등 가혹행위를 당했다는 신고가 접수돼 군 당국이 조사에 착수했다. 25일 군 당국..
+309. [2026-07-25T07:13:50+00:00] [금리환율] [이데일리 - 경제/정책뉴스] 삼성·SK 1400조 잭팟 'K메모리의 힘'…불황 사이클 옅어진다(종합)
+     Summary: ‘K메모리의 힘’이재명 대통령의 ‘샌프란시스코 AI 선언’을 계기로 나온 9500억달러(약 1400조원) 규모의 반도체 협업은 이 한 마디로 요약할 수 있다. 삼성전자와 SK하이닉스의 AI 메모리를 구하고자 엔비디아, 마이크로소프트(MS) 같은 굴지의 빅테크들이 줄지어 신규 장기 공급 계약을 맺은 것이기 때문이다. K메모리가 한국을 글로벌 AI 공급망의 ...
+310. [2026-07-25T07:13:13+00:00] [기타] [매일경제 : 전체뉴스] “거동 불편한 점 노렸다”…돌보던 노인 집서 5600만원 수표 훔친 요양보호사
+     Summary: 자신이 돌보던 노인의 집에서 5000만 원이 넘는 수표를 훔친 요양보호사에게 실형이 선고됐다. 인천지법 형사18단독(판사 나재영)은 절도 혐의로 재판에 넘겨진 요양보호사 A(62)..
+311. [2026-07-25T07:09:28+00:00] [정책] [매일경제 : 전체뉴스] “나 건들면 죽여버린다”…머리로 소주병 ‘쾅’ 유리 조각 들고 난동
+     Summary: 경기 의정부의 한 전집에서 술에 취한 손님이 소주병을 자신의 머리에 깨뜨린 뒤 유리 조각을 들고 난동을 부리는 일이 벌어졌다. 당시 상황은 매장 CCTV에 고스란히 담겼다. 24일..
+312. [2026-07-25T07:00:52+00:00] [산업] [연합뉴스 산업 최신기사] 정의선 "AI 팩토리·도시 인프라 통합까지"…피지컬 AI 비전(종합)
+     Summary: (서울·샌프란시스코=연합뉴스) 김윤구 임형섭 기자 = 정의선 현대자동차그룹 회장이 자동차 제조기업을 넘어 피지컬 AI(인공지능) 솔루션 기업으로...
+313. [2026-07-25T07:00:00+00:00] [기타] [Bloomberg Markets] Europe’s Stock Market Rally Is the Most Concentrated in Years
+     Summary: The European equity market has long been seen as immune to shocks driven by only a handful of stocks. A narrow rally in 2026 has completely flipped that script.
+314. [2026-07-25T07:00:00+00:00] [소비] [경제] 전기 만들고 열 식히고…AI 데이터센터 핵심은 SOFC·WHRC[짤막영상]
+     Summary: <br />[서울=뉴시스] 강세훈 기자, 신연경 인턴기자 = &#039;21세기의 황금&#039;이라 불릴 만큼 전 세계의 주목을 받는 AI 열풍 뒤에는 이를 뒷받침하는 핵심 기술이 있다. 막대한 전력을 소비하는 데이터센터에 안정적으로 에너지를 공급하는 고효율 연료전지(SOFC)와 발생한 열을 냉각에 다시 활용하는 하이브리드 냉각 기술(WHRC)이다.<br /><br />25일 SK에코플랜트는 공식 유튜브 채널을 통해 AI 데이터센터(AIDC)의 핵심 인프라 기술을 소개하는 영상 &#039;광부보다 더 크게 번 사람은 따로 있었다 AI인프라&#039;를 공개했다.<br /><br />영상에서 사회를 맡은 숭실사이버대 환경안전공학부 곽재식 교수는 &quot;새로운 기술이 만들어질 때마다 그 기술을 만드는 또 다른 기술도 주목받는다&quot;라며 SK에코플랜트의 AI 데이터센터(AIDC) 운영 핵심 기술을 설명했다.  <br /><br />수만 수천대의 컴퓨터가 쉬지 않고 가동되는 AIDC는 거대한 전력을 소비한다. 과열로 인한 단전은 곧 치명적인 데이터 손실로 이어지기에 열을 식히는 냉각 기술과 지속적인 전기 공급이 필수다. SK에코플랜트는 AIDC 운영에 하이브리드 냉각 기술과 전기 공급 기술을 해법으로 적용했다. <br /><br />SOFC(Solid Oxide Fuel Cell)는 세라믹과 같은 고체 산화물 전해질을 사용해 연료의 화학 에너지를 전기에너지로 직접 변환하는 발전 장치이자 고효율 연료 전지다. <br /><br />약 600~1000℃ 수준의 고온에서 작동하며, 대기 오염 물질을 거의 배출하지 않는다. 발전 효율성과 연료 유연성도 뛰어나다. 덕분에 대규모 전력망에 의존하지 않고 현장에서 바로 풍부한 전기를 공급할 수 있는 &#039;온사이트 전원&#039;으로서 AI 인프라의 심장 역할을 수행한다. <br /><br />SOFC의 진가는 하이브리드 냉각 기술과의 결합에서 더욱 빛을 발한다. SOFC 가동 시 방출하는 약 400~600℃의 배기
+315. [2026-07-25T06:54:41+00:00] [산업] [오늘의뉴스 - 이티뉴스] 네이버, 브룩필드·엔비디아로부터 14조 투자 유치…200㎿ AI 팩토리 구축
+     Summary: 네이버가 캐나다 대체자산 운용사 브룩필드, 엔비디아와 한국의 소버린 인공지능(AI) 팩토리 인프라를 확대한다고 25일 밝혔다. 이번 투자로 엔비디아 AI 팩토리의 초기 구축 규모는 55메가와트(㎿)에서 200㎿로 늘어난다. 이번 인프라 확장은 이재명 대통령의 미국 샌프란시스코 'AI 서밋' 방문 일정 중 발표됐다. 구축 규모는 200㎿, 엔비디아 그래픽처리장치(GPU) 약 10만개다. 세종시 네이버 하이퍼스케일 데이터센터 '각 세종'에 엔비디아
+316. [2026-07-25T06:47:31+00:00] [산업] [연합뉴스 산업 최신기사] 靑 "국내 기업-글로벌 빅테크 기업, 9천500억불 반도체 협력"(종합)
+     Summary: (샌프란시스코=연합뉴스) 임형섭 황윤기 기자 = 청와대는 25일 이재명 대통령과 한미 AI(인공지능) 분야 기업들이 참여한 &apos;샌프란시스코 AI ...
+317. [2026-07-25T06:42:31+00:00] [빅테크발언] [조선일보] 이재용, 오픈AI 본사 찾아 샘 올트먼 만난다... AI 인프라 협력 논의
+318. [2026-07-25T06:40:44+00:00] [금리환율] [ZDNet Korea] [AI는 지금] 中 저가 AI 공세에 앤트로픽 반격 나섰다…'반값' 오퍼스5로 승부수
+     Summary: [지디넷코리아]앤트로픽이 최상위 모델에 가까운 성능을 절반 수준의 작업 비용으로 제공하는 인공지능(AI) 모델 '클로드 오퍼스5'를 공개했다. 문샷AI의 '키미 K3'와 딥시크 등 중국 AI 기업들이 저비용 고성능 모델로 미국 기업을 압박하자, 앤트로픽도 가격 대비 업무 성능을 높인 주력 모델로 기업 시장 방어에 나선 모습이다.앤트로픽은 24일(현지시간) 공식 뉴스룸을 통해 오퍼스5를 클로드 맥스의 기본 모델이자 클로드 프로에서 사용할 수 있는 최고 성능 모델로 배치한다고 밝혔다. 최상위 모델급 성능을 유지하면서 비용을 낮춰 기업과 개인 이용자가 일상적으로 쓰는 주력 모델로 키우겠다는 구상이다.오퍼스5의 가격은 입력 토큰 100만 개당 5달러, 출력 토큰 100만 개당 25달러로 이전 모델인 오퍼스4.8과 같다. 성능을 높여 같은 업무를 처리하는 데 필요한 비용을 낮췄으며, 최상위 공개 모델인 페이블5와 비교하면 절반 수준의 작업 비용으로 비슷하거나 더 높은 성능을 낸다.이 같은 움직임은 중국 AI 기업들의 저가 공세가 주효했다. 문샷AI의 '키미 K3'와 딥시크 등이 낮은 가격과 개방형 모델로 영향력을 넓히자, 앤트로픽도 오퍼스5를 주력 모델로 배치해 기업 고객 대응을 강화한 분위기다.오퍼스5는 소프트웨어 개발 평가인 '프런티어-벤치 v0.1'에서 오퍼스4.8보다 작업당 비용을 낮추면서 성능을 2배 이상 높였다. 업무 자동화 평가인 '재피어 오토메이션벤치'에선 같은 비용 기준으로 차순위 모델보다 약 1.5배 높은 업무 통과율을 기록했다. 컴퓨터 사용 평가인 'OS월드 2.0'에서는 페이블5의 최고 성능을 약 3분의 1 수준의 비용으로 넘어섰다.이 같은 성능 개선은 기업이 AI 업무를 처리하는 데 드는 비용을 낮추는 데 초점이 맞춰졌다. 기업들이 AI 도입 효과를 따지기 시작하면서 토큰 단가보다 실제 업무 처리량과 비용 효율이 모델 선택의 주요 기준으로 떠오르고 있기 때문이다.다이앤 펜 앤트로픽 연구제품관리 책임자는 "기업들로부터 '어떻게 더 많은 가치를 만들
+319. [2026-07-25T06:31:23+00:00] [기타] [매일경제 : 전체뉴스] “보너스 자랑하다 인생 꼬였네”…SNS에 7억 성과급 공개한 팀장의 결말
+     Summary: 중국 최대 빅테크 기업 텐센트의 한 프로젝트 팀장이 6억8000만원대 연말 성과급 명세서를 사회관계망서비스(SNS)에 공개했다가 회사 기밀 유출 혐의로 해고됐다. 회사는 해당 직원..
+320. [2026-07-25T06:28:50+00:00] [빅테크발언] [매일경제 : 전체뉴스] 李 대통령 “요즘 주가 조정” 말하자…젠슨 황 “곧 다시 오를 겁니다”
+     Summary: 젠슨 황 엔비디아 최고경영자(CEO)가 한국 증시의 반등을 전망했다. 미국 샌프란시스코를 방문 중인 이재명 대통령은 24일(현지 시각) ‘샌프란시스코 AI 서밋’ 참석을 마친 뒤 ..
+321. [2026-07-25T06:27:09+00:00] [금리환율] [오늘의뉴스 - 이티뉴스] 삼성전자, 브로드컴과 292조원 규모 반도체 파운드리·메모리 협력
+     Summary: 삼성전자가 브로드컴과 2000억달러(약 292조원) 규모 반도체 협력을 추진한다. 고대역폭메모리(HBM) 등 인공지능(AI) 메모리뿐만 아니라 반도체 위탁생산(파운드리), 첨단 패키징까지 전방위 솔루션을 공급하는 대규모 협업이다. 양사는 24일(현지시간) 미국 샌프란시스코 더 미드웨이에서 열린 'AI 서밋' 행사에서 차세대 인공지능(AI) 핵심 인프라 구축을 위한 전략적 업무협약(MOU)을 체결했다. 삼성전자는 메모리, 파운드리, 첨단 패키징을
+322. [2026-07-25T06:22:05+00:00] [금리환율] [조선일보] 최태원 “한국, AI 네이티브 국가 돼야”… “빅테크 칩 수요 폭발적”
+     Summary: 미국을 방문 중인 최태원 SK그룹 회장이 대한민국을 인공지능(AI) 네이티브 국가로 만들어 전 세계의 AI 테스트베드가 되도록 해야 한다고 했다. 최 회장은 24일(현지 시각) 미국 샌프란시스코에서 열린 ‘샌프란시스코 AI 서밋’에서 이재명 대통령이 최근 발표한 3조달러 규모의 대한민국 3대 메가 프로젝트(반도체, AI 데이터센터, 피지컬 AI)를 언급하며
+323. [2026-07-25T06:21:22+00:00] [빅테크발언] [연합뉴스 산업 최신기사] 이재용·올트먼, 오픈AI 본사서 만난다…HBM·파운드리 협의할듯
+     Summary: (서울=연합뉴스) 한상용 기자 = 이재용 삼성전자[005930] 회장과 샘 올트먼 오픈AI 최고경영자(CEO)가 미국 샌프란시스코 오픈AI 본사...
+324. [2026-07-25T06:21:10+00:00] [기타] [매일경제 : 전체뉴스] 성묘 마치고 사서 긁었더니 ‘1등’… “부모님이 보내주신 선물 같아요”
+     Summary: 부모님 묘소에 성묘를 다녀온 뒤 복권 1등에 당첨된 사연이 공개돼 눈길을 끌고 있다. 복권수탁사업자 동행복권은 공식 홈페이지를 통해 ‘스피또1000’ 106회차 1등 당첨자 A씨의..
+325. [2026-07-25T06:15:46+00:00] [빅테크발언] [ZDNet Korea] 오픈AI, 이 대통령 이어 삼성·SK 회동…"한국 AI 협력 확대"
+     Summary: [지디넷코리아]오픈AI가 한국 정부와 삼성·SK를 만나 인공지능(AI) 인프라와 산업 전환을 아우르는 전략적 협력을 강화했다.오픈AI는 샘 알트먼 최고경영자(CEO)가 24일(현지시간) 미국 샌프란시스코에서 이재명 대통령과 단독 면담을 가진 뒤 '샌프란시스코 AI 서밋'에 참석해 이같은 행보를 보였다고 25일 밝혔다. 알트먼 CEO는 한국의 AI 비전과 오픈AI의 장기적인 협력 방향에 대해 의견을 나눴다. 인라 최태원 SK그룹 회장과 만나 고대역폭메모리(HBM)와 D램 등 AI 인프라 협력 방안을 논의했다. SK그룹의 AI 전환을 위한 양사 간 협력 방향도 다뤘다.올트먼 CEO는 25일(현지시간) 오전 미국 샌프란시스코 오픈AI 본사에서 이재용 삼성전자 회장과 회의를 진행할 예정이다. 양측은 HBM과 D램, 첨단 파운드리를 포함한 AI 인프라와 삼성전자의 AI 전환을 중심으로 협력 방안을 논의한다.이번 연쇄 회동은 오픈AI가 지난해 10월 한국 정부·국내 기업들과 구축한 협력 체계를 확대하는 차원이다. 오픈AI는 당시 과학기술정보통신부와 업무협약을 맺고 한국 AI 산업 발전과 차세대 AI 인프라 확충 방안을 모색한다고 발표했다. 오픈AI는 삼성전자, SK하이닉스와 전략적 파트너십을 맺고 첨단 메모리 반도체 생산 확대도 추진하고 있다. 해당 협력은 아시아·태평양 지역에서 발표된 오픈AI 첫 국가 단위 파트너십으로 평가받고 있다. 현재 한국과 오픈AI 협력 범위는 AI 인프라에서 국내 기업·대학 AI 도입으로 확대되고 있다. 삼성전자는 전 세계 오픈AI 기업 도입 사례 가운데 최대 규모 중 하나로 전 임직원을 대상으로 챗GPT와 코덱스를 도입하기로 했다.서울대는 교수와 학생·교직원 등 전체 구성원에게 챗GPT 에듀를 제공하고 있다. 이를 통해 교육과 연구·행정 전반에서 AI 네이티브 조직으로 전환한다는 계획이다.공공 부문에서는 한국전력공사와 한국수자원공사, 기술보증기금이 오픈AI와 업무협약을 맺고 AI 전환을 추진하고 있다. 오픈AI는 한국 정부와 공공기관·국내 
+326. [2026-07-25T06:14:15+00:00] [기타] [한국경제 | 뉴스 | 증권] 삼전닉스 30% 빠질 때 웃었다…조용히 오른 '효자 종목' 정체 [이수의 ETF줌인]
+327. [2026-07-25T06:14:09+00:00] [기타] [매일경제 : 전체뉴스] “집주인 바뀌었는데, 보증금 어떡하죠?”…전세금 지키려면 ‘이것’부터
+     Summary: 대항력 갖춘 임차인, 새 집주인이 전세금 돌려줘야 세입자, 대항력 없으면 새 주인에 전세금 받기 어려워서울 전역에서 아파트 전세매물이 자취를 감추면서 전세값이 10년 만에 최고치로..
+328. [2026-07-25T06:09:57+00:00] [기타] [연합뉴스 산업 최신기사] 중복 무더위에 전국이 '헉헉'…온열질환·가축 폐사 초비상
+     Summary: (전국종합=연합뉴스) 삼복 중 가장 무덥다는 &apos;중복&apos;인 25일 전국적으로 불볕더위가 기승을 부리며 온열질환과 가축 폐사 등 피해가 우려된다.
+329. [2026-07-25T06:04:46+00:00] [빅테크발언] [매일경제 : 전체뉴스] 젠슨 황 “AI데이터센터 인허가 빨리 해달라”…이 대통령 “신속한 처리 중요”
+     Summary: 젠슨 황 엔비디아 최고경영자(CEO)가 미국 샌프란시스코에서 이재명 대통령을 만나 인공지능(AI) 데이터센터의 신속한 인허가 절차를 요청했다고 대통령실이 밝혔다. 24일(현지 시각..
+330. [2026-07-25T06:04:36+00:00] [기타] [한국경제 | 뉴스 | 국제] 클롭, 독일 감독 부임하자마자…"가족 괴롭히면 떠나겠다"
+331. [2026-07-25T06:02:49+00:00] [산업] [연합뉴스 산업 최신기사] 삼성SDS, 앤트로픽과 첫 전략적 협력…기업용 AI 확대
+     Summary: (서울=연합뉴스) 한상용 기자 = 삼성SDS가 글로벌 인공지능(AI) 기업 앤트로픽과 처음으로 전략적 파트너십을 맺고 클로드 기반 기업용 AI ...
+332. [2026-07-25T05:59:44+00:00] [금리환율] [매일경제 : 전체뉴스] “주식·채권 60대40은 끝났다”…월가가 다시 원자재 담는 이유
+     Summary: 주식·채권 분산효과 동반 약세 채권형펀드 비중 2008년 이후 최저 인플레 강한 원자재·인프라 돈 몰려오랫동안 주가 하락을 방어하는 대표적인 분산투자 자산으로 꼽혀온 채권의 입지가..
+333. [2026-07-25T05:59:00+00:00] [금리환율] [ZDNet Korea] 레고처럼 조립하는 전기차 나온다…"18가지로 자유자재 변신"
+     Summary: [지디넷코리아]사용 목적에 따라 사용자가 직접 원하는 형태로 바꿀 수 있는 모듈형 전기차가 등장해 관심을 끌고 있다.캐나다 기업 엔보 드라이브 시스템(ENVO Drive systems)이 모듈형 전기차 플랫폼 '유틸리티 퍼스널 트랜스포터(UPT·Utility Personal Transporter)'를 공개했다고 자동차 전문매체 일렉트렉이 24일(현지시간) 보도했다.UPT는 한 개 공통 플랫폼을 기반으로 최대 18개 차량 형태로 구성할 수 있는 것이 특징이다. 다양한 옵션과 액세서리, 업그레이드를 더하면 더욱 폭넓은 조합이 가능하다. 엔보는 용도별로 서로 다른 차량을 제작하는 대신 한 개 섀시를 기반으로 저속 차량(LSV)과 골프 카트, 화물 운반차, 다목적 ATV, 산업용 운송 차량 등 다양한 형태로 변형할 수 있도록 설계했다.구매자는 미리 구성된 모델 가운데 하나를 선택하거나 온라인 3D 컨피규레이터를 이용해 처음부터 자신만의 차량을 설계할 수 있다. 이를 통해 섀시 레이아웃, 구동계, 배터리 팩, 조향 시스템, 휠과 타이어, 좌석 배치, 적재함, 범퍼, 충전기, 각종 액세서리 등을 자유롭게 선택할 수 있다.회사 측은 이 같은 조립 방식을 레고 블록을 조립하는 경험에 비유하는 한편, 이케아의 모듈형 가구 개념과도 유사하다고 설명했다.알리 카젬카니 엔보 창업자는 "목표는 경량 전기차를 설계하고 판매하는 방식을 근본적으로 재고하는 것"이라며 "대부분의 제조업체는 하나의 용도에 맞춘 차량만 판매하지만, UPT는 현재 필요한 용도에 맞게 차량을 구성하고 향후 필요가 바뀌면 같은 플랫폼을 기반으로 다시 조정할 수 있도록 설계됐다"고 말했다.엔보에 따르면 UPT 개발에는 약 4년이 걸렸다. 회사는 군소 전기차 브랜드의 과제 중 하나인 낮은 생산량 문제를 해결하기 위해 공통 플랫폼을 생산, 고객이 원하는 방식으로 차량을 구성할 수 있도록 했다. 특수 목적 차량에 일반적으로 붙는 높은 가격 부담을 낮추면서도 맞춤형 기능을 제공할 수 있을 것으로 기대하고 있다.최종 구성에 
+334. [2026-07-25T05:53:44+00:00] [정책] [매일경제 : 전체뉴스] “직접 포장하세요” 한마디에 격분…가게 사장에 접시 던진 50대
+     Summary: 남은 감자튀김을 직접 포장해주지 않았다는 이유로 음식점 주인에게 접시와 소주잔을 던져 다치게 한 50대 남성이 실형을 선고받았다. 25일 뉴시스에 따르면 의정부지법 남양주지원 형사..
+335. [2026-07-25T05:50:53+00:00] [기타] [매일경제 : 전체뉴스] “피자·술 등 좋아하는 음식 안 끊어도 돼”…30대 英 여성, ‘의외의’ 비결
+     Summary: 체중 감량을 결심할 때 가장 먼저 시작하는 것이 식이요법이다. 하지만 이처럼 무조건 참는 방식의 식습관은 오래 지속하기 어렵다. 이런 가운데 최근 한 30대 여성이 식사 비율 조절..
+336. [2026-07-25T05:48:40+00:00] [산업] [오늘의뉴스 - 이티뉴스] 삼성SDS·앤트로픽, 전략적 파트너십…'클로드' 기반 엔터프라이즈 AI 사업 확대
+     Summary: 삼성SDS가 글로벌 인공지능(AI) 기업 앤트로픽과 손잡고 엔터프라이즈 AI 시장에 공동 진출한다. 클로드 기반의 기업용 AI 전환을 가속화해 국내외 시장 공략에 속도를 낸다. 삼성SDS는 24일(현지시간) 샌프란시스코에서 엔트로픽과 AI 시장 확대를 위한 전략적 파트너십을 체결했다. 국내 기업 가운데 앤트로픽과 사업 협력에 나선 것은 삼성SDS가 처음이다. 이번 협력을 통해 삼성SDS는 양사가 보유한 기술력과 산업 노하우를 결합해 국내 AI
+337. [2026-07-25T05:48:30+00:00] [정책] [매일경제 : 전체뉴스] 삼전닉스, 美빅테크들과 9500억弗 반도체 협력
+     Summary: 김용범 청와대 정책실장, ‘샌프란 AI 서밋’ 브리핑 삼성·SK, 브로드컴·엔비디아 등에 메모리반도체 대규모 공급하고 파운드리 결속 GPU 200만장 규모 AI데이터센터 구축도 추..
+338. [2026-07-25T05:46:09+00:00] [금리환율] [연합뉴스 산업 최신기사] K-반도체, 빅테크와 9천500억불 협력…대체불가 초격차 만든다(종합)
+     Summary: (서울=연합뉴스) 조성흠 기자 = 삼성전자와 SK하이닉스가 글로벌 빅테크와 5년간 합계 9천500억달러(약 1천390조원) 규모의 반도체 협력을...
+339. [2026-07-25T05:43:12+00:00] [산업] [연합뉴스 경제 최신기사] AI 데이터센터 판 키운다…네이버 14조·SKT 2GW 추진(종합)
+     Summary: (서울=연합뉴스) 한상용 기자 = 국내 AI 데이터센터 구축 경쟁이 기가와트(GW)급 초대형 투자 단계로 본격 진입했다.
+340. [2026-07-25T05:42:28+00:00] [금리환율] [이데일리 - 경제/정책뉴스] 삼성·브로드컴, 290조원 'AI칩 동맹'…"설계·패키징·양산 협업"
+     Summary: 삼성전자와 브로드컴이 2000억달러(약 290조원) 규모의 인공지능(AI) 동맹에 나선다. 세계적인 맞춤형 반도체 설계 업체인 브로드컴의 AI 가속기 설계 경쟁력과 삼성전자의 메모리, 파운드리, 패키징 기술력을 결합하는 형태다. 삼성전자와 브로드컴은 24일(현지시간) 미국 샌프란시스코 더 미드웨이에서 열린 ‘AI 서밋’ 행사에서 오는 2030년까지 향후 ...
+341. [2026-07-25T05:39:54+00:00] [산업] [조선일보] 엔비디아·브룩필드, 네이버에 14조원 베팅…이해진 “글로벌 AI 팩토리 도약”
+342. [2026-07-25T05:38:44+00:00] [기타] [한국경제 | 뉴스 | 국제] 고우석, 공 던져보지도 못하고 쫓겨났다…"글러브 때문"
+343. [2026-07-25T05:36:47+00:00] [금리환율] [연합뉴스 산업 최신기사] SK, 엔비디아 등 글로벌 빅테크와 7천500억달러 AI 인프라 협력
+     Summary: (서울=연합뉴스) 임성호 기자 = SK그룹이 미국의 글로벌 빅테크 기업들과 향후 5년간 7천500억달러(약 1천100조원) 규모의 인공지능(AI...
+344. [2026-07-25T05:36:26+00:00] [정책] [ZDNet Korea] 삼성·SK, 글로벌 AI 공급망 핵심축으로…빅테크와 1389조원 협력 시동
+     Summary: [지디넷코리아]삼성전자, SK그룹이 미국 브로드컴·엔비디아 등 글로벌 빅테크와 손잡고 AI 반도체 및 인프라 시장 공략에 속도를 낸다. 메모리 반도체부터 파운드리, 첨단 패키징, AI 데이터센터까지 아우르는 협력에 나서면서 한국 기업들이 글로벌 AI 공급망의 핵심 파트너로 부상하고 있다는 평가가 나온다.정부는 이번 협력 규모가 총 9500억달러(약 1389조9450억원)에 달한다고 설명했다. 단순 반도체 공급을 넘어 AI 팩토리, 데이터센터 등 AI 인프라 전반을 포함하는 대규모 협력이다. 삼성전자는 브로드컴과, SK그룹은 엔비디아 등 글로벌 빅테크와 전략적 협력 관계를 구축하며 AI 시대의 핵심 경쟁력으로 꼽히는 'AI 풀스택' 생태계 구축에 나섰다.24일(현지시간) 미국 샌프란시스코에서 열린 'AI 서밋'에서는 이재명 대통령과 글로벌 빅테크 최고경영자(CEO), 국내 주요 기업 총수들이 참석한 가운데 이 같은 협력 방안이 공개됐다.김용범 대통령실 정책실장은 이날 브리핑에서 "이번 일정은 3대 메가 프로젝트가 강력한 반도체 산업을 보유한 우리나라와 전략적 투자 협력을 원하는 글로벌 빅테크 기업들이 준비해 온 거대한 글로벌 이니셔티브임을 국내외에 밝히는 자리"라고 설명했다.이어 "대한민국이 보유한 반도체뿐 아니라 AI 인프라, 모델, 피지컬 AI 등 AI 생태계 전반의 역량에 글로벌 빅테크의 기술과 자본을 결합해 AI 풀스택 전반의 투자 협력 성과를 창출하기 위해 마련됐다"고 강조했다.삼성전자는 브로드컴과 차세대 AI 반도체 시장을 겨냥한 전략적 협력을 확대한다. 양사는 메모리와 파운드리, 첨단 패키징을 아우르는 '원스톱 턴키 솔루션'을 기반으로 AI 반도체 생태계 경쟁력을 강화하기로 했다.삼성전자는 24일 미국 샌프란시스코에서 열린 AI 서밋에서 브로드컴과 업무협약(MOU)을 체결했다고 밝혔다. 양사는 2030년까지 향후 5년간 2000억달러(약 292조6200억원) 이상 규모의 전략적 협력을 추진할 계획이다.이번 협력의 핵심은 삼성전자가 보유한 반도체 전 
+345. [2026-07-25T05:33:38+00:00] [금리환율] [ZDNet Korea] 네이버, 엔비디아·브룩쉴드서 14.6조 투자 유치…이해진 "새 단계 도약"
+     Summary: [지디넷코리아]네이버가 인공지능(AI) 팩토리 사업 확장을 위해 엔비디아와 대체자산 운용사 브룩필드로부터 100억 달러(14조 6310억원) 규모의 투자를 유치한다.이해진 네이버 이사회 의장은 24일(현지시간) 미국 샌프란시스코에서 이재명 대통령이 주관한 ‘AI 샌프란시스코 서밋’에 참석해 “엔비디아와 브룩필드가 네이버에 100억 달러라는 큰 금액을 투자하게 됐다”고 말했다.이어 “네이버가 새로운 단계로 도약하는 계기가 될 것”이라며 “두 회사 자본뿐만 아니라 글로벌 브랜드와 네트워크가 네이버의 노하우를 확장하는 데 큰 기회가 될 것”이라고 강조했다.이 의장은 네이버가 지난 30년 간 미국과 중국 빅테크 사이에서 검색과 서비스, 콘텐츠, 클라우드 등 다양한 인터넷 서비스를 개발, 운영해왔다고 설명했다. 그러면서 이들 서비스를 안정적으로 운영하기 위해 데이터센터를 직접 설계, 구축하며 관련 기술과 경험을 축적해왔다고 덧붙였다.현재 네이버는 엔비디아와 AI 컴퓨팅 인프라부터 AI 모델, 기업용 서비스까지 아우르는 ‘AI 팩토리’ 협력을 추진 중이다. 이들이 합의한 글로벌 AI 팩토리는 기가와트(GW)급으로, 네이버는 데이터센터 부지 확보, 구축 및 운영을 주도하고 엔비디아는 그래픽처리장치(GPU) 공급과 함께 글로벌 고객 발굴 및 매출, 사업 리스크를 공동 부담하는 사업 주체로 참여한다.데이터센터와 전력, 재생에너지 등 대규모 실물 인프라 투자에서 강점을 가진 브룩필드의 경우 네이버의 AI 인프라 사업 확장에 필요한 자금과 기반 시설을 지원할 예정이다.이와 함께 이 의장은 이번 투자로 특정 빅테크가 AI와 인터넷 생태계를 독점하지 않는 환경을 만들겠다고 다짐했다. 그는 “네이버가 꿈꾸는 인터넷 세상은 인터넷과 AI가 한두 집단에 의해 지배되고 조종되는 세상이 아니다”라며 “세계 다양성을 지키려면 국가와 집단, 개인마다 여러 AI가 나타나도 활동할 수 있어야 한다”고 언급했다.또 “네이버가 새롭게 성장하는 계기를 통해 보다 많은 기술을 개발하고 연구하겠다”며 “같은
+346. [2026-07-25T05:30:28+00:00] [산업] [ZDNet Korea] 삼성SDS, 오픈AI 이어 앤트로픽 맞손…"AI 풀스택 사업 강화"
+     Summary: [지디넷코리아]삼성SDS가 앤트로픽과 국내 기업 최초로 파트너십을 맺고 글로벌 인공지능(AI) 영향력을 강화했다. 삼성SDS는 24일(현지시간) 미국 샌프란시스코 더 미드웨이에서 열린 '샌프란시스코 AI 서밋'에서 앤트로픽과 엔터프라이즈 AI 시장 확대를 위한 전략적 파트너십을 맺었다고 25일 밝혔다. 이번 협력을 통해 국내 AI 확산을 비롯한 신규 사업 발굴, 전문 인력 양성에 협력할 방침이다. 두 기업은 한국 시장에서 공동 마케팅과 기술검증(PoC)을 추진하고 새로운 사업 기회를 함께 발굴한다. 고객 수요에 따라 양사 기술과 산업 경험을 결합한 공동 사업도 추진하며 국내 기업에 클로드 도입을 확대한다. 삼성SDS는 클로드 서비스를 기업 환경에 맞게 구축·운영할 응용형 AI 엔지니어 양성 프로그램을 운영한다. 이들은 AI 서비스 도입 기획부터 설계와 구축·운영과 기술 지원까지 전 과정을 담당한다.이번 협력은 삼성SDS가 추진해 온 글로벌 AI 기업과의 개방형 협력 전략 일환이다. 삼성SDS는 기업이 AI 혁신에 필요한 기술과 인프라를 모두 단독으로 확보하기 어렵다고 보고 AI 컴퓨팅과 프론티어 모델·엔터프라이즈 플랫폼 분야 기업과 협력하고 있다.삼성SDS는 삼성 클라우드 플랫폼과 서비스형 그래픽처리장치(GPUaaS), 글로벌 멀티클라우드로 구성된 AI 인프라를 제공하고 있다. 생성형 AI 플랫폼 '패브릭스'와 글로벌 프론티어 AI 플랫폼·업무 자동화 솔루션 '브리티웍스'를 더해 기업 AI 도입부터 구축·운영까지 지원한다.삼성SDS는 앤트로픽 협력에 앞서 내부 임직원 대상으로 클로드 엔터프라이즈를 먼저 도입했다. 새로운 기술을 내부에서 우선 적용하고 검증한 뒤 관계사와 외부 고객에게 확산하는 '클라이언트 제로' 전략에 따른 것이다.실제 삼성SDS 임직원이 클로드 도입 초기 몇 주 동안 클로드와 주고받은 메시지는 100만건을 넘어선 것으로 집계됐다. 클로드 이용자 절반에 가까운 직원은 AI 코딩 도구인 '클로드 코드'도 활용하고 있다.삼성SDS는 현재 20개 삼
+347. [2026-07-25T05:29:32+00:00] [기타] [ZDNet Korea] 허민 국가유산청장 "갯벌 보전, 한 나라 몫 아닌 국제사회 공동 책임 과제"
+     Summary: [지디넷코리아][부산=이도원, 정진성 기자] 제48차 유네스코 세계유산위원회에서 '한국의 갯벌' 2단계 확대 등재가 최종 확정된 직후, 황해 연안 습지 보전을 위한 국제사회의 공동 성명이 부산에서 발표됐다.국가유산청은 25일 부산 벡스코에서 유네스코, 세계연안포럼(WCF) 등과 공동으로 사이드 이벤트 '국경을 넘어선 철새의 여정' 세미나를 개최했다.오전 회의에서 갯벌 확대 등재가 승인된 직후 곧바로 열린 이번 행사는 황해 갯벌 보전과 동아시아-대양주 철새 이동경로(EAAF) 보호를 위한 초국경적 협력 방안을 논의하기 위해 마련됐다.허민 국가유산청장은 축사를 통해 9개 지자체의 갯벌이 하나로 합쳐진 이번 확대 등재의 의의를 강조했다.허 청장은 "황해의 갯벌은 한반도를 넘어 대한민국과 북한, 중국 등 세 나라가 합치된 다국적 연대 공간"이라며 "세계유산은 한 나라의 몫이 아니며, 갯벌 보전은 전 세계가 공유하고 국제사회가 책임져야 할 공동의 과제"라고 밝혔다.라자르 엘룬두 아소모 유네스코 세계유산센터장 역시 한국의 성과를 극찬했다. 라자르 센터장은 "등재 5년 만에 유산을 축소하지 않고 가치를 강화하기 위해 확장한 이번 사례는 세계유산이 나아가야 할 모범"이라며 "한국과 중국, 북한을 잇는 황해 생태 네트워크는 단순한 자연 보호를 넘어 상호 이해와 대화, 신뢰를 구축하는 강력한 수단"이라고 진단했다.이날 행사의 핵심은 참가국 및 협력 기관이 뜻을 모은 '황해 갯벌 및 연안 습지 보전을 위한 협력에 관한 부산 선언' 채택이다. 이번 합의문은 앞서 세계유산위원회 본회의에서 제6의 전략적 목표로 '협력'을 공식 채택한 '세계유산위 부산 선언'의 정신을 실제 현장에서 실천하는 최초의 구체적 사례다.선언문은 실효성 있는 기술 협력을 대폭 강화했다. 참가국들은 갯벌 생태계와 철새 모니터링 방식을 표준화하여 데이터를 공유하고, '스파르티나(영국갯끈풀)' 등 유산을 훼손하는 외래종 통제 및 기후변화 적응 전략을 공동 연구하기로 합의했다.아울러 지자체, 현장 관리자, 기술 전문가
+348. [2026-07-25T05:28:23+00:00] [금리환율] [연합뉴스 산업 최신기사] 삼성전자, 브로드컴과 AI 반도체 동맹…5년간 2천억달러
+     Summary: (서울=연합뉴스) 강태우 기자 = 삼성전자[005930]가 미국 반도체 설계 기업 브로드컴과 향후 5년간 2천억달러(약 290조원) 규모의 첨단...
+349. [2026-07-25T05:21:13+00:00] [산업] [Bloomberg Markets] Indonesia Arrests Former Top Graft Prosecutor After Police Raids
+     Summary: Indonesia’s former top graft prosecutor was arrested on suspicion of money laundering, weeks after police raids uncovered $26 million worth of gold bars and cash at a house he owns.
+350. [2026-07-25T05:18:16+00:00] [정책] [매일경제 : 전체뉴스] “에어포스원 위험할 수도”…트럼프, 귀국길 전용기 갈아탄 이유
+     Summary: 도널드 트럼프 미국 대통령이 최근 북대서양조약기구(NATO·나토) 정상회의를 마친 뒤 귀국길에서 대통령 전용기인 에어포스원을 바꿔 탄 배경에는 이란의 암살 위협이 있었다는 보도가 ..
+351. [2026-07-25T05:17:18+00:00] [기타] [매일경제 : 전체뉴스] ‘알몸’ 정재환 왜 옷 벗었나?…엽기적 행적에 심리학자들분석 엇갈려
+     Summary: 친구를 살해한 뒤 피범벅이 된 알몸 상태로 거리를 돌아다닌 정재환(24)의 엽기적인 행적을 두고 전문가들의 분석이 갈리고 있다. 25일 뉴시스에 따르면 이웅혁 건국대 경찰학과 교수..
+352. [2026-07-25T05:13:30+00:00] [금리환율] [이데일리 - 경제/정책뉴스] [속보]삼성전자·브로드컴, 2000억달러 규모 AI 전략적 협업
+     Summary: 삼성전자는 24일(현지시간) 미국 샌프란시스코 더 미드웨이에서 열린 ‘AI 서밋’ 행사에서 글로벌 AI 반도체 기업 브로드컴과 차세대 AI 핵심 인프라 구축을 위해 오는 2030년까지 2000억달러 규모의 전략적 업무협약(MOU)을 체결했다.(사진=연합뉴스)
+353. [2026-07-25T05:11:27+00:00] [빅테크발언] [ZDNet Korea] 반도체·AIDC 협력...샌프란서 삼성·SK·현대차·네이버 대규모 협력 발표
+     Summary: [지디넷코리아]과학기술정보통신부가 24일(현지시간) 미국 샌프란시스코에서 글로벌 AI 국내외 대표기업이 참여한 가운데 개최한 ‘샌프란시스코 AI서밋’을 통해 총 9500억 달러 규모의 반도체 공급과 생산 협력, 5GW 규모의 AI 데이터센터 구축 등의 AI 투자 이니셔티브를 추진한다고 밝혔다.이 자리에는 이재용 삼성전자 회장, 최태원 SK그룹 회장, 정의선 현대차그룹 회장, 이해진 네이버 의장과 젠슨황 엔비디아 CEO, 샘 알트만 오픈AI CEO, 다리오 아모데이 앤트로픽 CEO, 혹 탄 브로드컴 CEO가 참여했다.서밋에서는 이재명 대통령이 샌프란시스코 AI선언을 통해 세계 최고의 메모리 반도체 역량을 바탕으로 글로벌 AI공급망 핵심거점으로서 ‘대체불가 대한민국’의 AI역량과 비전을 제시하고, 신뢰할 수 있는 공급망 파트너인 대한민국과의 협력에 대한 전략적 가치를 강조했다.이어진 글로벌 AI리더 대화 세션에서는 이재용 회장, 젠슨 황 CEO, 최태원 회장, 혹 탄 CEO, 정의선 회장, 샘 알트만 CEO, 이해진 의장, 다리오 아모데이 CEO가 참여하여 반도체 공급 생산 협력, AI 인프라 구축 확대 및 피지컬AI 개발 확산 등 AI생태계 전반에 대한 국내외 기업 간 전방위적 협력방안을 논의하고, 구체적인 이행계획을 발표했다.서밋을 계기로 국내기업과 해외 빅테크 간 6건의 협약 체결을 진행했다. 총 9500억 달러 규모 반도체 공급 생산 협력, 5GW 규모 AIDC 구축 협력 등이 포함됐다.삼성은 브로드컴과 올해부터 5년간 총 2000억 달러 규모의 첨단 메모리 반도체 공급과 AI칩 생산을 위한 파운드리 협력을 추진하고 앤트로픽과는 AI 신규시장 공동발굴, 응용 AI엔지니어 인력의 양성을 위한 파트너십을 구축하기로 했다.3대 메가프로젝트로 2029년까지 5GW규모의 대규모 AIDC 투자계획을 발표했던 SK는 아시아 AI인프라 거점으로서 한국의 가능성을 높게 평가한 앤트로픽과 함께 국내 기가와트급 AIDC 프로젝트 투자 협력을 추진하기로 했다. 아울러 엔비디아와
+354. [2026-07-25T05:06:31+00:00] [정책] [조선일보] 靑 “국내 기업·글로벌 빅테크, 9500억달러 반도체 협력”
+     Summary: 청와대는 이재명 대통령의 미국 방문을 계기로 열린 ‘샌프란시스코 AI 서밋’을 통해 국내 기업과 글로벌 빅테크가 반도체 분야에서 총 9500억달러(약 1391조원) 규모의 협력을 추진하기로 했다고 25일 밝혔다.  김용범 청와대 정책실장은 24일(현지 시각) 샌프란시스코 프레스센터에서 브리핑을 통해 3대(반도체·AI데이터센터·피지컬AI) 메가 프로젝트의 핵
+355. [2026-07-25T04:59:47+00:00] [빅테크발언] [ZDNet Korea] [안광섭 AI 진테제] 미중 AI패권 경쟁...누가 무엇을 잠그나
+     Summary: [지디넷코리아]최근 사흘간 쏟아진 뉴스를 추적하며 필자는 한 가지 공통점을 발견했다. 모두가 무언가를 잠그고 있었다. 7월 20일 블룸버그는 중국 Z.AI(옛 즈푸AI)가 중국산 칩만으로 1기가와트(GW) 규모 데이터센터를 완공했다고 보도했다.21일 파이낸셜타임스는 중국 상무부가 AI 모델 가중치와 칩 설계의 해외 반출을 막는 수출통제를 검토 중이라고 전했다. 같은 날 워싱턴에서는 스콧 베센트 미 재무장관이 중국 AI 모델에 대한 제재 가능성을 언급했고, 이튿날 텍사스에서는 젠슨 황 엔비디아 CEO가 정반대로 중국 모델을 옹호하는 인터뷰를 내놨다. 그리고 그 주에 공개된 딥시크 창업자 량원펑의 투자자 회의 실록에는 또 다른 자물쇠가 등장한다.얼핏 뒤엉킨 뉴스처럼 보이지만, 필자가 보기에 이 장면들은 하나의 원리로 정리된다. 각 주체가 무엇을 잠그려 하는지를 보면, 그 주체가 무엇을 진짜 자산으로 여기는지가 드러난다.1. 모두가 잠그고 있다, 다만 서로 다른 것을베센트 장관이 잠그려는 것은 모델이다. 그는 폭스비즈니스 인터뷰에서 "해외 모델들이 우리의 훌륭한 기업들로부터 훔치고 있다는 게 확인되면, 그 절도를 근거로 제재할 수 있다"고 말했다. 중국 모델에서 미국 대형언어모델의 '워터마크'가 발견된다는 주장과 함께다. 여기서 절도로 지목된 기법이 증류(distillation, 큰 모델의 답변을 교재 삼아 작은 모델을 학습시키는 방식)다. 오픈AI와 앤스로픽 역시 중국 경쟁사들이 자사 모델의 능력을 빼갔다며 차단을 요구해 왔다. 앤스로픽은 지난달 미 상원에 보낸 서한에서 알리바바가 "사상 최대 규모의 증류 공격"을 감행했다고 주장했다.중국이 잠그려는 것은 가중치다. FT 보도에 따르면 중국 상무부는 알리바바, 바이트댄스, Z.AI 등과 협의, AI 모델 가중치(weights, 모델의 실력이 담긴 학습 결과물)와 학습 데이터의 해외 이전, 화웨이 등이 설계한 칩 IP의 해외 생산, 나아가 서방의 중국 AI 기업 인수까지 통제하는 방안을 검토 중이다.주목할 대목은 A
+356. [2026-07-25T04:56:52+00:00] [기타] [매일경제 : 전체뉴스] 한국의 갯벌, 유네스코 세계유산 확대 등재…여수·고흥·무안·서산 포함
+     Summary: 황해 생태계·철새 이동경로 가치 인정 생물다양성 2446종으로 늘어나“‘한국의 갯벌’ 2단계 확대 등재를 승인합니다.” 한국 국적인 이병현 유네스코 세계유산위원회 의장을 대신해 회..
+357. [2026-07-25T04:53:39+00:00] [소비] [매일경제 : 전체뉴스] “‘나는 신이다’는 거짓” JMS 정명석 두둔한 유튜버…법원 “6000만원 배상”
+     Summary: 기독교복음선교회(통칭 JMS) 총재 정명석을 두둔하고 성폭행 피해자들을 비방한 JMS 신도 출신 유튜버에게 법원이 6000만 원의 손해배상 판결을 내렸다. 25일 법조계에 따르면,..
+358. [2026-07-25T04:47:28+00:00] [소비] [매일경제 : 전체뉴스] “여름 휴가, 카드만 잘 써도 돈 아낀다”…워터파크 입장료 반값에 즐기는 법은?
+     Summary: 제휴카드·스마트예약 조합 시 입장권 반값 생활 특화 카드부터 테마파크 전용까지 전월실적·이용횟수 등 혜택 조건 살펴야본격적인 휴가철을 맞아 워터파크를 찾는 소비자들의 발걸음이 늘고..
+359. [2026-07-25T04:44:12+00:00] [정책] [ZDNet Korea] "韓, 글로벌 AI 생산기지로"…이 대통령, '샌프란 AI 선언'서 비전 제시
+     Summary: [지디넷코리아]이재명 대통령이 반도체·데이터센터를 중심으로 한국을 글로벌 인공지능(AI) 공급망 핵심 국가로 육성하겠다는 비전을 제시했다. AI 기술을 산업과 국민 생활에 빠르게 적용해 한국을 글로벌 테스트베드이자 생산 플랫폼으로 만들겠다는 구상이다.이 대통령은 24일(현지시간) 미국 샌프란시스코 더 미드웨이에서 열린 '샌프란시스코 AI 서밋'에 참석해 한국 글로벌 AI 전략을 발표했다. 행사에는 삼성전자와 SK그룹을 비롯한 국내 기업과 엔비디아·오픈AI·앤트로픽·브로드컴 등 글로벌 AI 기업 경영진이 참석했다.이 대통령은 "세계적인 메모리반도체 경쟁력과 생산 역량을 기반으로 한국을 신뢰할 수 있는 AI 반도체 생산기지로 구축할 것"이라며 "수도권과 지방에 생산 거점을 분산해 위기 상황에서도 반도체 공급을 이어갈 수 있는 국가 차원의 공급망 안전장치도 마련할 것"이라고 밝혔다. 반도체 공급을 넘어 데이터센터와 피지컬 AI를 연결하는 종합 AI 인프라 허브를 조성한다는 비전도 제시했다. 반도체와 컴퓨팅 자원뿐 아니라 에너지와 데이터·산업 수요를 하나의 생태계로 연결해 글로벌 기업의 AI 개발과 서비스 확산을 지원한다는 전략이다.한국을 AI 기술이 가장 빠르게 개발되고 검증되는 글로벌 테스트베드로 만드는 계획도 제시됐다. 제조공장과 도시·물류 현장에 AI를 적용해 데이터를 축적하고 이를 다시 AI 성능과 신뢰성을 높이는 데 활용하는 선순환 구조를 만들겠다는 구상이다. 이 대통령은 올해 말부터 5000만 국민이 참여하는 '모두의 AI' 프로젝트를 본격 추진한다는 점도 발표했다. 행정과 복지·교육 등 공공서비스와 국민 일상 전반에 AI를 확산해 국내 AI 수요를 키우고 글로벌 기업의 기술과 서비스를 실증할 수 있는 시장을 조성한다고 강조했다. 한국은 국가 간 AI 격차를 줄이기 위한 글로벌 협력도 확대한다. 이 대통령은 연설에서 선도국과 개발도상국을 연결하는 수평적 협력망을 구축하고 각국의 언어와 문화·산업 환경에 맞는 AI 기술과 서비스를 개발하도록 지원할 계획이라
+360. [2026-07-25T04:42:42+00:00] [정책] [ZDNet Korea] 靑 김용범 "삼성전자-브로드컴 2000억 달러 메모리 업무협약"
+     Summary: [지디넷코리아]김용범 청와대 정책실장이 24일(현지시간) "삼성전자와 브로드컴은 향후 5년 간 2000억 달러(290조원) 규모 첨단 메모리 반도체 공급과 인공지능(AI) 칩 생산을 위한 파운드리 협력 업무협약을 체결했다"고 밝혔다.이번 업무협약은 같은 날 이재명 대통령이 미국 샌프란시스코에서 개최된 '샌프란시스코 AI 서밋'을 참석한 가운데 공개됐다.이 대통령은 이 자리에서 AI 시대 한국의 새로운 비전을 담은 '샌프란시스코 AI 선언'을 발표했다.이 대통령은 "대한민국은 대체 불가한 글로벌 AI 공급망의 핵심 국가로 도약할 것"이라며 "우리가 가진 세계 최고 수준의 메모리반도체 경쟁력과 생산 역량을 토대로, 신뢰할 수 있는 AI 반도체 생산기지이자 공급망 파트너가 되겠다"고 강조했다.이날 SK도 엔비디아 등 글로벌 빅테크 기업들과 향후 5년 간 7500억 달러 규모 메모리 반도체 장기 공급 협력을 체결했으며, SK텔레콤과 네이버는 빅테크들과 손잡고 대규모 AI 데이터센터를 세우기로 했다.
+361. [2026-07-25T04:39:11+00:00] [산업] [조선일보] 최태원 “국민 1인당 AI 비서 하나씩은 있어야, AI 비용 절감 필요”
+362. [2026-07-25T04:34:57+00:00] [금리환율] [매일경제 : 전체뉴스] [속보] 靑 “국내 기업·글로벌 빅테크, 9500억달러 반도체 협력”
+     Summary: [속보] 靑 “국내 기업·글로벌 빅테크, 9500억달러 반도체 협력”
+363. [2026-07-25T04:30:53+00:00] [기타] [조선일보] 이해진 “엔비디아·브룩필드가 14.6조 투자… 네이버 새 도약 계기”
+364. [2026-07-25T04:30:21+00:00] [산업] [Bloomberg Markets] Modi Sidesteps Exam Leaks in Video as India Protests Spread
+     Summary: Indian Prime Minister Narendra Modi repeatedly thanked the nation’s youth in a video message Friday night, offering no indication he would meet their key demand to remove the education minister as student protests widen.
+365. [2026-07-25T04:24:51+00:00] [산업] [조선일보] 정의선 “빅테크와 협력해 한국을 피지컬 AI 중심지로”
+366. [2026-07-25T04:22:08+00:00] [정책] [ZDNet Korea] [속보] 靑 "SK, 엔비디아 등과 1085조원 메모리 장기공급 협약 진행"
+     Summary: [지디넷코리아]김용범 청와대 정책실장은 25일 브리핑을 통해 "SK그룹은 엔비디아 등 글로벌 빅테크 기업들과 7500억 달러, 한화로 1085조원 규모에 달하는 첨단 메모리반도체 장기 공급계약을 진행하기로 했다"고 밝혔다.
+367. [2026-07-25T04:21:58+00:00] [정책] [ZDNet Korea] [속보] 靑 "삼성전자, 브로드컴과 290조원 규모 메모리·파운드리 협력"
+     Summary: [지디넷코리아]김용범 청와대 정책실장은 25일 브리핑을 통해 "삼성전자와 브로드컴은 향후 5년간 2000억 달러, 한화로 290조원의 첨단 메모리반도체 공급과 AI칩 생산을 위한 파운드리 업무협약을 체결했다"고 밝혔다.
+368. [2026-07-25T04:12:26+00:00] [기타] [연합뉴스 산업 최신기사] 李대통령, 빅테크 CEO들과 '샌프란 깐부회동'…"우리는 식구다"(종합)
+     Summary: (샌프란시스코=연합뉴스) 임형섭 황윤기 기자 = 미국 샌프란시스코를 방문 중인 이재명 대통령이 24일(현지시간) 글로벌 빅테크 기업 최고경영자(...
+369. [2026-07-25T04:10:14+00:00] [산업] [연합뉴스 산업 최신기사] 정의선 "국내 피지컬AI 오픈생태계 구축…글로벌 최고인재 양성"
+     Summary: (샌프란시스코·서울=연합뉴스) 임형섭 홍규빈 기자 = 정의선 현대차그룹 회장은 &quot;국내 로봇 AI 기술 고도화를 위한 오픈 생태계를 조성할 계획&quot;...
+370. [2026-07-25T04:08:22+00:00] [산업] [조선일보] 이재용 “AI 시대, 韓·美 강점 결합하면 더 많은 난제 해결 가능"
+371. [2026-07-25T04:07:36+00:00] [금리환율] [매일경제 : 전체뉴스] [속보] 靑 “국내 기업과 글로벌빅테크 기업, 9천500억불 반도체 협력”
+     Summary: 청와대는 이재명 대통령이 참석한 ‘샌프란시스코 AI 서밋’을 계기로 국내 기업과 글로벌 빅테크 기업들이 총 9500억달러(약 1375조원) 규모의 반도체 협력을 추진하기로 했다고 ..
+372. [2026-07-25T04:07:29+00:00] [산업] [연합뉴스 산업 최신기사] [속보] SK, 엔비디아 등 빅테크 기업들과 7천500억불 반도체 공급 협력
+     Summary: (
+373. [2026-07-25T04:07:20+00:00] [산업] [연합뉴스 산업 최신기사] [속보] 삼성전자-브로드컴, 2천억불 반도체 공급 업무협약
+     Summary: (
+374. [2026-07-25T03:54:49+00:00] [정책] [ZDNet Korea] 세계유산 '한국의 갯벌' 2단계 확대 등재, 서산·여수·고흥·무안 추가…허민 청장 "노력의 결실"
+     Summary: [지디넷코리아][부산=이도원, 정진성 기자] 유네스코 세계유산 '한국의 갯벌(Getbol, Korean Tidal Flats)' 2단계 확대 등재가 최종 확정됐다. 25일 부산에서 열린 제48차 세계유산위원회는 오전 회의를 통해 한국의 갯벌에 대한 중대한 경계 변경을 승인했다. 이번 결정으로 기존 서천, 고창, 신안, 보성-순천 갯벌에 여수, 고흥, 무안, 서산 갯벌이 새롭게 추가되며 총 6개 구성요소로 이뤄진 연속유산으로 확대됐다.세계유산위원회는 한국의 갯벌이 멸종위기종 보전 등 생물다양성의 중요성을 다루는 세계유산 등재기준을 충족한다고 진단했다. 실제 2단계 확대 지역을 포함한 한국의 갯벌 전체 연속유산은 총 2446종의 생물다양성을 부양하는 것으로 분석됐다. 이 중에는 24종의 국제적 멸종위기 조류가 포함된 216종의 조류와 2230종에 달하는 갯벌 생물 등이 서식하고 있다.새롭게 추가된 갯벌들도 각각 탁월한 보편적 가치(OUV)를 입증했다. 서산갯벌은 내륙 유일의 점박이물범 서식지이며, 무안갯벌은 흰발농게가 우점하는 등 1318종의 생물을 품고 있다. 여수와 고흥갯벌은 저어새, 흑두루미 등 국제적 멸종위기 조류의 장거리 이동에 필수적인 기착지 역할을 수행한다.이번 성과는 지난 2021년 등재 당시 위원회가 제시한 2단계 확대 권고사항을 충실히 이행한 결과다. 그간 국가유산청은 해양수산부, 외교부, 해당 지자체 및 한국의갯벌세계유산등재추진단 등과 긴밀히 협력해 왔다.이들은 보호구역 지정과 관리체계 정비를 추진하고, 국제자연보전연맹(IUCN)의 심사에 적극 대응하며 유산의 보호 및 관리 기반을 지속적으로 보완했다.현장 심사를 담당한 IUCN 측은 이날 회의에서 "이번 2단계 확대로 전체 유산 면적이 기존 대비 약 22% 증가했다"며 확장을 통한 완전성 강화를 높이 평가했다. 특히 여수와 고흥 갯벌 추가로 여자만 전체 갯벌의 완전성이 완성됐으며, 무안·서산 갯벌을 통해 동아시아-대양주 철새 이동경로(EAAF)의 북상 확장 기반이 마련됐다고 진단했다.또한 IU
+375. [2026-07-25T03:53:00+00:00] [산업] [연합뉴스 산업 최신기사] 최태원 "한국, AI 테스트베드 될것…비용 낮추고 부작용 줄여야"
+     Summary: (서울·샌프란시스코=연합뉴스) 조성흠 임형섭 기자 = 최태원 SK그룹 회장은 &quot;국민 1인당 최소 하나씩 인공지능(AI) 에이전트가 있어야 하는 ...
+376. [2026-07-25T03:44:02+00:00] [빅테크발언] [ZDNet Korea] 최태원 "한국 3대 AI 메가 프로젝트, 허황되지 않아"
+     Summary: [지디넷코리아]최태원 SK그룹 회장이 정부가 발표한 3대 메가 프로젝트에 대해 "생소할 수는 있어도 허황된 것은 아니다"라며 "오히려 지금 발표한 계획이 작은 숫자가 될 수 있다"고 말했다. 규모가 커 과장돼 보일 수 있지만 글로벌 빅테크 기업들의 요구 수준을 고려하면 오히려 과소 평가됐다는 설명이다.최 회장은 24일(현지시간) 미국 샌프란시스코에서 열린 'AI 서밋'에 참석해 "반도체 생산시설 증설, AI 데이터센터 건설, 피지컬 AI 투자를 모두 합하면 3조 달러가 넘는다"며 이같이 밝혔다.그는 젠슨 황 엔비디아 최고경영자(CEO)를 비롯해 브로드컴, 앤트로픽, 오픈AI 등 주요 빅테크 수장들과의 회동 결과를 공유하며, 이들이 요구하는 AI 인프라와 메모리 반도체 수요가 예상을 뛰어넘는 수준이라고 강조했다.특히 오픈AI 측은 직공급을 요청할 만큼 막대한 컴퓨팅 파워를 필요로 하고 있으며, 엔비디아 역시 지속적으로 추가 공급을 요구하는 상황이라고 전했다.최 회장은 이러한 현장의 흐름을 바탕으로 이번 프로젝트가 대한민국의 미래 성장을 담보할 핵심 과제인 만큼, 국가적 역량을 집중해 조기에 성과를 내야 한다고 강조했다.이어 프로젝트 성공을 위한 3대 과제로 ▲대한민국의 'AI 네이티브 국가' 전환 ▲AI 비용 절감 ▲AI 부작용 최소화를 제시했다.최 회장은 "AI 거버넌스를 제대로 만들고 AI가 없애는 것보다 더 많은 일자리를 창출해야 한다"며 "환경을 훼손하지 않도록 보전 방안도 함께 마련해야 한다"고 주문했다.
+377. [2026-07-25T03:41:28+00:00] [기타] [매일경제 : 전체뉴스] [속보] 세계유산 ‘한국의 갯벌’ 넓어졌다…서산·여수·고흥·무안 포함
+     Summary: 한국의 갯벌이 유네스코 세계유산 2단계 확대 등재되면서 세계적인 자연유산으로서의 가치를 다시 한번 인정받았다. 제48차 유네스코 세계유산위원회는 25일 부산 벡스코에서 열린 회의에..
+378. [2026-07-25T03:35:37+00:00] [산업] [연합뉴스 산업 최신기사] 이재용 "AI 시대, 한미 강점 결합하면 더 많은 난제 해결 가능"
+     Summary: (서울·샌프란시스코=연합뉴스) 조성흠 임형섭 기자 = 이재용 삼성전자 회장은 &quot;한국과 미국 두 나라 강점들을 하나로 결합한다면 우리는 더 빠르게...
+379. [2026-07-25T03:31:07+00:00] [정책] [Bloomberg Markets] India Flags Attack on LPG Tanker in Iran Waters, Says Crew Safe
+     Summary: India’s embassy in Tehran said it is in close contact with authorities after a liquefied petroleum gas tanker, with 28 Indian crew members onboard, came under attack in Iranian territorial waters on Friday.
+380. [2026-07-25T03:29:19+00:00] [금리환율] [연합뉴스 경제 최신기사] 이해진 "엔비디아·브룩필드, 네이버에 14조6천억원 투자"
+     Summary: (서울=연합뉴스) 한상용 기자 = 이해진 네이버 창업자 겸 이사회 의장은 엔비디아와 글로벌 대체자산 운용사 브룩필드로부터 100억달러(약 14조...
+381. [2026-07-25T03:26:27+00:00] [산업] [연합뉴스 산업 최신기사] '샌프란 AI 선언' 토대는 K-반도체 저력…글로벌 초격차 굳힌다
+     Summary: (서울=연합뉴스) 조성흠 기자 = 이재명 대통령이 &apos;샌프란시스코 인공지능(AI) 선언&apos;을 통해 글로벌 AI 공급망 핵심 국가의 비전을 제시한 것...
+382. [2026-07-25T02:41:28+00:00] [기타] [이데일리 - 경제/정책뉴스] '회사가치 정확히 공개'…스트래티지, 순준비금 도입+mNAV 손질
+     Summary: 세계 최대 기업 비트코인 보유기업이자 트레저리 기업인 미국 스트래티지(Strategy)가 투자자들에게 회사의 실질적인 자산 가치를 보다 명확하게 보여주기 위해 비트코인 관련 핵심 지표를 전면 개편했다. 마이클 세일러 스트래티지 이사회 의장최근 비트코인 주요 매입 재원으로 쓰이는 영구우선주와 전환사채(CB) 등 보통주보다 우선 상환되는 금융상품을 제외한 새...
+383. [2026-07-25T02:40:00+00:00] [금리환율] [오늘의뉴스 - 이티뉴스] 반도체 잘 팔아도 달러가 새는 한국…“원화 가치 잡아 먹는 서학개미?”
+     Summary: 미국 재무부가 한국을 다시 환율 관찰대상국으로 지정하면서 의외의 원화 약세 원인으로 이른바 '서학개미'의 해외 주식 투자 열풍을 지목했다. 반도체 수출 호조로 경상수지 흑자가 크게 늘었음에도 개인과 기관의 대규모 해외 투자로 달러 유출이 확대되면서 원화 가치 하락 압력이 커졌다는 분석이다. 미국 재무부는 23일(현지시간) 의회에 제출한 반기 환율보고서에서 한국을 중국, 일본, 대만 등과 함께 환율 관찰대상국으로 유지했다. 이번 평가는 2025년
+384. [2026-07-25T02:38:21+00:00] [빅테크발언] [조선일보] 李대통령, 샌프란 AI 서밋 후 만찬…피시앤칩스에 맥주
+     Summary: 미국 샌프란시스코를 방문 중인 이재명 대통령이 글로벌 빅테크 기업 최고경영자(CEO)와 국내 주요 기업 총수들과 함께 만찬을 가졌다.  강유정 청와대 수석대변인은 24일(현지시각) 서면 브리핑을 통해 이 대통령이 샌프란시스코의 ‘더 램프’ 레스토랑에서 글로벌 인공지능(AI) 기업 관계자들과 만찬을 가졌다고 밝혔다. 만찬에는 젠슨 황 엔비디아 CEO와 혹 탄
+385. [2026-07-25T02:36:16+00:00] [기타] [매일경제 : 전체뉴스] “성관계 영상 보여줄게”…‘아동 성매매’ 최영중 추가 범행 정황 포착
+     Summary: 미성년자 성매매와 성착취물 제작 혐의를 받는 최영중 전 청주시의원의 추가 범행 의혹이 제기됐다. 지난 24일 연합뉴스TV 보도에 따르면 경찰은 최 전 의원이 피해 아동에게 자신이 ..
+386. [2026-07-25T02:36:06+00:00] [기타] [매일경제 : 전체뉴스] ‘바다의 로또’ 횡재…울산 방어진서 7.3m 밍크고래 7100만원 낙찰
+     Summary: 울산 동구 방어진항 인근 해상에서 길이 7.3m에 달하는 대형 밍크고래가 어선 그물에 걸려 혼획됐다. 밍크고래는 국내 해양보호생물로 지정돼 있지 않아 혼획됐을 때 해경의 처리확인서..
+387. [2026-07-25T02:33:50+00:00] [산업] [매일경제 : 전체뉴스] 李대통령 ‘샌프란 AI 선언’…“韓, 대체불가 글로벌 AI 공급망 핵심 국가로”
+     Summary: AI서밋서 글로벌 AI산업서 한국 기여 청사진 제시 “AI 테스트베드이자 생산플랫폼될 것”  엔비디아·앤트로픽 등 美AI기업 CEO 참석 한국선 이재용·최태원·정의선 참여 참석 C..
+388. [2026-07-25T02:30:30+00:00] [산업] [이데일리 - 경제/정책뉴스] 정의선 "엔비디아와 로봇 레퍼런스 플랫폼 공동 구축…개방형 생태계 조성"
+     Summary: 정의선 현대자동차그룹 회장이 엔비디아와 협력해 로봇 인공지능(AI) 기술 고도화를 위한 개방형 생태계 구축에 나선다. 엔비디아와 로봇 레퍼런스 플랫폼을 공동 구축해 국내 학계와 기업이 표준화된 환경에서 기술을 개발·검증할 수 있도록 지원하겠다는 구상이다.이재명 대통령, '글로벌 AI 리더들과 함께'. (사진=뉴시스)정 회장은 24일(현지시간) 미국 샌프란...
+389. [2026-07-25T02:28:01+00:00] [기타] [조선일보] 김혜경 여사, 美서 한지 홍보… “유네스코 유산 등재 기원”
+     Summary: 이재명 대통령의 배우자 김혜경 여사가 24일(현지 시각) 미국 샌프란시스코에서 열린 한지(韓紙) 전시와 패션쇼에 참석해 문화유산으로서의 가치를 알렸다. 이 대통령과 김 여사는 한국 시각 24일 미국·남미·독일 순방에 나섰다.  김 여사는 이날 오후 주LA한국문화원이 샌프란시스코 문화공간 더펄에서 주최한 ‘한지로 잇는 시간과 미래’ 행사에 참석해 전시와 한지
+390. [2026-07-25T02:24:58+00:00] [기타] [연합뉴스 산업 최신기사] 울산 방어진 앞바다서 7.3ｍ 밍크고래 혼획…7천100만원 위판
+     Summary: (울산=연합뉴스) 박영민 기자 = 울산 동구 방어진항 인근 해상에서 길이 7.3ｍ짜리 밍크고래가 어선 그물에 걸려 혼획됐다.
+391. [2026-07-25T02:20:16+00:00] [기타] [연합뉴스 산업 최신기사] 李대통령, 빅테크 CEO들과 피시앤칩스 만찬…'샌프란 깐부회동'
+     Summary: (샌프란시스코=연합뉴스) 임형섭 황윤기 기자 = 미국 샌프란시스코를 방문 중인 이재명 대통령이 24일(현지시간) 글로벌 빅테크 기업 최고경영자(...
+392. [2026-07-25T02:17:01+00:00] [산업] [연합뉴스 경제 최신기사] 'HBM 1위' 한국, AI 3강 노린다…샌프란 선언 현주소는
+     Summary: (서울=연합뉴스) 심재훈 기자 = 이재명 대통령의 24일(현지시간) &apos;샌프란시스코 AI 선언&apos;을 계기로 우리나라를 글로벌 인공지능(AI) 공급망...
+393. [2026-07-25T02:13:33+00:00] [빅테크발언] [매일경제 : 전체뉴스] 피시앤칩스에 맥주 한 잔…이 대통령, AI 리더들과 ‘미국판 깐부회동’
+     Summary: 이재명 대통령이 미국 샌프란시스코에서 젠슨 황 엔비디아 최고경영자(CEO)를 비롯한 글로벌 인공지능(AI) 업계 리더들과 만찬을 갖고 한미 AI 협력 확대 방안을 논의한다. 강유정..
+394. [2026-07-25T02:12:33+00:00] [산업] [매일경제 : 전체뉴스] “퇴근해야 한다” 상관 지시 거부하고 칼퇴근한 군무원… 법원 “감봉 처분 부당”
+     Summary: 회의 참석 대상자를 파악해 보고하라는 상관의 지시에 “퇴근해야 한다”며 응하지 않은 군무원에게 내린 감봉 징계 처무는 부당하다는 법원 판결이 나왔다. 해당 지시가 군인복무기본법상 ..
+395. [2026-07-25T02:05:05+00:00] [소비] [ZDNet Korea] "두산베어스와 10년, T 좀 내보겠습니다"…티스테이션 브랜드데이 개최
+     Summary: [지디넷코리아]한국타이어앤테크놀로지의 타이어 중심 자동차 토탈 서비스 전문점 티스테이션이 프로야구 두산베어스 후원 10주년을 맞아 잠실야구장에서 브랜드 체험 행사를 연다. 야구 팬들과 함께 타이어 안전 관리의 중요성을 알리고 브랜드 경험을 확대한다는 취지다.한국타이어앤테크놀로지(한국타이어)는 티스테이션이 25일부터 26일까지 서울 잠실야구장에서 열리는 두산베어스 홈경기 기간 '브랜드데이'를 개최한다고 밝혔다. 티스테이션은 2016년부터 두산베어스 메인 스폰서로 활동하며 올해 후원 10주년을 맞았다.이번 행사는 'T(티) 좀 내보겠습니다'를 콘셉트로 진행된다. 티스테이션은 후원 10주년 기념 스페셜 유니폼을 선보이고 브랜드 헤리티지와 안전 가치를 야구 팬들이 직접 체험할 수 있는 다양한 프로그램을 마련했다.잠실야구장 중앙매표소 옆 광장에는 선수들의 락커룸과 덕아웃을 모티브로 한 체험 공간이 조성된다. 차량도 경기 전 선수들처럼 사전 점검이 중요하다는 점을 야구와 연계해 전달할 예정이다.체험 공간에 두산베어스 유니폼을 지참하고 한국타이어와 티스테이션 공식 사회관계망서비스(SNS)를 팔로우한 관람객을 대상으로 '유니폼 커스텀 이벤트'를 진행한다. 티스테이션과 두산베어스 마스코트 '철웅이'가 협업한 자수 와펜을 유니폼에 부착할 수 있으며, 브랜드 굿즈와 타이어 할인권도 제공한다.타이어 안전 관리 체험 프로그램도 운영된다. 적정 타이어 공기압인 '38PSI'를 모티브로 한 '공기압 타임어택'은 참가자가 스톱워치를 3.8초에 맞춰 멈추는 방식으로 진행된다. 성공한 참가자에게는 타이어 마모도 측정 키링을 증정하며, 타이어 마모 상태를 비교할 수 있는 전시 공간도 함께 운영한다.경기장 안에서는 사전 이벤트를 통해 선정된 티스테이션 점주가 시구에 나선다. 전광판 카메라에 잡힌 관람객이 'T' 포즈를 취하는 이닝 이벤트 'It's T Time'도 진행되며, 우수 참여자에게는 후원 10주년 기념 스페셜 유니폼이 제공된다.한국타이어는 소비자가 일상에서 타이어 안전 관리의 중요성을 
+396. [2026-07-25T02:04:57+00:00] [산업] [연합뉴스 산업 최신기사] '기업가치 합계 2경원' CEO들 한자리…"AI 여정 한국과 함께"
+     Summary: (샌프란시스코=연합뉴스) 임형섭 황윤기 기자 = 이재명 대통령의 미국 샌프란시스코 방문을 계기로 열린 24일(현지시간) &apos;샌프란시스코 AI 서밋...
+397. [2026-07-25T02:03:03+00:00] [산업] [연합뉴스 경제 최신기사] '샌프란 AI 선언' 실행 시험대…GPU·전력·시장이 관건
+     Summary: (서울=연합뉴스) 한상용 기자 = 이재명 대통령이 24일(현지시간) &apos;샌프란시스코 AI 선언&apos;을 통해 한국을 글로벌 인공지능(AI) 생산·활용 ...
+398. [2026-07-25T02:00:57+00:00] [빅테크발언] [ZDNet Korea] 엔비디아 본사 찾은 정의선, 젠슨 황과 AI 동맹 후속 논의
+     Summary: [지디넷코리아]정의선 현대자동차그룹 회장이 미국 엔비디아 본사를 찾아 젠슨 황 최고경영자(CEO)와 다시 만났다. 지난달 서울에서 열린 회동 이후 한 달여 만에 이뤄진 후속 만남으로, 자율주행과 로봇, 제조 인공지능(AI) 등 미래 사업 협력에 본격 속도를 내기 위한 행보로 풀이된다.엔비디아는 24일(현지시간) X(옛 트위터)를 통해 정의선 회장이 미국 캘리포니아주 산타클라라에 위치한 엔비디아 본사를 방문해 젠슨 황 CEO와 만난 사진을 공개했다.양측은 이번 면담에서 자율주행과 로봇, 제조 AI를 비롯해 지난 6월 젠슨 황 CEO의 한국 방문 당시 논의했던 협력 방안의 후속 내용을 협의한 것으로 알려졌다.앞서 젠슨 황 CEO는 지난달 8일 서울 양재동 현대차그룹 본사를 방문해 정의선 회장과 회동했다. 당시 양사는 자율주행, 로봇, AI 팩토리(제조 AI), 데이터센터 등 미래 모빌리티와 AI 인프라 전반으로 협력 범위를 확대하기로 뜻을 모았다.당시 젠슨 황 CEO는 "모빌리티부터 로보틱스, AI 팩토리까지 모든 AI 분야에서 현대차그룹과 협력하게 돼 매우 기대된다"고 밝히기도 했다.특히 정 회장은 회동에서 새만금 AI 밸리 프로젝트를 직접 소개했으며, 젠슨 황 CEO는 AI 인프라와 데이터센터, 연구개발(R&amp;D) 분야를 중심으로 엔비디아의 참여 의사를 나타냈다.황 CEO는 "캘리포니아에 실리콘밸리가 있다면 한국에는 새만금 AI 밸리가 있다"며 "엔비디아도 새만금에 함께할 수 있기를 바란다"고 말했다.현대차그룹은 전북 새만금 112만4000㎡ 부지에 올해부터 단계적으로 9조원을 투자해 로봇과 AI, 수소에너지, 태양광 발전, AI 수소 시티 등을 아우르는 미래기술 혁신성장거점을 구축할 계획이다.업계에서는 이번 정의선 회장의 엔비디아 본사 방문을 지난달 서울 회동의 답방 성격으로 보고 있다. 현대차그룹의 모빌리티·로보틱스 역량과 엔비디아의 AI 플랫폼 및 컴퓨팅 기술을 결합해 자율주행, 휴머노이드 로봇, 스마트 제조 등 '피지컬 AI' 분야 협력이 본격화할
+399. [2026-07-25T02:00:08+00:00] [기타] [한국경제 | 뉴스 | 증권] 공급망을 알아야 주식이 보인다 [조윤남의 사이클투자]
+400. [2026-07-25T02:00:02+00:00] [기타] [한국경제 | 뉴스 | 국제] "일자리 뺏길라" 입 다물었는데…독학으로 일 배운 사원 정체 [한명현의 오피스로그]
+401. [2026-07-25T02:00:01+00:00] [기타] [연합뉴스 산업 최신기사] [게임위드인] 게임은 안 해도 굿즈는 산다…2030이 게임에 남는 법
+     Summary: (서울=연합뉴스) 김주환 기자 = &apos;전 국민 게임 이용률 50.2%&apos;
+402. [2026-07-25T02:00:00+00:00] [정책] [경제] 어선 빌려 귀어했더니…청년 선장 1년 만에 '억대 매출'[짤막영상]
+     Summary: <br />[서울=뉴시스] 강세훈 기자, 정재훈 인턴기자 = 귀어를 꿈꾸는 청년 어업인을 위한 &#039;어선임대사업&#039;이 눈길을 끌고 있다. 청년들의 안정적인 어촌 정착을 돕고 연안어업에 활력을 불어넣을 것으로 기대를 모은다.<br /><br />25일 한국수산자원공단(FIRA)은 공식 유튜브를 통해 &#039;내 배 없어도 선장이 될 수 있다. 청년어선임대사업으로 귀어 1년 차에 억대 매출 찍은 현실 역전 스토리&#039;라는 제목의 영상을 공개했다. <br /><br />해당 영상에는 전북 부안으로 귀어한 1년 차 지병우 선장의 정착 사례가 담겼다.<br /><br />&#039;어선청년임대사업&#039;은 기존 어업인의 연안어선을, 어선어업을 희망하는 청년과 매칭해 월 임차료를 지원하는 사업이다.<br /><br />특히 파격적인 지원 한도가 눈길을 끈다. 어선 월 임차료의 70%(최대 2년, 월 350만 원 한도)를 지원할 뿐만 아니라, 어구 구입비도 50%(최초 1회, 최대 250만 원)까지 지원한다. <br /><br />귀어 1년 차 지 선장은 영상에서 &quot;어업하고 싶은 마음은 있었지만, 가정사로 인해 쉽게 결정을 못 하고 있었다&quot;라며 &quot;어선청년임대사업을 알게 되고 난 후 내가 어선이 없어도 어장할 기회가 주어지기 때문에 사업 신청을 하였고 어장을 하고 있다&quot;라고 말했다.<br /><br />공단은 청년 역량 강화를 위한 어선어업 교육과 멘토링 지원 등 어촌 정착을 위한 다양한 프로그램도 제공한다. <br /><br />꽃게가 잡힌 어망을 끌어 올리며 크기에 만족하는 모습을 보인 지 선장은 멘토링 프로그램에 만족감을 보였다. 영상에서 그는 꽃게를 잘 잡기 위한 포인트를 찾는 과정을 멘토링으로 받았냐는 질문에 고개를 끄덕이며 &quot;여러 선장에게 많은 정보를 받았다&quot;라고 답했다. <br /><br />멘토링을 통해 친분을 쌓은 청년 어업인들은 비상시 서로를 지키는 실질적인 안전장치가 된다. 이들
+403. [2026-07-25T01:57:48+00:00] [빅테크발언] [ZDNet Korea] 이 대통령 만난 젠슨 황 "SK그룹과 730조원 파트너십 발표"
+     Summary: [지디넷코리아]젠슨 황 엔디비아 최고경영자(CEO)가 SK그룹과 5000억 달러(한화 약 730조원) 규모에 이르는 대규모 파트너십을 발표한다. 네이버, 현대자동차, LG 등과도 협력을 강화할 예정이다.24일(현지시간) 이재명 대통령은 미국 샌프란시스코 소재 한 호텔에서 젠슨 황 CEO와 면담했다.이날 이 대통령은 "대한민국이 AI 황금시대로 진입하는 데 앞으로 더 중심적인 역할을 해주실 것으로 기대한다"고 말했다.이에 젠슨 황은 "SK그룹과 오늘 양사 간의 비즈니스 파트너십을 발표할 것"이라며 "그 규모는 5000억 달러에 달한다"고 답했다. 네이버, 현대자동차 등과도 협력을 약속했다. 젠슨 황은 "네이버는 한국의 선도적인 클라우드 회사로, 네이버에 대한 대규모 투자도 단행할 것"이라며 "이번 파트너십으로 한국뿐만이 아니라 전 세계적인 확장을 지원하겠다"고 강조했다. 그는 이어 현대차그룹과의 파트너십을 통해 자율주행 제네시스 차량을 함께 개발하고, 로보틱스도 같이 진행을 할 계획"이라며 "LG와도 발전 시스템을 같이 개발하고, 공장 및 가정에서 사용할 수 있는 시스템을 함께 개발하고 있다"고 덧붙였다.한편 젠슨 황 CEO는 이 대통령과의 면담에 앞서 엔비디아 본사에 국내 주요 기업 총수들을 대거 초빙했다. 이 자리에는 이재용 삼성전자 회장, 정의선 현대자동차 회장, 이해진 네이버 회장 등이 참석했다.
+404. [2026-07-25T01:55:50+00:00] [기타] [매일경제 : 전체뉴스] “국장 못 믿겠다” 해외로 쏠린 개미…이달 순매수 4배 폭증
+     Summary: ‘빚투’ 줄고 ‘하락 베팅’ 늘어 미국 대표지수 ETF로 자금 유입미국 주식에 투자하는 ‘서학개미’의 이달 순매수액이 4배 급증한 것으로 나타났다. 국내 증시의 변동성이 커지며 약..
+405. [2026-07-25T01:53:19+00:00] [빅테크발언] [매일경제 : 전체뉴스] 이재용·정의선·이해진 엔비디아 본사서 젠슨 황과 만났다
+     Summary: 젠슨 황 방한 이후 한 달여 만에 재회  이재용, 반도체 메모리 등 논의 관측  정의선, 자율주행·로봇 등 협력 모색이재용 삼성전자 회장과 정의선 현대자동차그룹 회장, 이해진 네이..
+406. [2026-07-25T01:46:22+00:00] [정책] [연합뉴스 경제 최신기사] 쿠팡 사태 진화 나선 정부…미국 정부·의회·업계 현지 설득전
+     Summary: (서울=연합뉴스) 신창용 기자 = 정부가 미국 무역법 301조 관세 조치 등 주요 통상 현안에 대응하고 쿠팡 사태 등 국내 디지털 제도에 대한 ...
+407. [2026-07-25T01:44:35+00:00] [기타] [매일경제 : 전체뉴스] “코 고는 줄 알았는데…” 친구의 ‘이 말’ 한마디가 고3 생명 살렸다
+     Summary: 수업 도중 심정지 상태에 빠진 고등학생이 교사와 친구들의 신속한 판단과 응급처치 덕분에 목숨을 구한 사실이 뒤늦게 알려졌다. 25일 창원소방본부 등에 따르면 지난달 16일 오후 경..
+408. [2026-07-25T01:44:32+00:00] [실적] [ZDNet Korea] 세계 홀린 'K-헤리티지'…국가유산청 세계유산위 대한민국관, 관람객 몰렸다
+     Summary: [지디넷코리아][부산=이도원, 정진성 기자] 제48차 유네스코 세계유산위원회가 열린 부산 벡스코 제1전시장 내 '대한민국관(K-Heritage House)'이 국내외 관람객의 발길로 연일 북적이고 있다. 기념주화 등 굿즈 판매 매출은 이미 1억원을 넘어섰다.국가유산청이 위원회 기간인 20일부터 29일까지 운영하는 대한민국관은 K-컬처의 뿌리인 국가유산의 과거와 현재, 미래를 한자리에 모은 공간이다. 올해 위원회 본회의에는 역대 최다인 162개국 3111명이 등록했으며, 이러한 열기가 고스란히 현장 전시장의 흥행으로 이어진 것으로 확인됐다. 초반 관람객 집계에서도 이 같은 열기가 확인된다. 위원회에 따르면 대한민국관은 지난 23일까지 개막 나흘 만에 이미 누적 3만7273명이 현장을 찾았다. 이머시브 전시관(1만1160명)과 방문캠페인관(1만1513명) 등 주요 거점마다 1만명 이상의 관람객이 몰리며 문전성시를 이뤘다.관람객의 호응은 실질적인 성과로도 연결됐다. K-헤리티지 팝업스토어는 약 8200만원, 기념주화는 382장이 판매되며 약 3000만원의 매출을 올렸다. 아울러 위원회 측이 기획한 31건의 참가자 투어 중 21건이 조기 매진되는 등 K-컬처에 대한 글로벌 관심이 수치로 입증됐다.특히 대한민국관 개방 이후 첫 주말인 25일 오전부터 행사장 앞은 입장을 위해 긴 대기열이 형성되는 등 흥행 열기가 최고조에 달한 모습이다.전시장 내부는 다채로운 문화 및 미식 홍보관으로 채워졌다. 행정안전부 국가기록원이 20종의 세계기록유산을 선보였고, 해양수산부와 농림축산식품부는 각각 K-시푸드(K-Seafood)와 K-푸드를 내세워 미식의 재미를 더했다.첨단 기술로 유산을 만나는 공간도 높은 호응을 이끌어냈다. 국가유산에 담긴 가치를 대규모 미디어아트로 재해석한 이머시브 전시 '헤리티지: 타임리스 타임'과 AR·VR 콘텐츠를 활용한 교육 체험관 '이어지교'가 몰입감 높은 경험을 제공했다.주무대인 'K-헤리티지 스테이지'에서는 열흘간 총 38건의 다채로운 공연이 펼쳐진다.
+409. [2026-07-25T01:39:59+00:00] [실적] [매일경제 : 전체뉴스] 주가 30% 빠진 SK하이닉스…역대급 실적보다 ‘이것’에 쏠렸다
+     Summary: 이달 들어 주가가 30% 넘게 급락한 SK하이닉스가 오는 29일 2분기 실적을 발표한다. 역대 최대 수준의 실적이 예상되는 가운데 투자자들의 관심은 고대역폭메모리(HBM) 가격과 ..
+410. [2026-07-25T01:30:02+00:00] [실적] [ZDNet Korea] 페퍼저축은행, 유례없는 150명 해고통보…내주 중 노사 교섭
+     Summary: [지디넷코리아]한때 업계 4위였던 페퍼저축은행이 유례없는 세 자릿수 규모 해고로 노사 간 내홍을 빚고 있다.25일 전국사무금융노동조합은 페퍼저축은행 노동조합이 지난 15일 결성됐다고 밝혔다.페퍼저축은행 사측은 2025년 1월과 10월에 이어 올해 6월까지 세 차례 걸쳐 희망퇴직을 진행했으며, 6월 희망퇴직 전 150명 직원을 구조조정을 하겠다는 계획을 밝혔다. 페퍼저축은행 노동조합에 따르면 이달 14일 기준으로 해고 대상 인원인 150명 중 41명이 희망퇴직했으며 100여명 남은 직원을 자르기 위한 작업을 사측이 진행 중이다.페퍼저축은행 노조 측은 사측의 해고 과정이 불법적이라는 점을 강조하고 있다. 관계자는 "노동조합이나 근로자 대표도 없었던 상황이다 보니 직원을 한 회의실에 모아놓고 해고에 대한 절차를 진행하고 있다고 말했다"며 "해고 절차가 불합리하게 이뤄지고 있다"고 지적했다.페퍼저축은행 노조는 내주 중 사측과 교섭에 나설 예정이다. 교섭 안건 중 하나는 해고프로세스 중단이다. 노조 관계자는 "노조가 설립됐다고 하더라도 사측은 해고가 진행되고 있으니 8월 말에는 해고 통보하겠다는 생각을 갖고 있다"며 "해당 해고 절차가 무효라는 점에 대해 교섭할 계획"이라고 말했다.페퍼저축은행은 2021년 817억원 당기순이익을 내면서 역대 최고 실적을 내기도 했다. 당시 총 자산도 6조~7조원에 달했다. 하지만 2023년 1073억원 적자를 낸 이후 2024년 961억원, 2025년 555억원 적자가 3년 연속 이어졌다.
+411. [2026-07-25T01:30:01+00:00] [산업] [연합뉴스 산업 최신기사] [테크톡노트] AI 판 흔든 '키미 K3'…미국이 긴장한 이유
+     Summary: (서울=연합뉴스) 권하영 기자 = 중국 인공지능(AI) 스타트업 문샷AI가 지난 17일 공개한 오픈웨이트(가중치 공개형) 대규모언어모델(LLM)...
+412. [2026-07-25T01:30:00+00:00] [산업] [연합뉴스 경제 최신기사] [연합뉴스 이 시각 헤드라인] - 10:30
+     Summary: ■ 李대통령 &apos;샌프란AI 선언&apos;…&quot;韓, 대체불가 공급망 핵심 국가로&quot;
+413. [2026-07-25T01:24:58+00:00] [기타] [Bloomberg Markets] Japan’s Seven & i Abandons Investment Talks With Poland’s Zabka
+     Summary: Japan’s Seven &amp; i Holdings Co. has ended talks over a potential investment in Zabka Group SA, Poland’s largest convenience store operator, even as it continues to look for expansion opportunities beyond its home market.
+414. [2026-07-25T01:18:06+00:00] [기타] [매일경제 : 전체뉴스] [단독] 파라다이스, 장충동 새 호텔 상표 등록 완료…선대 회장 이름 딴 ‘에데나’
+     Summary: 지주사 통해 ‘에데나’ 상표권 확보해 서울 장충동 우버 럭셔리 호텔 추진 미쉐린 3스타 강민구 셰프 협업 기대 서울 거점 더해 호텔 벨트 완성 예정파라다이스그룹이 서울 한복판에 새..
+415. [2026-07-25T01:17:15+00:00] [기타] [매일경제 : 전체뉴스] “돈 벌기 참 쉽네”…원구성 파행에도 월급 450만원 ‘꼬박꼬박’, 어디길래
+     Summary: 대전 지역 일부 기초의회들이 원(院) 구성 파행으로 의회 기능을 사실상 전면 마비시키고도 수백만 원 상당의 월급(의정비·월정수당)을 정상 수령해 비판을 받고 있다. 25일 지역 정..
+416. [2026-07-25T01:16:12+00:00] [기타] [ZDNet Korea] '6천만 IP의 힘'…위메이드맥스 '윈드러너 키우기', 한국·대만 양대 마켓 1위
+     Summary: [지디넷코리아]위메이드맥스의 신작 방치형 RPG가 흥행 IP의 인지도를 앞세워 국내외 시장에서 초반 인기 순위 정상을 싹쓸이했다.위메이드맥스는 라이트컨이 개발한 방치형 RPG '윈드러너 키우기'가 한국과 대만 지역의 구글 플레이, 애플 앱스토어 인기 게임 순위 1위를 달성했다고 25일 밝혔다.지난 21일 정식 출시된 윈드러너 키우기는 출시 4일 만에 양대 마켓 정상에 올랐으며, 유저 평점 역시 4점대 중반을 기록하며 초반 흥행세를 이어가고 있다.이 게임은 글로벌 누적 6000만 다운로드를 기록한 인기 IP '윈드러너'를 방치형 RPG로 재해석한 작품이다. '콤보-피버-피버 버스트'로 이어지는 독자적인 전투 시스템과 150여 종의 수집·성장 콘텐츠를 갖춘 것이 특징이다.현재 3000회 뽑기를 지원하는 성장 이벤트와 7일 이벤트 등 다양한 출시 프로모션을 진행 중이며, 사전예약자 및 이용자 전원에게 레전더리 캐릭터와 탈것 등 보상을 제공하고 있다.이길형 라이트컨 대표는 "원작의 감성과 차별화된 전투 시스템이 유저분들의 긍정적인 반응으로 이어진 것 같다"며 "안정적인 서비스와 지속적인 업데이트로 장기 흥행 기틀을 다지겠다"고 전했다.
+417. [2026-07-25T01:15:06+00:00] [정책] [이데일리 - 경제/정책뉴스] “특금법과 네이버·두나무 심사는 달라”…공정위 선긋기
+     Summary: 공정거래위원회가 네이버파이낸셜과 두나무 합병 관련해 심층 검토 입장을 밝혔다. 대통령 직속 규제합리화위원회(규합위)의 규제완화 권고와 네이버·두나무 합병 심사는 직접적 연관성이 없는데다 1위 사업자 간 합병이어서 면밀한 검토가 필요하다는 이유에서다. 25일 이데일리 취재 결과, 공정거래위원회는 규합위 권고와 네이버파이낸셜·두나무 기업결합은 별개 사안이라며...
+418. [2026-07-25T01:10:34+00:00] [산업] [경제] 마사회, 경마지원직 187명 공개채용…8월 5일까지 접수
+     Summary: <p><img src="https://image.newsis.com/2026/07/02/NISI20260702_0002176548_web.jpg?rnd=20260702150846" /></p><br />[세종=뉴시스]임소현 기자 = 한국마사회가 공정하고 투명한 능력 중심 채용을 위해 경마지원직 187명을 공개 모집한다.<br /><br />마사회는 구매권 발급과 고객지원, 고객구호 등 경마 시행을 지원하는 무기계약직인 &#039;경마지원직&#039; 187명을 채용한다고 25일 밝혔다. 원서 접수는 오는 8월 5일 오후 6시까지 마사회 채용 홈페이지를 통해 진행된다.<br /><br />경마지원직은 주 2일, 총 15시간 근무하는 직군으로 4대 보험과 주휴수당, 연차휴가 등 복리후생이 제공된다.<br /><br />지원 자격은 만 19세 이상 만 60세 미만이며 학력과 성별, 전공 제한 없이 지원할 수 있다. 채용 과정에서는 출신 학교와 가족관계 등 직무와 무관한 정보를 배제하는 블라인드 채용 방식을 적용한다.<br /><br />모집 분야는 발매직 6명, 진행직 177명, 고객구호직 4명 등 총 187명이다. 근무지는 렛츠런파크 서울과 수도권 사업장, 광주·천안지사, 장수목장이다.<br /><br />사회형평적 채용 확대를 위해 진행직 10명은 보훈 대상자 제한경쟁으로 선발한다. 고객구호직은 업무 특성을 고려해 응급구조사 1·2급 또는 간호사 자격증 소지자만 지원할 수 있다.<br /><br />채용 절차는 서류전형과 면접전형으로 진행된다. 수도권 지원자는 과천 본사에서, 지방 사업장 지원자는 장수목장과 광주·천안지사 등 해당 사업장에서 면접을 치를 수 있도록 해 지원자의 접근성과 편의성을 높였다.<br /><br />채용 관련 세부 사항은 한국마사회 채용 홈페이지와 공공기관 채용정보시스템 &#039;잡알리오&#039;에서 확인할 수 있다.<br />
+◎공감언론 뉴시스 shlim@newsis.com
+419. [2026-07-25T01:07:48+00:00] [정책] [경제] 통상본부장, 美 의회·업계 총력 접촉…301조 관세 등 논의
+     Summary: <p><img src="https://image.newsis.com/2026/07/24/NISI20260724_0021375817_web.jpg?rnd=20260724094718" /></p><br />[세종=뉴시스]임소현 기자 = 여한구 산업통상부 통상교섭본부장이 미국을 찾아 미 행정부와 의회, 주요 기업을 상대로 대미 통상 현안 관리에 나섰다. 최근 미국의 301조 관세 후속조치와 한국의 디지털 규제를 둘러싼 우려가 이어지는 가운데, 양국 경제·통상 협력의 안정적 관리에 외교력을 집중한 것이다.<br /><br />산업부는 여 본부장이 지난 21일부터 24일(현지시간)까지 미국 워싱턴 D.C.를 방문해 미국 행정부·의회·업계 주요 인사들과 양국 경제·통상 관계와 301조 관세 등 주요 통상 현안을 논의했다고 25일 밝혔다.<br /><br />여 본부장은 이번 방미 기간 빌 해거티 상원의원, 에이드리언 스미스 하원 세입위원회 무역소위원장 등 상·하원 의원 10명을 만나 한국이 미국의 핵심 투자국이자 반도체·조선·에너지 등 전략산업 분야의 필수 협력 파트너라는 점을 강조했다. 이어 한·미 간 상호 호혜적인 경제 관계가 더욱 공고해질 수 있도록 미 의회의 적극적인 지지를 요청했다.<br /><br />또 방미 중인 한·미 의원연맹 소속 의원단과 함께 스티브 데인스 상원의원, 브래드 슈나이더 하원의원을 만나 양국 협력 강화 의지를 재확인했다.<br /><br />미국 업계가 지속적으로 우려를 제기해온 국내 디지털 법·정책과 관련해서도 직접 설명에 나섰다.<br /><br />여 본부장은 구글, 애플, AWS, 퀄컴 등 디지털 기업을 비롯해 화이자, 일라이 릴리 등 바이오 기업, 메트라이프와 처브 등 금융사, 제너럴모터스(GM) 관계자들을 만나 우리 정부의 디지털 법·정책이 특정 국가나 미국 기업을 차별하기 위한 것이 아니라는 점을 설명하고 업계 의견을 청취했다.<br /><br />앞서 여 본부장은 지난 21일 제이미슨 그리어 미국 무역대표부(USTR) 대표를 
+420. [2026-07-25T01:05:54+00:00] [실적] [매일경제 : 전체뉴스] 청계천서 목욕에 때밀이까지…‘역대급 빌런’ 등장 [영상]
+     Summary: ‘행운의 동전 싹쓸이’ 논란으로 몸살을 앓았던 서울 청계천에서 이번에는 한 중년 여성이 대낮에 목욕과 때밀이를 하는 모습이 포착돼 논란이 일고 있다. 25일 사회관계망서비스(SNS..
+421. [2026-07-25T01:04:33+00:00] [기타] [매일경제 : 전체뉴스] 화장실 휴지봉 고장 났는데 어디서 사나요…근데 그거 뭐지? [그거사전2]
+     Summary: [그거사전 - 105] 화장실 휴지 거는 하얀색 봉 ‘그거’ 명사. 1. 휴지걸이 봉, 보빈, 보빙 2. (美) 토일렛 페이퍼 스핀들(toilet paper spindle), 토일..
+422. [2026-07-25T01:02:01+00:00] [금리환율] [이데일리 - 경제/정책뉴스] [속보]이해진 "엔비디아·브룩필드, 네이버에 100억 달러 투자"
+     Summary: [속보]이해진 “엔비디아·브룩필드, 네이버에 100억 달러 투자”
+423. [2026-07-25T01:00:50+00:00] [정책] [경제] 中 증감회 “자본시장 안정 위해 역주기조절 강화”
+     Summary: <p><img src="https://image.newsis.com/2023/01/09/NISI20230109_0001172361_web.jpg?rnd=20230109171941" /></p><br />[서울=뉴시스]이재준 기자 = 중국 증권감독관리위원회(證監會)는 자본시장의 안정적인 운영을 위해 역주기 조절(逆周期調節)을 강화하기로 했다.<br /><br />역주기 조절은 시장이 좋을 때는 과열을 막고, 시장이 나쁠 때는 정책 지원을 확대해 경기와 증시의 급격한 흔들림을 완화하는 정책 운용 방식이다.<br /><br />경제통과 홍콩경제일보는 25일 증감회가 우칭(吳清) 주석 주재로 당 건설 및 감독업무 좌담회를 열어 올해 상반기 업무를 결산하고 하반기 중점 과제를 발표했다고 전했다.<br /><br />증감회는 상반기 자본시장이 전반적으로 안정적이고 활발한 흐름을 보였으며 중점 분야의 위험도 지속적으로 완화됐다고 평가했다.<br /><br />다만 지정학적 충돌과 글로벌 금융시장 변동성 확대 위험은 여전히 남아 있다고 진단했다.<br /><br />이에 따라 시장 안정을 위한 역주기 조절을 강화하고 중장기 자금의 증시 유입을 확대하는 한편 투자·융자 제도 개혁과 상장기업 경쟁력 제고, 중점 분야 리스크 관리에 역량을 집중하기로 했다.<br /><br />증감회는 &#039;안정 속 발전(穩中求進)&#039; 기조를 유지해 제15차 5개년 계획(2026~2030년) 기간 자본시장 정책을 순조롭게 추진하겠다는 방침도 제시했다.<br /><br />또 거시경제 여건과 시장 수급, 정책 환경 등 긍정적인 요인이 꾸준히 축적되고 자본시장 개혁 효과도 이어지고 있다며 중국 증시의 투자 매력이 전반적으로 양호한 수준이라고 평가했다.<br /><br />하반기에는 모두 7개 중점 과제를 추진한다. 시장 안정을 위해서는 보다 정교하고 효과적인 역주기 조절 정책을 시행하고 중장기 자금의 증시 유입 규모와 비중을 지속적으로 확대한다. 글로벌 금융시장 변동과 해외 위험이 중국 
+424. [2026-07-25T01:00:07+00:00] [산업] [한국경제 | 뉴스 | 증권] AI랠리 최대 수혜주라더니…'반토막' 이수페타시스, 반등은 언제쯤?
+425. [2026-07-25T01:00:03+00:00] [기타] [매일경제 : 전체뉴스] ‘10대 여고생’에 흉기 휘두른 10대男…경찰, 구속영장 신청
+     Summary: 서울 강서구 화곡동에서 10대 여고생에게 흉기를 휘두른 10대 남성(A 군)에게 경찰이 구속영장을 신청했다. 25일 경찰에 따르면 서울 강서경찰서는 전날 살인미수 혐의를 받는 A ..
+426. [2026-07-25T01:00:00+00:00] [실적] [경제] 더블 역세권 '월계 중흥S클래스'…노원에선 최고가, 장위와 비교하면 경쟁력[르포]
+     Summary: [서울=뉴시스] 강세훈 기자, 신연경 인턴기자 = 서울 노원구 월계동 일대가 대규모 정비사업과 광운대역세권 개발 기대감을 품고 빠르게 변화를 준비하고 있다. 오래된 골목과 생활형 상권은 여전히 일상을 이어가고 있지만, 그 사이사이에서는 타워크레인이 쉼 없이 움직이며 새로운 도시의 윤곽을 그리고 있었다.<br /><br />지난 22일 찾은 &#039;월계 중흥S-클래스 리비에르&#039; 사업지 일대는 과거와 미래가 공존하는 공간이었다. 부슬비가 내리는 오후에도 석계역 1번 출구 앞은 장을 보러 나온 주민들과 노점상을 둘러보는 사람들로 활기를 띠었다. 식료품점과 청과물 가게, 오랜 음식점과 노래방이 늘어선 골목은 오래된 생활권의 분위기를 그대로 간직하고 있었다.<br /><br />서울 지하철 1호선과 6호선 더블역세권인 석계역 앞 석계역문화공원에서는 주민들이 차양막 아래 모여 더위를 피했고, 인근 우이천 산책로에서는 자전거를 타거나 달리기를 하는 시민들의 모습도 어렵지 않게 볼 수 있었다.<br /><br />현장에서 만난 한 주민은 &quot;낮에는 학교나 직장 때문에 한산하지만 저녁만 되면 동네 사람들로 북적인다&quot;며 &quot;오래 산 사람들이 많은 동네라 정이 있다&quot;고 말했다.<br /><br />실제로 사업지 주변은 병·의원과 슈퍼마켓, 청과시장 등 생활 인프라가 밀집해 있다. 규모 자체는 크지 않지만 대부분 도보 5~10분 이내에서 이용할 수 있어 생활 편의성은 갖췄다는 평가다.<br /><br />사업지로 향하는 약 4분 남짓한 길에서는 변화의 조짐도 곳곳에서 확인됐다. 인근 구축 아파트에는 재건축을 알리는 현수막이 걸려 있었고, 사방에서는 타워크레인이 분주하게 움직였다. 단지는 광운대역세권 개발사업인 &#039;서울원아이파크&#039;와 장위뉴타운 &#039;푸르지오 라디우스 파크&#039; 사이에 들어서며 향후 일대 개발의 수혜 단지로 꼽힌다.<br /><br />24일 개관한 견본주택에도 동네 주민과 실수요자들의 발길이 이어
+427. [2026-07-25T01:00:00+00:00] [정책] [Bloomberg Markets] El Niño Worsens Plight of Asia’s Rice Belt After War Price Shock
+     Summary: A dry spell is sweeping across Asia’s rice fields, dealing another blow to farmers grappling with steep fuel and fertilizer prices triggered by the war in Iran.
+428. [2026-07-25T00:57:42+00:00] [빅테크발언] [조선일보] 이재용·정의선·이해진, 엔비디아 본사서 젠슨 황 만나
+     Summary: 이재용 삼성전자 회장과 정의선 현대자동차그룹 회장, 이해진 네이버 창업자 겸 이사회 의장이 미국 실리콘밸리에 있는 엔비디아 본사를 방문해 젠슨 황 엔비디아 최고경영자(CEO)와 만났다.  24일(현지시각) 엔비디아는 이들 기업인이 미국 캘리포니아주 산타클라라에 있는 엔비디아 본사를 둘러봤다고 밝혔다. 이 회장과 정 회장, 이 의장은 엔비디아 창립자인 황 C
+429. [2026-07-25T00:53:10+00:00] [빅테크발언] [조선일보] 이재용·정의선·이해진, 엔비디아 본사 찾아 젠슨 황 만났다
+430. [2026-07-25T00:48:07+00:00] [정책] [매일경제 : 전체뉴스] “연 1억4000만원 버는데 건보료 0원?”…정부, 일용소득도 이젠 건보료 뗀다
+     Summary: 일용소득 2000만원 초과분 50% 반영 연간 2658억원 재정 확충 기대정부가 연간 2000만원을 넘는 일용근로소득에 대해 건강보험료를 부과하는 방안을 본격 추진한다. 그동안 취..
+431. [2026-07-25T00:42:47+00:00] [기타] [매일경제 : 전체뉴스] [부음] 이근오(EBRD 수석연구원)씨 모친상
+     Summary: ▲ 이경희(향년 72세)씨 별세, 이동숙(전 주케냐대한민국대사관 공사)씨 배우자상, 이근오(EBRD 수석연구원)·이근동(세인이엔에스 과장)씨 모친상, 이미야씨 시모상, 이안나·이태..
+432. [2026-07-25T00:39:48+00:00] [산업] [연합뉴스 산업 최신기사] [전문] 李대통령 '샌프란 AI 선언'…"담대한 미래, 韓 든든한 파트너"
+     Summary: (샌프란시스코=연합뉴스) 임형섭 황윤기 기자 = 미국 샌프란시스코를 방문한 이재명 대통령은 24일(현지시간) 현지에서 열린 &apos;AI(인공지능) 서...
+433. [2026-07-25T00:30:53+00:00] [빅테크발언] [연합뉴스 산업 최신기사] 이재용·정의선·이해진, 엔비디아 본사서 젠슨 황 만났다(종합)
+     Summary: (샌프란시스코·서울=연합뉴스) 권영전 특파원 홍규빈 한상용 기자 = 이재용 삼성전자[005930] 회장과 정의선 현대자동차그룹 회장, 이해진 네...
+434. [2026-07-25T00:30:01+00:00] [기타] [연합뉴스 산업 최신기사] [이지 사이언스] ABS 도입하니 '스타 타자' 특혜 판정 줄었다
+     Summary: (서울=연합뉴스) 조승한 기자 = 한국 프로야구가 세계 최초로 도입한 자동투구판정시스템(ABS)이 심판의 &apos;스타 타자&apos; 편향을 줄였을 가능성이 ...
+435. [2026-07-25T00:30:00+00:00] [정책] [경제] 지출부담 급증한 기초연금…70% 지급 방식 바뀔까[재정개혁 골든타임①]
+     Summary: <p><img src="https://image.newsis.com/2025/02/25/NISI20250225_0001777853_web.jpg?rnd=20250225114824" /></p><br />[세종=뉴시스] 안호균 기자 = 정부는 최근 발표한 하반기 경제성장전략에서 기초연금을 저소득층을 집중 지원하는 방식으로 개편하겠다고 밝혔다. 고령자의 70%에게 지원하는 현행 방식을 유지하면 불평등 완화 효과는 점점 떨어지고 재정 부담만 빠르게 증가할 것이라는 판단이다.<br /><br />고령인구의 노후 대비와 소득 수준이 점차 개선되면서 빈곤층에 해당하지 않는 기초연금 수급자는 더 늘어날 수 밖에 없는 구조다. 급격한 고령화로 재정의 여력이 점차 떨어질 것으로 예상되는 상황에서 정부가 &#039;하후상박&#039; 구조 도입을 통해 기초연금의 효율성과 지속가능성을 높일 수 있을지 주목된다.<br /><br />25일 관련 부처에 따르면 기초연금은 2008년 노인 빈곤 완화를 위해 도입된 &#039;기초노령연금&#039;이 확대·개편된 제도다. 기초노령연금 제도 도입 당시 우리나라의 노인 빈곤율은 경제협력개발기구(OECD) 국가 중 가장 높은 44.1%에 달했고, 노인의 절반 가량은 소득이 빈곤선(중위소득의 50%)에도 미치지 못했다. <br /><br />하지만 기초연금이 소득 하위 70% 노인(65세 이상) 가구를 대상으로 지원하는 방식을 현재까지 유지하면서, 연금 수급자 중 취약 계층이 아닌 노인이 증가하고 있다. 최근 65세에 진입하는 세대의 소득과 자산 수준이 기존 고령층에 비해 높아지고 있기 때문이다.<br /><br />기초연금을 지원받는 고령자의 월 소득 인정액은 2015년 중위소득의 58%에서 지난해 93% 수준까지 높아졌다. 올해 기준 소득 인정액은 단독 가구 기준 247만원, 부부 가구 기준 395만2000원이다. 월 지원액은 34만9700원이다. <br /><br />현재의 지원 방식을 유지할 경우 급격한 고령화로 인해 수급자와 재정 부담
+436. [2026-07-25T00:29:55+00:00] [정책] [경제] 日, 한국·중국산 아연도금강판에 반덤핑 예비 판정
+     Summary: <p><img src="https://image.newsis.com/2014/02/19/NISI20140219_0009377273_web.jpg?rnd=20160915084709" /></p><br />[서울=뉴시스]이재준 기자 = 일본 정부는 중국과 한국산 용융아연도금 강대·강판에 대한 반덤핑(부당 염가판매) 관세 조사와 관련해 덤핑 수입이 있었고 이로 인해 일본 국내 산업이 실질적인 피해를 입었다는 예비 판정을 내렸다고 닛케이 신문과 지지(時事) 통신 등이 25일 보도했다.<br /><br />매체에 따르면 일본 정부는 전날 그간 조사 결과를 토대로 이 같은 조치를 발표하면서 반덤핑 마진을 한국산 32.49∼42.69%, 중국산 63.95∼68.67%로 산정했다.<br /><br />예비 판정을 근거로 아카자와 료세이(赤澤亮正) 경제산업상은 산정된 덤핑 마진 범위 내에서 잠정 반덤핑 관세를 부과하는 방안을 관세·외환 등 심의회에 자문했다고 밝혔다.<br /><br />아카자와 경제산업상은 &quot;심의회가 답신을 내놓으면 이르면 다음 달부터 잠정 반덤핑 관세 부과에 들어갈 예정&quot;이라고 전했다.<br /><br />일본 정부는 아울러 이번 반덤핑 조사 기간을 12월12일까지 4개월 연장한다고 발표했다. 정부는 지난해 8월13일부터 관련 조사를 진행했으며 이해관계자들이 제출한 증거와 자료를 추가로 검토할 필요가 있다고 설명했다.<br /><br />일본 반덤핑 조사는 원칙적으로 1년 이내에 마무리해야 하지만 필요할 경우 최대 6개월까지 연장할 수 있다.<br />
+◎공감언론 뉴시스 yjjs@newsis.com
+437. [2026-07-25T00:28:54+00:00] [기타] [매일경제 : 전체뉴스] “내 손길을 뿌리쳐?”…지인 8살 아이 목 졸라 실신시킨 50대
+     Summary: 자신의 손길을 거부했다는 이유로 지인의 8살 딸의 목을 조르고 배를 때려 실신하게 한 뒤 출동한 경찰관까지 폭행한 50대에게 징역형의 집행유예가 선고됐다. 25일 법조계에 따르면 ..
+438. [2026-07-25T00:22:04+00:00] [기타] [매일경제 : 전체뉴스] “사람이 뛰쳐나와 살려달라”…경산 방화 사건 후 트라우마 갇힌 주민들
+     Summary: “살려달라는 소리가 저녁까지 머릿속을 떠나지 않았어요.” 경북 경산시의 한 아파트 관리사무소 방화 참사 다음 날인 지난 24일 오후, 사고 현장 앞은 여전히 가시지 않은 충격과 ..
+439. [2026-07-25T00:16:04+00:00] [산업] [조선일보] 李대통령 “한국, AI 생산기지·글로벌 테스트베드 될 것”
+     Summary: 이재명 대통령이 한국을 글로벌 인공지능(AI) 공급망의 핵심 국가이자 세계 기술과 자본, 인재를 연결하는 AI 협력 플랫폼으로 육성하겠다고 밝혔다.  이 대통령은 24일(현지 시각) 미국 샌프란시스코에서 열린 ‘AI 서밋’에서 발표한 선언문을 통해 “대한민국은 글로벌 AI 생산기지이자 혁신의 토양이 되고, 세계 기술과 자본, 인재와 아이디어가 연결되는 대체
+440. [2026-07-25T00:13:53+00:00] [원자재] [조선일보] 미국 증시, 유가 하락에도 반도체주 급락에 혼조세
+441. [2026-07-25T00:13:12+00:00] [기타] [한국경제 | 뉴스 | 국제] '반바지 출근' 허용에…2030 직장인들에 불티나게 팔린 게 [도쿄나우]
+442. [2026-07-25T00:10:13+00:00] [산업] [ZDNet Korea] 베이징대학교 동문 2명 필즈상 수상, 2026 세계수학자대회에 베이징대 출신 14명 연사로 참여
+     Summary: [지디넷코리아]베이징 2026년 7월 25일 /PRNewswire/ -- 2026 세계수학자대회(International Congress of Mathematicians, ICM)가 현지시간으로 7월 23일 오전 미국 필라델피아에서 개막했다. 베이징대학교(Peking University, PKU) 동문 왕훙(Wang Hong)과 덩위(Deng Yu)가 수학계 최고의 영예 중 하나인 2026년 필즈상(Fields Medal)을 수상하며 베이징대학교 역사에 새로운 이정표를 세웠다.     Wang Hong (rightmost) and Deng Yu (leftmost) receiving the Fields Medals.    수상자는 국제수학연맹(International Mathematical Union, IMU)이 공식 발표했다. 국제수학연맹은 4년마다 40세 미만의 수학자에게 기존 연구 성과의 영향력과 향후 발전 가능성을 인정해 필즈상을 수여한다. 왕훙과 덩위는 이번에 선정된 수상자 4명 가운데 2명이다.  두 사람이 같은 해에 필즈상을 수상한 것은 베이징대학교 역사상 처음으로, 특히 2007학번 동문 2명이 동시에 수상했다는 점에서 의미가 크다.  수상 외에도 베이징대학교는 이번 학술대회에 동문 10명과 교수진 4명 등 총 14명이 연사가 참여하면서 초청 연사 수에서도 새로운 기록을 세웠다  왕훙의 수상은 또 다른 특별한 의미를 지닌다. 왕훙은 필즈상을 수상한 역사상 세 번째 여성이자, 이 상을 받은 최초의 중국 여성이다.  왕훙은 조슈아 잘(Joshua Zahl)과 함께 3차원 카케야 추측(Kakeya conjecture)을 해결한 연구로 가장 잘 알려져 있다. 해석학과 기하학의 접점에 있는 이 오랜 난제는 수십 년 동안 수학자들의 도전 과제로 남아 있었으며, 수학의 여러 분야와 폭넓게 연결돼 있다.  왕훙은 현재 프랑스 고등과학연구소(Institut des Hautes &Eacute;tudes Scientifiques, IHES) 종신교수로 재직하고 있다.
+443. [2026-07-25T00:10:02+00:00] [실적] [ZDNet Korea] 애니서치, 차세대 AI 빌더 지원 위한 학생 및 개발자 프로그램 출시
+     Summary: [지디넷코리아]베이징 2026년 7월 25일 /PRNewswire/ -- 애니서치(AnySearch)가 AI 검색 인프라를 무료로 이용할 수 있도록 지원하는 글로벌 이니셔티브인 학생 및 개발자 프로그램(Student &amp; Developer Program)을 공식 출시했다. 이 프로그램은 학생과 개발자가 학술 연구를 추진하고 오픈소스 프로젝트에 기여하며 차세대 AI 기반 애플리케이션을 구축할 수 있도록 지원하기 위해 마련됐다.         AI가 발전하면서 애플리케이션은 단순한 정보 검색에서 복잡한 작업 수행으로 전환되고 있다. AI 에이전트는 실시간으로 신뢰할 수 있는 정보에 접근하는 능력을 기반으로 하는 주요 패러다임으로 부상하고 있다. 그러나 많은 학생과 초기 단계 개발자는 이러한 역량을 구현하는 데 필요한 안정적이고 신뢰할 수 있는 인프라를 확보하는 데 어려움을 겪고 있다.  애니서치는 이번 학생 및 개발자 프로그램을 통해 AI 혁신 비용을 절감하고, 더 많은 빌더가 아이디어를 신속하게 시험하고 애플리케이션의 프로토타입을 제작하며 새롭게 형성되는 AI 기반 생태계에 기여하는 데 필요한 정보 활용 역량을 제공하고자 한다.  애니서치의 설립자인 쉐관췬(Xue Guanqun) 최고경영자(CEO)는 "AI의 발전은 단순히 더 우수한 모델을 개발하는 데 그치지 않는다. 이러한 모델을 현실적인 솔루션으로 구현할 수 있는 개발자의 손에 전달하는 것이 중요하다"며 "이번 프로그램을 통해 초기 아이디어를 탐색하는 단계부터 상용 출시가 가능한 제품을 선보이는 단계에 이르기까지 전 세계 학생과 개발자가 필요한 기초 AI 지원을 최대한 간편하게 확보할 수 있도록 하고자 한다. 이를 통해 모두가 함께 AI 혁신의 속도를 높일 수 있기를 기대한다"고 말했다.  애니서치는 AI 시대를 위한 검색 인프라를 구축하고 있으며, AI 에이전트가 시의적절하고 검증 가능한 정보에 접근할 수 있는 통합 게이트웨이를 제공한다. 개발자는 API, MCP 및 스킬 기반 인터페이스를 통해 애니
+444. [2026-07-25T00:06:09+00:00] [빅테크발언] [매일경제 : 전체뉴스] 젠슨 황 “지금은 韓 AI 황금시대”…올트먼 “메가프로젝트, 세계 모범”
+     Summary: 美빅테크 CEO들 李대통령과 만남서 韓민관 합작 메가프로젝트 관심“대한민국은 인공지능(AI)의 현실화에 관해 세계에서 가장 앞서가는 나라를 만들겠다는 각오가 돼 있습니다.” 미국·..
+445. [2026-07-25T00:05:49+00:00] [기타] [매일경제 : 전체뉴스] 21살 걸그룹 멤버는 어떻게 강남 ‘18억 로또’를 뚫었나
+     Summary: 문턱 높은 청약 가점 경쟁에 20·30세대 겨눈 추첨제 도입 강남 대단지 청약 이어지지만 계약 포기하면 ‘재당첨 제한’ 현금 동원력 꼼꼼하게 체크해야그룹 아이브 안유진이 서울 서초..
+446. [2026-07-25T00:02:03+00:00] [정책] [ZDNet Korea] 마음AI, 바르퀸과 협력…글로벌 피지컬AI 시장 공략
+     Summary: [지디넷코리아]마음AI가 글로벌 피지컬AI(Physical AI) 시장 진출에 본격 나선다.마음AI는 미국 워싱턴 D.C.를 거점으로 미주 지역 비즈니스 네트워크를 보유한 바르킨 인터내셔널(Barquin International Corporation)과 전략적 업무협약(MOU)을 체결,글로벌 및 중남미 시장을 대상으로 피지컬AI 공동 사업 발굴과 현지 사업화를 위한 협력을 추진한다고 24일 밝혔다.이번 협약은 단순히 기술 교류를 넘어 마음AI의 피지컬AI, 자율주행, 로보틱스, AI 휴먼 기술과 바르킨(Barquin)의 현지 산업 네트워크를 연계, 실제 산업 현장에서 활용 가능한 적용 사례(Use Case)를 공동 발굴하고 사업화하는 데 목적이 있다.양사는 시장조사와 현지 수요 분석을 시작으로 기술 실증(PoC), 사업모델 개발, 파트너 발굴까지 단계적으로 협력을 확대할 계획이다. 특히 공공안전, 스마트 인프라, 제조, 물류, 시설관리, 서비스 등 다양한 산업 분야에서 피지컬lAI 적용 사례를 공동으로 구축하고, 현지 실증을 거쳐 글로벌 시장으로 확산하는 협력 체계를 마련할 방침이다.바르킨 인터내셔널(Barquin International)은 미국, 캐나다, 멕시코, 푸에르토리코, 도미니카공화국 등 미주 지역에서 경제개발과 공공정책, 디지털 전환 및 기술 협력 프로젝트를 수행하며 정부기관과 기업 간 협력을 지원하는 글로벌 컨설팅 기업이다.이날 마음AI는 자사 온디바이스 AI 모듈 '메이드(MAIED)', AI 자율주행 솔루션 '나비컴(NAVICOM)', 4족보행 로봇 '진도봇(JINDOBOT)'과 함께 월드모델(World Model) 및 VLA(Vision-Language-Action) 기반 피지컬AI 기술을 시연했다. AI가 실제 환경을 이해하고 스스로 판단·행동하는 자율지능 기술과 다양한 산업 현장에서의 활용 가능성을 소개하며 협력 방향을 공유했다.손병희 마음AI 국방AI&amp;로보틱스 부문 대표는 "피지컬AI 경쟁력은 뛰어난 AI 모델 자체보다 실제 산
+447. [2026-07-25T00:01:00+00:00] [기타] [연합뉴스 산업 최신기사] 대형병원 특수관계 간납업체 지분 정리…을지대병원도 추진
+     Summary: (서울=연합뉴스) 김잔디 기자 = 내년 말 특수관계인 간접납품업체(간납업체)와의 거래를 금지하는 개정 의료기기법 시행을 앞두고 국내 대형병원들이...
+448. [2026-07-25T00:00:10+00:00] [기타] [한국경제 | 뉴스 | 증권] "국민연금, 이것부터 확인하세요"…노후 성패 갈리는 5가지
+449. [2026-07-25T00:00:02+00:00] [기타] [연합뉴스 산업 최신기사] '여름 방학엔 과학의 도시로!'…대덕특구 청소년 프로그램 다채
+     Summary: (대전＝연합뉴스) 김준호 기자 = &quot;방학엔 과학의 도시 대전 대덕특구로 오세요.&quot;
+450. [2026-07-25T00:00:01+00:00] [산업] [연합뉴스 경제 최신기사] [IPO챗] 인제니아 청약 돌입…네오뷰 코스닥 재상장
+     Summary: (서울=연합뉴스) 정회인 기자 = 7월 마지막 주(27~31일) 기업공개(IPO) 시장에서는 바이오기업 인제니아테라퓨틱스가 일반투자자 대상 공모...
+451. [2026-07-25T00:00:01+00:00] [정책] [ZDNet Korea] 지구 3분의 1 감시하는 中 위성의 비밀은 [우주로 간다]
+     Summary: [지디넷코리아]중국은 3년전 지구의 3분의 1을 24시간 내내 감시할 수 있는 레이더 위성을 우주로 발사했다. 2023년 8월 발사된 '루디 톈스 4-01(이하 루디)'은 현재까지 발사된 감시 위성 가운데 가장 높은 고도에서 운용되는 레이더 위성이다.최근 이 위성의 핵심 기술이 중국이 사실상 독점하고 있는 질화갈륨(GaN) 기반 반도체에 있다는 연구 결과가 나왔다고 홍콩 사우스차이나모닝포스트(SCMP)와 기즈모도 등 외신이 보도했다.중국 시안 우주전파기술연구소 연구진은 관련 내용을 전자공학 분야 학술지 '저널 오브 마이크로웨이브(Journal of Microwaves)'에 발표했다.보도에 따르면 루디 위성은 질화갈륨(GaN) 반도체 기반 전력 시스템을 사용해 지상의 같은 위치를 지속적으로 관측하면서도 약 3만 6000㎞ 상공의 정지궤도에서 운용된다. 중국은 현재 전 세계 갈륨 공급을 사실상 장악하고 있으며, 위성 발사 직후인 2023년부터 갈륨 수출도 제한하고 있다.루디는 현재 세계에서 유일한 정지궤도 합성개구레이더(SAR) 위성으로, 아시아•태평양 지역을 상시 관측하고 있다.일반적인 레이더 위성은 약 600㎞ 고도의 저궤도에서 운용된다. 레이더 신호는 거리가 멀어질수록 급격히 약해지기 때문이다. 반면 정지궤도 위성은 평균 3만5786㎞ 상공에서 훨씬 넓은 지역을 관측할 수 있지만, 저궤도 위성과 같은 수준의 영상 성능을 구현하려면 훨씬 더 큰 출력이 필요하다.이 문제를 해결하기 위해 연구진은 GaN 고전자이동도트랜지스터(HEMT)를 적용한 고체 전력증폭기를 개발했다. GaN 반도체가 증폭기에 전력을 공급하면 증폭기가 합성개구레이더(SAR)에 강력한 전자기파를 전달하는 방식이다.연구진에 따르면 위성에 탑재된 전력증폭기 한 기의 출력은 800와트(W)에 달하며, 전체 시스템은 최대 1만8천W의 출력을 낸다.또 이 장치는 전력 추가 효율(PAE) 50.3%를 기록했으며, 증폭기 20기의 2년간 궤도 운용 데이터를 분석한 결과 "8년의 설계 수명과 고성능, 높은 신
+452. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] "위약금도 안 받고 그만두겠다"…시작도 ...
+453. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] "롤러코스피 주범 왜 도입했나"…13조 쓸어담은 개미들 달라졌다
+454. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 김희철X이특 "하투하 멤버 母와 동갑…우...
+455. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] "아내(김연정 치어리더)와 집에선 같은 ...
+456. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 'GOAT' 르브론, 필라델피아 간다! 2년 11...
+457. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] "김하성 MLB 콜업? 기뻐할 선수 별로 없...
+458. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] "사생활 침해시 사임" 취임 기자회견에서...
+459. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] '4개월만 이혼' 이선정, 모아둔 돈 바닥...
+460. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] '김부장' 소지섭 사망 엔딩…? 유골함 포...
+461. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 이나연, 모발 이식 후 탈모 부작용 호소...
+462. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 던, 만성부신증후군 고백…2층 주택 최애 장소가 현관 "햇빛 많이 봐야"(나혼산)[어제TV]96
+463. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] '이효리 보러 와서 훈수까지?'…도 넘은 ...
+464. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] '고정 11개' 전현무, 무리했나…갈라진 ...
+465. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 연정훈♥한가인, 두 子女영재원 출신 "11...
+466. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 던, '병약미 NO' 확 달라진 운동 루틴 공개…"김무열 따라했다"[나혼산][별별TV]77
+467. [2026-07-25T00:00:00+00:00] [기타] [경제] "죠스가 나타났다"…수온 오른 동해, 상어 출몰 잇따라[뜨거워진 동해①]
+     Summary: <p><img src="https://image.newsis.com/2026/07/21/NISI20260721_0002191285_web.jpg?rnd=20260721102328" /></p>[서울=뉴시스] 박성환 기자, 정재훈 인턴기자 = #1. 강릉시가 상어 출몰 신고와 관련한 재난안전문자를 발송하며 주의를 당부했다. 강릉시는 경포해수욕장이 개장한 지난 4일 오후 &#039;안목해변 동쪽 4㎞ 해상에서 상어가 출몰했다&#039;며 &#039;해양레저 및 해수욕 활동 시 안전에 유의해 달라&#039;는 내용의 재난안전문자를 시민들에게 발송했다. 이는 앞서 동해안 앞바다에서 조업 중이던 어선으로부터 상어 출몰 신고가 접수된 데 따른 조치다.<br /><br />#2. 지난 5일 경북 울진 앞바다에서는 영화 &#039;죠스&#039;에 등장하는 백상아리가 그물에 잡혔다. 이튿날에도 상어 포획 사례가 이어졌다. 울진 앞바다에서는 귀상어와 청상아리가, 강원 양양 앞바다에서는 청상아리가 각각 그물에 걸렸다. <br /><br />본격적인 피서철을 앞두고 동해안 해수욕장 일대에 긴장감이 높아지고 있다. 최근 상어 출몰과 포획 사례가 잇따르면서 피서객과 어민들의 불안이 커지고 있다. <br /><br />올해 동해안에서 확인된 상어는 56마리로, 지난해 같은 기간 대비 3배 이상 늘어나며 급증세를 보이고 있다. <br /><br />지난해에 이어 올여름에도 해수면 온도 상승 영향으로 백상아리·청상아리 등 대형 상어류의 출현 빈도가 높아질 것이란 전망이 나온다. 특히 수온이 더 오르는 본격적인 피서철이 되면 출몰 빈도가 더 높아질 가능성이 제기된다. <br /><br />과거에는 공격성이 강한 상어가 주로 서해안에서 목격됐지만, 최근에는 동해안에서도 잇따라 출몰하고 있다. 동해안 수온이 상승하면서 따뜻한 해역을 선호하는 상어의 활동 범위가 넓어진 영향으로 풀이된다. <br /><br />특히 동해안에서 확인되는 청상아리와 청새리상어, 무태상어 등은 국립수산과학원 분류 기준
+468. [2026-07-25T00:00:00+00:00] [금리환율] [Nate News Economy Rank] 최태원 "3조 달러 규모 대한민국 3대 메가 프로젝트, 허황 아냐"
+469. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] "돈 벌기 참 쉽네"…원구성 파행에도 월...
+470. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 이럴수가! 마이너 강등 고우석, 등판하자...
+471. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] "한국은 쓰레기 나라" 충격 비하 발언 남...
+472. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] [공식발표] 월드컵 못 간 모리타, PL 입...
+473. [2026-07-25T00:00:00+00:00] [기타] [매일경제 : 전체뉴스] [신단수의 세상읽기] 망자의 소원
+     Summary: 죽은 뒤에도 어떤 말 못 할 사연 때문에 이승에 머물고 있는 존재를 우리는 귀신이라 부른다. 그러나 그들은 흔히 생각하는 것처럼 두려움의 대상만은 아니다. 편안한 이웃도 아니지만,..
+474. [2026-07-25T00:00:00+00:00] [산업] [매일경제 : 전체뉴스] 스마트카 ETF가 가장 많이 담은 종목은...현대차·기아 아닌 ‘삼성전기’
+     Summary: BNK자산운용, 스마트카 ETF 신규 상장 삼성전기 편입 비중 18%로 가장 높아스마트카 상장지수펀드(ETF)가 새롭게 증시에 상장했다. 커넥티드카, 소프트웨어 중심 자동차(SDV..
+475. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] "팰다르크 덕분"…李대통령에 호소하자 막힌 대출 뚫렸다?
+476. [2026-07-25T00:00:00+00:00] [산업] [Nate News Economy Rank] 이재용·최태원, 美AI서밋서 빅테크와 협력 논의…'韓 3대 메가프로젝트' ...
+477. [2026-07-25T00:00:00+00:00] [빅테크발언] [Nate News Economy Rank] 이재용·정의선·이해진, 엔비디아 본사서 젠슨 황 만나
+478. [2026-07-25T00:00:00+00:00] [산업] [Nate News Economy Rank] 이재용·최태원·정의선 "韓, AI 글로벌 허브로…의기투합"(종합)
+479. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] "세탁기에 돌리자니 불안"…러닝 열풍에 신발 전문 세탁도 뛴다
+480. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 인천 동춘동 해송마을동남아파트 52㎡ 2억4000만원에 거래
+481. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] '4타수 무안타' 이정후 3할 결국 무너졌...
+482. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] '고구마 100개' 먹은 듯 답답…1위 삼성...
+483. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] '韓 축구 청천벽력!' 이강인, 서울 투어 ...
+484. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 은퇴 발표 아직도, 호날두 향해 파격 발...
+485. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] "장애 입으면 나만 바보"…허경환, '진짜...
+486. [2026-07-25T00:00:00+00:00] [빅테크발언] [Nate News Economy Rank] 이재명 대통령과 젠슨 황 엔비디아 CEO공감수101
+487. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 황정민, 아들 '해병대' 입대…"일주일 만에 울면서 전화, 무조건 견디라고" (십오야)63
+488. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 김연아, 단발이 이렇게 시크할 줄이야…도발적 눈빛까지74
+489. [2026-07-25T00:00:00+00:00] [빅테크발언] [Nate News Economy Rank] 이재용 "헬기 처음 본 어린 李 꿈처럼"…최태원 "젠슨 황, 만나면 '모어 칩스'"공감수188
+490. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] '노소영 몫 9440억' 변호사들도 대박…최대 650억, 최소 100억49
+491. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] "진짜 이렇게 번다고?"…요즘 미 부자들만 몰래 하는 '이 재테크'
+492. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 최태원 회장, 주식담보대출-부동산 등 매각해 9440억 마련할 듯
+493. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 21살 걸그룹 멤버는 어떻게 강남 '18억 로또'를 뚫었나
+494. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 오른쪽엔 이재용, 왼쪽은 최태원…샌프란 수놓은 李 대통령 만찬
+495. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 뉴발란스 '엉터리 태극기' 논란에…서경덕 "기본부터 갖추라" 일침
+496. [2026-07-25T00:00:00+00:00] [빅테크발언] [Nate News Economy Rank] "지금은 한국 황금기"…젠슨 황 직접 말한 네이버·SK 투자 이유 [GMC]
+497. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 결승 스리런포보다 멋졌던 나성범의 품격...
+498. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] 이 더위에도…'버스 13대-500여명' 원정 ...
+499. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] "남편 믿었다가 전 재산 잃었다" 테니스 ...
+500. [2026-07-25T00:00:00+00:00] [기타] [Nate News Economy Rank] '5살 연하남편' 박현호 "♥은가은 씨께서...

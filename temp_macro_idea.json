@@ -1,0 +1,71 @@
+﻿{
+    "value":  [
+                  {
+                      "id":  "29fdaf57-4744-4677-9a19-85935126bf2d",
+                      "date":  "2026-07-16",
+                      "title":  "상반기 역대 최대 수출, 글로벌로 뻗어나가는 K-뷰티 인디 브랜드",
+                      "background":  "2026년 상반기 K-뷰티 수출액이 전년 대비 27.3% 증가한 70억 달러를 돌파하며 역대 최대를 기록함. 전통적 수출국인 중국을 넘어 미국(최대 수출국)과 유럽 등 서구권 중심의 인디 브랜드 성장이 성과를 견인하고 있음. 한국콜마의 2분기 영업이익 역대 최고치(900억 상회) 예상, 파마리서치 해외 수출 호조 등으로 증권가 목표주가 상향 릴레이가 이어지는 중.",
+                      "causal_chain":  "미국·유럽 등 글로벌 채널(세포라, 틱톡 등) 내 K-뷰티 인디 브랜드의 구조적 점유율 상승 -\u003e 국내 화장품 OEM/ODM 및 스킨부스터(의료기기) 업체들의 공장 가동률(Q) 및 마진율(P) 동반 상승 -\u003e 컨센서스를 상회하는 사상 최대 실적 달성 및 멀티플 리레이팅.",
+                      "play_mode":  "Global_Re_rating_Play",
+                      "total_score":  85,
+                      "directness":  25,
+                      "leverage":  20,
+                      "scalability_or_rotation":  20,
+                      "technical_alignment":  20,
+                      "directness_reason":  "수출 데이터(상반기 70억불)와 각 기업의 2분기 사상 최대 실적 전망 가시성이 매우 확실하게 나타남",
+                      "leverage_reason":  "생산 라인 가동률 상승 및 고마진 신규 지역(서구권) 수출 확대로 영업 레버리지 극대화",
+                      "scalability_or_rotation_reason":  "중국 의존도를 탈피하여 미국, 유럽, 동남아 등 글로벌 전역으로 지역적 횡창 확장세가 뚜렷함",
+                      "technical_alignment_reason":  "한국콜마(91.0) 등 핵심 주도주들의 기술적 우상향 추세가 꺾이지 않음",
+                      "market_timing":  "2분기 어닝 시즌 도래 및 실적 상향 리포트가 집중적으로 쏟아지며 실적 모멘텀이 부각되는 시기",
+                      "critical_risk":  "다수 인디 브랜드들의 경쟁 심화 및 마케팅(광고) 비용 증가로 인한 수익성 훼손 가능성",
+                      "raw_json":  {
+
+                                   },
+                      "created_at":  "2026-07-16T21:32:34.384571+00:00",
+                      "candidates":  [
+                                         {
+                                             "name":  "한국콜마",
+                                             "role":  "대장주",
+                                             "ret_1m":  21.3,
+                                             "ret_3m":  26.9,
+                                             "ticker":  "161890",
+                                             "signal_flag":  "🔺임박",
+                                             "near_52w_high":  91.0,
+                                             "early_signal_score":  65.0
+                                         },
+                                         {
+                                             "name":  "실리콘투",
+                                             "role":  "2차 수혜",
+                                             "ret_1m":  25.8,
+                                             "ret_3m":  -7.0,
+                                             "ticker":  "257720",
+                                             "signal_flag":  "🔵하단",
+                                             "near_52w_high":  79.0,
+                                             "early_signal_score":  35.0
+                                         },
+                                         {
+                                             "name":  "코스맥스비티아이",
+                                             "role":  "밸류체인",
+                                             "ret_1m":  9.4,
+                                             "ret_3m":  7.1,
+                                             "ticker":  "044820",
+                                             "signal_flag":  "🔵하단",
+                                             "near_52w_high":  79.8,
+                                             "early_signal_score":  29.4
+                                         },
+                                         {
+                                             "name":  "파마리서치",
+                                             "role":  "밸류체인",
+                                             "ret_1m":  9.1,
+                                             "ret_3m":  6.8,
+                                             "ticker":  "214450",
+                                             "signal_flag":  "🔵하단",
+                                             "near_52w_high":  45.6,
+                                             "early_signal_score":  29.1
+                                         }
+                                     ],
+                      "theme":  "화장품/K뷰티"
+                  }
+              ],
+    "Count":  1
+}

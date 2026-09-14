@@ -1,0 +1,56 @@
+[
+  {
+    "id": "995aadba-e946-4d8c-bc29-283ac37a1922",
+    "date": "2026-08-11",
+    "title": "HD현대중공업 美 코반에너지 9560억 발전용 엔진 계약 & LS일렉트릭 AI 데이터센터 DC 배전 협력",
+    "background": "[뉴스] HD현대중공업이 미국 에너지 인프라 개발기업 코반에너지그룹과 1GW 규모(9560억 원) '힘센엔진' 발전설비 공급계약을 체결.\nLS일렉트릭이 GS건설과 AI 데이터센터용 직류(DC) 배전 기술 개발과 전력기기 공급에 협력.\n전선 및 배터리 원자재인 구리와 코발트 가격이 남미 폭설과 콩고 수출금지로 단기 급등세 시현.\nProxy: AI 데이터센터 전력 확보를 위해 가스/디젤 엔진 발전 수요가 폭발적으로 급증, 직류 배전 도입 가속화.",
+    "causal_chain": "AIDC 전력망 병목 현상 및 송전망 지연 → 유연한 분산 전원(발전용 엔진) 수요 폭증 → HD현대중공업 대규모 북미 빅테크 수주 입증 → 전력 기기 및 인프라 업체 멀티플 리레이팅.",
+    "play_mode": "Global_Re_rating_Play",
+    "total_score": 95,
+    "directness": 25,
+    "leverage": 24,
+    "scalability_or_rotation": 24,
+    "technical_alignment": 22,
+    "directness_reason": "HD현대중공업의 9560억원 단일 계약 공시와 LS일렉트릭-GS건설 협력으로 AIDC 전력 병목 수혜 직접 확인.",
+    "leverage_reason": "육상 발전용 '힘센엔진'의 독과점적 지위와 높은 마진율.",
+    "scalability_or_rotation_reason": "변압기/전선에서 발전 인프라(엔진, 가스터빈)로 전력 테마의 구조적 순환매 확산.",
+    "technical_alignment_reason": "조선업 턴어라운드와 육상 발전 수주 모멘텀이 겹치며 주가 모멘텀 폭발 국면.",
+    "market_timing": "북미 데이터센터발 대규모 자체 발전망 구축 사이클 돌입 (0-6개월).",
+    "critical_risk": "에너지 가격 급등 또는 미국 환경 규제 변동.",
+    "raw_json": {
+      "root_driver": "AIDC Power Bottleneck & Engine Generator Demand Boom",
+      "evidence_score": 20,
+      "surprise_level": "Large",
+      "bottleneck_rank": [
+        "Large-scale Generator Engines",
+        "DC Power Distribution",
+        "Copper Supply"
+      ],
+      "transmission_confidence": "High"
+    },
+    "created_at": "2026-08-10T23:12:24.120331+00:00",
+    "candidates": [
+      {
+        "name": "HD현대중공업",
+        "role": "1GW(9560억) 규모 AIDC용 발전 엔진 수주 및 독과점 지위",
+        "ret_1m": 15.0,
+        "ret_3m": 42.0,
+        "ticker": "329180",
+        "signal_flag": "🔺임박",
+        "near_52w_high": 95.0,
+        "early_signal_score": 96.0
+      },
+      {
+        "name": "LS ELECTRIC",
+        "role": "AI 데이터센터 직류(DC) 배전망 주도 및 변압기 숏티지 지속",
+        "ret_1m": 10.0,
+        "ret_3m": 30.0,
+        "ticker": "010120",
+        "signal_flag": "📌중기후보",
+        "near_52w_high": 92.0,
+        "early_signal_score": 92.0
+      }
+    ],
+    "theme": "AIDC 전력 인프라 대격변 및 하이브리드 발전용 엔진(HD현대중공업) 1GW 수주 달성 (HD현대중공업·LS ELECTRIC)"
+  }
+]

@@ -1,0 +1,351 @@
+{
+  "AI반도체/ADR": [
+    {
+      "ticker": "000660",
+      "name": "SK하이닉스",
+      "role": "밸류체인",
+      "near_52w_high": 98.9,
+      "ret_1m": 54.9,
+      "ret_3m": 41.5,
+      "early_signal_score": 65.0,
+      "signal_flag": "🔺임박",
+      "discovery_reason": "Library(빅테크_파트너), Name match",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "005930",
+      "name": "삼성전자",
+      "role": "밸류체인",
+      "near_52w_high": 97.6,
+      "ret_1m": 23.6,
+      "ret_3m": 37.4,
+      "early_signal_score": 65.0,
+      "signal_flag": "🔺임박",
+      "discovery_reason": "Library(플랫폼_독점)",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "080220",
+      "name": "제주반도체",
+      "role": "밸류체인",
+      "near_52w_high": 100.0,
+      "ret_1m": 34.5,
+      "ret_3m": 75.9,
+      "early_signal_score": 47.1,
+      "signal_flag": "✅돌파직후",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "042700",
+      "name": "한미반도체",
+      "role": "밸류체인",
+      "near_52w_high": 69.1,
+      "ret_1m": -28.3,
+      "ret_3m": -7.2,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Library(공급_병목), Library(빅테크_파트너), Name match, Library(플랫폼_독점)",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "036540",
+      "name": "SFA반도체",
+      "role": "밸류체인",
+      "near_52w_high": 45.3,
+      "ret_1m": -27.9,
+      "ret_3m": -27.8,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "084850",
+      "name": "아이티엠반도체",
+      "role": "밸류체인",
+      "near_52w_high": 47.8,
+      "ret_1m": -15.8,
+      "ret_3m": -50.6,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    }
+  ],
+  "금융/밸류업": [
+    {
+      "ticker": "071055",
+      "name": "한국금융지주우",
+      "role": "밸류체인",
+      "near_52w_high": 92.7,
+      "ret_1m": 7.5,
+      "ret_3m": 21.4,
+      "early_signal_score": 57.5,
+      "signal_flag": "🔺임박",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "086790",
+      "name": "하나금융지주",
+      "role": "밸류체인",
+      "near_52w_high": 92.9,
+      "ret_1m": 6.8,
+      "ret_3m": 2.6,
+      "early_signal_score": 56.8,
+      "signal_flag": "🔺임박",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "138040",
+      "name": "메리츠금융지주",
+      "role": "밸류체인",
+      "near_52w_high": 77.2,
+      "ret_1m": 6.5,
+      "ret_3m": -2.3,
+      "early_signal_score": 26.5,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "138930",
+      "name": "BNK금융지주",
+      "role": "밸류체인",
+      "near_52w_high": 76.0,
+      "ret_1m": 2.4,
+      "ret_3m": -6.7,
+      "early_signal_score": 22.4,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "000150",
+      "name": "두산",
+      "role": "밸류체인",
+      "near_52w_high": 54.6,
+      "ret_1m": -25.8,
+      "ret_3m": -6.1,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Library(지주사_재평가)",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "071050",
+      "name": "한국금융지주",
+      "role": "밸류체인",
+      "near_52w_high": 76.1,
+      "ret_1m": -3.3,
+      "ret_3m": -7.9,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    }
+  ],
+  "중동지정학/에너지": [],
+  "AI인프라/클라우드임대": [
+    {
+      "ticker": "010170",
+      "name": "대한광통신",
+      "role": "밸류체인",
+      "near_52w_high": 36.6,
+      "ret_1m": -37.6,
+      "ret_3m": -40.1,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Library(공급_병목)",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "009150",
+      "name": "삼성전기",
+      "role": "밸류체인",
+      "near_52w_high": 87.8,
+      "ret_1m": 7.8,
+      "ret_3m": 364.6,
+      "early_signal_score": 7.8,
+      "signal_flag": "📌중기후보",
+      "discovery_reason": "Library(플랫폼_독점)",
+      "recent_broker_reports": ""
+    }
+  ],
+  "원전/핵심광물": [
+    {
+      "ticker": "006345",
+      "name": "대원전선우",
+      "role": "밸류체인",
+      "near_52w_high": 100.0,
+      "ret_1m": 53.6,
+      "ret_3m": 58.7,
+      "early_signal_score": 55.0,
+      "signal_flag": "✅돌파직후",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "032820",
+      "name": "우리기술",
+      "role": "밸류체인",
+      "near_52w_high": 34.3,
+      "ret_1m": -25.7,
+      "ret_3m": -52.1,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Library(수주잔고_선행), Library(정책_수혜)",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "006340",
+      "name": "대원전선",
+      "role": "밸류체인",
+      "near_52w_high": 53.4,
+      "ret_1m": -3.7,
+      "ret_3m": 76.1,
+      "early_signal_score": 12.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    }
+  ],
+  "K뷰티/ODM": [
+    {
+      "ticker": "003350",
+      "name": "한국화장품제조",
+      "role": "밸류체인",
+      "near_52w_high": 73.5,
+      "ret_1m": 12.0,
+      "ret_3m": 4.0,
+      "early_signal_score": 32.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "044820",
+      "name": "코스맥스비티아이",
+      "role": "밸류체인",
+      "near_52w_high": 75.6,
+      "ret_1m": 4.9,
+      "ret_3m": 4.9,
+      "early_signal_score": 24.9,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "192820",
+      "name": "코스맥스",
+      "role": "밸류체인",
+      "near_52w_high": 61.5,
+      "ret_1m": 4.6,
+      "ret_3m": -7.1,
+      "early_signal_score": 24.6,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "123690",
+      "name": "한국화장품",
+      "role": "밸류체인",
+      "near_52w_high": 48.7,
+      "ret_1m": -7.5,
+      "ret_3m": -25.3,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "406820",
+      "name": "뷰티스킨",
+      "role": "밸류체인",
+      "near_52w_high": 30.8,
+      "ret_1m": -13.3,
+      "ret_3m": 11.1,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Name match",
+      "recent_broker_reports": ""
+    }
+  ],
+  "비만약/GLP1": [
+    {
+      "ticker": "001630",
+      "name": "종근당홀딩스",
+      "role": "밸류체인",
+      "near_52w_high": 81.6,
+      "ret_1m": -9.4,
+      "ret_3m": -13.4,
+      "early_signal_score": 30.0,
+      "signal_flag": "📌중기후보",
+      "discovery_reason": "Active(임상_파이프라인)",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "087010",
+      "name": "펩트론",
+      "role": "밸류체인",
+      "near_52w_high": 66.5,
+      "ret_1m": 1.4,
+      "ret_3m": -5.5,
+      "early_signal_score": 21.4,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Library(임상_파이프라인)",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "000250",
+      "name": "삼천당제약",
+      "role": "밸류체인",
+      "near_52w_high": 17.8,
+      "ret_1m": -37.7,
+      "ret_3m": -82.2,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Library(임상_파이프라인)",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "019175",
+      "name": "신풍제약우",
+      "role": "밸류체인",
+      "near_52w_high": 25.8,
+      "ret_1m": -13.0,
+      "ret_3m": -24.1,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Library(임상_파이프라인)",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "187660",
+      "name": "페니트리움바이오",
+      "role": "밸류체인",
+      "near_52w_high": 25.1,
+      "ret_1m": -26.2,
+      "ret_3m": -68.4,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Library(임상_파이프라인)",
+      "recent_broker_reports": ""
+    },
+    {
+      "ticker": "196170",
+      "name": "알테오젠",
+      "role": "밸류체인",
+      "near_52w_high": 58.4,
+      "ret_1m": -4.1,
+      "ret_3m": -9.3,
+      "early_signal_score": 20.0,
+      "signal_flag": "🔵하단",
+      "discovery_reason": "Library(임상_파이프라인)",
+      "recent_broker_reports": ""
+    }
+  ]
+}

@@ -1,477 +1,461 @@
+---
 name: macro-idea
-description:
-Adaptive Macro Narrative & Capital Allocation Engine v5
+description: Adaptive Macro Narrative & Capital Allocation Engine v10
+---
+==================================================
 MISSION
-당신은 뉴스 분석기가 아니다.
-당신의 목적은
+Objective is NOT summarizing news.
+Objective:
 Reality
-→ Surprise
-→ Mechanism
-→ Capital Cycle
-→ Market Pricing
-→ Portfolio Allocation
-까지 연결되는 투자 가능한 Macro Thesis만 생성하는 것이다.
-최종 산출물은
-"시장 컨센서스보다 먼저 가격을 움직일 경제 메커니즘"
-이다.
-절대로 뉴스를 요약하지 않는다.
-절대로 모든 뉴스를 분석하지 않는다.
-높은 Expected Value를 가진 Theme만 남긴다.
-CORE PRINCIPLES
-Price follows
-Expectation Revision
-not
-News.
-Investment =
-Magnitude
-× Probability
-× Persistence
-× Mispricing
-모든 아이디어는 아래 네 조건을 동시에 만족해야 한다.
-Expectation Gap 존재
-경제 메커니즘 존재
-가격 미반영
-실행 가능한 투자수단 존재
-하나라도 없으면
-NO TRADE
-ZERO STAGE
-NEWS DEDUPLICATION
-(NEW)
-먼저 모든 뉴스를 이벤트 단위로 압축한다.
-중복 기사 제거
-같은 사건 Merge
-후속 기사 Merge
-인터뷰 Merge
-기업 PR Merge
-ETF 출시 Merge
-단순 실적 기사 Merge
-예
-TerraPower 승인
-원전 리퍼비시
-SMR 기사
 ↓
-"Nuclear Investment Cycle"
-1개 Theme
-출력 전에
-50개의 뉴스를
-3~8개의 Event Cluster로 먼저 압축한다.
-STAGE 1
+Expectation Revision
+↓
+Economic Transmission
+↓
+Market Repricing
+↓
+Capital Allocation
+↓
+Executable Portfolio
+Default Decision = NO TRADE
+Interesting ≠ Investable.
+==================================================
+CORE PHILOSOPHY
+Alpha =
+Surprise
+×
+Persistence
+×
+Transmission
+×
+Scarcity
+×
+Mispricing
+×
+Timing
+×
+Execution
+Every idea must satisfy ALL:
+Structural Driver
+Expectation Revision
+Economic Transmission
+Market Mispricing
+Catalyst
+Executable Vehicle
+Otherwise Reject.
+==================================================
+DATA INGESTION
+대상 뉴스 수집 범위:
+- 전일 장마감(20:00 KST)부터 스킬 실행 시점까지 누적된 뉴스로 한정.
+- 주말/휴일의 경우 직전 거래일 장마감 이후부터 수집된 뉴스 전체.
+==================================================
+LAYER 0
+NOISE ELIMINATION & CLUSTERING
+Discard automatically:
+Company PR
+Routine earnings
+ETF launches
+Broker opinions
+Executive interviews
+Duplicated headlines
+Minor M&A
+Product announcements
+Assign each remaining event
+Evidence Weight
+5 Policy / War / Regulation
+4 Physical Supply / CAPEX
+3 Industry Confirmation
+2 Corporate Signal
+1 Noise
+Then calculate
+Evidence Score =
+Weight × Independent Confirmation
+
+CLUSTER & DEDUPLICATE:
+수백 건의 뉴스 중 동일한 본질(Root Driver)을 가진 유사/중복 기사들은 단일 이벤트로 완벽히 압축(Deduplication)하여 다음 레이어로 넘길 것.
+==================================================
+LAYER 1
+SURPRISE ENGINE
+Importance alone is insufficient.
+Estimate (MUST cite quantitative proxy, e.g., FedWatch, Options Skew, Consensus EPS mismatch):
+Expected by market?
+Already consensus?
+Magnitude of surprise
+None
+Small
+Medium
+Large
+Extreme
+Only Medium or above proceeds.
+
+RAG 기반 이슈 검증 엔진 (Trader Manju Wiki):
+- 판단이 모호하거나 재료의 파급력을 가늠하기 어려울 경우, 반드시 로컬 지식베이스(C:\Users\tzero\Documents\ai\youtube-to-wiki\docs\wiki)의 과거 유사 사례(CASE_*.md) 및 매매 기법(이벤트_드리븐_매매 등)을 검색(RAG)하여 실전 주식 시장에서의 파급력과 수혜/피해 종목을 팩트 기반으로 도출하라.
+- 위키 검색 결과 명확한 아날로지(Analogy)나 근거를 찾지 못한 경우, 억지로 연결하지 말고 해당 이벤트는 'NO TRADE'로 즉시 기각할 것.
+==================================================
+LAYER 2
+EVENT COMPRESSION & EARLY KILL SWITCH
+Compress all headlines into ≤5 Macro Events.
+Each event contains
+Root Driver
+Evidence Score
+Persistence
+Affected Regions
+Affected Assets
+Discard isolated stories.
+EARLY KILL SWITCH: If an event has Evidence Score < 3 OR Surprise < Medium, instantly drop it here. Do NOT process it through remaining layers.
+==================================================
+LAYER 3
+INTERACTION ENGINE
+Look for reinforcing interactions.
+Examples
+AI
++
+Power
+War
++
+Energy
+Fiscal
++
+Inflation
+Rates
++
+Housing
+China
++
+Industrial Metals
+If two events strengthen each other
+Create one higher-level macro theme.
+Interaction Score
+Weak
+Medium
+Strong
+==================================================
+LAYER 4
+ROOT DRIVER
+Trace
+Headline
+↓
+Immediate Cause
+↓
+Economic Driver
+↓
+Structural Driver
+↓
+Secular Regime
+Keep only deepest driver.
+==================================================
+LAYER 5
+EXPECTATION REVISION
+Ask
+"What changed?"
+not
+"What happened?"
+Estimate (MUST quantify using measurable data: Earnings Revision, OIS, Swap rates, CDS spreads, Target Price changes):
+Prior Belief (with data)
+Posterior Belief (with data)
+Revision Size (score 0-100)
+Reject if belief change is minimal.
+==================================================
+LAYER 6
+VARIANT VIEW
+Mandatory
+Consensus
+My View
+Why consensus is incomplete
+Evidence supporting divergence
+Catalyst changing consensus
+Without Variant View
+Reject.
+==================================================
+LAYER 7
 REGIME MAP
-먼저 현재 시장 Regime 정의
+Evaluate
 Growth
 Inflation
 Liquidity
-Real Rates
-Nominal Rates
-Dollar
 Credit
-Commodity
-Oil
-Power
-Volatility
-Market Breadth
-Leadership
-Risk Appetite
-모든 Theme는
-Regime와 충돌하면 감점.
-STAGE 2
-SIGNAL QUALITY
-Evidence Score
-Government
-Central Bank
-Regulator
-Official Data
-Company Filing
-Conference Call
-Reuters
-Bloomberg
-FT
-WSJ
-Industry Report
-Satellite
-Supply-chain data
-Interview
-Rumor
-SNS
-품질을
-0~5점으로 평가.
-Evidence<3
-Discard
-STAGE 3
-ECONOMIC IMPORTANCE FILTER
-(NEW)
-기사가 아니라
-GDP 수준의 영향을 평가.
-Score
-Global
-Regional
-Sector
-Company
-Noise
-Sector 이하인데
-확산효과 없으면
-Discard
-STAGE 4
-FIRST-ORDER
-vs
-SECOND-ORDER
-vs
-NTH-ORDER
-직접 수혜보다
-간접 수혜 우선.
-Always ask
-Who sells the shovel?
-Who owns bottleneck?
-Who controls replacement cycle?
-Who owns pricing power?
-STAGE 5
-BASE RATE
-반드시
-역사 사례 비교.
-비슷한 사례
-몇 번?
-평균 지속기간
-평균 EPS 증가
-평균 Multiple
-실패율
-대표 사례
-반드시 작성.
-STAGE 6
-EXPECTATION GAP
-항상 아래 형식.
-Consensus
-Reality
-Market Positioning
-What changed?
-Why is consensus wrong?
-Already priced?
-Gap 없으면
-Discard
-STAGE 7
-MARKET PRICING
-뉴스보다 가격.
-확인 항목
-3M
-6M
-12M
-52W Position
-Valuation
-Positioning
-ETF Flow
-Insider
-Short Interest
-Ownership
-Crowding
-이미 Crowd Trade면 감점.
-STAGE 8
-MULTI-ASSET CONFIRMATION
-확인
-Oil
-Gas
-Copper
-Gold
-Power Prices
 Rates
-Credit
-FX
-Freight
-Utilities
-Semiconductor Index
-Defense
-Shipping
-없으면
-Confidence↓
-STAGE 9
-MECHANISM GRAPH
-반드시
-Cause
-↓
-Demand
+Dollar
+Energy
+Labor
+AI
+Geopolitics
+Risk Appetite
+Tailwind
+Neutral
+Headwind
+==================================================
+LAYER 8
+TRANSMISSION
+Mandatory chain
+Driver
 ↓
 Supply
 ↓
-Scarcity
+Demand
+↓
+Constraint
 ↓
 Pricing
 ↓
-Margin
+Margins
 ↓
 Cash Flow
 ↓
 EPS
 ↓
-FCF
+Valuation
 ↓
-Multiple
-↓
-Price
-중간 생략 금지.
-STAGE 10
-CAPITAL CYCLE
-평가
-CAPEX
-Lead Time
-Capacity
-Utilization
-Inventory
-Replacement
-Capital Discipline
-Operating Leverage
-Supply Response
-Industry Consolidation
-Winner는
-공급 증가가 가장 느린 기업.
-STAGE 11
+Asset Price
+Missing links reduce confidence.
+==================================================
+LAYER 9
 BOTTLENECK ENGINE
-항상
-가장 희소한 Resource를 찾는다.
+Find where scarcity exists.
+Rank
+Energy
 Grid
-Transformer
-Power
-Labor
-Cooling
-Rare Earth
-Equipment
-Semiconductor
+Power Equipment
+Engineering
+Raw Materials
+Infrastructure
+Logistics
 Software
-License
-Construction
-Materials
-Services
-없으면
-Structural Alpha 낮음.
-STAGE 12
-REFLEXIVITY
-Positive Loop 존재?
-Investment
-↓
-Demand
-↓
-Profit
-↓
-Price
-↓
-Capital Raise
-↓
+Capital
+Prefer
+Scarcity
+Long Lead Time
+Limited Capacity
+High Switching Cost
+Avoid commoditized manufacturers.
+==================================================
+LAYER 10
+CAPITAL CYCLE
+Evaluate
 Capacity
-↓
-Demand
-Loop 강도
-0~5
-STAGE 13
-DURATION TEST
-(NEW)
-기사가 아니라
-얼마나 오래 지속되는가?
-Transient
-Quarter
-1Y
-3Y
-5Y+
-Structural
-Duration이 길수록
-EV 증가.
-STAGE 14
-OPTIONALITY
-(NEW)
-Upside는 큰데
-Downside는 제한적인가?
-Optionality
-Low
-Medium
-High
-매우 중요.
-STAGE 15
-ASYMMETRY SCORE
-(NEW)
-Expected Value는
-확률보다
-비대칭성을 우선.
-Downside
-Upside
-Payoff Ratio
-Tail Risk
-Skew
-STAGE 16
-CATALYST MAP
-Immediate
-Near
-Medium
-Long
-Catalyst Quality
-Law
-Policy
-Permit
+Lead Time
 CAPEX
-Order
-Commissioning
+Replacement Cycle
+Inventory
+Utilization
+Industry Discipline
+Winner
+=
+Slow Supply Response
++
+Persistent Demand
+==================================================
+LAYER 11
+MARKET VALIDATION
+Cross-check thesis with
+Rates
+Credit
+FX
+Oil
+Gas
+Copper
+Power
+Utilities
+Shipping
+Semiconductors
+Volatility
+Classify
+Confirmed
+Mixed
+Contradicted
+==================================================
+LAYER 12
+POSITIONING
+Assess
+Valuation
+Institutional Ownership
+Passive Flow
+Retail Positioning
+Momentum
+Narrative Saturation
+Crowding
+Crowded themes require larger mispricing.
+==================================================
+LAYER 13
+WHY NOW
+Every idea requires
+Near-term catalyst
+Examples
+Policy
+Permits
+Funding
+Orders
 Production
-Volume
-Guidance
-Interview
-ETF
-STAGE 17
-COMPETING THESIS
-Bull
-Bear
-Alternative
-Unknown
+Inventory Shift
+Estimate Revision
+Timing
+0-3M
+3-6M
+6-12M
+12M+
+Without catalyst
+Reject.
+==================================================
+LAYER 14
+RISK ENGINE
+Bear Thesis
 Invalidation
-Bear Thesis를 먼저 작성.
-STAGE 18
-PORTFOLIO AUCTION
-(NEW)
-모든 Theme는
-포트폴리오 내부에서 경쟁.
-질문
-만약
-5개만 투자 가능하면
-채택되는가?
-새 Theme가
-기존보다 EV↓
-Discard
-STAGE 19
-LIQUIDITY CHECK
-(NEW)
-좋은 아이디어와
-좋은 투자는 다르다.
-확인
-시가총액
-거래대금
-ETF 접근성
-Option 존재
-Institution Ownership
-Execution 가능성
-STAGE 20
-IMPLEMENTATION
-(NEW)
-Idea가 아니라
-Trade 생성.
+Leading Indicators
+Hidden Assumptions
+Failure Modes
+==================================================
+LAYER 15
+SCENARIOS
+Bull
+Probability
+Return
+Base
+Probability
+Return
+Bear
+Probability
+Return
+Expected Value
+Probability-weighted
+==================================================
+LAYER 16
+EXECUTION FILTER
+Trade Type
 Long
 Short
 Pair
 Basket
-Barbell
-Relative Value
-Pick-and-Shovel
-Supplier Basket
-Commodity
 ETF
-STAGE 21
-POSITION SIZING
-(NEW)
-Weight 결정.
-Conviction
+Commodity
+Infrastructure
+Supplier Basket
+Execution must satisfy
 Liquidity
-Volatility
+Capacity
+Hedge Availability
 Correlation
-Tail Risk
-Catalyst
-Position
-0%
-1%
-2%
-3%
-5%
-8%
-10%
-STAGE 22
-NOISE SUPPRESSION
-(NEW)
-자동 제외
-Celebrity
-Sports
-Entertainment
-Routine Earnings
-ETF Launch
-Price Commentary
-Rumor
-Single Broker Opinion
-Duplicate News
-Small Contract
-Non-scalable Story
-STAGE 23
-FINAL INVESTMENT SCORE
-100점
-Evidence
-Expectation Gap
-Mechanism
-Pricing
-Capital Cycle
-Duration
-Scarcity
-Cross Asset
-Crowding
-Optionality
-Liquidity
-Catalyst
-Reflexivity
-Base Rate
-Implementation
-Positioning
-Execution
-Risk
-Confidence
-OUTPUT FORMAT
-Macro Regime
-Compressed Event Clusters
-Selected Themes
-(maximum 5)
-For each Theme
-Theme
-Evidence Quality
-Economic Importance
-Consensus
-Reality
-Expectation Gap
-Why Now
-Why Not Priced
-Mechanism Chain
-Capital Cycle
-Scarcity
-Bottleneck
-Cross Asset Confirmation
-Base Rate
-Duration
-Optionality
-Crowding
-Catalyst Timeline
-Bull Thesis
-Bear Thesis
-Alternative Explanation
-Invalidation
-Implementation
-Candidate Companies
-Preferred Layer
-(Leader / Supplier / Bottleneck / Infrastructure)
-Suggested Position Size
+Position Cost
+==================================================
+LAYER 17
+PORTFOLIO AUCTION
+Every surviving theme competes.
+Rank by
+Expected Alpha
 Expected Value
-Confidence
-Final Decision
-Highest Conviction
-High Conviction
+Evidence
+Variant View
+Timing
+Execution
+Diversification
+Avoid selecting multiple expressions of the same macro factor.
+Maximum
+3 Themes
+==================================================
+LAYER 18
+CONFIDENCE DECOMPOSITION
+Instead of one confidence score
+Report
+Evidence Confidence
+Transmission Confidence
+Valuation Confidence
+Timing Confidence
+Execution Confidence
+Overall Confidence
+Lowest component determines overall conviction.
+==================================================
+LAYER 19
+KILL SWITCH
+Automatic NO TRADE if
+Weak Evidence
+No Surprise
+No Variant View
+No Structural Driver
+No Transmission
+No Catalyst
+Already Fully Priced
+Crowded
+Poor Liquidity
+Execution Difficulty
+Risk > Reward
+==================================================
+FINAL SCORE
+Surprise
+15
+Expectation Revision
+15
+Transmission
+15
+Structural Persistence
+10
+Scarcity
+10
+Evidence Quality
+10
+Variant View
+10
+Timing
+5
+Positioning
+5
+Execution
+5
+Market Validation
+5
+Risk
+5
+Total
+100
+Execution <3
+Automatic NO TRADE
+==================================================
+OUTPUT
+Macro Regime
+Compressed Events (≤5)
+Discarded Events
+Interaction Map
+Selected Themes (≤3)
+For each theme
+Structural Driver
+Evidence
+Surprise
+Expectation Revision
+Variant View
+Transmission
+Scarcity
+Capital Cycle
+Market Validation
+Positioning
+Risk
+Catalyst
+Timing
+Vehicle
+Expected Value
+Confidence Breakdown
+Decision
+Portfolio Construction
+Net Exposure
+Factor Exposure
+Correlation
+Diversification
 Watchlist
-Too Early
-Too Late
-No Trade
-FINAL RULES
-Always compress before analyzing.
-Analyze events,
-not headlines.
-Prefer structural trends over daily news.
-Prefer bottlenecks over end-products.
-Prefer suppliers over champions.
-Prefer duration over surprise.
-Prefer asymmetric payoff over high probability.
-Prefer implementation over storytelling.
-If evidence is weak,
-say
-NO TRADE.
-The default action is
-Discard,
-not
-Buy.
-The most important question is NOT
-"What happened?"
-Instead ask
-"What expectation will the market have to revise over the next 6–24 months, and who captures the resulting economic rent before consensus recognizes it?"
+Rejected Ideas
+Reasons for NO TRADE (if applicable)
+
+**[대시보드 자동 업데이트 필수 (CRITICAL)]**
+위 분석 결과를 채팅창에 출력하는 것으로 끝내지 마세요.
+분석이 완료되면, 즉시 `c:\Users\tzero\Documents\ai\StockResearch\insert_today_ideas_v5.py` 파일 내의 `ideas = [...]` 배열 부분을 방금 도출한 최종 테마(최대 3개)의 내용으로 교체(업데이트)하십시오. 
+이후 `run_command` 도구를 사용해 해당 스크립트(`.venv\Scripts\python.exe insert_today_ideas_v5.py`)를 실행하여 대시보드 DB(Supabase)에 실시간으로 데이터가 반영되도록 조치해야 합니다. 사용자의 추가 지시가 없어도 스킬 가동 시 이 과정까지 완수하는 것이 최종 목표입니다.
+==================================================
+FINAL PRINCIPLES
+Compress before analysis.
+Weight surprise more than headline count.
+Prioritize expectation revisions.
+Favor interacting macro forces over isolated news.
+Seek bottlenecks, not headlines.
+Prefer infrastructure over downstream beneficiaries.
+Evidence outranks narratives.
+Execution influences thesis selection.
+Opportunity cost matters.
+Portfolio diversification matters.
+Every idea competes against cash.
+Default Position = NO TRADE.

@@ -29,30 +29,6 @@ RSS_FEEDS = [
     ("https://www.yna.co.kr/rss/market.xml", "ko"),    # 연합 증권/시장
     # ── 비즈니스워치 (2026-07 검증: 445건)
     ("https://news.bizwatch.co.kr/rss", "ko"),
-
-    # ════════════════════════════════════════════
-    # 해외 (English) — 2026-07-05 verified working
-    # ════════════════════════════════════════════
-    # ── Yahoo Finance (글로벌 시황 + 미국 종목)
-    ("https://finance.yahoo.com/news/rssindex", "en"),
-    # ── CNBC Markets (매칭률 63%, 30건/회)
-    ("https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15839069", "en"),
-    # ── WSJ Markets (매칭률 70%, 20건/회)
-    ("https://feeds.a.dj.com/rss/RSSMarketsMain.xml", "en"),
-    # ── TheStreet (매칭률 72%, 50건/회)
-    ("https://www.thestreet.com/.rss/full/", "en"),
-    # ── MarketWatch Market Pulse (30건/회)
-    ("https://feeds.content.dowjones.io/public/rss/mw_marketpulse", "en"),
-    # ── Seeking Alpha (30건/회 — 종목 분석 중심)
-    ("https://seekingalpha.com/feed.xml", "en"),
-    # ── Benzinga (100% 매칭, 10건/회)
-    ("https://www.benzinga.com/feed", "en"),
-    # ── FT Markets (Financial Times, 25건/회)
-    ("https://www.ft.com/markets?format=rss", "en"),
-    # ── GlobeNewswire Corporate Action (보도자료, 20건/회)
-    ("https://www.globenewswire.com/RssFeed/subjectcode/23-Corporate%20Action", "en"),
-    # ── PRNewswire (보도자료, 20건/회)
-    ("https://www.prnewswire.com/rss/news-releases-list.rss", "en"),
 ]
 
 

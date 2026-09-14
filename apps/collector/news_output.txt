@@ -1,0 +1,151 @@
+Fetched 200 news items.
+[2026-07-18T12:09:50+00:00] [산업] 마이크론, 퀄컴·현대모비스·하만 등 자동차 생태계 7곳과 SCA 체결
+  마이크론이 전세계 자동차 산업을 지원하는 생태계 협력사 7곳과 전략적 고객 계약(SCA)를 체결했다고 16일(현지시간) 밝혔다.마이크론과 SCA를 맺은 곳은 퀄컴, 현대모비스, 하만, 비스테온, 덴소, 아스테모, 조이넥스트가 포함된다. 첨단 차량의 제조를 지원하는 기술, 부품 공급업체다.마이크론은 해당 업체들에게 차량용 인포테인먼트, 첨단 운전자 보조 시스템(ADAS), 연결(커넥티비티) 시스템 등에 필요한 D램·낸드 등 메모리 솔루션을 장기 공급하게 된다.SCA 체결로 마이크론과 고객사는 기술 전략(로드맵)과 공급 물량 등을 사전
+---
+[2026-07-18T08:07:00.381017+00:00] [기타] Nuclear startup TerraPower wins US approval to build commercial SMR plant
+  TerraPower, a US nuclear startup founded by Bill Gates, has received approval to build an advanced commercial small modular reactor (SMR), shareholder
+---
+[2026-07-18T08:07:00.380989+00:00] [기타] Bullish ETF bets blamed for rollercoaster swings in South Korean stock market
+  South Korea&rsquo;s stock market has been whipsawed by extreme swings in recent weeks, with analysts increasingly pointing to the explosive growth of
+---
+[2026-07-18T08:07:00.380975+00:00] [정책] South Korea to import 6 million barrels of UAE crude to curb fuel price surge
+  South Korea will import more than 6 million barrels of crude oil from the United Arab Emirates as part of an emergency effort to stabilize domestic fu
+---
+[2026-07-18T08:07:00.380949+00:00] [산업] EuBiologics partners with Korea's health agency to develop Nipah virus vaccine candidate
+  EuBiologics Co., South Korea's vaccine-focused biotechnology company, is developing a vaccine candidate against the Nipah virus, an infectious disease
+---
+[2026-07-18T08:07:00.380923+00:00] [산업] No career ambition, no ego: AI plays devil's advocate at Audax Private Equity
+  Generative AI is challenging traditional investment theses, acting as a devil's advocate to sharpen decision-making, particularly when it comes to ass
+---
+[2026-07-18T08:07:00.380905+00:00] [정책] Iran names S.Korea-built UAE nuclear plant among potential targets
+  Iran has included the Barakah nuclear power plant in Abu Dhabi, South Korea&rsquo;s first overseas nuclear project, in a list of potential targets fol
+---
+[2026-07-18T08:07:00.380859+00:00] [산업] Asset-heavy, cash-flow-backed investments gain appeal in lower-return world, Principal Asset Management CEO says
+  Investors should shift toward asset-heavy investments backed by contractual cash flow as years of strong gains in global equities give way to a lower-
+---
+[2026-07-18T08:07:00.380829+00:00] [기타] European structured credit beckons Korean investors with potential for higher returns, defense: M&G Investments
+  Nearly two decades after the global financial crisis saddled structured finance with a reputation for opacity and risk, the asset class is drawing a f
+---
+[2026-07-18T08:07:00.380806+00:00] [정책] BOK holds fire amid Iran war uncertainty; outgoing Gov. Rhee expects won’s swift relief
+  Bank of Korea Gov. Rhee Chang-yong on Friday struck a cautiously optimistic tone on the currency market as he chaired his final rate-setting meeting.H
+---
+[2026-07-18T08:07:00.380776+00:00] [기타] South Korean ETF issuers in space race to ride SpaceX IPO buzz
+  South Korean asset managers are rushing to launch new exchange-traded funds tied to both established and emerging space technology companies, seeking
+---
+[2026-07-18T08:07:00.380748+00:00] [기타] New BOK chief maps out cautious policy stance, wider financial stability role
+  South Korea&rsquo;s new central bank governor, Shin Hyun-song, struck a cautious tone on monetary policy Tuesday as rising oil prices and the broader
+---
+[2026-07-18T08:07:00.380719+00:00] [기타] Reactor refurbishments to drive near-term nuclear growth: Candu Energy
+  Refurbishment of aging nuclear reactors is expected to drive growth in the industry over the next five to 10 years as more countries seek to extend th
+---
+[2026-07-18T08:07:00.380704+00:00] [정책] Hyundai Motor profit falls 30% as Middle East disruption, US tariffs bite
+  Hyundai Motor Co. said on Thursday its first-quarter operating profit fell sharply despite record revenue, as disruptions tied to the US-Iran conflict
+---
+[2026-07-18T08:07:00.380678+00:00] [산업] South Korean stock market value tops $4.1 trillion, nearly tripling in a year
+  South Korea&rsquo;s stock market crossed a milestone Monday, with the combined value of its two main bourses topping 6,000 trillion won ($4.1 trillion
+---
+[2026-07-18T08:07:00.380649+00:00] [산업] Partners Group eyes special opportunities, royalties to outplay market swings
+  Partners Group is positioning itself to benefit from market disruptions stemming from Middle East conflicts, liquidity pressures at rival private cred
+---
+[2026-07-18T08:07:00.380625+00:00] [원자재] Korean shipbuilders sweep up LNG, ammonia orders as energy demand holds firm
+  South Korea&rsquo;s top shipbuilders are capitalizing on resilient demand for energy infrastructure, landing a string of liquefied natural gas (LNG) a
+---
+[2026-07-18T08:07:00.380596+00:00] [산업] Chungho Nais sale faces fresh questions amid Carlyle talks
+  The planned sale of Chungho Nais Co. is facing fresh uncertainty after the South Korean water purifier maker reported a sharp decline in profit, raisi
+---
+[2026-07-18T08:07:00.380557+00:00] [산업] AI trade isn’t just about tech stocks but also power, TCW says
+  The artificial intelligence boom has sent investors racing into chipmakers, cloud providers and megacap technology stocks, but a more durable opportun
+---
+[2026-07-18T08:07:00.380524+00:00] [산업] For global property investors, real test comes after acquisition: executing business plan
+  Cross-border real estate is often won or lost after the deal closes.A transaction may be approved in Seoul, London or Singapore, but performance is sh
+---
+[2026-07-18T08:07:00.380466+00:00] [기타] Kayne Anderson expects capital inflows to US alternative real estate sectors to accelerate
+  Kayne Anderson Real Estate, the real estate investment arm of Kayne Anderson, expects significant capital rotation into US alternative real estate sec
+---
+[2026-07-18T07:59:48+00:00] [기타] “반복 입원했다가 보험사기범 몰렸어요”…경찰 판단은 어떻게? [어쩌다 세상이]
+  보험금 많이 타면 의심부터 하는 보험사 경찰, 의심 만으론 증거불충분…“혐의 없음”보험업계는 보험사기 의심 사건을 다룰 때 종종 개인의 보험 가입 형태나 청구 이력만으로 고의성을 ..
+---
+[2026-07-18T07:40:05+00:00] [기타] “케인을 왜 수비에 묶어뒀나”…트럼프, 잉글랜드 전술에 훈수
+  도널드 트럼프 미국 대통령이 2026 북중미 월드컵 준결승전에서 아르헨티나에 역전패한 잉글랜드 대표팀의 전술에 훈수를 뒀다. 18일 영국 인디펜던트, dpa통신 등에 따르면 트럼프..
+---
+[2026-07-18T07:22:54+00:00] [기타] [부음] 이도헌(벡스코 마케팅본부장)씨 모친상
+  ▲박남순(향년 86세)씨 별세, 이도헌(벡스코 마케팅본부장)·이광원·이주원씨 부친상, 이선영씨 시모상 = 18일, 부산 온종합병원 장례식장 특2호실, 발인 20일 오전 6시, 장지..
+---
+[2026-07-18T07:21:23+00:00] [산업] “제헌절이 코스피 살렸다”…국내증시 휴장에 개미들 안도, 왜?
+  미국 반도체주가 폭락한 가운데 국내 증시는 휴장으로 충격을 피하자 개인투자자들 사이에서는 안도의 한숨을 내쉬고 있다. 18일 SBS에 따르면 온라인 커뮤니티와 사회관계망서비스(SN..
+---
+[2026-07-18T07:21:03+00:00] [기타] 메시 “아기 때 사진찍은 19세 야말과 결승이라니…잘 되길 바라지만 이번엔 아냐”
+  ‘축구의 신’ 리오넬 메시가 북중미 월드컵 결승전을 앞두고 2회 연속 우승을 향한 열망과 각오를 밝혔다. 메시는 18일(한국시간) 미국 뉴욕의 재비츠 센터에서 열린 ‘패너틱스 페스..
+---
+[2026-07-18T07:12:00+00:00] [기타] 주가 반토막에도 7조 베팅한 개미들…삼전·하닉 레버리지 문턱 높인다
+  단일종목 레버리지 한달새 7.3조 유입 개인이 하이닉스 레버리지 4조 순매수 본주 폭락에 ETF 수익률도 반토막 금융당국 기본예탁금 3000만원 상향국내 개인 투자자들이 최근 한 ..
+---
+[2026-07-18T07:07:34+00:00] [기타] 미얀마 노동자 숨진 공사현장 시공사 대표, 유족 만나 사과
+  (서울=연합뉴스) 임기창 기자 = KTX 선로 공사 현장에서 미얀마인 이주노동자가 사망한 사건과 관련해 원청 시공사 SK에코플랜트 대표가 18일...
+---
+[2026-07-18T07:00:00+00:00] [소비] 공항 갈 때 뭐 타지?…공항철도 3가지 열차 비교[짤막영상]
+  <br /><br /><br />[서울=뉴시스] 강세훈 기자, 정재훈 인턴기자 = 공항철도(AREX)가 자사 마스코트를 활용해 세 가지 종류의 공항철도에 대해 소개했다.<br /><br />18일 공항철도는 공식 유튜브 채널을 통해 &#039;스피 & 나르 & 다르가 알려주는 공항철도를 타야 하는 이유!&#039;라는 제목의 영상을 공개했다. 영상에는 &#039;공항철도 직통열차, 일반열차, 신규전동차&#039;의 내용이 담겼다.<br /><br />공항철도 직통열차는 서울 도심과 인천국제공항을 가장 빠르게 잇는 열차다. 무정차로 운행하는 열차로 서울역 기준 인천공항1터미널역까지 43분, 인천공항2터미널역까지 51분이 소요된다. 요금은 성인 기준 1만3000원, 어린이 9천500원이며, 기상변화와 관계없이 제시간 도착을 보장한다는 것이 장점이다.<br /><br />또한 공항 이용 승객이 직통열차를 이용하면 두 손 가벼운 여행이 가능하다. 서울역 도심공항터미널에서 직통열차를 이용하면 출국 당일 미리 탑승수속과 수하물 위탁을 할 수 있다. 공항처럼 길게 줄을 설 필요도 없다. <br /><br />순번 대기 시스템을 통해 번호표를 뽑아놓으면 본인 차례에 탑승 수속이 가능하며, 이후 출국심사까지 완료하면 인천국제공항 3층의 전용 출국통로를 이용해 바로 출국장 입장이 가능하다. 이는 직통열차 승차권 구매 고객 중 인천국제공항 출발 국제선 비행기 탑승 고객에게 제공되는 서비스인데, 이용항공사와 여행지에 따라 서비스가 제한 된다. 이외에도 열차 지정 좌석제, 객실승무원 서비스 제공 등 직통열차만의 차별화된 서비스를 누릴 수 있다.<br /><br />일반열차는 총 14개 역과 8개 환승역을 거치는 노선으로, 수도권 도시철도와 촘촘하게 연결돼 있다. 특히 8개 환승역을 통해 서울과 수도권 주요 지역을 오가는 직장인과 관광객들의 이동 편의를 높이고 있다.<br /><br />서울역에서 인천공항1터미널역까지는 약 59분, 인천공항2터미널역까지는 약 66분이 소요된다. 다만 
+---
+[2026-07-18T07:00:00+00:00] [산업] Hungary Crackdown on $20 Billion EV Sector Puts China on Notice
+  Hungary’s $20 billion electric-vehicle industry, which has long enjoyed the protection of former premier Viktor Orban, is facing a reckoning as the country’s new leadership cracks down on environmental violations and looks to raise taxes.
+---
+[2026-07-18T06:55:09+00:00] [기타] ‘서이초 3주기’ 됐지만 “참교육이 현실”…민주 “안심하고 가르칠 학교 만들겠다”
+  “선생님이 안심하고 가르치고 아이들이 온전히 배울 수 있는 학교를 만드는 데 민주당이 끝까지 책임을 다하겠다” 더불어민주당은 서이초등학교 교사 사망 사건 3주기인 18일 논평을 내..
+---
+[2026-07-18T06:42:04+00:00] [기타] 국가공무원 7급공채 1차 필기시험 응시율 61.1%…소폭 상승
+  (서울=연합뉴스) 황윤기 기자 = 올해 국가공무원 7급 공개경쟁채용 1차 필기시험 잠정 응시율이 61.1%로 집계됐다.
+---
+[2026-07-18T06:41:40+00:00] [정책] [이창근의 헤디트] 헤리티지의 시간
+  [지디넷코리아]세계가 K-컬처에 열광하는 이유는 단순한 유행이 아니라 우리의 삶과 이야기, 오래된 시간의 결이 담긴 헤리티지에 있습니다. 전통을 오늘의 감각으로 다시 읽고 디지털 기술과 예술적 상상력을 더할 때, 문화자원은 공연과 전시, 도시와 공간, 콘텐츠와 산업의 언어로 확장됩니다. 정책과 현장, 기술과 예술이 만나는 접점에서 한국다움이 오늘의 콘텐츠와 경험으로 어떻게 살아나는지를 이창근 칼럼니스트와 함께 짚어봅니다. [편집자주]7월 19일 부산에서 제48차 유네스코 세계유산위원회가 개막한다. 대한민국에서 처음 열리는 세계유산위원회다. 세계유산의 신규 등재와 기존 유산의 보존상태를 심의하는 국제회의이지만, 이번 부산 회의의 의미는 회의 운영에만 머물지 않는다. 한국이 유산을 어떤 말로 설명하고, 어떤 경험으로 남기며, 무엇을 다음 세대와 나눌 것인지를 세계 앞에서 보여주는 자리다.지난해 이 회의의 유치 과정을 바라보며 붙들고 있던 질문이 있다. 우리는 세계유산을 보유한 나라로 남을 것인가, 세계유산을 경험하게 하는 나라로 기억될 것인가. 국제회의를 매끄럽게 운영하는 나라는 많다. 그러나 한 장면으로 오래 남는 나라는 많지 않다. 제48차 세계유산위원회의 의미는 회의가 차질 없이 끝나는 데서만 결정되지 않는다. 부산을 찾은 세계인이 한국을 어떤 문화적 장면으로 기억하느냐에 달려 있다.대한민국은 세계유산, 인류무형유산, 세계기록유산을 균형 있게 축적해온 나라다. 그러나 세계유산강국의 다음 질문은 ‘얼마나 많이 갖고 있는가’가 아니다. 이제 중요한 것은 ‘어떻게 함께 읽고, 어떻게 경험하게 하며, 어떻게 기억되게 할 것인가’다. 세계유산은 과거의 훈장이 아니라 인류가 함께 지키기로 한 미래의 약속이기 때문이다.이번 회의의 의미는 준비 과정에서 이미 드러났다. 대통령 주재 범정부 보고회를 거치며 제48차 세계유산위원회는 국가유산청의 전문성을 중심으로 관계부처와 부산시의 협력이 결합된 국가적 문화외교 행사로 자리매김했다. 문화외교, 관광, 안전, 콘텐츠, 지역경제,
+---
+[2026-07-18T06:35:43+00:00] [기타] RBI Currency Printer Seeks Bids for Polymer Banknote Material
+  India has invited bids from manufacturers to supply polymer substrate sheets with security features suitable for printing of Indian banknotes.
+---
+[2026-07-18T06:31:53+00:00] [정책] 김용범 정책실장 “AI, 거대한 물적기반 요구… 재정지원 필요”
+  김용범 청와대 정책실장은 18일 “인공지능(AI) 시대 국가의 과제는 관계 전체를 조직하는 것”이라고 주장했다. 18일 정치권 등에 따르면 김 실장은 이날 자신의 소셜미디어(SNS)에 올린 글에서 “AI)생산 체계는 기존 ‘중후장대’(重厚長大, 제조·중공업) 산업에 못지않게, 때로는 그보다 더 거대한 물적 기반을 요구한다”며 이같이 전했다. 사회 전체의 인
+---
+[2026-07-18T06:29:06+00:00] [기타] 이란 공습에 요르단 미군기지 장병 다수 부상…"사망자 없어"
+  None
+---
+[2026-07-18T06:27:32+00:00] [금리환율] "10시간 넘게 난다"…공기로 부풀리는 대형 고정익 드론 주목
+  [지디넷코리아]수천㎞에 달하는 파이프라인이나 넓은 지역을 저렴한 비용으로 점검할 수 있는 공기 주입식 고정익 드론이 개발돼 주목받고 있다.과학매체 뉴아틀라스는 프랑스 항공우주 스타트업 셀레스트 에코플라이어스(Celeste Ecoflyers)가 개발한 고정익 드론 'dAS10'을 최근 소개했다.dAS10은 길이 약 8m의 가압 섬유 외피와 공기 주입식 날개를 갖춘 것이 특징이다. 팽창된 날개 구조가 양력을 만들어내는 방식으로, 적은 에너지로도 장시간 비행이 가능하다. 사용하지 않을 때는 공기를 빼 납작하게 접어 보관할 수 있어 운반과 보관도 용이하다.이 드론은 셀레스트 에코플라이어스의 설립자이자 최고경영자(CEO)인 올리비에 마네트가 개발했다. 시속 60~80㎞의 순항 속도로 10시간 이상 자율 비행할 수 있으며, 최대 5㎏의 장비를 탑재할 수 있다. 저고도 감시와 정보 전송에 적합하며, 첫 상용 시험 비행은 2026년 4분기로 예정돼 있다.마네트 CEO는 dAS10 개발 목표에 대해 "항공 작업을 더욱 안전하고 경제적이며 지속 가능하게 만드는 것"이라고 밝혔다. 회사는 파이프라인과 에너지망 운영업체 등 인프라 운영 기업을 첫 고객으로 확보한다는 계획이다. 항공 점검이 필요한 분야에서 dAS10을 활용하면 운영 효율을 높이고 비용을 절감할 수 있다는 설명이다. 향후에는 물류 운영업체와 지상 인프라가 부족한 해양 지역을 감시하는 기업 등으로 활용 범위를 확대할 수 있을 것으로 기대하고 있다.회사 측에 따르면 송유관 점검을 위한 헬리콥터 운항 비용은 시간당 약 2500달러(약 373만원)에 달한다. 여기에 조종사 인건비와 연료비, 급유에 따른 시간 손실은 포함되지 않는다. 또한 악천후와 조종사 부족 등의 영향으로 전체 비행의 약 25%가 취소되는 등 운영상 제약도 적지 않다.공기를 주입해 사용하는 구조 때문에 일반인들은 dAS10을 작은 비행선으로 오해할 수 있지만, 회사는 "dAS10은 비행선이 아닌 고정익 항공기"라고 강조했다.이어 "양력은 부력이 아니라 공기역
+---
+[2026-07-18T06:25:08+00:00] [정책] "BTS·블랙핑크·오징어게임서 영감"…'모던 워페어 4'가 한반도 선택한 이유
+  [지디넷코리아]액티비전이 퍼블리싱하고 인피니티 워드에 개발한 '콜 오브 듀티: 모던 워페어 4'가 한반도를 주 무대로 채택한 이유에 대해 공개됐다.18일 게임업계에 따르면 개발사 인피니티 워드는 '콜 오브 듀티: 모던 워페어 4(이하 모던 워페어 4)'에서 한국 해병대와 미군의 여정, 북한 내부의 갈등을 다루며 오프라인 싱글 캠페인의 부활을 예고했다.이번 작품은 오는 10월 23일 출시를 앞두고 있다. 인피니티 워드의 스튜디오 헤드 마크 그리그스비는 최근 진행된 미디어 브리핑에서 신작 캠페인 모드에 대한 다양한 세부 정보를 공개했다.주요 배경이 한반도로 설정된 이유에는 BTS, 블랙핑크, 오징어 게임 등 한국 문화 콘텐츠의 세계적인 인기가 큰 영향을 미쳤다고 밝혔다.그리그스비는 "현재 우리는 한국이 전 세계에 확산시킨 네 번째 할리우드 웨이브(한류 열풍) 속에 살고 있다"며 "이는 음악과 음식뿐만 아니라 TV 프로그램에서 영화에 이르는 엔터테인먼트 전반을 아우른다"고 설명했다.이어 그는 "실제 전쟁이 일어날 가능성은 낮지만, 분명히 팽팽한 긴장감이 흐르고 있는 곳"이라며 "바로 그 지점에 우리가 다룰 만한 이야기가 있다고 판단했다"라고 배경 선택 이유를 전했다.한편, 이번 '모던 워페어 4'의 캠페인 스토리는 세 가지 뚜렷한 서사로 구성된다. 징집된 젊은 미국 고문단과 대한민국 해병대의 여정, 픽션으로 재구성한 북한 정부 내부의 갈등, 시리즈의 상징적인 캐릭터인 캡틴 존 프라이스의 활약상이다.인피니티 워드는 약 3년간의 개발 과정에서 '모던 워페어 4'의 캠페인과 서사 구축에 총력을 기울인 것으로 나타났다. 게임스비트 등 외신에 따르면 지난 몇 년간 일부 평론가들은 지난해 출시된 '블랙 옵스 7' 등 최근 콜 오브 듀티 시리즈가 캠페인보다 멀티플레이어 모드에만 치중한다고 비판해 왔다.반면 '모던 워페어 4'는 캠페인을 전면에 내세웠다. 캠페인 세계관을 기반으로 신규 모드(DMZ)를 제공하며, 협동 캠페인을 과감히 제외하는 대신 오프라인으로도 플레이 가능한 단독
+---
+[2026-07-18T06:24:14+00:00] [기타] 악어 키우다 하천에 버렸나 아님 도망쳤나…경기 여주서 50㎝짜리 잡혀
+  경기도 여주시 하천에서 악어가 붙잡혔다. 18일 소방당국에 따르면 이날 오전 11시 27분께 경기도 여주시 창동 일대 소양천에서 악어가 포획됐다. “애완용 악어 같은 게 있다”는 ..
+---
+[2026-07-18T06:21:50+00:00] [기타] '데드 스페이스' 창시자 글렌 스코필드, 35년 여정 끝 은퇴 선언
+  [지디넷코리아]'데드 스페이스'와 '칼리스토 프로토콜' 등을 개발한 베테랑 게임 개발자 글렌 스코필드가 35년간의 업계 경력을 마치고 은퇴를 선언했다고 게임스트리비즈가 15일(현지시간) 보도했다.보도에 따르면 스코필드는 자신의 링크드인에 게시한 영상을 통해 은퇴 소식을 알렸다.그는 "지난 수십 년은 비디오 게임에 있어 가장 위대한 시기 중 하나였다"며 "역사상 가장 위대한 창조적 폭발을 가장 가까이서 지켜볼 수 있었다"고 소회를 밝혔다.이어 "'데드 스페이스'를 만들게 해준 EA와 세 편의 '콜 오브 듀티' 게임을 맡겨준 액티비전에 감사하다"며 "현재 업계가 어려운 시기를 겪고 있지만 미래는 매우 밝으며, 다음 세대 게임 제작자들에게 행운을 빈다"고 덧붙였다.스코필드는 올해 초 한 외신 인터뷰에서 '칼리스토 프로토콜' 개발을 마친 후 은퇴를 결심했다고 설명한 바 있다. 그는 "내 인생에서 가장 힘든 개발 과정이었으며, '반지의 제왕'보다 더 힘들었다"고 회상했다.또한 "조각과 그림 등 창작 활동을 하면서, 내가 더 이상 매일 이어지는 일상적인 업무를 할 수 있을지 의문이 들었다"며 "지금이 업계의 변곡점이며 다음 세대가 부상해 자신만의 길을 가야 할 때"라고 진단했다.스코필드는 업계에 몸담는 동안 크리스탈 다이내믹스에서 '겍스'와 '레거시 오브 케인' 프랜차이즈를 감독했으며, 비서럴 게임즈 부사장, 슬레지해머 게임즈 공동 창립자 등을 역임했다. 이후 스트라이킹 디스턴스 스튜디오를 설립해 최고경영자(CEO)로 활동하다 지난 2023년 새로운 기회를 모색하기 위해 퇴사했다.
+---
+[2026-07-18T06:19:44+00:00] [기타] [속보]“최선희 北외무상, 러 공식방문차 모스크바 도착”
+  최선희 북한 외무상이 러시아 공식 방문을 위해 18일(현지시간) 모스크바에 도착했다고 러시아 관영 리아노보스티 통신이 보도했다. 구체적인 방문 목적과 세부 일정은 아직 공개되지 않..
+---
+[2026-07-18T06:19:33+00:00] [기타] [속보] 종합특검, ‘양평 의혹’ 원희룡 전 국토부 장관 23일 소환
+  양평고속도로 노선 변경 의혹과 관련해 원희룡 전 국토교통부 장관이 오는 23일 권창영 2차 종합특검팀에 출석해 조사받는다. 18일 연합뉴스에 따르면 특검팀은 이날 언론 공지를 통해..
+---
+[2026-07-18T06:19:19+00:00] [산업] 밸브, 내년 상반기 '스팀' 이벤트 일정 공개...장르·콘셉트별 개최 예고
+  [지디넷코리아]밸브가 PC 게임 플랫폼 스팀의 2027년 상반기 테마 할인 및 이벤트 일정을 공개했다.18일 스팀에 공지된 일정표에 따르면, 2027년 상반기 테마 이벤트 및 할인 계획이 잠정 확정됐다. 세부적인 게임 라인업은 아직 미정이다.우선 1월에는 데스크톱 컴패니언 게임 축제(14일~18일)와 가게 운영 게임 축제(25일~2월1일)가 열린다. 2월에는 양 게임 축제(4일~8일), 협동 게임 축제(8일~15일)에 이어 신작 체험판 행사인 스팀 넥스트 페스트 2월 에디션(22일~3월1일)이 진행된다.3월에는 리듬 게임 축제(8일~15일)와 계절 할인인 봄 할인(18일~25일)이 예정돼 있다. 공룡 대 로봇 게임 축제(29일~4월5일) 등 이색 콘셉트 행사도 눈에 띈다.4월에는 레이싱 게임 축제(12일~19일), 마녀 게임 축제(22일~26일), 격투 게임 축제(26일~5월3일)가 이어진다. 5월에는 실시간 전략 게임 축제(10일~17일)와 등산 게임 축제(31일~6월3일)가 열린다.6월에는 스팀 넥스트 페스트 6월 에디션(14일~21일)에 이어 여름 할인이 24일부터 7월8일까지 진행될 예정이다.한편 올해 남은 기간에도 이벤트가 이어진다. 기차 게임 축제(7월20일~27일)를 시작으로 사이버펑크 게임 축제(8월3일~10일), PvE 생존 제작 게임 축제(8월31일~9월7일), 프로그래밍 게임 축제(9월10일~14일) 등 테마 행사가 순차적으로 열린다.10월에는 가을 계절 할인(1일~8일)과 넥스트 페스트 10월 에디션(19일~26일) 등이 예정돼 있다. 11월에는 블랙 프라이데이 할인 게임을 집중 조명할 '특별 할인' 허브를 운영할 계획이다. 올해 말 겨울 할인은 12월17일부터 다음해 1월4일까지 진행된다.
+---
+[2026-07-18T06:16:26+00:00] [기타] "방문·경유 신중히 판단해야"…美 국무부, 중동 여행 경고
+  None
+---
+[2026-07-18T06:04:47+00:00] [기타] 최선희 北외무상, 모스크바 찾는다… 러 외무장관 공식 초청
+  최선희 북한 외무상이 러시아를 방문한다. 18일(현지 시각) 러시아 관영매체 리아 노보스티는 최 외무상이 이날 모스크바에 도착한다고 보도했다. 세르게이 라브로프 러시아 외무장관이 최 외무상을 공식 초청한 것으로 전해졌다. 구체적인 방문 목적과 세부 일정은 아직 공개되지 않았다. 북한과 러시아는 2024년 포괄적 전략적 동반자 조약을 체결해 군사 동맹에 준하
+---
+[2026-07-18T06:03:32+00:00] [정책] 박홍근 "반도체 호황기 급격히 안 꺼져…청년 정책에 대폭 투자"
+  (세종=연합뉴스) 김수현 기자 = 박홍근 기획예산처 장관은 18일 &quot;정부 안에서 논의하는 과정에서 보면 (반도체 호황기가) 급격히 꺼질 것이라고...
+---
+[2026-07-18T06:00:00+00:00] [원자재] LNG부터 정수장까지…현엔, 세계 곳곳에 'K건설' 기술력 심다[짤막영상]
+  <br />[서울=뉴시스] 강세훈 기자, 이우경인턴기자 = 현대엔지니어링이 전 세계 곳곳에서 대규모 프로젝트를 성공적으로 수행하며 기업의 위상을 입증하고 있다. <br /><br />17일 현대엔지니어링은 공식 유튜브 채널의 &#039;세계를 누비는 현대엔지니어링 글로벌 프로젝트 투어&#039;라는 제목의 영상을 통해 현대엔지니어링이 수행 중인 5개국의 주요 사업을 소개했다.  <br /><br />가장 대표적인 사업은 쿠웨이트 알주르 LNG터미널 사업이다. 세계 최대 규모의 이 터미널은 지난 2021년 11월 현대건설이 한국가스공사와 함께 준공했다. 쿠웨이트시티의 안정적인 에너지 공급 인프라를 구축한 것은 물론 향후 미래 에너지 전환을 이끄는 핵심 기반이 되고 있다. <br /><br />지난 2019년 수주한 &#039;폴리머리 폴리체 PDH/PP 플랜트&#039; 프로젝트는 국내 건설사가 유럽에서 단독으로 수주한 석유화학 플랜트 가운데 최대 규모(약 1조2880억원)다. 자동차 부품과 생활용품의 원료인 폴리프로필렌을 생산하는 시설로, 현대엔지니어링의 유럽 시장 경쟁력을 입증한 대표 프로젝트로 평가받는다.<br /><br />투르크메니스탄에서도 현대엔지니어링의 기술력은 이어졌다. &#039;가스탈황설비 프로젝트&#039;를 통해 천연가스 내 불순물을 제거하는 정제 설비를 구축하며, 현지의 안정적인 가스 생산과 대규모 수출 기반 마련에 기여했다.<br /><br />멕시코에서는 &#039;몬테레이 기아공장&#039; 건설을 통해 연간 40만대 규모의 완성차 생산시설을 조성했다. 이 공장은 북미, 유럽, 중남미를 잇는 핵심 생산 허브로 자리매김했다.<br /><br />아프리카 DR콩고에서는 &#039;렘바임부 정수장&#039;을 건설해 지역 주민들에게 깨끗한 식수를 안정적으로 공급하며 생활환경 개선에 크게 기여했다.<br /><br />현대엔지니어링 관계자는 &quot;아시아부터 유럽, 아메리카, 중동, 아프리카까지 세계 곳곳에서 더 나은 미래를 만들고 있다
+---
+[2026-07-18T05:54:22+00:00] [산업] 中 문샷, AI 신모델 '키미 K3' 출시…"오픈AI·앤트로픽 추격"
+  None
+---
+[2026-07-18T05:48:01+00:00] [기타] 월드컵 끝나면 ‘MLB 이정후’ 보는 재미로…시즌 30호 멀티히트, 타율 0.307
+  한국이 북중미 월드컵 조별리그에서 일찌감치 탈락하면서 월드컵 보는 재미가 반감됐다. 오는 19일 프랑스와 잉글랜드의 3·4위전과 20일 아르헨티나와 스페인의 결승전이 끝나면 월드컵..
+---
+[2026-07-18T05:47:01+00:00] [산업] “내부 기밀 빼돌렸지?”…애플, 오픈AI로 이직한 직원들에 경고장
+  애플이 인공지능(AI) 선두인 오픈AI를 상대로 ‘기밀 탈취’ 의혹을 제기해온 가운데 애플에서 이직한 직원 수십명에게 소송전을 위협하는 것으로 알려졌다. 17일(현지시간) 연합뉴스..
+---
